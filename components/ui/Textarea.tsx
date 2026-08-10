@@ -23,17 +23,17 @@ export interface TextareaProps
 }
 
 const baseTextarea = [
-  'w-full px-[--spacing-s4] py-[--spacing-s3]',
-  'font-[family-name:--font-body] text-[--font-size-step-0] text-[--color-graphite]',
-  'bg-[--color-chalk] rounded-[--radius-md]',
-  'border border-[--color-ink-900]/20',
-  'transition-colors duration-[--duration-fast]',
+  'w-full px-(--spacing-s4) py-(--spacing-s3)',
+  'font-sans text-(--font-size-step-0) text-(--color-graphite)',
+  'bg-(--color-chalk) rounded-(--radius-md)',
+  'border border-(--color-ink-900)/20',
+  'transition-colors duration-(--duration-fast)',
   'resize-y',
-  'placeholder:text-[--color-ink-400]',
-  'hover:border-[--color-ink-900]/40',
-  'focus:outline-none focus:border-[--color-marigold] focus:ring-1 focus:ring-[--color-marigold]',
-  'disabled:bg-[--color-ink-900]/4 disabled:text-[--color-ink-400] disabled:cursor-not-allowed',
-  'aria-invalid:border-[--color-kumkum] aria-invalid:ring-1 aria-invalid:ring-[--color-kumkum]/30',
+  'placeholder:text-(--color-ink-400)',
+  'hover:border-(--color-ink-900)/40',
+  'focus:outline-none focus:border-(--color-marigold) focus:ring-1 focus:ring-(--color-marigold)',
+  'disabled:bg-(--color-ink-900)/4 disabled:text-(--color-ink-400) disabled:cursor-not-allowed',
+  'aria-invalid:border-(--color-kumkum) aria-invalid:ring-1 aria-invalid:ring-(--color-kumkum)/30',
 ].join(' ')
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -92,10 +92,10 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             aria-live="polite"
             aria-atomic="true"
             className={[
-              'mt-[--spacing-s1] text-right text-[--font-size-step--1] tabular',
+              'mt-(--spacing-s1) text-right text-(--font-size-step--1) tabular',
               remaining !== undefined && remaining <= 20
-                ? 'text-[--color-kumkum] font-medium'
-                : 'text-[--color-ink-400]',
+                ? 'text-(--color-kumkum) font-medium'
+                : 'text-(--color-ink-400)',
             ].join(' ')}
           >
             <span className="sr-only">Characters remaining: </span>

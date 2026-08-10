@@ -198,16 +198,16 @@ export function Combobox({
             }, 300)
           }}
           className={[
-            'w-full min-h-[44px] px-[--spacing-s4] py-[--spacing-s3] pr-10',
-            'font-[family-name:--font-body] text-[--font-size-step-0] text-[--color-graphite]',
-            'bg-[--color-chalk] rounded-[--radius-md]',
-            'border border-[--color-ink-900]/20',
-            'transition-colors duration-[--duration-fast]',
-            'placeholder:text-[--color-ink-400]',
-            'hover:border-[--color-ink-900]/40',
-            'focus:outline-none focus:border-[--color-marigold] focus:ring-1 focus:ring-[--color-marigold]',
-            'disabled:bg-[--color-ink-900]/4 disabled:text-[--color-ink-400] disabled:cursor-not-allowed',
-            hasError ? 'border-[--color-kumkum] ring-1 ring-[--color-kumkum]/30' : '',
+            'w-full min-h-[44px] px-(--spacing-s4) py-(--spacing-s3) pr-10',
+            'font-sans text-(--font-size-step-0) text-(--color-graphite)',
+            'bg-(--color-chalk) rounded-(--radius-md)',
+            'border border-(--color-ink-900)/20',
+            'transition-colors duration-(--duration-fast)',
+            'placeholder:text-(--color-ink-400)',
+            'hover:border-(--color-ink-900)/40',
+            'focus:outline-none focus:border-(--color-marigold) focus:ring-1 focus:ring-(--color-marigold)',
+            'disabled:bg-(--color-ink-900)/4 disabled:text-(--color-ink-400) disabled:cursor-not-allowed',
+            hasError ? 'border-(--color-kumkum) ring-1 ring-(--color-kumkum)/30' : '',
           ]
             .filter(Boolean)
             .join(' ')}
@@ -215,7 +215,7 @@ export function Combobox({
 
         {/* Loading/search indicator */}
         <span
-          className="absolute inset-y-0 right-[--spacing-s4] flex items-center text-[--color-ink-400]"
+          className="absolute inset-y-0 right-(--spacing-s4) flex items-center text-(--color-ink-400)"
           aria-hidden="true"
         >
           {loading ? (
@@ -240,12 +240,12 @@ export function Combobox({
           role="listbox"
           aria-label="Suggestions"
           className={[
-            'absolute z-50 w-full mt-[--spacing-s1]',
+            'absolute z-50 w-full mt-(--spacing-s1)',
             'max-h-60 overflow-y-auto',
-            'bg-[--color-chalk] rounded-[--radius-md]',
-            'border border-[--color-ink-900]/15',
-            'shadow-lg shadow-[--color-ink-900]/10',
-            'py-[--spacing-s1]',
+            'bg-(--color-chalk) rounded-(--radius-md)',
+            'border border-(--color-ink-900)/15',
+            'shadow-lg shadow-(--color-ink-900)/10',
+            'py-(--spacing-s1)',
           ].join(' ')}
         >
           {options.map((option, i) => (
@@ -259,18 +259,18 @@ export function Combobox({
                 handleSelect(option)
               }}
               className={[
-                'flex flex-col px-[--spacing-s4] py-[--spacing-s3] cursor-pointer',
-                'transition-colors duration-[--duration-fast]',
+                'flex flex-col px-(--spacing-s4) py-(--spacing-s3) cursor-pointer',
+                'transition-colors duration-(--duration-fast)',
                 i === activeIndex
-                  ? 'bg-[--color-marigold]/10 text-[--color-ink-900]'
-                  : 'text-[--color-graphite] hover:bg-[--color-ink-900]/4',
+                  ? 'bg-(--color-marigold)/10 text-(--color-ink-900)'
+                  : 'text-(--color-graphite) hover:bg-(--color-ink-900)/4',
               ].join(' ')}
             >
-              <span className="text-[--font-size-step-0] font-medium leading-tight">
+              <span className="text-(--font-size-step-0) font-medium leading-tight">
                 {option.label}
               </span>
               {option.meta && (
-                <span className="text-[--font-size-step--1] text-[--color-ink-400] mt-[2px]">
+                <span className="text-(--font-size-step--1) text-(--color-ink-400) mt-[2px]">
                   {option.meta}
                 </span>
               )}

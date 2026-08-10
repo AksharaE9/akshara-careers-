@@ -26,29 +26,29 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary: [
-    'bg-[--color-marigold] text-[--color-ink-900] font-semibold',
-    'hover:bg-[--color-marigold-press]',
+    'bg-(--color-marigold) text-(--color-ink-900) font-semibold',
+    'hover:bg-(--color-marigold-press)',
     'active:scale-[0.97]',
     'disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100',
   ].join(' '),
   secondary: [
-    'bg-transparent text-[--color-ink-900] font-medium',
-    'border border-[--color-ink-900]/30',
-    'hover:bg-[--color-ink-900]/6',
-    'active:bg-[--color-ink-900]/10 active:scale-[0.97]',
+    'bg-transparent text-(--color-ink-900) font-medium',
+    'border border-(--color-ink-900)/30',
+    'hover:bg-(--color-ink-900)/6',
+    'active:bg-(--color-ink-900)/10 active:scale-[0.97]',
     'disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100',
   ].join(' '),
   ghost: [
-    'bg-transparent text-[--color-ink-900] font-medium',
-    'hover:bg-[--color-ink-900]/6',
-    'active:bg-[--color-ink-900]/10 active:scale-[0.97]',
+    'bg-transparent text-(--color-ink-900) font-medium',
+    'hover:bg-(--color-ink-900)/6',
+    'active:bg-(--color-ink-900)/10 active:scale-[0.97]',
     'disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100',
   ].join(' '),
   destructive: [
-    'bg-transparent text-[--color-kumkum] font-medium',
-    'border border-[--color-kumkum]/30',
-    'hover:bg-[--color-kumkum]/6',
-    'active:bg-[--color-kumkum]/10 active:scale-[0.97]',
+    'bg-transparent text-(--color-kumkum) font-medium',
+    'border border-(--color-kumkum)/30',
+    'hover:bg-(--color-kumkum)/6',
+    'active:bg-(--color-kumkum)/10 active:scale-[0.97]',
     'disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100',
   ].join(' '),
 }
@@ -73,9 +73,9 @@ export const variantStylesDark: Record<ButtonVariant, string> = {
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'min-h-[36px] px-[--spacing-s4] text-[--font-size-step--1] gap-[--spacing-s2]',
-  md: 'min-h-[44px] px-[--spacing-s5] text-[--font-size-step-0] gap-[--spacing-s3]',
-  lg: 'min-h-[52px] px-[--spacing-s6] text-[--font-size-step-1] gap-[--spacing-s3]',
+  sm: 'min-h-[36px] px-(--spacing-s4) text-(--font-size-step--1) gap-(--spacing-s2)',
+  md: 'min-h-[44px] px-(--spacing-s5) text-(--font-size-step-0) gap-(--spacing-s3)',
+  lg: 'min-h-[52px] px-(--spacing-s6) text-(--font-size-step-1) gap-(--spacing-s3)',
 }
 
 const LoadingSpinner = () => (
@@ -129,9 +129,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={[
           // Base
           'inline-flex items-center justify-center',
-          'rounded-[--radius-md]',
-          'font-[family-name:--font-body]',
-          'transition-all duration-[--duration-fast]',
+          'rounded-(--radius-md)',
+          'font-sans',
+          'transition-all duration-(--duration-fast)',
           'outline-offset-2',
           // Variant
           variantStyles[variant],

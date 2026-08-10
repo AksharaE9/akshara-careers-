@@ -69,77 +69,77 @@ export default function DevUiGallery() {
   }
 
   return (
-    <main className="min-h-screen bg-[--color-paper] py-[--spacing-s8] px-[--spacing-s5] md:px-[--spacing-s8]">
-      <div className="max-w-6xl mx-auto flex flex-col gap-[--spacing-s8]">
+    <main className="min-h-screen bg-(--color-paper) py-(--spacing-s8) px-(--spacing-s5) md:px-(--spacing-s8)">
+      <div className="max-w-6xl mx-auto flex flex-col gap-(--spacing-s8)">
         {/* Header */}
-        <header className="border-b border-[--color-ink-900]/10 pb-[--spacing-s5]">
-          <span className="eyebrow text-[--color-marigold]">Antigravity Scaffold</span>
-          <h1 className="display text-[--font-size-step-3] font-bold text-[--color-ink-900] mt-[--spacing-s1]">
+        <header className="border-b border-(--color-ink-900)/10 pb-(--spacing-s5)">
+          <span className="eyebrow text-(--color-marigold)">Antigravity Scaffold</span>
+          <h1 className="display text-(--font-size-step-3) font-bold text-(--color-ink-900) mt-(--spacing-s1)">
             UI Primitives Gallery
           </h1>
-          <p className="prose text-[--font-size-step-0] text-[--color-graphite] mt-[--spacing-s2]">
+          <p className="prose text-(--font-size-step-0) text-(--color-graphite) mt-(--spacing-s2)">
             Visual demonstration of all custom design components. All styles respect metric font matches, HSL Tailwind v4 tokens, and WCAG contrast.
           </p>
         </header>
 
         {/* 1. Contrast Audit Section */}
-        <section className="flex flex-col gap-[--spacing-s4]">
-          <h2 className="display text-[--font-size-step-2] font-semibold text-[--color-ink-900]">
+        <section className="flex flex-col gap-(--spacing-s4)">
+          <h2 className="display text-(--font-size-step-2) font-semibold text-(--color-ink-900)">
             Contrast Audit Log (WCAG AA Compliance)
           </h2>
-          <div className="overflow-x-auto rounded-[--radius-lg] border border-[--color-ink-900]/10">
-            <table className="w-full text-left border-collapse text-[--font-size-step--1]">
+          <div className="overflow-x-auto rounded-(--radius-lg) border border-(--color-ink-900)/10">
+            <table className="w-full text-left border-collapse text-(--font-size-step--1)">
               <thead>
-                <tr className="bg-[--color-ink-900] text-white font-mono">
-                  <th className="p-[--spacing-s4]">Foreground / Role</th>
-                  <th className="p-[--spacing-s4]">Background</th>
-                  <th className="p-[--spacing-s4]">Ratio (Est.)</th>
-                  <th className="p-[--spacing-s4]">Status</th>
-                  <th className="p-[--spacing-s4]">Usage Scenario</th>
+                <tr className="bg-(--color-ink-900) text-white font-mono">
+                  <th className="p-(--spacing-s4)">Foreground / Role</th>
+                  <th className="p-(--spacing-s4)">Background</th>
+                  <th className="p-(--spacing-s4)">Ratio (Est.)</th>
+                  <th className="p-(--spacing-s4)">Status</th>
+                  <th className="p-(--spacing-s4)">Usage Scenario</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[--color-ink-900]/10 bg-[--color-chalk] text-[--color-graphite]">
+              <tbody className="divide-y divide-(--color-ink-900)/10 bg-(--color-chalk) text-(--color-graphite)">
                 <tr>
-                  <td className="p-[--spacing-s4] font-medium font-mono text-[--color-ink-900]">#0E1226 (Ink 900)</td>
-                  <td className="p-[--spacing-s4] bg-[--color-paper] font-mono">#F2EEE4 (Khadi Paper)</td>
-                  <td className="p-[--spacing-s4] font-semibold font-mono">11.8:1</td>
-                  <td className="p-[--spacing-s4]"><span className="text-[--color-leaf] font-bold font-mono">PASS (AAA)</span></td>
-                  <td className="p-[--spacing-s4]">Primary Headings & Body on Light Sections</td>
+                  <td className="p-(--spacing-s4) font-medium font-mono text-(--color-ink-900)">#0E1226 (Ink 900)</td>
+                  <td className="p-(--spacing-s4) bg-(--color-paper) font-mono">#F2EEE4 (Khadi Paper)</td>
+                  <td className="p-(--spacing-s4) font-semibold font-mono">11.8:1</td>
+                  <td className="p-(--spacing-s4)"><span className="text-(--color-leaf) font-bold font-mono">PASS (AAA)</span></td>
+                  <td className="p-(--spacing-s4)">Primary Headings & Body on Light Sections</td>
                 </tr>
                 <tr>
-                  <td className="p-[--spacing-s4] font-medium font-mono text-[--color-graphite]">#3A3A42 (Graphite)</td>
-                  <td className="p-[--spacing-s4] bg-[--color-chalk] font-mono">#FBFAF6 (Chalk Card)</td>
-                  <td className="p-[--spacing-s4] font-semibold font-mono">8.2:1</td>
-                  <td className="p-[--spacing-s4]"><span className="text-[--color-leaf] font-bold font-mono">PASS (AAA)</span></td>
-                  <td className="p-[--spacing-s4]">Body prose & text inputs</td>
+                  <td className="p-(--spacing-s4) font-medium font-mono text-(--color-graphite)">#3A3A42 (Graphite)</td>
+                  <td className="p-(--spacing-s4) bg-(--color-chalk) font-mono">#FBFAF6 (Chalk Card)</td>
+                  <td className="p-(--spacing-s4) font-semibold font-mono">8.2:1</td>
+                  <td className="p-(--spacing-s4)"><span className="text-(--color-leaf) font-bold font-mono">PASS (AAA)</span></td>
+                  <td className="p-(--spacing-s4)">Body prose & text inputs</td>
                 </tr>
                 <tr>
-                  <td className="p-[--spacing-s4] font-medium font-mono text-white">#FFFFFF (Chalk)</td>
-                  <td className="p-[--spacing-s4] bg-[--color-ink-800] text-white font-mono">#171D3D (Ink 800)</td>
-                  <td className="p-[--spacing-s4] font-semibold font-mono">14.0:1</td>
-                  <td className="p-[--spacing-s4]"><span className="text-[--color-leaf] font-bold font-mono">PASS (AAA)</span></td>
-                  <td className="p-[--spacing-s4]">Recruiter console views, dark hero blocks</td>
+                  <td className="p-(--spacing-s4) font-medium font-mono text-white">#FFFFFF (Chalk)</td>
+                  <td className="p-(--spacing-s4) bg-(--color-ink-800) text-white font-mono">#171D3D (Ink 800)</td>
+                  <td className="p-(--spacing-s4) font-semibold font-mono">14.0:1</td>
+                  <td className="p-(--spacing-s4)"><span className="text-(--color-leaf) font-bold font-mono">PASS (AAA)</span></td>
+                  <td className="p-(--spacing-s4)">Recruiter console views, dark hero blocks</td>
                 </tr>
                 <tr>
-                  <td className="p-[--spacing-s4] font-medium font-mono text-[--color-ink-900]">#0E1226 (Ink 900)</td>
-                  <td className="p-[--spacing-s4] bg-[--color-marigold] font-mono">#E8A33D (Marigold)</td>
-                  <td className="p-[--spacing-s4] font-semibold font-mono">4.9:1</td>
-                  <td className="p-[--spacing-s4]"><span className="text-[--color-leaf] font-bold font-mono">PASS (AA)</span></td>
-                  <td className="p-[--spacing-s4]">Primary button label (Black on Marigold)</td>
+                  <td className="p-(--spacing-s4) font-medium font-mono text-(--color-ink-900)">#0E1226 (Ink 900)</td>
+                  <td className="p-(--spacing-s4) bg-(--color-marigold) font-mono">#E8A33D (Marigold)</td>
+                  <td className="p-(--spacing-s4) font-semibold font-mono">4.9:1</td>
+                  <td className="p-(--spacing-s4)"><span className="text-(--color-leaf) font-bold font-mono">PASS (AA)</span></td>
+                  <td className="p-(--spacing-s4)">Primary button label (Black on Marigold)</td>
                 </tr>
                 <tr>
-                  <td className="p-[--spacing-s4] font-medium font-mono text-[--color-leaf]">#2E6B4F (Leaf)</td>
-                  <td className="p-[--spacing-s4] bg-[--color-chalk] font-mono">#FBFAF6 (Chalk)</td>
-                  <td className="p-[--spacing-s4] font-semibold font-mono">5.2:1</td>
-                  <td className="p-[--spacing-s4]"><span className="text-[--color-leaf] font-bold font-mono">PASS (AA)</span></td>
-                  <td className="p-[--spacing-s4]">Success messages & checkmarks</td>
+                  <td className="p-(--spacing-s4) font-medium font-mono text-(--color-leaf)">#2E6B4F (Leaf)</td>
+                  <td className="p-(--spacing-s4) bg-(--color-chalk) font-mono">#FBFAF6 (Chalk)</td>
+                  <td className="p-(--spacing-s4) font-semibold font-mono">5.2:1</td>
+                  <td className="p-(--spacing-s4)"><span className="text-(--color-leaf) font-bold font-mono">PASS (AA)</span></td>
+                  <td className="p-(--spacing-s4)">Success messages & checkmarks</td>
                 </tr>
                 <tr>
-                  <td className="p-[--spacing-s4] font-medium font-mono text-[--color-kumkum]">#C0392B (Kumkum)</td>
-                  <td className="p-[--spacing-s4] bg-[--color-chalk] font-mono">#FBFAF6 (Chalk)</td>
-                  <td className="p-[--spacing-s4] font-semibold font-mono">5.9:1</td>
-                  <td className="p-[--spacing-s4]"><span className="text-[--color-leaf] font-bold font-mono">PASS (AA)</span></td>
-                  <td className="p-[--spacing-s4]">Input errors & validation alerts</td>
+                  <td className="p-(--spacing-s4) font-medium font-mono text-(--color-kumkum)">#C0392B (Kumkum)</td>
+                  <td className="p-(--spacing-s4) bg-(--color-chalk) font-mono">#FBFAF6 (Chalk)</td>
+                  <td className="p-(--spacing-s4) font-semibold font-mono">5.9:1</td>
+                  <td className="p-(--spacing-s4)"><span className="text-(--color-leaf) font-bold font-mono">PASS (AA)</span></td>
+                  <td className="p-(--spacing-s4)">Input errors & validation alerts</td>
                 </tr>
               </tbody>
             </table>
@@ -147,23 +147,23 @@ export default function DevUiGallery() {
         </section>
 
         {/* 2. Buttons Section */}
-        <section className="flex flex-col gap-[--spacing-s4]">
-          <h2 className="display text-[--font-size-step-2] font-semibold text-[--color-ink-900]">
+        <section className="flex flex-col gap-(--spacing-s4)">
+          <h2 className="display text-(--font-size-step-2) font-semibold text-(--color-ink-900)">
             Buttons (§2.6)
           </h2>
-          <Card className="flex flex-col gap-[--spacing-s5]">
-            <div className="flex flex-wrap gap-[--spacing-s3] items-center">
+          <Card className="flex flex-col gap-(--spacing-s5)">
+            <div className="flex flex-wrap gap-(--spacing-s3) items-center">
               <Button variant="primary">Primary Button</Button>
               <Button variant="secondary">Secondary Button</Button>
               <Button variant="ghost">Ghost Button</Button>
               <Button variant="destructive">Destructive Button</Button>
             </div>
-            <div className="flex flex-wrap gap-[--spacing-s3] items-center">
+            <div className="flex flex-wrap gap-(--spacing-s3) items-center">
               <Button variant="primary" size="sm">Small</Button>
               <Button variant="primary" size="md">Medium</Button>
               <Button variant="primary" size="lg">Large</Button>
             </div>
-            <div className="flex flex-wrap gap-[--spacing-s3] items-center">
+            <div className="flex flex-wrap gap-(--spacing-s3) items-center">
               <Button variant="primary" loading>Loading Button</Button>
               <Button variant="primary" disabled>Disabled Button</Button>
               <Button
@@ -182,13 +182,13 @@ export default function DevUiGallery() {
         </section>
 
         {/* 3. Form Inputs Section */}
-        <section className="flex flex-col gap-[--spacing-s4]">
-          <h2 className="display text-[--font-size-step-2] font-semibold text-[--color-ink-900]">
+        <section className="flex flex-col gap-(--spacing-s4)">
+          <h2 className="display text-(--font-size-step-2) font-semibold text-(--color-ink-900)">
             Form Controls & Validation Primitives
           </h2>
-          <div className="grid md:grid-cols-2 gap-[--spacing-s5]">
+          <div className="grid md:grid-cols-2 gap-(--spacing-s5)">
             {/* Input & Textarea */}
-            <Card className="flex flex-col gap-[--spacing-s5]">
+            <Card className="flex flex-col gap-(--spacing-s5)">
               <FieldWrapper id="input-demo" label="Full Name" required hint="Enter letters and spaces only.">
                 <Input id="input-demo" placeholder="e.g. Aditi Gowda" />
               </FieldWrapper>
@@ -207,7 +207,7 @@ export default function DevUiGallery() {
             </Card>
 
             {/* Select, Combobox & Chips */}
-            <Card className="flex flex-col gap-[--spacing-s5]">
+            <Card className="flex flex-col gap-(--spacing-s5)">
               <FieldWrapper id="select-demo" label="Experience Level" required>
                 <Select id="select-demo" placeholder="Select one...">
                   <option value="fresher">Fresher (Graduate of 2026 / 2025)</option>
@@ -224,7 +224,7 @@ export default function DevUiGallery() {
                 />
               </FieldWrapper>
               {comboboxVal && (
-                <div className="text-[--font-size-step--1] font-mono text-[--color-ink-600] -mt-[--spacing-s3]">
+                <div className="text-(--font-size-step--1) font-mono text-(--color-ink-600) -mt-(--spacing-s3)">
                   Selected: <span className="font-semibold">{comboboxVal}</span>
                 </div>
               )}
@@ -243,13 +243,13 @@ export default function DevUiGallery() {
         </section>
 
         {/* 4. Checkbox, Switch & Progress Section */}
-        <section className="flex flex-col gap-[--spacing-s4]">
-          <h2 className="display text-[--font-size-step-2] font-semibold text-[--color-ink-900]">
+        <section className="flex flex-col gap-(--spacing-s4)">
+          <h2 className="display text-(--font-size-step-2) font-semibold text-(--color-ink-900)">
             Toggles, Progress & Badges
           </h2>
-          <div className="grid md:grid-cols-2 gap-[--spacing-s5]">
-            <Card className="flex flex-col gap-[--spacing-s5] justify-between">
-              <div className="flex flex-col gap-[--spacing-s4]">
+          <div className="grid md:grid-cols-2 gap-(--spacing-s5)">
+            <Card className="flex flex-col gap-(--spacing-s5) justify-between">
+              <div className="flex flex-col gap-(--spacing-s4)">
                 <Checkbox
                   id="checkbox-demo"
                   label="I consent to Akshara retaining my application details"
@@ -267,7 +267,7 @@ export default function DevUiGallery() {
                 />
               </div>
 
-              <div className="flex flex-wrap gap-[--spacing-s2]">
+              <div className="flex flex-wrap gap-(--spacing-s2)">
                 <Badge variant="default">Sales</Badge>
                 <Badge variant="accent">Campus Drive</Badge>
                 <Badge variant="success">Open</Badge>
@@ -276,8 +276,8 @@ export default function DevUiGallery() {
               </div>
             </Card>
 
-            <Card className="flex flex-col gap-[--spacing-s5] justify-center">
-              <h3 className="font-mono text-[--font-size-step--1] uppercase tracking-wider text-[--color-ink-400]">
+            <Card className="flex flex-col gap-(--spacing-s5) justify-center">
+              <h3 className="font-mono text-(--font-size-step--1) uppercase tracking-wider text-(--color-ink-400)">
                 Application Wizard Progress
               </h3>
               <ProgressSteps currentStep={1} />
@@ -288,11 +288,11 @@ export default function DevUiGallery() {
         </section>
 
         {/* 5. Resume Upload Section */}
-        <section className="flex flex-col gap-[--spacing-s4]">
-          <h2 className="display text-[--font-size-step-2] font-semibold text-[--color-ink-900]">
+        <section className="flex flex-col gap-(--spacing-s4)">
+          <h2 className="display text-(--font-size-step-2) font-semibold text-(--color-ink-900)">
             Resume Upload Dropzone (§4.3)
           </h2>
-          <Card className="flex flex-col gap-[--spacing-s4]">
+          <Card className="flex flex-col gap-(--spacing-s4)">
             <FileDropzone
               onFileSelected={handleFileDrop}
               progress={dropzoneProgress}
@@ -306,27 +306,27 @@ export default function DevUiGallery() {
         </section>
 
         {/* 6. Dark Ground Mode Demonstration */}
-        <section className="flex flex-col gap-[--spacing-s4]">
-          <h2 className="display text-[--font-size-step-2] font-semibold text-[--color-ink-900]">
+        <section className="flex flex-col gap-(--spacing-s4)">
+          <h2 className="display text-(--font-size-step-2) font-semibold text-(--color-ink-900)">
             Dark Ground Proof Block (§2.2)
           </h2>
-          <div className="bg-[--color-ink-900] text-white rounded-[--radius-lg] p-[--spacing-s7] flex flex-col gap-[--spacing-s5] border border-[--color-ink-600]/30 shadow-xl">
+          <div className="bg-(--color-ink-900) text-white rounded-(--radius-lg) p-(--spacing-s7) flex flex-col gap-(--spacing-s5) border border-(--color-ink-600)/30 shadow-xl">
             <div>
-              <span className="eyebrow text-[--color-marigold]">Console Preview</span>
-              <h3 className="display text-[--font-size-step-2] text-white mt-[--spacing-s1]">
+              <span className="eyebrow text-(--color-marigold)">Console Preview</span>
+              <h3 className="display text-(--font-size-step-2) text-white mt-(--spacing-s1)">
                 Recruiter Portal Theme
               </h3>
-              <p className="prose text-[--font-size-step-0] text-[--color-ink-400] mt-[--spacing-s2]">
+              <p className="prose text-(--font-size-step-0) text-(--color-ink-400) mt-(--spacing-s2)">
                 Proves that components styled on the dark ground (`--color-ink-900`) look consistent and retain high readability without visual vibration.
               </p>
             </div>
-            <div className="flex flex-wrap gap-[--spacing-s3]">
+            <div className="flex flex-wrap gap-(--spacing-s3)">
               <Button variant="primary">Accent CTA</Button>
               {/* Secondary/Ghost are styled dynamically on dark backgrounds inside Button component */}
-              <button className="min-h-[44px] px-[--spacing-s5] text-[--font-size-step-0] font-medium border border-white/20 hover:bg-white/10 text-white rounded-[--radius-md] transition-all duration-[--duration-fast] active:scale-95">
+              <button className="min-h-[44px] px-(--spacing-s5) text-(--font-size-step-0) font-medium border border-white/20 hover:bg-white/10 text-white rounded-(--radius-md) transition-all duration-(--duration-fast) active:scale-95">
                 Dark Outline
               </button>
-              <button className="min-h-[44px] px-[--spacing-s5] text-[--font-size-step-0] font-medium hover:bg-white/10 text-white rounded-[--radius-md] transition-all duration-[--duration-fast] active:scale-95">
+              <button className="min-h-[44px] px-(--spacing-s5) text-(--font-size-step-0) font-medium hover:bg-white/10 text-white rounded-(--radius-md) transition-all duration-(--duration-fast) active:scale-95">
                 Dark Ghost
               </button>
             </div>

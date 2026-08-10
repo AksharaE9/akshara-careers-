@@ -9,7 +9,7 @@ export function Header() {
         {/* Brand Logo */}
         <Link
           href="/careers"
-          className="flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-marigold rounded-[--radius-sm] p-1"
+          className="flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-marigold rounded-(--radius-sm) p-1"
         >
           <Image
             src="/images/akshara-logo.svg"
@@ -25,21 +25,21 @@ export function Header() {
         <nav className="flex items-center gap-4">
           <Link
             href="/careers#roles"
-            className="text-step--1 font-medium text-chalk/80 hover:text-chalk transition-colors focus-visible:outline-2 focus-visible:outline-marigold rounded-[--radius-sm] px-3 py-1.5"
+            className="text-step--1 font-medium text-chalk/80 hover:text-chalk transition-colors focus-visible:outline-2 focus-visible:outline-marigold rounded-(--radius-sm) px-3 py-1.5"
           >
             Open Roles
           </Link>
           
           <Link
             href="/careers#life"
-            className="text-step--1 font-medium text-chalk/80 hover:text-chalk transition-colors focus-visible:outline-2 focus-visible:outline-marigold rounded-[--radius-sm] px-3 py-1.5"
+            className="text-step--1 font-medium text-chalk/80 hover:text-chalk transition-colors focus-visible:outline-2 focus-visible:outline-marigold rounded-(--radius-sm) px-3 py-1.5"
           >
             Life at Akshara
           </Link>
 
           <Link
             href="/careers#process"
-            className="text-step--1 font-medium text-chalk/80 hover:text-chalk transition-colors focus-visible:outline-2 focus-visible:outline-marigold rounded-[--radius-sm] px-3 py-1.5 hidden sm:inline-block"
+            className="text-step--1 font-medium text-chalk/80 hover:text-chalk transition-colors focus-visible:outline-2 focus-visible:outline-marigold rounded-(--radius-sm) px-3 py-1.5 hidden sm:inline-block"
           >
             Hiring Process
           </Link>

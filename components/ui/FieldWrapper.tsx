@@ -38,17 +38,17 @@ export function FieldWrapper({
   // Clone children to inject aria props — children should be a single form element
   return (
     <div
-      className={`flex flex-col gap-[--spacing-s2] ${className}`}
+      className={`flex flex-col gap-(--spacing-s2) ${className}`}
       data-testid={testId}
     >
       <label
         htmlFor={id}
-        className="text-[--font-size-step--1] font-medium text-[--color-graphite] leading-tight"
+        className="text-(--font-size-step--1) font-medium text-(--color-graphite) leading-tight"
       >
         {label}
         {required && (
           <span
-            className="ml-[--spacing-s1] text-[--color-kumkum]"
+            className="ml-(--spacing-s1) text-(--color-kumkum)"
             aria-hidden="true"
           >
             *
@@ -67,7 +67,7 @@ export function FieldWrapper({
       {hint && !error && (
         <p
           id={hintId}
-          className="text-[--font-size-step--1] text-[--color-ink-400] leading-snug"
+          className="text-(--font-size-step--1) text-(--color-ink-400) leading-snug"
         >
           {hint}
         </p>
@@ -78,7 +78,7 @@ export function FieldWrapper({
           id={errorId}
           role="alert"
           data-testid={`error-${id}`}
-          className="flex items-center gap-[--spacing-s2] text-[--font-size-step--1] text-[--color-kumkum] leading-snug font-medium"
+          className="flex items-center gap-(--spacing-s2) text-(--font-size-step--1) text-(--color-kumkum) leading-snug font-medium"
         >
           <svg
             width="14"

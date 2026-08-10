@@ -15,6 +15,13 @@
       "when": 1786338233474,
       "tag": "0001_flimsy_penance",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1786438800000,
+      "tag": "0002_apps_candidate_job_partial_index",
+      "breakpoints": true
     }
   ]
 }

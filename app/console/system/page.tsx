@@ -52,12 +52,12 @@ export default function SystemHealthPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[--color-ink-900]/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-(--color-ink-900)/10">
         <div>
-          <span className="font-mono text-[--font-size-step--2] uppercase text-[--color-graphite] font-semibold tracking-wider">
+          <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) font-semibold tracking-wider">
             Infrastructure Diagnostics
           </span>
-          <h1 className="text-[--font-size-step-2] font-bold text-[--color-ink-900] tracking-tight">
+          <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             System Health & Service Probes
           </h1>
         </div>
@@ -69,21 +69,21 @@ export default function SystemHealthPage() {
           <div
             key={svc.name}
             data-testid={`system-service-${svc.name}`}
-            className="p-4 bg-white border border-[--color-ink-900]/10 rounded-xl shadow-xs flex flex-col justify-between"
+            className="p-4 bg-white border border-(--color-ink-900)/10 rounded-xl shadow-xs flex flex-col justify-between"
           >
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[--font-size-step--2] uppercase font-bold text-[--color-graphite]">
+              <span className="font-mono text-(--font-size-step--2) uppercase font-bold text-(--color-graphite)">
                 {svc.name}
               </span>
-              <div className="w-2.5 h-2.5 rounded-full bg-[--color-leaf] animate-pulse" />
+              <div className="w-2.5 h-2.5 rounded-full bg-(--color-leaf) animate-pulse" />
             </div>
 
-            <p className="font-semibold text-[--font-size-step--1] text-[--color-ink-900] mt-2 mb-1">
+            <p className="font-semibold text-(--font-size-step--1) text-(--color-ink-900) mt-2 mb-1">
               {svc.label}
             </p>
 
-            <div className="flex items-center justify-between font-mono text-[--font-size-step--2] text-[--color-graphite] border-t border-[--color-ink-900]/5 pt-2 mt-2">
-              <span>Ping: <strong className="text-[--color-ink-900]">{svc.latency}</strong></span>
+            <div className="flex items-center justify-between font-mono text-(--font-size-step--2) text-(--color-graphite) border-t border-(--color-ink-900)/5 pt-2 mt-2">
+              <span>Ping: <strong className="text-(--color-ink-900)">{svc.latency}</strong></span>
               <span>p95: {svc.p95}</span>
             </div>
           </div>
@@ -91,18 +91,18 @@ export default function SystemHealthPage() {
       </div>
 
       {/* API Endpoint Latency Table */}
-      <div className="bg-white border border-[--color-ink-900]/10 rounded-xl p-5 shadow-xs">
-        <h2 className="text-[--font-size-step-0] font-bold text-[--color-ink-900] mb-1">
+      <div className="bg-white border border-(--color-ink-900)/10 rounded-xl p-5 shadow-xs">
+        <h2 className="text-(--font-size-step-0) font-bold text-(--color-ink-900) mb-1">
           API Endpoint Latency Distribution
         </h2>
-        <p className="text-[--font-size-step--2] text-[--color-graphite] mb-4">
+        <p className="text-(--font-size-step--2) text-(--color-graphite) mb-4">
           Response times and error rates across critical core routes
         </p>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-[--font-size-step--1]">
+          <table className="w-full text-left border-collapse text-(--font-size-step--1)">
             <thead>
-              <tr className="border-b border-[--color-ink-900]/10 font-mono text-[--font-size-step--2] uppercase text-[--color-graphite]">
+              <tr className="border-b border-(--color-ink-900)/10 font-mono text-(--font-size-step--2) uppercase text-(--color-graphite)">
                 <th className="py-2.5">Route</th>
                 <th className="py-2.5">p50 Latency</th>
                 <th className="py-2.5">p95 Latency</th>
@@ -110,14 +110,14 @@ export default function SystemHealthPage() {
                 <th className="py-2.5">Error Rate</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-ink-900]/5">
+            <tbody className="divide-y divide-(--color-ink-900)/5">
               {data.endpoints.map((ep: any) => (
-                <tr key={ep.path} className="hover:bg-[--color-chalk] font-mono">
-                  <td className="py-3 font-semibold text-[--color-ink-900]">{ep.path}</td>
+                <tr key={ep.path} className="hover:bg-(--color-chalk) font-mono">
+                  <td className="py-3 font-semibold text-(--color-ink-900)">{ep.path}</td>
                   <td className="py-3">{ep.p50}</td>
-                  <td className="py-3 font-bold text-[--color-ink-900]">{ep.p95}</td>
+                  <td className="py-3 font-bold text-(--color-ink-900)">{ep.p95}</td>
                   <td className="py-3">{ep.p99}</td>
-                  <td className="py-3 text-[--color-leaf] font-bold">{ep.errorRate}</td>
+                  <td className="py-3 text-(--color-leaf) font-bold">{ep.errorRate}</td>
                 </tr>
               ))}
             </tbody>
@@ -126,14 +126,14 @@ export default function SystemHealthPage() {
       </div>
 
       {/* Build Info */}
-      <div className="p-4 bg-white border border-[--color-ink-900]/10 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[--font-size-step--2] font-mono text-[--color-graphite]">
+      <div className="p-4 bg-white border border-(--color-ink-900)/10 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-(--font-size-step--2) font-mono text-(--color-graphite)">
         <div>
-          <span>Environment: <strong className="text-[--color-ink-900] uppercase">{data.buildInfo.environment}</strong></span>
+          <span>Environment: <strong className="text-(--color-ink-900) uppercase">{data.buildInfo.environment}</strong></span>
           <span className="mx-3">·</span>
-          <span>Next.js: <strong className="text-[--color-ink-900]">{data.buildInfo.nextVersion}</strong></span>
+          <span>Next.js: <strong className="text-(--color-ink-900)">{data.buildInfo.nextVersion}</strong></span>
         </div>
         <div>
-          <span>Build SHA: <strong className="text-[--color-ink-900]">{data.buildInfo.sha}</strong></span>
+          <span>Build SHA: <strong className="text-(--color-ink-900)">{data.buildInfo.sha}</strong></span>
         </div>
       </div>
     </div>

@@ -62,8 +62,8 @@ export function MultiChipInput({
       aria-labelledby={`${id}-label`}
       data-testid={`field-${id}`}
       className={[
-        'flex flex-wrap gap-[--spacing-s2]',
-        hasError ? 'ring-1 ring-[--color-kumkum]/30 rounded-[--radius-md] p-[--spacing-s2]' : '',
+        'flex flex-wrap gap-(--spacing-s2)',
+        hasError ? 'ring-1 ring-(--color-kumkum)/30 rounded-(--radius-md) p-(--spacing-s2)' : '',
       ].join(' ')}
     >
       {options.map((opt) => {
@@ -77,13 +77,13 @@ export function MultiChipInput({
             disabled={disabled}
             onClick={() => toggle(opt.value)}
             className={[
-              'inline-flex items-center min-h-[36px] px-[--spacing-s4] rounded-full',
-              'text-[--font-size-step--1] font-medium',
-              'border transition-all duration-[--duration-fast]',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-marigold] focus-visible:ring-offset-1',
+              'inline-flex items-center min-h-[36px] px-(--spacing-s4) rounded-full',
+              'text-(--font-size-step--1) font-medium',
+              'border transition-all duration-(--duration-fast)',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-marigold) focus-visible:ring-offset-1',
               isSelected
-                ? 'bg-[--color-ink-900] text-white border-[--color-ink-900]'
-                : 'bg-transparent text-[--color-graphite] border-[--color-ink-900]/20 hover:border-[--color-ink-900]/50',
+                ? 'bg-(--color-ink-900) text-white border-(--color-ink-900)'
+                : 'bg-transparent text-(--color-graphite) border-(--color-ink-900)/20 hover:border-(--color-ink-900)/50',
               disabled
                 ? 'opacity-40 cursor-not-allowed'
                 : 'cursor-pointer active:scale-95',
@@ -91,7 +91,7 @@ export function MultiChipInput({
           >
             {isSelected && (
               <svg
-                className="mr-[--spacing-s1] -ml-[--spacing-s1]"
+                className="mr-(--spacing-s1) -ml-(--spacing-s1)"
                 width="14"
                 height="14"
                 viewBox="0 0 24 24"
@@ -113,7 +113,7 @@ export function MultiChipInput({
       })}
 
       {allowOther && (
-        <div className="flex items-center gap-[--spacing-s2]">
+        <div className="flex items-center gap-(--spacing-s2)">
           <input
             type="text"
             value={otherValue}
@@ -122,12 +122,12 @@ export function MultiChipInput({
             placeholder="Other…"
             disabled={disabled}
             className={[
-              'min-h-[36px] px-[--spacing-s3] py-[--spacing-s2]',
-              'text-[--font-size-step--1] text-[--color-graphite]',
-              'bg-[--color-chalk] rounded-full',
-              'border border-[--color-ink-900]/20',
-              'focus:outline-none focus:border-[--color-marigold] focus:ring-1 focus:ring-[--color-marigold]',
-              'placeholder:text-[--color-ink-400]',
+              'min-h-[36px] px-(--spacing-s3) py-(--spacing-s2)',
+              'text-(--font-size-step--1) text-(--color-graphite)',
+              'bg-(--color-chalk) rounded-full',
+              'border border-(--color-ink-900)/20',
+              'focus:outline-none focus:border-(--color-marigold) focus:ring-1 focus:ring-(--color-marigold)',
+              'placeholder:text-(--color-ink-400)',
               'w-28',
             ].join(' ')}
           />
@@ -135,7 +135,7 @@ export function MultiChipInput({
             type="button"
             onClick={addOther}
             disabled={!otherValue.trim() || disabled}
-            className="text-[--font-size-step--1] text-[--color-marigold] font-medium hover:underline disabled:opacity-40 disabled:cursor-not-allowed"
+            className="text-(--font-size-step--1) text-(--color-marigold) font-medium hover:underline disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Add
           </button>

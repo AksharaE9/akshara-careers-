@@ -168,13 +168,13 @@ export default async function CareersPage({ searchParams }: CareersPageProps) {
               <div className="mt-12 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                 <a
                   href="#roles"
-                  className="h-12 px-6 bg-marigold text-ink-900 rounded-[--radius-md] inline-flex items-center justify-center font-semibold hover:bg-marigold-press transition-colors"
+                  className="h-12 px-6 bg-marigold text-ink-900 rounded-(--radius-md) inline-flex items-center justify-center font-semibold hover:bg-marigold-press transition-colors"
                 >
                   View Open Roles
                 </a>
                 <a
                   href="#drives"
-                  className="h-12 px-6 border border-ink-600 text-chalk rounded-[--radius-md] inline-flex items-center justify-center font-semibold hover:border-chalk transition-colors"
+                  className="h-12 px-6 border border-ink-600 text-chalk rounded-(--radius-md) inline-flex items-center justify-center font-semibold hover:border-chalk transition-colors"
                 >
                   Campus Drives
                 </a>
@@ -231,7 +231,7 @@ export default async function CareersPage({ searchParams }: CareersPageProps) {
                     <div className="text-right">
                       <Link
                         href={`/d/${drive.code}`}
-                        className="inline-flex items-center text-xs font-sans font-semibold text-marigold hover:underline"
+                        className="inline-flex items-center justify-end min-h-[44px] text-xs font-sans font-semibold text-marigold hover:underline"
                       >
                         Register →
                       </Link>

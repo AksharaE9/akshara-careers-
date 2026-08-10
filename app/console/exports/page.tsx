@@ -26,24 +26,24 @@ export default function ConsoleExportsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-[--spacing-s6] max-w-3xl">
+    <div className="flex flex-col gap-(--spacing-s6) max-w-3xl">
       <div>
-        <span className="eyebrow text-[--color-marigold]">Compliance & Analytics</span>
-        <h1 className="display text-[--font-size-step-3] font-bold text-[--color-ink-900]">
+        <span className="eyebrow text-(--color-marigold)">Compliance & Analytics</span>
+        <h1 className="display text-(--font-size-step-3) font-bold text-(--color-ink-900)">
           DPDP Candidate Exports
         </h1>
-        <p className="text-[--font-size-step--1] text-[--color-graphite] mt-1">
+        <p className="text-(--font-size-step--1) text-(--color-graphite) mt-1">
           Export candidate pipeline snapshots into standard CSV for ATS or offline evaluation.
           All exports are immutably recorded in the compliance audit log.
         </p>
       </div>
 
-      <Card className="p-[--spacing-s6] bg-[--color-chalk] border border-[--color-ink-900]/10 shadow-xs flex flex-col gap-[--spacing-s5]">
-        <h2 className="font-bold text-[--font-size-step-1] text-[--color-ink-900]">
+      <Card className="p-(--spacing-s6) bg-(--color-chalk) border border-(--color-ink-900)/10 shadow-xs flex flex-col gap-(--spacing-s5)">
+        <h2 className="font-bold text-(--font-size-step-1) text-(--color-ink-900)">
           Export Configuration
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-[--spacing-s4]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-(--spacing-s4)">
           <FieldWrapper id="stage" label="Filter by Stage">
             <Select id="stage" value={stage} onChange={(e) => setStage(e.target.value)}>
               <option value="">All Pipeline Stages</option>
@@ -65,8 +65,8 @@ export default function ConsoleExportsPage() {
           </FieldWrapper>
         </div>
 
-        <div className="bg-[--color-marigold]/10 p-3 rounded-[--radius-sm] border border-[--color-marigold]/20 text-[--font-size-step--2] text-[--color-graphite]">
-          <span className="font-bold text-[--color-ink-900] block mb-1">
+        <div className="bg-(--color-marigold)/10 p-3 rounded-(--radius-sm) border border-(--color-marigold)/20 text-(--font-size-step--2) text-(--color-graphite)">
+          <span className="font-bold text-(--color-ink-900) block mb-1">
             ⚖️ DPDP Act Retention Policy Notice:
           </span>
           Exported records are subject to 24-month retention limits. Do not store PII on unencrypted

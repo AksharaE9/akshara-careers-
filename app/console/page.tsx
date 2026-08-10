@@ -177,22 +177,22 @@ export default function PulseDashboardPage() {
       {/* Header & Live Timestamp */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <span className="font-mono text-[--font-size-step--2] uppercase text-[--color-graphite] tracking-wider font-semibold">
+          <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) tracking-wider font-semibold">
             System Overview · Real-Time
           </span>
-          <h1 className="text-[--font-size-step-2] font-bold text-[--color-ink-900] tracking-tight">
+          <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             Operations Pulse
           </h1>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-[--font-size-step--2] font-mono text-[--color-graphite]">
-            Last updated <strong className="text-[--color-ink-900]">{secondsAgo}s ago</strong>
+          <span className="text-(--font-size-step--2) font-mono text-(--color-graphite)">
+            Last updated <strong className="text-(--color-ink-900)">{secondsAgo}s ago</strong>
           </span>
           <button
             type="button"
             onClick={fetchPulse}
-            className="px-2.5 py-1 bg-white border border-[--color-ink-900]/15 rounded text-[--font-size-step--2] font-mono hover:bg-[--color-ink-900]/5 text-[--color-ink-900]"
+            className="px-2.5 py-1 bg-white border border-(--color-ink-900)/15 rounded text-(--font-size-step--2) font-mono hover:bg-(--color-ink-900)/5 text-(--color-ink-900)"
           >
             Refresh ⟳
           </button>
@@ -204,16 +204,16 @@ export default function PulseDashboardPage() {
         {/* 1. Applications */}
         <div
           data-testid="pulse-tile-applications"
-          className="bg-white border border-[--color-ink-900]/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
+          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
         >
-          <span className="text-[--font-size-step--2] font-medium text-[--color-graphite]">Applications</span>
+          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Applications</span>
           <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-[--font-size-step-2] font-mono font-bold tabular-nums text-[--color-ink-900]">
+            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
               {data.kpis.applications.value}
             </span>
             <MiniSparkline data={data.kpis.applications.sparkline} />
           </div>
-          <span className="text-[--font-size-step--2] font-mono text-[--color-leaf] font-medium">
+          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
             {data.kpis.applications.delta} vs prev 7d
           </span>
         </div>
@@ -221,16 +221,16 @@ export default function PulseDashboardPage() {
         {/* 2. Conversion Rate */}
         <div
           data-testid="pulse-tile-conversion"
-          className="bg-white border border-[--color-ink-900]/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
+          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
         >
-          <span className="text-[--font-size-step--2] font-medium text-[--color-graphite]">Start &rarr; Submit</span>
+          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Start &rarr; Submit</span>
           <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-[--font-size-step-2] font-mono font-bold tabular-nums text-[--color-ink-900]">
+            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
               {data.kpis.applyConversionRate.value}
             </span>
             <MiniSparkline data={data.kpis.applyConversionRate.sparkline} color="#059669" />
           </div>
-          <span className="text-[--font-size-step--2] font-mono text-[--color-leaf] font-medium">
+          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
             {data.kpis.applyConversionRate.delta} vs prev 7d
           </span>
         </div>
@@ -238,16 +238,16 @@ export default function PulseDashboardPage() {
         {/* 3. Unique Visitors */}
         <div
           data-testid="pulse-tile-visitors"
-          className="bg-white border border-[--color-ink-900]/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
+          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
         >
-          <span className="text-[--font-size-step--2] font-medium text-[--color-graphite]">Unique Visitors</span>
+          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Unique Visitors</span>
           <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-[--font-size-step-2] font-mono font-bold tabular-nums text-[--color-ink-900]">
+            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
               {data.kpis.uniqueVisitors.value}
             </span>
             <MiniSparkline data={data.kpis.uniqueVisitors.sparkline} color="#2563eb" />
           </div>
-          <span className="text-[--font-size-step--2] font-mono text-[--color-leaf] font-medium">
+          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
             {data.kpis.uniqueVisitors.delta} vs prev 7d
           </span>
         </div>
@@ -255,16 +255,16 @@ export default function PulseDashboardPage() {
         {/* 4. Job Views */}
         <div
           data-testid="pulse-tile-views"
-          className="bg-white border border-[--color-ink-900]/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
+          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
         >
-          <span className="text-[--font-size-step--2] font-medium text-[--color-graphite]">Job Views</span>
+          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Job Views</span>
           <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-[--font-size-step-2] font-mono font-bold tabular-nums text-[--color-ink-900]">
+            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
               {data.kpis.jobViews.value}
             </span>
             <MiniSparkline data={data.kpis.jobViews.sparkline} color="#7c3aed" />
           </div>
-          <span className="text-[--font-size-step--2] font-mono text-[--color-leaf] font-medium">
+          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
             {data.kpis.jobViews.delta} vs prev 7d
           </span>
         </div>
@@ -272,16 +272,16 @@ export default function PulseDashboardPage() {
         {/* 5. Avg Time */}
         <div
           data-testid="pulse-tile-avgtime"
-          className="bg-white border border-[--color-ink-900]/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
+          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
         >
-          <span className="text-[--font-size-step--2] font-medium text-[--color-graphite]">Avg. Completion</span>
+          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Avg. Completion</span>
           <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-[--font-size-step-2] font-mono font-bold tabular-nums text-[--color-ink-900]">
+            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
               {data.kpis.avgTimeToComplete.value}
             </span>
             <MiniSparkline data={data.kpis.avgTimeToComplete.sparkline} color="#0d9488" />
           </div>
-          <span className="text-[--font-size-step--2] font-mono text-[--color-leaf] font-medium">
+          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
             {data.kpis.avgTimeToComplete.delta}
           </span>
         </div>
@@ -289,34 +289,34 @@ export default function PulseDashboardPage() {
         {/* 6. Resume Upload Success */}
         <div
           data-testid="pulse-tile-resume"
-          className="bg-white border border-[--color-ink-900]/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
+          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
         >
-          <span className="text-[--font-size-step--2] font-medium text-[--color-graphite]">Resume Uploads</span>
+          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Resume Uploads</span>
           <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-[--font-size-step-2] font-mono font-bold tabular-nums text-[--color-ink-900]">
+            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
               {data.kpis.resumeSuccessRate.value}
             </span>
             <MiniSparkline data={data.kpis.resumeSuccessRate.sparkline} color="#16a34a" />
           </div>
-          <span className="text-[--font-size-step--2] font-mono text-[--color-leaf] font-medium">
+          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
             {data.kpis.resumeSuccessRate.delta}
           </span>
         </div>
       </div>
 
       {/* Row 2 — Applications Over Time & Breakdown */}
-      <div className="bg-white border border-[--color-ink-900]/10 rounded-xl p-4 shadow-xs">
+      <div className="bg-white border border-(--color-ink-900)/10 rounded-xl p-4 shadow-xs">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-[--font-size-step-0] font-bold text-[--color-ink-900]">
+            <h2 className="text-(--font-size-step-0) font-bold text-(--color-ink-900)">
               Application Velocity by Channel
             </h2>
-            <p className="text-[--font-size-step--2] text-[--color-graphite]">
+            <p className="text-(--font-size-step--2) text-(--color-graphite)">
               Volume breakdown across Campus Drives, Organic Search, Referrals & Direct QR
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[--font-size-step--2] font-mono font-semibold px-2 py-0.5 rounded bg-[--color-marigold]/15 text-[--color-ink-900]">
+            <span className="text-(--font-size-step--2) font-mono font-semibold px-2 py-0.5 rounded bg-(--color-marigold)/15 text-(--color-ink-900)">
               Daily View
             </span>
           </div>
@@ -325,56 +325,56 @@ export default function PulseDashboardPage() {
         {/* Visual Channel Breakdown Bars */}
         <div className="space-y-3 pt-2">
           <div className="space-y-1">
-            <div className="flex justify-between text-[--font-size-step--2] font-mono">
-              <span className="font-medium text-[--color-ink-900]">🎓 Campus Drives (QR & Code)</span>
-              <span className="text-[--color-graphite] tabular-nums font-bold">58% · {Math.round(data.kpis.applications.value * 0.58)} apps</span>
+            <div className="flex justify-between text-(--font-size-step--2) font-mono">
+              <span className="font-medium text-(--color-ink-900)">🎓 Campus Drives (QR & Code)</span>
+              <span className="text-(--color-graphite) tabular-nums font-bold">58% · {Math.round(data.kpis.applications.value * 0.58)} apps</span>
             </div>
-            <div className="h-3 bg-[--color-ink-900]/5 rounded-full overflow-hidden">
-              <div className="h-full bg-[--color-marigold] rounded-full" style={{ width: '58%' }} />
+            <div className="h-3 bg-(--color-ink-900)/5 rounded-full overflow-hidden">
+              <div className="h-full bg-(--color-marigold) rounded-full" style={{ width: '58%' }} />
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-[--font-size-step--2] font-mono">
-              <span className="font-medium text-[--color-ink-900]">🔍 Organic Search & Direct</span>
-              <span className="text-[--color-graphite] tabular-nums font-bold">27% · {Math.round(data.kpis.applications.value * 0.27)} apps</span>
+            <div className="flex justify-between text-(--font-size-step--2) font-mono">
+              <span className="font-medium text-(--color-ink-900)">🔍 Organic Search & Direct</span>
+              <span className="text-(--color-graphite) tabular-nums font-bold">27% · {Math.round(data.kpis.applications.value * 0.27)} apps</span>
             </div>
-            <div className="h-3 bg-[--color-ink-900]/5 rounded-full overflow-hidden">
+            <div className="h-3 bg-(--color-ink-900)/5 rounded-full overflow-hidden">
               <div className="h-full bg-blue-600 rounded-full" style={{ width: '27%' }} />
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-[--font-size-step--2] font-mono">
-              <span className="font-medium text-[--color-ink-900]">🤝 Employee & Student Referral</span>
-              <span className="text-[--color-graphite] tabular-nums font-bold">15% · {Math.round(data.kpis.applications.value * 0.15)} apps</span>
+            <div className="flex justify-between text-(--font-size-step--2) font-mono">
+              <span className="font-medium text-(--color-ink-900)">🤝 Employee & Student Referral</span>
+              <span className="text-(--color-graphite) tabular-nums font-bold">15% · {Math.round(data.kpis.applications.value * 0.15)} apps</span>
             </div>
-            <div className="h-3 bg-[--color-ink-900]/5 rounded-full overflow-hidden">
+            <div className="h-3 bg-(--color-ink-900)/5 rounded-full overflow-hidden">
               <div className="h-full bg-purple-600 rounded-full" style={{ width: '15%' }} />
             </div>
           </div>
         </div>
 
         {/* Accessible Data Table Alternative (§14.21) */}
-        <details className="mt-4 pt-3 border-t border-[--color-ink-900]/10 text-[--font-size-step--2]">
-          <summary className="cursor-pointer text-[--color-graphite] hover:text-[--color-ink-900] font-mono">
+        <details className="mt-4 pt-3 border-t border-(--color-ink-900)/10 text-(--font-size-step--2)">
+          <summary className="cursor-pointer text-(--color-graphite) hover:text-(--color-ink-900) font-mono">
             View Accessible Data Table
           </summary>
           <table className="w-full mt-2 text-left border-collapse">
             <thead>
-              <tr className="border-b border-[--color-ink-900]/10 text-[--color-graphite]">
+              <tr className="border-b border-(--color-ink-900)/10 text-(--color-graphite)">
                 <th className="py-1">Channel</th>
                 <th className="py-1">Share</th>
                 <th className="py-1 text-right">Volume</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b border-[--color-ink-900]/5">
+              <tr className="border-b border-(--color-ink-900)/5">
                 <td className="py-1">Campus Drives</td>
                 <td className="py-1">58%</td>
                 <td className="py-1 text-right font-mono tabular-nums">{Math.round(data.kpis.applications.value * 0.58)}</td>
               </tr>
-              <tr className="border-b border-[--color-ink-900]/5">
+              <tr className="border-b border-(--color-ink-900)/5">
                 <td className="py-1">Organic Search</td>
                 <td className="py-1">27%</td>
                 <td className="py-1 text-right font-mono tabular-nums">{Math.round(data.kpis.applications.value * 0.27)}</td>
@@ -394,35 +394,35 @@ export default function PulseDashboardPage() {
         {/* Panel 1: Live Activity Feed */}
         <div
           data-testid="live-feed"
-          className="bg-white border border-[--color-ink-900]/10 rounded-xl p-4 shadow-xs flex flex-col h-[340px]"
+          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-4 shadow-xs flex flex-col h-[340px]"
         >
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-[--font-size-step-0] font-bold text-[--color-ink-900]">
+            <h2 className="text-(--font-size-step-0) font-bold text-(--color-ink-900)">
               Live Activity Stream
             </h2>
-            <span className="w-2 h-2 rounded-full bg-[--color-leaf] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-(--color-leaf) animate-pulse" />
           </div>
 
-          <div className="flex-1 overflow-y-auto space-y-2.5 pr-1 divide-y divide-[--color-ink-900]/5">
+          <div className="flex-1 overflow-y-auto space-y-2.5 pr-1 divide-y divide-(--color-ink-900)/5">
             {data.liveFeed.length === 0 ? (
-              <p className="text-[--font-size-step--1] text-[--color-graphite] py-8 text-center">No activity recorded yet.</p>
+              <p className="text-(--font-size-step--1) text-(--color-graphite) py-8 text-center">No activity recorded yet.</p>
             ) : (
               data.liveFeed.map((item) => (
                 <div
                   key={item.id}
                   data-testid="live-feed-row"
-                  className="pt-2 first:pt-0 flex flex-col text-[--font-size-step--1]"
+                  className="pt-2 first:pt-0 flex flex-col text-(--font-size-step--1)"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-[--color-ink-900]">{item.candidateName}</span>
-                    <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">
+                    <span className="font-semibold text-(--color-ink-900)">{item.candidateName}</span>
+                    <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">
                       {new Date(item.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
-                  <span className="text-[--font-size-step--2] text-[--color-graphite]">
-                    Applied for <strong className="text-[--color-ink-900]">{item.jobTitle}</strong>
+                  <span className="text-(--font-size-step--2) text-(--color-graphite)">
+                    Applied for <strong className="text-(--color-ink-900)">{item.jobTitle}</strong>
                   </span>
-                  <span className="text-[--font-size-step--2] text-[--color-ink-400] truncate">
+                  <span className="text-(--font-size-step--2) text-(--color-ink-400) truncate">
                     🏛️ {item.collegeName}
                   </span>
                 </div>
@@ -432,17 +432,17 @@ export default function PulseDashboardPage() {
         </div>
 
         {/* Panel 2: Pipeline Funnel Snapshot */}
-        <div className="bg-white border border-[--color-ink-900]/10 rounded-xl p-4 shadow-xs flex flex-col justify-between">
+        <div className="bg-white border border-(--color-ink-900)/10 rounded-xl p-4 shadow-xs flex flex-col justify-between">
           <div>
-            <h2 className="text-[--font-size-step-0] font-bold text-[--color-ink-900] mb-1">
+            <h2 className="text-(--font-size-step-0) font-bold text-(--color-ink-900) mb-1">
               Active Pipeline Snapshot
             </h2>
-            <p className="text-[--font-size-step--2] text-[--color-graphite] mb-4">
+            <p className="text-(--font-size-step--2) text-(--color-graphite) mb-4">
               Current candidate distribution across hiring stages
             </p>
 
             {/* Funnel Progress Distribution Bar */}
-            <div className="h-4 w-full bg-[--color-ink-900]/5 rounded-full overflow-hidden flex mb-4">
+            <div className="h-4 w-full bg-(--color-ink-900)/5 rounded-full overflow-hidden flex mb-4">
               {stagesList.map((st) => {
                 const count = data.pipelineSnapshot[st.key] || 0
                 const widthPct = (count / totalPipeline) * 100
@@ -459,20 +459,20 @@ export default function PulseDashboardPage() {
             </div>
 
             {/* Stage Breakdown Grid */}
-            <div className="grid grid-cols-2 gap-2 text-[--font-size-step--1]">
+            <div className="grid grid-cols-2 gap-2 text-(--font-size-step--1)">
               {stagesList.map((st) => {
                 const count = data.pipelineSnapshot[st.key] || 0
                 return (
                   <Link
                     key={st.key}
                     href={`/console/applications?stage=${st.key}`}
-                    className="p-2 rounded-lg bg-[--color-chalk] hover:bg-[--color-marigold]/10 flex items-center justify-between transition-colors border border-[--color-ink-900]/5"
+                    className="p-2 rounded-lg bg-(--color-chalk) hover:bg-(--color-marigold)/10 flex items-center justify-between transition-colors border border-(--color-ink-900)/5"
                   >
                     <div className="flex items-center gap-2">
                       <div className={`w-2.5 h-2.5 rounded-full ${st.color}`} />
-                      <span className="text-[--color-graphite] font-medium">{st.label}</span>
+                      <span className="text-(--color-graphite) font-medium">{st.label}</span>
                     </div>
-                    <span className="font-mono font-bold text-[--color-ink-900] tabular-nums">
+                    <span className="font-mono font-bold text-(--color-ink-900) tabular-nums">
                       {count}
                     </span>
                   </Link>
@@ -483,43 +483,43 @@ export default function PulseDashboardPage() {
 
           <Link
             href="/console/applications"
-            className="mt-4 text-center py-2 rounded-lg bg-[--color-ink-900]/5 hover:bg-[--color-ink-900]/10 text-[--font-size-step--1] font-medium text-[--color-ink-900] transition-colors"
+            className="mt-4 text-center py-2 rounded-lg bg-(--color-ink-900)/5 hover:bg-(--color-ink-900)/10 text-(--font-size-step--1) font-medium text-(--color-ink-900) transition-colors"
           >
             Open Kanban Pipeline &rarr;
           </Link>
         </div>
 
         {/* Panel 3: Today's Drives */}
-        <div className="bg-white border border-[--color-ink-900]/10 rounded-xl p-4 shadow-xs flex flex-col justify-between">
+        <div className="bg-white border border-(--color-ink-900)/10 rounded-xl p-4 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <h2 className="text-[--font-size-step-0] font-bold text-[--color-ink-900]">
+              <h2 className="text-(--font-size-step-0) font-bold text-(--color-ink-900)">
                 Campus Hiring Drives
               </h2>
-              <Link href="/console/drives" className="text-[--font-size-step--2] text-[--color-marigold] underline font-medium">
+              <Link href="/console/drives" className="text-(--font-size-step--2) text-(--color-marigold) underline font-medium">
                 Manage
               </Link>
             </div>
-            <p className="text-[--font-size-step--2] text-[--color-graphite] mb-3">
+            <p className="text-(--font-size-step--2) text-(--color-graphite) mb-3">
               Active schedules, QR allocations & attendance
             </p>
 
             <div className="space-y-2.5">
               {data.liveDrives.length === 0 ? (
-                <div className="p-6 text-center text-[--font-size-step--1] text-[--color-graphite]">
+                <div className="p-6 text-center text-(--font-size-step--1) text-(--color-graphite)">
                   No live drives scheduled today.
                 </div>
               ) : (
                 data.liveDrives.slice(0, 3).map((drv) => (
-                  <div key={drv.id} className="p-2.5 rounded-lg border border-[--color-ink-900]/10 bg-[--color-chalk] text-[--font-size-step--1]">
+                  <div key={drv.id} className="p-2.5 rounded-lg border border-(--color-ink-900)/10 bg-(--color-chalk) text-(--font-size-step--1)">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono font-bold text-[--color-ink-900]">{drv.code}</span>
-                      <span className="font-mono text-[--font-size-step--2] px-1.5 py-0.5 rounded bg-[--color-leaf]/15 text-[--color-leaf] font-bold uppercase">
+                      <span className="font-mono font-bold text-(--color-ink-900)">{drv.code}</span>
+                      <span className="font-mono text-(--font-size-step--2) px-1.5 py-0.5 rounded bg-(--color-leaf)/15 text-(--color-leaf) font-bold uppercase">
                         {drv.status}
                       </span>
                     </div>
-                    <p className="font-medium text-[--color-ink-900] truncate mt-0.5">{drv.collegeName}</p>
-                    <div className="flex items-center justify-between text-[--font-size-step--2] text-[--color-graphite] mt-1 font-mono">
+                    <p className="font-medium text-(--color-ink-900) truncate mt-0.5">{drv.collegeName}</p>
+                    <div className="flex items-center justify-between text-(--font-size-step--2) text-(--color-graphite) mt-1 font-mono">
                       <span>Seats: {drv.seats || 50}</span>
                       <span>QR Scans: {drv.viewCount || 0}</span>
                     </div>
@@ -531,7 +531,7 @@ export default function PulseDashboardPage() {
 
           <Link
             href="/console/insight/drives"
-            className="mt-4 text-center py-2 rounded-lg bg-[--color-ink-900]/5 hover:bg-[--color-ink-900]/10 text-[--font-size-step--1] font-medium text-[--color-ink-900] transition-colors"
+            className="mt-4 text-center py-2 rounded-lg bg-(--color-ink-900)/5 hover:bg-(--color-ink-900)/10 text-(--font-size-step--1) font-medium text-(--color-ink-900) transition-colors"
           >
             View Drives Analytics &rarr;
           </Link>
@@ -539,13 +539,13 @@ export default function PulseDashboardPage() {
       </div>
 
       {/* Row 4 — Attention Required (§14.5) */}
-      <div className="bg-white border border-[--color-ink-900]/10 rounded-xl p-4 shadow-xs">
-        <h2 className="text-[--font-size-step-0] font-bold text-[--color-ink-900] mb-2 flex items-center gap-2">
+      <div className="bg-white border border-(--color-ink-900)/10 rounded-xl p-4 shadow-xs">
+        <h2 className="text-(--font-size-step-0) font-bold text-(--color-ink-900) mb-2 flex items-center gap-2">
           <span>🚨</span> Attention Required
         </h2>
 
         {data.attentionItems.length === 0 ? (
-          <p className="text-[--font-size-step--1] text-[--color-leaf] font-medium py-2">
+          <p className="text-(--font-size-step--1) text-(--color-leaf) font-medium py-2">
             ✓ Nothing needs attention. All systems, drives, and data pipelines are healthy.
           </p>
         ) : (
@@ -556,21 +556,21 @@ export default function PulseDashboardPage() {
                 data-testid={`pulse-attention-${item.severity}`}
                 className={`p-3 rounded-lg flex items-center justify-between border ${
                   item.severity === 'P1'
-                    ? 'bg-[--color-kumkum]/10 border-[--color-kumkum]/20 text-[--color-kumkum]'
+                    ? 'bg-(--color-kumkum)/10 border-(--color-kumkum)/20 text-(--color-kumkum)'
                     : item.severity === 'P2'
                     ? 'bg-amber-50 border-amber-200 text-amber-900'
                     : 'bg-blue-50 border-blue-200 text-blue-900'
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-mono font-bold text-[--font-size-step--2] px-1.5 py-0.5 rounded bg-white/60">
+                  <span className="font-mono font-bold text-(--font-size-step--2) px-1.5 py-0.5 rounded bg-white/60">
                     {item.severity}
                   </span>
-                  <span className="text-[--font-size-step--1] font-medium">{item.message}</span>
+                  <span className="text-(--font-size-step--1) font-medium">{item.message}</span>
                 </div>
                 <Link
                   href={item.href}
-                  className="text-[--font-size-step--1] font-semibold underline ml-4 hover:opacity-80"
+                  className="text-(--font-size-step--1) font-semibold underline ml-4 hover:opacity-80"
                 >
                   Resolve &rarr;
                 </Link>

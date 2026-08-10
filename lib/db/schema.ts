@@ -382,10 +382,17 @@ export const applications = pgTable(
     index('apps_stage_submitted').on(t.stage, t.submittedAt),
     index('apps_job').on(t.jobId, t.submittedAt),
     index('apps_drive').on(t.driveId),
-    // Block same candidate + same role within 90 days, unless withdrawn (D7)
-    // NOTE: Postgres partial indexes with expressions are defined in the migration SQL,
-    // not in Drizzle schema (Drizzle does not support WHERE clauses on indexes natively).
-    // See migration 0001.
+    // D7 guard: blocks more than one ACTIVE (non-withdrawn, non-duplicate)
+    // application per candidate+job pair — see migration 0002 for the actual
+    // CREATE UNIQUE INDEX (Drizzle doesn't support WHERE clauses on indexes
+    // natively, so it's hand-written SQL, not declared here).
+    //
+    // NOTE: this is NOT the 90-day rolling window the original design
+    // intended — Postgres index predicates must be IMMUTABLE and can't call
+    // now()/interval arithmetic, so "expires after 90 days" can't live in an
+    // index. This enforces "never more than one active application" instead,
+    // which is a superset of the 90-day protection. A true rolling window
+    // needs a BEFORE INSERT trigger or application-layer enforcement.
     check(
       'apps_academic_status_check',
       sql`${t.academicStatus} IN ('sem_1','sem_2','sem_3','sem_4','sem_5','sem_6','sem_7','sem_8','final_year_results_awaited','graduated')`,

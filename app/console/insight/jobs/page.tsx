@@ -55,10 +55,10 @@ export default function JobsPerformancePage() {
       header: 'Job Title & Family',
       accessor: (row) => (
         <div className="flex flex-col">
-          <Link href={`/careers/${row.slug}`} target="_blank" className="font-semibold text-[--color-ink-900] hover:underline">
+          <Link href={`/careers/${row.slug}`} target="_blank" className="font-semibold text-(--color-ink-900) hover:underline">
             {row.title}
           </Link>
-          <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">{row.family}</span>
+          <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">{row.family}</span>
         </div>
       ),
     },
@@ -71,21 +71,21 @@ export default function JobsPerformancePage() {
       id: 'viewToApply',
       header: 'View → Apply',
       accessor: (row) => (
-        <span className="font-mono font-semibold text-[--color-ink-900]">{row.viewToApply}</span>
+        <span className="font-mono font-semibold text-(--color-ink-900)">{row.viewToApply}</span>
       ),
     },
     {
       id: 'startToSubmit',
       header: 'Start → Submit',
       accessor: (row) => (
-        <span className="font-mono font-bold text-[--color-leaf]">{row.startToSubmit}</span>
+        <span className="font-mono font-bold text-(--color-leaf)">{row.startToSubmit}</span>
       ),
     },
     {
       id: 'submits',
       header: 'Applications',
       accessor: (row) => (
-        <span className="font-mono font-bold px-2 py-0.5 rounded bg-[--color-marigold]/15 text-[--color-ink-900]">
+        <span className="font-mono font-bold px-2 py-0.5 rounded bg-(--color-marigold)/15 text-(--color-ink-900)">
           {row.submits}
         </span>
       ),
@@ -95,7 +95,7 @@ export default function JobsPerformancePage() {
       header: 'Diagnostic Badge',
       accessor: (row) => (
         <span
-          className={`px-2 py-0.5 rounded text-[--font-size-step--2] font-mono font-medium ${
+          className={`px-2 py-0.5 rounded text-(--font-size-step--2) font-mono font-medium ${
             row.diagnosis.badgeType === 'warning'
               ? 'bg-amber-100 text-amber-900 border border-amber-300'
               : row.diagnosis.badgeType === 'info'
@@ -111,12 +111,12 @@ export default function JobsPerformancePage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[--color-ink-900]/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-(--color-ink-900)/10">
         <div>
-          <span className="font-mono text-[--font-size-step--2] uppercase text-[--color-graphite] font-semibold tracking-wider">
+          <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) font-semibold tracking-wider">
             Requisition Analytics
           </span>
-          <h1 className="text-[--font-size-step-2] font-bold text-[--color-ink-900] tracking-tight">
+          <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             Jobs Performance & Conversion
           </h1>
         </div>

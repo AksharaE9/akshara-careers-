@@ -51,7 +51,7 @@ export default function AuditLogPage() {
       id: 'createdAt',
       header: 'Timestamp',
       accessor: (row) => (
-        <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">
+        <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">
           {new Date(row.createdAt).toLocaleString()}
         </span>
       ),
@@ -61,8 +61,8 @@ export default function AuditLogPage() {
       header: 'Actor',
       accessor: (row) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-[--color-ink-900]">{row.actorName || 'System'}</span>
-          <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">{row.actorEmail || 'automated'}</span>
+          <span className="font-semibold text-(--color-ink-900)">{row.actorName || 'System'}</span>
+          <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">{row.actorEmail || 'automated'}</span>
         </div>
       ),
     },
@@ -70,7 +70,7 @@ export default function AuditLogPage() {
       id: 'action',
       header: 'Action',
       accessor: (row) => (
-        <span className="font-mono font-bold text-[--font-size-step--2] px-2 py-0.5 rounded bg-[--color-marigold]/15 text-[--color-ink-900]">
+        <span className="font-mono font-bold text-(--font-size-step--2) px-2 py-0.5 rounded bg-(--color-marigold)/15 text-(--color-ink-900)">
           {row.action}
         </span>
       ),
@@ -79,7 +79,7 @@ export default function AuditLogPage() {
       id: 'entity',
       header: 'Target Entity',
       accessor: (row) => (
-        <span className="font-mono text-[--font-size-step--2] text-[--color-ink-900]">
+        <span className="font-mono text-(--font-size-step--2) text-(--color-ink-900)">
           {row.entityType} {row.entityId ? `(${row.entityId.substring(0, 8)}…)` : ''}
         </span>
       ),
@@ -92,7 +92,7 @@ export default function AuditLogPage() {
           type="button"
           data-testid="audit-diff"
           onClick={() => setSelectedDiff(row)}
-          className="px-2 py-1 rounded bg-[--color-ink-900]/5 hover:bg-[--color-ink-900]/10 text-[--font-size-step--2] font-mono font-semibold"
+          className="px-2 py-1 rounded bg-(--color-ink-900)/5 hover:bg-(--color-ink-900)/10 text-(--font-size-step--2) font-mono font-semibold"
         >
           View JSON Diff &rarr;
         </button>
@@ -102,12 +102,12 @@ export default function AuditLogPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[--color-ink-900]/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-(--color-ink-900)/10">
         <div>
-          <span className="font-mono text-[--font-size-step--2] uppercase text-[--color-graphite] font-semibold tracking-wider">
+          <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) font-semibold tracking-wider">
             DPDP Compliance · Immutable Ledger
           </span>
-          <h1 className="text-[--font-size-step-2] font-bold text-[--color-ink-900] tracking-tight">
+          <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             System Audit Trail
           </h1>
         </div>
@@ -124,25 +124,25 @@ export default function AuditLogPage() {
       {/* JSON Diff Modal */}
       {selectedDiff && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
-          <div className="w-full max-w-2xl bg-white border border-[--color-ink-900]/10 rounded-xl p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-[--color-ink-900]/10 pb-3">
+          <div className="w-full max-w-2xl bg-white border border-(--color-ink-900)/10 rounded-xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-(--color-ink-900)/10 pb-3">
               <div>
-                <h2 className="text-[--font-size-step-1] font-bold text-[--color-ink-900]">Mutation Diff Inspection</h2>
-                <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">Action: {selectedDiff.action}</span>
+                <h2 className="text-(--font-size-step-1) font-bold text-(--color-ink-900)">Mutation Diff Inspection</h2>
+                <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">Action: {selectedDiff.action}</span>
               </div>
               <button type="button" onClick={() => setSelectedDiff(null)} className="text-xl">×</button>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 font-mono text-[--font-size-step--2]">
+            <div className="grid grid-cols-2 gap-3 font-mono text-(--font-size-step--2)">
               <div>
-                <span className="font-bold text-[--color-graphite] block mb-1">Before State</span>
-                <pre className="p-3 rounded-lg bg-[--color-chalk] border border-[--color-ink-900]/10 overflow-x-auto max-h-60">
+                <span className="font-bold text-(--color-graphite) block mb-1">Before State</span>
+                <pre className="p-3 rounded-lg bg-(--color-chalk) border border-(--color-ink-900)/10 overflow-x-auto max-h-60">
                   {JSON.stringify(selectedDiff.before || {}, null, 2)}
                 </pre>
               </div>
               <div>
-                <span className="font-bold text-[--color-leaf] block mb-1">After State</span>
-                <pre className="p-3 rounded-lg bg-[--color-chalk] border border-[--color-ink-900]/10 overflow-x-auto max-h-60">
+                <span className="font-bold text-(--color-leaf) block mb-1">After State</span>
+                <pre className="p-3 rounded-lg bg-(--color-chalk) border border-(--color-ink-900)/10 overflow-x-auto max-h-60">
                   {JSON.stringify(selectedDiff.after || {}, null, 2)}
                 </pre>
               </div>
@@ -152,7 +152,7 @@ export default function AuditLogPage() {
               <button
                 type="button"
                 onClick={() => setSelectedDiff(null)}
-                className="px-4 py-1.5 bg-[--color-ink-900] text-white rounded-lg text-[--font-size-step--1]"
+                className="px-4 py-1.5 bg-(--color-ink-900) text-white rounded-lg text-(--font-size-step--1)"
               >
                 Close Diff
               </button>

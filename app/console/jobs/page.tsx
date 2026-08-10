@@ -124,12 +124,12 @@ export default function ConsoleJobsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-[--spacing-s6]">
+    <div className="flex flex-col gap-(--spacing-s6)">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-[--spacing-s4]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-(--spacing-s4)">
         <div>
-          <span className="eyebrow text-[--color-marigold]">Requisitions</span>
-          <h1 className="display text-[--font-size-step-3] font-bold text-[--color-ink-900]">
+          <span className="eyebrow text-(--color-marigold)">Requisitions</span>
+          <h1 className="display text-(--font-size-step-3) font-bold text-(--color-ink-900)">
             Job Openings Manager
           </h1>
         </div>
@@ -144,10 +144,10 @@ export default function ConsoleJobsPage() {
       </div>
 
       {/* Jobs Table */}
-      <Card className="overflow-hidden bg-[--color-chalk] border border-[--color-ink-900]/10 shadow-xs">
+      <Card className="overflow-hidden bg-(--color-chalk) border border-(--color-ink-900)/10 shadow-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-[--font-size-step--1]">
-            <thead className="bg-[--color-ink-900]/4 border-b border-[--color-ink-900]/10 font-mono text-[--font-size-step--2] uppercase tracking-wider text-[--color-graphite]">
+          <table className="w-full text-left text-(--font-size-step--1)">
+            <thead className="bg-(--color-ink-900)/4 border-b border-(--color-ink-900)/10 font-mono text-(--font-size-step--2) uppercase tracking-wider text-(--color-graphite)">
               <tr>
                 <th className="py-3 px-4">Title & Family</th>
                 <th className="py-3 px-4">Location</th>
@@ -158,26 +158,26 @@ export default function ConsoleJobsPage() {
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-ink-900]/5">
+            <tbody className="divide-y divide-(--color-ink-900)/5">
               {jobs.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-8 text-center text-[--color-ink-400] italic">
+                  <td colSpan={7} className="py-8 text-center text-(--color-ink-400) italic">
                     {loading ? 'Loading job postings...' : 'No job openings created.'}
                   </td>
                 </tr>
               ) : (
                 jobs.map((j) => (
-                  <tr key={j.id} className="hover:bg-[--color-ink-900]/2 transition-colors">
+                  <tr key={j.id} className="hover:bg-(--color-ink-900)/2 transition-colors">
                     <td className="py-3 px-4">
-                      <div className="font-bold text-[--color-ink-900]">{j.title}</div>
-                      <div className="text-[--font-size-step--2] text-[--color-ink-400] font-mono">
+                      <div className="font-bold text-(--color-ink-900)">{j.title}</div>
+                      <div className="text-(--font-size-step--2) text-(--color-ink-400) font-mono">
                         {j.family} · /{j.slug}
                       </div>
                     </td>
-                    <td className="py-3 px-4 font-medium text-[--color-graphite]">
+                    <td className="py-3 px-4 font-medium text-(--color-graphite)">
                       {j.locationCity}
                     </td>
-                    <td className="py-3 px-4 font-mono text-[--font-size-step--2]">
+                    <td className="py-3 px-4 font-mono text-(--font-size-step--2)">
                       {j.salaryMin && j.salaryMax
                         ? `₹${(j.salaryMin / 100000).toFixed(1)}L - ₹${(j.salaryMax / 100000).toFixed(1)}L`
                         : 'Not public'}
@@ -189,7 +189,7 @@ export default function ConsoleJobsPage() {
                       <select
                         value={j.status}
                         onChange={(e) => handleStatusChange(j.id, e.target.value)}
-                        className={`text-[--font-size-step--2] font-mono font-bold uppercase rounded px-2 py-1 border ${
+                        className={`text-(--font-size-step--2) font-mono font-bold uppercase rounded px-2 py-1 border ${
                           j.status === 'open'
                             ? 'bg-emerald-500/10 text-emerald-800 border-emerald-300'
                             : j.status === 'draft'
@@ -203,14 +203,14 @@ export default function ConsoleJobsPage() {
                         <option value="closed">CLOSED</option>
                       </select>
                     </td>
-                    <td className="py-3 px-4 text-[--font-size-step--2] text-[--color-ink-400] font-mono">
+                    <td className="py-3 px-4 text-(--font-size-step--2) text-(--color-ink-400) font-mono">
                       {j.postedAt ? new Date(j.postedAt).toLocaleDateString() : 'Unpublished'}
                     </td>
                     <td className="py-3 px-4 text-right">
                       <Link
                         href={`/careers/${j.slug}`}
                         target="_blank"
-                        className="text-[--font-size-step--2] font-semibold text-[--color-marigold] hover:underline"
+                        className="text-(--font-size-step--2) font-semibold text-(--color-marigold) hover:underline"
                       >
                         Public Page &rarr;
                       </Link>
@@ -226,21 +226,21 @@ export default function ConsoleJobsPage() {
       {/* Create Job Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4 backdrop-blur-xs">
-          <Card className="w-full max-w-xl p-[--spacing-s6] bg-[--color-chalk] border border-[--color-ink-900]/20 shadow-2xl flex flex-col gap-[--spacing-s5]">
-            <div className="flex items-center justify-between border-b border-[--color-ink-900]/10 pb-3">
-              <h2 className="font-bold text-[--font-size-step-1] text-[--color-ink-900]">
+          <Card className="w-full max-w-xl p-(--spacing-s6) bg-(--color-chalk) border border-(--color-ink-900)/20 shadow-2xl flex flex-col gap-(--spacing-s5)">
+            <div className="flex items-center justify-between border-b border-(--color-ink-900)/10 pb-3">
+              <h2 className="font-bold text-(--font-size-step-1) text-(--color-ink-900)">
                 Create New Job Requisition
               </h2>
               <button
                 type="button"
                 onClick={() => setShowCreateModal(false)}
-                className="text-[--color-ink-400] hover:text-[--color-ink-900] font-bold text-[--font-size-step-1]"
+                className="text-(--color-ink-400) hover:text-(--color-ink-900) font-bold text-(--font-size-step-1)"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleCreateJob} className="flex flex-col gap-[--spacing-s4]">
+            <form onSubmit={handleCreateJob} className="flex flex-col gap-(--spacing-s4)">
               <FieldWrapper id="title" label="Job Title" required>
                 <Input
                   id="title"
@@ -251,7 +251,7 @@ export default function ConsoleJobsPage() {
                 />
               </FieldWrapper>
 
-              <div className="grid grid-cols-2 gap-[--spacing-s3]">
+              <div className="grid grid-cols-2 gap-(--spacing-s3)">
                 <FieldWrapper id="slug" label="URL Slug" required>
                   <Input
                     id="slug"
@@ -287,7 +287,7 @@ export default function ConsoleJobsPage() {
                 />
               </FieldWrapper>
 
-              <div className="grid grid-cols-2 gap-[--spacing-s3]">
+              <div className="grid grid-cols-2 gap-(--spacing-s3)">
                 <FieldWrapper id="salaryMin" label="Min CTC (₹)">
                   <Input
                     id="salaryMin"
@@ -307,7 +307,7 @@ export default function ConsoleJobsPage() {
                 </FieldWrapper>
               </div>
 
-              <div className="flex justify-end gap-[--spacing-s2] mt-2">
+              <div className="flex justify-end gap-(--spacing-s2) mt-2">
                 <Button
                   variant="secondary"
                   type="button"

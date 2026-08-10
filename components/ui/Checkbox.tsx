@@ -22,7 +22,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const hintId = hint ? `${id}-hint` : undefined
 
     return (
-      <div className="flex items-start gap-[--spacing-s3]">
+      <div className="flex items-start gap-(--spacing-s3)">
         <div className="relative flex items-center h-6">
           <input
             ref={ref}
@@ -32,14 +32,14 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             aria-invalid={error ? true : undefined}
             data-testid={`field-${id}`}
             className={[
-              'peer h-5 w-5 rounded-[--radius-sm]',
-              'border border-[--color-ink-900]/25 bg-[--color-chalk]',
-              'text-[--color-marigold] cursor-pointer',
-              'transition-all duration-[--duration-fast]',
-              'focus:outline-none focus-visible:ring-2 focus-visible:ring-[--color-marigold] focus-visible:ring-offset-2',
-              'checked:bg-[--color-ink-900] checked:border-[--color-ink-900]',
+              'peer h-5 w-5 rounded-(--radius-sm)',
+              'border border-(--color-ink-900)/25 bg-(--color-chalk)',
+              'text-(--color-marigold) cursor-pointer',
+              'transition-all duration-(--duration-fast)',
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-(--color-marigold) focus-visible:ring-offset-2',
+              'checked:bg-(--color-ink-900) checked:border-(--color-ink-900)',
               'disabled:opacity-40 disabled:cursor-not-allowed',
-              error ? 'border-[--color-kumkum] focus-visible:ring-[--color-kumkum]' : '',
+              error ? 'border-(--color-kumkum) focus-visible:ring-(--color-kumkum)' : '',
               className,
             ]
               .filter(Boolean)
@@ -47,7 +47,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             {...rest}
           />
           {/* Custom Checkmark indicator */}
-          <span className="absolute left-[2px] pointer-events-none opacity-0 peer-checked:opacity-100 text-white transition-opacity duration-[--duration-fast] flex items-center justify-center">
+          <span className="absolute left-[2px] pointer-events-none opacity-0 peer-checked:opacity-100 text-white transition-opacity duration-(--duration-fast) flex items-center justify-center">
             <svg
               width="16"
               height="16"
@@ -64,12 +64,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         </div>
 
         {label && (
-          <div className="flex flex-col gap-[--spacing-s1]">
+          <div className="flex flex-col gap-(--spacing-s1)">
             <label
               htmlFor={id}
               className={[
-                'text-[--font-size-step-0] font-medium leading-none cursor-pointer',
-                rest.disabled ? 'opacity-40 cursor-not-allowed' : 'text-[--color-graphite]',
+                'text-(--font-size-step-0) font-medium leading-none cursor-pointer',
+                rest.disabled ? 'opacity-40 cursor-not-allowed' : 'text-(--color-graphite)',
               ]
                 .filter(Boolean)
                 .join(' ')}
@@ -77,7 +77,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               {label}
             </label>
             {hint && (
-              <span id={hintId} className="text-[--font-size-step--1] text-[--color-ink-400]">
+              <span id={hintId} className="text-(--font-size-step--1) text-(--color-ink-400)">
                 {hint}
               </span>
             )}

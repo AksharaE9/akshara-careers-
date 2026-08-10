@@ -207,7 +207,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[--color-paper] flex flex-col">
+    <div className="min-h-screen bg-(--color-paper) flex flex-col">
       {/* Inject JSON-LD Schema.org SEO */}
       <script
         type="application/ld+json"

@@ -133,12 +133,12 @@ export function FileDropzone({
   const displayError = error ?? clientError
 
   const zoneStyles: Record<DropzoneState, string> = {
-    idle: 'border-[--color-ink-900]/20 bg-[--color-chalk] hover:border-[--color-marigold]/60 hover:bg-[--color-marigold]/4',
-    drag: 'border-[--color-marigold] bg-[--color-marigold]/8 scale-[1.01]',
-    uploading: 'border-[--color-ink-900]/20 bg-[--color-chalk] cursor-wait',
-    success: 'border-[--color-leaf] bg-[--color-leaf]/5',
-    replace: 'border-[--color-leaf] bg-[--color-leaf]/5',
-    error: 'border-[--color-kumkum] bg-[--color-kumkum]/4',
+    idle: 'border-(--color-ink-900)/20 bg-(--color-chalk) hover:border-(--color-marigold)/60 hover:bg-(--color-marigold)/4',
+    drag: 'border-(--color-marigold) bg-(--color-marigold)/8 scale-[1.01]',
+    uploading: 'border-(--color-ink-900)/20 bg-(--color-chalk) cursor-wait',
+    success: 'border-(--color-leaf) bg-(--color-leaf)/5',
+    replace: 'border-(--color-leaf) bg-(--color-leaf)/5',
+    error: 'border-(--color-kumkum) bg-(--color-kumkum)/4',
   }
 
   return (
@@ -154,11 +154,11 @@ export function FileDropzone({
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
         className={[
-          'w-full rounded-[--radius-lg] border-2 border-dashed',
-          'flex flex-col items-center justify-center gap-[--spacing-s3]',
-          'py-[--spacing-s7] px-[--spacing-s5]',
-          'transition-all duration-[--duration-base]',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-marigold] focus-visible:ring-offset-2',
+          'w-full rounded-(--radius-lg) border-2 border-dashed',
+          'flex flex-col items-center justify-center gap-(--spacing-s3)',
+          'py-(--spacing-s7) px-(--spacing-s5)',
+          'transition-all duration-(--duration-base)',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-marigold) focus-visible:ring-offset-2',
           zoneStyles[state],
           disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
         ].join(' ')}
@@ -172,10 +172,10 @@ export function FileDropzone({
         <span
           className={[
             state === 'success' || state === 'replace'
-              ? 'text-[--color-leaf]'
+              ? 'text-(--color-leaf)'
               : state === 'error'
-                ? 'text-[--color-kumkum]'
-                : 'text-[--color-ink-400]',
+                ? 'text-(--color-kumkum)'
+                : 'text-(--color-ink-400)',
           ].join('')}
         >
           {state === 'success' || state === 'replace'
@@ -188,16 +188,16 @@ export function FileDropzone({
         {/* Text */}
         {state === 'idle' || state === 'drag' ? (
           <div className="text-center">
-            <p className="text-[--font-size-step-0] font-medium text-[--color-graphite]">
+            <p className="text-(--font-size-step-0) font-medium text-(--color-graphite)">
               {state === 'drag' ? 'Drop to upload' : 'Drag your résumé here'}
             </p>
-            <p className="text-[--font-size-step--1] text-[--color-ink-400] mt-[--spacing-s1]">
+            <p className="text-(--font-size-step--1) text-(--color-ink-400) mt-(--spacing-s1)">
               or click to browse · PDF, DOC, DOCX · max 5 MB
             </p>
           </div>
         ) : state === 'uploading' ? (
           <div className="w-full max-w-xs text-center">
-            <p className="text-[--font-size-step--1] font-medium text-[--color-graphite] mb-[--spacing-s3]">
+            <p className="text-(--font-size-step--1) font-medium text-(--color-graphite) mb-(--spacing-s3)">
               Uploading…
             </p>
             <div
@@ -207,10 +207,10 @@ export function FileDropzone({
               aria-valuemax={100}
               aria-label="Upload progress"
               data-testid="resume-progress"
-              className="h-1 w-full bg-[--color-ink-900]/10 rounded-full overflow-hidden"
+              className="h-1 w-full bg-(--color-ink-900)/10 rounded-full overflow-hidden"
             >
               <div
-                className="h-full bg-[--color-marigold] transition-all duration-[--duration-fast]"
+                className="h-full bg-(--color-marigold) transition-all duration-(--duration-fast)"
                 style={{ width: `${progress ?? 0}%` }}
               />
             </div>
@@ -219,20 +219,20 @@ export function FileDropzone({
           <div className="text-center">
             <p
               data-testid="resume-filename"
-              className="text-[--font-size-step-0] font-medium text-[--color-graphite] truncate max-w-[280px]"
+              className="text-(--font-size-step-0) font-medium text-(--color-graphite) truncate max-w-[280px]"
             >
               {uploadedFilename}
             </p>
-            <p className="text-[--font-size-step--1] text-[--color-leaf] mt-[--spacing-s1]">
+            <p className="text-(--font-size-step--1) text-(--color-leaf) mt-(--spacing-s1)">
               Uploaded successfully · Click to replace
             </p>
           </div>
         ) : (
           <div className="text-center">
-            <p className="text-[--font-size-step-0] font-medium text-[--color-kumkum]">
+            <p className="text-(--font-size-step-0) font-medium text-(--color-kumkum)">
               {displayError}
             </p>
-            <p className="text-[--font-size-step--1] text-[--color-graphite] mt-[--spacing-s1]">
+            <p className="text-(--font-size-step--1) text-(--color-graphite) mt-(--spacing-s1)">
               Click to try again
             </p>
           </div>

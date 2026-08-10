@@ -23,11 +23,11 @@ export default async function ApplicationDetailPage({ params }: Params) {
   }
 
   return (
-    <div className="flex flex-col gap-[--spacing-s6]">
+    <div className="flex flex-col gap-(--spacing-s6)">
       {/* Top Nav Back */}
       <Link
         href="/console/applications"
-        className="text-[--font-size-step--1] font-mono text-[--color-ink-600] hover:text-[--color-ink-900] transition-colors flex items-center gap-[--spacing-s1] self-start"
+        className="text-(--font-size-step--1) font-mono text-(--color-ink-600) hover:text-(--color-ink-900) transition-colors flex items-center gap-(--spacing-s1) self-start"
       >
         <span>&larr;</span> Back to Candidate Pipeline
       </Link>

@@ -20,7 +20,7 @@ export function ProgressSteps({
 
   return (
     <div
-      className="flex flex-col gap-[--spacing-s3] w-full"
+      className="flex flex-col gap-(--spacing-s3) w-full"
       role="progressbar"
       aria-label="Application Progress"
       aria-valuenow={currentStep}
@@ -29,27 +29,27 @@ export function ProgressSteps({
       aria-valuetext={`Step ${currentStep} of ${totalSteps}: ${stepsLabels[currentStep - 1]}`}
     >
       {/* Step Numbers & Labels */}
-      <div className="flex justify-between items-center text-[--font-size-step--1]">
-        <div className="flex items-center gap-[--spacing-s2] font-mono text-[--color-marigold]">
+      <div className="flex justify-between items-center text-(--font-size-step--1)">
+        <div className="flex items-center gap-(--spacing-s2) font-mono text-(--color-marigold)">
           <span className="font-bold">0{currentStep}</span>
           <span className="opacity-50">/</span>
           <span className="opacity-50">0{totalSteps}</span>
         </div>
-        <span className="font-medium text-[--color-ink-900] tracking-wide uppercase font-mono">
+        <span className="font-medium text-(--color-ink-900) tracking-wide uppercase font-mono">
           {stepsLabels[currentStep - 1]}
         </span>
       </div>
 
       {/* Progress Bar Container */}
-      <div className="h-[3px] w-full bg-[--color-ink-900]/10 rounded-full overflow-hidden">
+      <div className="h-[3px] w-full bg-(--color-ink-900)/10 rounded-full overflow-hidden">
         <div
-          className="h-full bg-[--color-marigold] transition-all duration-[--duration-slow] ease-out rounded-full"
+          className="h-full bg-(--color-marigold) transition-all duration-(--duration-slow) ease-out rounded-full"
           style={{ width: `${percentage}%` }}
         />
       </div>
 
       {/* Step dots for context */}
-      <div className="flex gap-[--spacing-s2] mt-[--spacing-s1]">
+      <div className="flex gap-(--spacing-s2) mt-(--spacing-s1)">
         {Array.from({ length: totalSteps }).map((_, idx) => {
           const stepNum = idx + 1
           const isActive = stepNum === currentStep
@@ -59,12 +59,12 @@ export function ProgressSteps({
             <div
               key={stepNum}
               className={[
-                'h-[6px] w-[6px] rounded-full transition-colors duration-[--duration-base]',
+                'h-[6px] w-[6px] rounded-full transition-colors duration-(--duration-base)',
                 isCompleted
-                  ? 'bg-[--color-ink-900]'
+                  ? 'bg-(--color-ink-900)'
                   : isActive
-                    ? 'bg-[--color-marigold]'
-                    : 'bg-[--color-ink-900]/15',
+                    ? 'bg-(--color-marigold)'
+                    : 'bg-(--color-ink-900)/15',
               ]
                 .filter(Boolean)
                 .join(' ')}

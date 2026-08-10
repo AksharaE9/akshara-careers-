@@ -62,12 +62,12 @@ export default function SecurityObservabilityPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[--color-ink-900]/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-(--color-ink-900)/10">
         <div>
-          <span className="font-mono text-[--font-size-step--2] uppercase text-[--color-graphite] font-semibold tracking-wider">
+          <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) font-semibold tracking-wider">
             8-Layer Defense Observability
           </span>
-          <h1 className="text-[--font-size-step-2] font-bold text-[--color-ink-900] tracking-tight">
+          <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             Security & Bot Protection
           </h1>
         </div>
@@ -79,18 +79,18 @@ export default function SecurityObservabilityPage() {
           <div
             key={layer.key}
             data-testid={`security-layer-${layer.key}`}
-            className="p-4 bg-white border border-[--color-ink-900]/10 rounded-xl shadow-xs flex flex-col justify-between"
+            className="p-4 bg-white border border-(--color-ink-900)/10 rounded-xl shadow-xs flex flex-col justify-between"
           >
-            <span className="text-[--font-size-step--2] font-semibold text-[--color-graphite]">{layer.name}</span>
+            <span className="text-(--font-size-step--2) font-semibold text-(--color-graphite)">{layer.name}</span>
             <div className="my-2 flex items-baseline justify-between">
-              <span className="text-[--font-size-step-2] font-mono font-bold tabular-nums text-[--color-ink-900]">
+              <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
                 {layer.count}
               </span>
-              <span className="font-mono text-[--font-size-step--2] px-2 py-0.5 rounded bg-[--color-leaf]/15 text-[--color-leaf] font-semibold">
+              <span className="font-mono text-(--font-size-step--2) px-2 py-0.5 rounded bg-(--color-leaf)/15 text-(--color-leaf) font-semibold">
                 Active & Defending
               </span>
             </div>
-            <span className="text-[--font-size-step--2] font-mono text-[--color-ink-400]">
+            <span className="text-(--font-size-step--2) font-mono text-(--color-ink-400)">
               Automated mitigations recorded
             </span>
           </div>
@@ -99,33 +99,33 @@ export default function SecurityObservabilityPage() {
 
       {/* Cloudflare Turnstile & Active Sessions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white border border-[--color-ink-900]/10 rounded-xl p-5 shadow-xs">
-          <h3 className="text-[--font-size-step-0] font-bold text-[--color-ink-900] mb-2">Cloudflare Turnstile Health</h3>
-          <div className="space-y-2 text-[--font-size-step--1]">
-            <div className="flex justify-between py-1 border-b border-[--color-ink-900]/5 font-mono">
+        <div className="bg-white border border-(--color-ink-900)/10 rounded-xl p-5 shadow-xs">
+          <h3 className="text-(--font-size-step-0) font-bold text-(--color-ink-900) mb-2">Cloudflare Turnstile Health</h3>
+          <div className="space-y-2 text-(--font-size-step--1)">
+            <div className="flex justify-between py-1 border-b border-(--color-ink-900)/5 font-mono">
               <span>Challenge Solve Rate</span>
-              <strong className="text-[--color-leaf]">{turnstile.solveRate}</strong>
+              <strong className="text-(--color-leaf)">{turnstile.solveRate}</strong>
             </div>
-            <div className="flex justify-between py-1 border-b border-[--color-ink-900]/5 font-mono">
+            <div className="flex justify-between py-1 border-b border-(--color-ink-900)/5 font-mono">
               <span>Total Verification Requests</span>
               <strong className="tabular-nums">{turnstile.challengeCount}</strong>
             </div>
             <div className="flex justify-between py-1 font-mono">
               <span>Fail-Open Fallback Triggers</span>
-              <strong className="text-[--color-leaf]">{turnstile.failOpenCount} incidents</strong>
+              <strong className="text-(--color-leaf)">{turnstile.failOpenCount} incidents</strong>
             </div>
           </div>
         </div>
 
-        <div className="bg-white border border-[--color-ink-900]/10 rounded-xl p-5 shadow-xs">
-          <h3 className="text-[--font-size-step-0] font-bold text-[--color-ink-900] mb-2">Active Admin Sessions</h3>
-          <p className="text-[--font-size-step--2] text-[--color-graphite] mb-3">
+        <div className="bg-white border border-(--color-ink-900)/10 rounded-xl p-5 shadow-xs">
+          <h3 className="text-(--font-size-step-0) font-bold text-(--color-ink-900) mb-2">Active Admin Sessions</h3>
+          <p className="text-(--font-size-step--2) text-(--color-graphite) mb-3">
             Currently authenticated recruiter and administrator console sessions
           </p>
-          <div className="p-3 bg-[--color-chalk] rounded-lg border border-[--color-ink-900]/5 text-[--font-size-step--1]">
+          <div className="p-3 bg-(--color-chalk) rounded-lg border border-(--color-ink-900)/5 text-(--font-size-step--1)">
             <div className="flex items-center justify-between font-mono">
               <span>Concurrent Active Sessions:</span>
-              <strong className="text-[--color-leaf]">{activeSessionsCount} active</strong>
+              <strong className="text-(--color-leaf)">{activeSessionsCount} active</strong>
             </div>
           </div>
         </div>

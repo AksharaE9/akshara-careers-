@@ -114,12 +114,12 @@ export default function CampusDrivesPage() {
   }
 
   return (
-    <div className="flex flex-col gap-[--spacing-s6]">
+    <div className="flex flex-col gap-(--spacing-s6)">
       {/* Header & Create Button */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-[--spacing-s4]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-(--spacing-s4)">
         <div>
-          <span className="eyebrow text-[--color-marigold]">Campus Operations</span>
-          <h1 className="display text-[--font-size-step-3] font-bold text-[--color-ink-900]">
+          <span className="eyebrow text-(--color-marigold)">Campus Operations</span>
+          <h1 className="display text-(--font-size-step-3) font-bold text-(--color-ink-900)">
             Campus Hiring Drives
           </h1>
         </div>
@@ -134,10 +134,10 @@ export default function CampusDrivesPage() {
       </div>
 
       {/* Drives List Card */}
-      <Card className="overflow-hidden bg-[--color-chalk] border border-[--color-ink-900]/10 shadow-xs">
+      <Card className="overflow-hidden bg-(--color-chalk) border border-(--color-ink-900)/10 shadow-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-[--font-size-step--1]">
-            <thead className="bg-[--color-ink-900]/4 border-b border-[--color-ink-900]/10 font-mono text-[--font-size-step--2] uppercase tracking-wider text-[--color-graphite]">
+          <table className="w-full text-left text-(--font-size-step--1)">
+            <thead className="bg-(--color-ink-900)/4 border-b border-(--color-ink-900)/10 font-mono text-(--font-size-step--2) uppercase tracking-wider text-(--color-graphite)">
               <tr>
                 <th className="py-3 px-4">Drive Code</th>
                 <th className="py-3 px-4">College & City</th>
@@ -149,41 +149,41 @@ export default function CampusDrivesPage() {
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-ink-900]/5">
+            <tbody className="divide-y divide-(--color-ink-900)/5">
               {drives.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-8 text-center text-[--color-ink-400] italic">
+                  <td colSpan={8} className="py-8 text-center text-(--color-ink-400) italic">
                     {loading ? 'Loading campus drives...' : 'No campus drives scheduled.'}
                   </td>
                 </tr>
               ) : (
                 drives.map((d) => (
-                  <tr key={d.id} className="hover:bg-[--color-ink-900]/2 transition-colors">
+                  <tr key={d.id} className="hover:bg-(--color-ink-900)/2 transition-colors">
                     <td className="py-3 px-4">
-                      <div className="font-mono font-bold text-[--color-marigold]">
+                      <div className="font-mono font-bold text-(--color-marigold)">
                         {d.code}
                       </div>
                     </td>
                     <td className="py-3 px-4">
-                      <div className="font-semibold text-[--color-ink-900]">{d.collegeName}</div>
-                      <div className="text-[--font-size-step--2] text-[--color-ink-400]">
+                      <div className="font-semibold text-(--color-ink-900)">{d.collegeName}</div>
+                      <div className="text-(--font-size-step--2) text-(--color-ink-400)">
                         {d.collegeCity || 'Karnataka'}
                       </div>
                     </td>
                     <td className="py-3 px-4 font-mono">
                       {new Date(d.driveDate).toLocaleDateString()}
                     </td>
-                    <td className="py-3 px-4 text-[--color-graphite]">
+                    <td className="py-3 px-4 text-(--color-graphite)">
                       {d.venue || 'Campus Auditorium'}
                     </td>
                     <td className="py-3 px-4 font-mono font-medium">
                       {d.seats || '—'}
                     </td>
-                    <td className="py-3 px-4 font-mono font-bold text-[--color-leaf]">
+                    <td className="py-3 px-4 font-mono font-bold text-(--color-leaf)">
                       {d.viewCount} views
                     </td>
                     <td className="py-3 px-4">
-                      <span className="px-2 py-0.5 text-[--font-size-step--2] font-mono uppercase font-bold rounded bg-emerald-500/10 text-emerald-800">
+                      <span className="px-2 py-0.5 text-(--font-size-step--2) font-mono uppercase font-bold rounded bg-emerald-500/10 text-emerald-800">
                         {d.status}
                       </span>
                     </td>
@@ -192,14 +192,14 @@ export default function CampusDrivesPage() {
                         <button
                           type="button"
                           onClick={() => copyDriveLink(d.code)}
-                          className="px-2.5 py-1 text-[--font-size-step--2] font-medium bg-[--color-paper] hover:bg-[--color-ink-900]/10 border border-[--color-ink-900]/15 rounded transition-colors"
+                          className="px-2.5 py-1 text-(--font-size-step--2) font-medium bg-(--color-paper) hover:bg-(--color-ink-900)/10 border border-(--color-ink-900)/15 rounded transition-colors"
                         >
                           {copiedCode === d.code ? 'Copied URL!' : 'Copy QR Link'}
                         </button>
                         <Link
                           href={`/d/${d.code}`}
                           target="_blank"
-                          className="text-[--font-size-step--2] text-[--color-ink-600] hover:underline"
+                          className="text-(--font-size-step--2) text-(--color-ink-600) hover:underline"
                         >
                           Visit &rarr;
                         </Link>
@@ -216,21 +216,21 @@ export default function CampusDrivesPage() {
       {/* Schedule Drive Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4 backdrop-blur-xs">
-          <Card className="w-full max-w-lg p-[--spacing-s6] bg-[--color-chalk] border border-[--color-ink-900]/20 shadow-2xl flex flex-col gap-[--spacing-s5]">
-            <div className="flex items-center justify-between border-b border-[--color-ink-900]/10 pb-3">
-              <h2 className="font-bold text-[--font-size-step-1] text-[--color-ink-900]">
+          <Card className="w-full max-w-lg p-(--spacing-s6) bg-(--color-chalk) border border-(--color-ink-900)/20 shadow-2xl flex flex-col gap-(--spacing-s5)">
+            <div className="flex items-center justify-between border-b border-(--color-ink-900)/10 pb-3">
+              <h2 className="font-bold text-(--font-size-step-1) text-(--color-ink-900)">
                 Schedule Campus Drive
               </h2>
               <button
                 type="button"
                 onClick={() => setShowCreateModal(false)}
-                className="text-[--color-ink-400] hover:text-[--color-ink-900] font-bold text-[--font-size-step-1]"
+                className="text-(--color-ink-400) hover:text-(--color-ink-900) font-bold text-(--font-size-step-1)"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleCreateDrive} className="flex flex-col gap-[--spacing-s4]">
+            <form onSubmit={handleCreateDrive} className="flex flex-col gap-(--spacing-s4)">
               <FieldWrapper id="code" label="Drive Short Code (e.g. GFGC-YLK-0826)" required hint="Used in QR code and direct landing URL /d/[code]">
                 <Input
                   id="code"
@@ -250,7 +250,7 @@ export default function CampusDrivesPage() {
                   required
                 />
                 {collegeOptions.length > 0 && !collegeId && (
-                  <div className="mt-1 max-h-40 overflow-y-auto bg-[--color-chalk] border border-[--color-ink-900]/15 rounded shadow-lg">
+                  <div className="mt-1 max-h-40 overflow-y-auto bg-(--color-chalk) border border-(--color-ink-900)/15 rounded shadow-lg">
                     {collegeOptions.map((c) => (
                       <div
                         key={c.value}
@@ -259,7 +259,7 @@ export default function CampusDrivesPage() {
                           setCollegeQuery(c.label)
                           setCollegeOptions([])
                         }}
-                        className="px-3 py-2 text-[--font-size-step--1] hover:bg-[--color-marigold]/10 cursor-pointer text-[--color-ink-900]"
+                        className="px-3 py-2 text-(--font-size-step--1) hover:bg-(--color-marigold)/10 cursor-pointer text-(--color-ink-900)"
                       >
                         {c.label}
                       </div>
@@ -268,7 +268,7 @@ export default function CampusDrivesPage() {
                 )}
               </FieldWrapper>
 
-              <div className="grid grid-cols-2 gap-[--spacing-s3]">
+              <div className="grid grid-cols-2 gap-(--spacing-s3)">
                 <FieldWrapper id="driveDate" label="Drive Date" required>
                   <Input
                     id="driveDate"
@@ -298,7 +298,7 @@ export default function CampusDrivesPage() {
                 />
               </FieldWrapper>
 
-              <div className="flex justify-end gap-[--spacing-s2] mt-2">
+              <div className="flex justify-end gap-(--spacing-s2) mt-2">
                 <Button
                   variant="secondary"
                   type="button"

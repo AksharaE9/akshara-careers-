@@ -35,17 +35,17 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           aria-describedby={describedBy}
           data-testid={`field-${id}`}
           className={[
-            'w-full min-h-[44px] px-[--spacing-s4] py-[--spacing-s3]',
-            'font-[family-name:--font-body] text-[--font-size-step-0] text-[--color-graphite]',
-            'bg-[--color-chalk] rounded-[--radius-md]',
-            'border border-[--color-ink-900]/20',
-            'transition-colors duration-[--duration-fast]',
+            'w-full min-h-[44px] px-(--spacing-s4) py-(--spacing-s3)',
+            'font-sans text-(--font-size-step-0) text-(--color-graphite)',
+            'bg-(--color-chalk) rounded-(--radius-md)',
+            'border border-(--color-ink-900)/20',
+            'transition-colors duration-(--duration-fast)',
             'appearance-none pr-10', // room for chevron
-            'hover:border-[--color-ink-900]/40',
-            'focus:outline-none focus:border-[--color-marigold] focus:ring-1 focus:ring-[--color-marigold]',
-            'disabled:bg-[--color-ink-900]/4 disabled:text-[--color-ink-400] disabled:cursor-not-allowed',
+            'hover:border-(--color-ink-900)/40',
+            'focus:outline-none focus:border-(--color-marigold) focus:ring-1 focus:ring-(--color-marigold)',
+            'disabled:bg-(--color-ink-900)/4 disabled:text-(--color-ink-400) disabled:cursor-not-allowed',
             hasError
-              ? 'border-[--color-kumkum] ring-1 ring-[--color-kumkum]/30'
+              ? 'border-(--color-kumkum) ring-1 ring-(--color-kumkum)/30'
               : '',
             className,
           ]
@@ -63,7 +63,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
 
         {/* Chevron icon */}
         <span
-          className="pointer-events-none absolute inset-y-0 right-[--spacing-s4] flex items-center text-[--color-ink-400]"
+          className="pointer-events-none absolute inset-y-0 right-(--spacing-s4) flex items-center text-(--color-ink-400)"
           aria-hidden="true"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

@@ -74,8 +74,8 @@ export default function UserManagementPage() {
       header: 'User & Email',
       accessor: (row) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-[--color-ink-900]">{row.name}</span>
-          <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">{row.email}</span>
+          <span className="font-semibold text-(--color-ink-900)">{row.name}</span>
+          <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">{row.email}</span>
         </div>
       ),
     },
@@ -83,7 +83,7 @@ export default function UserManagementPage() {
       id: 'role',
       header: 'RBAC Role',
       accessor: (row) => (
-        <span className="font-mono text-[--font-size-step--2] uppercase px-2 py-0.5 rounded bg-[--color-marigold]/15 text-[--color-ink-900] font-bold">
+        <span className="font-mono text-(--font-size-step--2) uppercase px-2 py-0.5 rounded bg-(--color-marigold)/15 text-(--color-ink-900) font-bold">
           {row.role}
         </span>
       ),
@@ -92,12 +92,12 @@ export default function UserManagementPage() {
       id: 'status',
       header: 'Account Status',
       accessor: (row) => (
-        <div className="flex items-center gap-2 font-mono text-[--font-size-step--2]">
-          <span className={row.isActive ? 'text-[--color-leaf] font-bold' : 'text-[--color-kumkum]'}>
+        <div className="flex items-center gap-2 font-mono text-(--font-size-step--2)">
+          <span className={row.isActive ? 'text-(--color-leaf) font-bold' : 'text-(--color-kumkum)'}>
             {row.isActive ? 'Active' : 'Disabled'}
           </span>
           {row.mustChangePassword && (
-            <span className="px-1.5 py-0.5 rounded bg-[--color-kumkum]/10 text-[--color-kumkum] font-medium">
+            <span className="px-1.5 py-0.5 rounded bg-(--color-kumkum)/10 text-(--color-kumkum) font-medium">
               Password Rotation Required
             </span>
           )}
@@ -108,7 +108,7 @@ export default function UserManagementPage() {
       id: 'lastLoginAt',
       header: 'Last Login',
       accessor: (row) => (
-        <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">
+        <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">
           {row.lastLoginAt ? new Date(row.lastLoginAt).toLocaleString() : 'Never'}
         </span>
       ),
@@ -120,7 +120,7 @@ export default function UserManagementPage() {
         <button
           type="button"
           data-testid="session-revoke"
-          className="px-2.5 py-1 rounded bg-[--color-ink-900]/5 hover:bg-[--color-kumkum]/10 text-[--font-size-step--2] font-semibold text-[--color-kumkum]"
+          className="px-2.5 py-1 rounded bg-(--color-ink-900)/5 hover:bg-(--color-kumkum)/10 text-(--font-size-step--2) font-semibold text-(--color-kumkum)"
         >
           Revoke Session
         </button>
@@ -130,12 +130,12 @@ export default function UserManagementPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[--color-ink-900]/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-(--color-ink-900)/10">
         <div>
-          <span className="font-mono text-[--font-size-step--2] uppercase text-[--color-graphite] font-semibold tracking-wider">
+          <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) font-semibold tracking-wider">
             Access Control · Super Admin Only
           </span>
-          <h1 className="text-[--font-size-step-2] font-bold text-[--color-ink-900] tracking-tight">
+          <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             User Management
           </h1>
         </div>
@@ -144,7 +144,7 @@ export default function UserManagementPage() {
           type="button"
           data-testid="user-create"
           onClick={() => setShowCreateModal(true)}
-          className="px-3.5 py-1.5 rounded-lg bg-[--color-marigold] text-white font-medium text-[--font-size-step--1] hover:bg-[--color-marigold]/90"
+          className="px-3.5 py-1.5 rounded-lg bg-(--color-marigold) text-white font-medium text-(--font-size-step--1) hover:bg-(--color-marigold)/90"
         >
           + Create Console User
         </button>
@@ -160,39 +160,39 @@ export default function UserManagementPage() {
       {/* Create User Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
-          <div className="w-full max-w-md bg-white border border-[--color-ink-900]/10 rounded-xl p-6 shadow-2xl space-y-4">
-            <h2 className="text-[--font-size-step-1] font-bold text-[--color-ink-900]">Create Console Account</h2>
+          <div className="w-full max-w-md bg-white border border-(--color-ink-900)/10 rounded-xl p-6 shadow-2xl space-y-4">
+            <h2 className="text-(--font-size-step-1) font-bold text-(--color-ink-900)">Create Console Account</h2>
             <form onSubmit={handleCreateUser} className="space-y-3">
               <div>
-                <label className="block text-[--font-size-step--1] font-medium text-[--color-ink-900] mb-1">Full Name</label>
+                <label className="block text-(--font-size-step--1) font-medium text-(--color-ink-900) mb-1">Full Name</label>
                 <input
                   type="text"
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="e.g. Anand Murthy"
-                  className="w-full h-10 px-3 border border-[--color-ink-900]/15 rounded-lg"
+                  className="w-full h-10 px-3 border border-(--color-ink-900)/15 rounded-lg"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-[--font-size-step--1] font-medium text-[--color-ink-900] mb-1">Email Address</label>
+                <label className="block text-(--font-size-step--1) font-medium text-(--color-ink-900) mb-1">Email Address</label>
                 <input
                   type="email"
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder="anand@akshara.in"
-                  className="w-full h-10 px-3 border border-[--color-ink-900]/15 rounded-lg"
+                  className="w-full h-10 px-3 border border-(--color-ink-900)/15 rounded-lg"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-[--font-size-step--1] font-medium text-[--color-ink-900] mb-1">Assigned Role</label>
+                <label className="block text-(--font-size-step--1) font-medium text-(--color-ink-900) mb-1">Assigned Role</label>
                 <select
                   value={newRole}
                   onChange={(e) => setNewRole(e.target.value)}
-                  className="w-full h-10 px-3 border border-[--color-ink-900]/15 rounded-lg font-mono text-[--font-size-step--1]"
+                  className="w-full h-10 px-3 border border-(--color-ink-900)/15 rounded-lg font-mono text-(--font-size-step--1)"
                 >
                   <option value="recruiter">Recruiter (Scoped to assigned drives)</option>
                   <option value="admin">Admin (Full operations & content)</option>
@@ -201,12 +201,12 @@ export default function UserManagementPage() {
               </div>
 
               <div>
-                <label className="block text-[--font-size-step--1] font-medium text-[--color-ink-900] mb-1">Temporary Password</label>
+                <label className="block text-(--font-size-step--1) font-medium text-(--color-ink-900) mb-1">Temporary Password</label>
                 <input
                   type="text"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full h-10 px-3 border border-[--color-ink-900]/15 rounded-lg font-mono"
+                  className="w-full h-10 px-3 border border-(--color-ink-900)/15 rounded-lg font-mono"
                   required
                 />
               </div>
@@ -215,13 +215,13 @@ export default function UserManagementPage() {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-3 py-1.5 border border-[--color-ink-900]/15 rounded-lg"
+                  className="px-3 py-1.5 border border-(--color-ink-900)/15 rounded-lg"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-[--color-marigold] text-white rounded-lg font-semibold"
+                  className="px-4 py-1.5 bg-(--color-marigold) text-white rounded-lg font-semibold"
                 >
                   Create User
                 </button>

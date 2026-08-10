@@ -55,10 +55,10 @@ export default function ConsoleLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[--color-paper] flex flex-col items-center justify-center p-[--spacing-s4]">
-      <div className="w-full max-w-md flex flex-col gap-[--spacing-s6]">
+    <div className="min-h-screen bg-(--color-paper) flex flex-col items-center justify-center p-(--spacing-s4)">
+      <div className="w-full max-w-md flex flex-col gap-(--spacing-s6)">
         {/* Brand Header */}
-        <div className="flex flex-col items-center text-center gap-[--spacing-s2]">
+        <div className="flex flex-col items-center text-center gap-(--spacing-s2)">
           <Link href="/careers" className="inline-block">
             <Image
               src="/images/akshara-logo.svg"
@@ -69,32 +69,32 @@ export default function ConsoleLoginPage() {
               style={{ width: 'auto', height: '36px' }}
             />
           </Link>
-          <span className="eyebrow text-[--color-marigold] mt-[--spacing-s1]">
+          <span className="eyebrow text-(--color-marigold) mt-(--spacing-s1)">
             Talent Operations Console
           </span>
-          <h1 className="display text-[--font-size-step-2] font-bold text-[--color-ink-900]">
+          <h1 className="display text-(--font-size-step-2) font-bold text-(--color-ink-900)">
             Sign in to Console
           </h1>
-          <p className="text-[--font-size-step--1] text-[--color-graphite]">
+          <p className="text-(--font-size-step--1) text-(--color-graphite)">
             Internal portal for recruiters, interviewers, and hiring managers.
           </p>
         </div>
 
         {/* Login Card */}
-        <Card className="p-[--spacing-s6] bg-[--color-chalk] border border-[--color-ink-900]/10 shadow-lg flex flex-col gap-[--spacing-s5]">
+        <Card className="p-(--spacing-s6) bg-(--color-chalk) border border-(--color-ink-900)/10 shadow-lg flex flex-col gap-(--spacing-s5)">
           {/* Quick Demo Logins */}
-          <div className="flex flex-col gap-[--spacing-s2] bg-[--color-marigold]/10 p-[--spacing-s3] rounded-[--radius-md] border border-[--color-marigold]/20">
-            <span className="text-[--font-size-step--2] font-mono uppercase tracking-wider text-[--color-graphite] font-semibold">
+          <div className="flex flex-col gap-(--spacing-s2) bg-(--color-marigold)/10 p-(--spacing-s3) rounded-(--radius-md) border border-(--color-marigold)/20">
+            <span className="text-(--font-size-step--2) font-mono uppercase tracking-wider text-(--color-graphite) font-semibold">
               Fast Demo Logins
             </span>
-            <div className="grid grid-cols-2 gap-[--spacing-s2]">
+            <div className="grid grid-cols-2 gap-(--spacing-s2)">
               <Button
                 variant="secondary"
                 size="sm"
                 type="button"
                 onClick={() => handleLogin('recruiter1@akshara.in', 'DemoPassword@123')}
                 disabled={loading}
-                className="text-[--font-size-step--2]"
+                className="text-(--font-size-step--2)"
                 data-testid="demo-recruiter-login"
               >
                 Sign in as Recruiter
@@ -105,7 +105,7 @@ export default function ConsoleLoginPage() {
                 type="button"
                 onClick={() => handleLogin('admin@akshara.in', 'DemoPassword@123')}
                 disabled={loading}
-                className="text-[--font-size-step--2]"
+                className="text-(--font-size-step--2)"
                 data-testid="demo-admin-login"
               >
                 Sign in as Admin
@@ -114,8 +114,8 @@ export default function ConsoleLoginPage() {
           </div>
 
           <div className="relative flex items-center justify-center">
-            <div className="border-t border-[--color-ink-900]/10 w-full" />
-            <span className="bg-[--color-chalk] px-[--spacing-s2] text-[--font-size-step--2] text-[--color-ink-400] uppercase font-mono tracking-widest absolute">
+            <div className="border-t border-(--color-ink-900)/10 w-full" />
+            <span className="bg-(--color-chalk) px-(--spacing-s2) text-(--font-size-step--2) text-(--color-ink-400) uppercase font-mono tracking-widest absolute">
               Or email
             </span>
           </div>
@@ -125,7 +125,7 @@ export default function ConsoleLoginPage() {
               e.preventDefault()
               handleLogin()
             }}
-            className="flex flex-col gap-[--spacing-s4]"
+            className="flex flex-col gap-(--spacing-s4)"
           >
             <FieldWrapper id="email" label="Work Email Address" required>
               <Input
@@ -154,7 +154,7 @@ export default function ConsoleLoginPage() {
             {error && (
               <div
                 data-testid="console-login-error"
-                className="p-[--spacing-s3] bg-[--color-kumkum]/10 border border-[--color-kumkum]/20 text-[--color-kumkum] text-[--font-size-step--1] rounded-[--radius-sm]"
+                className="p-(--spacing-s3) bg-(--color-kumkum)/10 border border-(--color-kumkum)/20 text-(--color-kumkum) text-(--font-size-step--1) rounded-(--radius-sm)"
               >
                 {error}
               </div>
@@ -168,7 +168,7 @@ export default function ConsoleLoginPage() {
                 handleLogin()
               }}
               loading={loading}
-              className="w-full mt-[--spacing-s2]"
+              className="w-full mt-(--spacing-s2)"
               data-testid="console-login-submit"
             >
               Sign In to Console &rarr;
@@ -177,9 +177,9 @@ export default function ConsoleLoginPage() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center text-[--font-size-step--2] text-[--color-ink-400]">
+        <div className="text-center text-(--font-size-step--2) text-(--color-ink-400)">
           <p>Protected under Akshara Information Security Policy.</p>
-          <Link href="/careers" className="hover:underline text-[--color-graphite] mt-[--spacing-s1] inline-block">
+          <Link href="/careers" className="hover:underline text-(--color-graphite) mt-(--spacing-s1) inline-block">
             &larr; Back to Public Careers Board
           </Link>
         </div>

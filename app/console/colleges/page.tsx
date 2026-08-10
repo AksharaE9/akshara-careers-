@@ -80,20 +80,20 @@ export default function ConsoleCollegesPage() {
   })
 
   return (
-    <div className="flex flex-col gap-[--spacing-s6]">
+    <div className="flex flex-col gap-(--spacing-s6)">
       {/* Header */}
       <div>
-        <span className="eyebrow text-[--color-marigold]">Institutional Directory</span>
-        <h1 className="display text-[--font-size-step-3] font-bold text-[--color-ink-900]">
+        <span className="eyebrow text-(--color-marigold)">Institutional Directory</span>
+        <h1 className="display text-(--font-size-step-3) font-bold text-(--color-ink-900)">
           Partner Colleges & Alias Registry
         </h1>
-        <p className="text-[--font-size-step--1] text-[--color-graphite] mt-1">
+        <p className="text-(--font-size-step--1) text-(--color-graphite) mt-1">
           Normalizes 47+ free-text variations into verified canonical campus profiles (D4).
         </p>
       </div>
 
       {/* Search Input */}
-      <Card className="p-[--spacing-s4] bg-[--color-chalk] border border-[--color-ink-900]/10">
+      <Card className="p-(--spacing-s4) bg-(--color-chalk) border border-(--color-ink-900)/10">
         <Input
           id="collegeSearch"
           placeholder="Filter colleges by canonical name, city, or alias..."
@@ -103,36 +103,36 @@ export default function ConsoleCollegesPage() {
       </Card>
 
       {/* Colleges Grid / Table */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[--spacing-s4]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-(--spacing-s4)">
         {filteredColleges.length === 0 ? (
-          <div className="col-span-2 py-12 text-center text-[--color-ink-400] italic">
+          <div className="col-span-2 py-12 text-center text-(--color-ink-400) italic">
             {loading ? 'Loading colleges directory...' : 'No partner colleges match your search.'}
           </div>
         ) : (
           filteredColleges.map((c) => (
             <Card
               key={c.id}
-              className="p-[--spacing-s4] bg-[--color-chalk] border border-[--color-ink-900]/10 flex flex-col justify-between gap-[--spacing-s3]"
+              className="p-(--spacing-s4) bg-(--color-chalk) border border-(--color-ink-900)/10 flex flex-col justify-between gap-(--spacing-s3)"
             >
               <div className="flex flex-col gap-1">
                 <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-bold text-[--font-size-step-0] text-[--color-ink-900] leading-snug">
+                  <h3 className="font-bold text-(--font-size-step-0) text-(--color-ink-900) leading-snug">
                     {c.name}
                   </h3>
                   {c.isVerified && (
-                    <span className="px-2 py-0.5 text-[--font-size-step--2] font-mono font-bold bg-emerald-500/10 text-emerald-800 rounded">
+                    <span className="px-2 py-0.5 text-(--font-size-step--2) font-mono font-bold bg-emerald-500/10 text-emerald-800 rounded">
                       Verified
                     </span>
                   )}
                 </div>
 
-                <div className="text-[--font-size-step--2] text-[--color-ink-400] font-mono">
+                <div className="text-(--font-size-step--2) text-(--color-ink-400) font-mono">
                   {c.city || 'Karnataka'}, {c.state}
                 </div>
 
                 {/* Aliases Tag Cloud */}
                 <div className="mt-2">
-                  <span className="text-[--font-size-step--2] font-mono text-[--color-graphite] uppercase tracking-wider block mb-1">
+                  <span className="text-(--font-size-step--2) font-mono text-(--color-graphite) uppercase tracking-wider block mb-1">
                     Mapped Aliases ({c.aliases?.length || 0}):
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -140,13 +140,13 @@ export default function ConsoleCollegesPage() {
                       c.aliases.map((alias, i) => (
                         <span
                           key={i}
-                          className="px-2 py-0.5 text-[--font-size-step--2] bg-[--color-paper] text-[--color-graphite] rounded border border-[--color-ink-900]/10 font-mono"
+                          className="px-2 py-0.5 text-(--font-size-step--2) bg-(--color-paper) text-(--color-graphite) rounded border border-(--color-ink-900)/10 font-mono"
                         >
                           {alias}
                         </span>
                       ))
                     ) : (
-                      <span className="text-[--font-size-step--2] text-[--color-ink-400] italic">
+                      <span className="text-(--font-size-step--2) text-(--color-ink-400) italic">
                         No alternate spellings mapped
                       </span>
                     )}
@@ -155,7 +155,7 @@ export default function ConsoleCollegesPage() {
               </div>
 
               {/* Add Alias Input */}
-              <div className="flex items-center gap-2 border-t border-[--color-ink-900]/5 pt-3 mt-1">
+              <div className="flex items-center gap-2 border-t border-(--color-ink-900)/5 pt-3 mt-1">
                 <input
                   type="text"
                   placeholder="Add alternate spelling..."
@@ -169,14 +169,14 @@ export default function ConsoleCollegesPage() {
                       handleAddAlias(c.id)
                     }
                   }}
-                  className="text-[--font-size-step--2] px-2 py-1 bg-[--color-paper] border border-[--color-ink-900]/15 rounded flex-1 focus:outline-none"
+                  className="text-(--font-size-step--2) px-2 py-1 bg-(--color-paper) border border-(--color-ink-900)/15 rounded flex-1 focus:outline-none"
                 />
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={() => handleAddAlias(c.id)}
                   loading={addingAliasId === c.id}
-                  className="text-[--font-size-step--2]"
+                  className="text-(--font-size-step--2)"
                 >
                   + Add
                 </Button>

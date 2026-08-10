@@ -294,32 +294,32 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
     const waUrl = `https://wa.me/919986266394?text=${encodeURIComponent(waText)}`
 
     return (
-      <Card className="max-w-xl mx-auto p-[--spacing-s6] text-center flex flex-col gap-[--spacing-s5] bg-[--color-chalk] border border-[--color-ink-900]/10 shadow-lg">
-        <div className="mx-auto h-12 w-12 rounded-full bg-[--color-leaf]/10 text-[--color-leaf] flex items-center justify-center">
+      <Card className="max-w-xl mx-auto p-(--spacing-s6) text-center flex flex-col gap-(--spacing-s5) bg-(--color-chalk) border border-(--color-ink-900)/10 shadow-lg">
+        <div className="mx-auto h-12 w-12 rounded-full bg-(--color-leaf)/10 text-(--color-leaf) flex items-center justify-center">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
 
         <div>
-          <h2 className="display text-[--font-size-step-2] font-bold text-[--color-ink-900]">
+          <h2 className="display text-(--font-size-step-2) font-bold text-(--color-ink-900)">
             Application Submitted!
           </h2>
-          <p className="text-[--font-size-step-0] text-[--color-graphite] mt-[--spacing-s2]">
+          <p className="text-(--font-size-step-0) text-(--color-graphite) mt-(--spacing-s2)">
             Thank you for applying. Your candidate profile has been successfully registered.
           </p>
         </div>
 
-        <div className="bg-[--color-paper] rounded-[--radius-md] p-[--spacing-s4] border border-[--color-ink-900]/5 flex flex-col gap-[--spacing-s1]">
-          <span className="text-[--font-size-step--2] text-[--color-ink-400] font-mono">YOUR APPLICATION ID</span>
-          <span className="text-[--font-size-step-1] font-mono font-bold text-[--color-ink-900]" data-testid="success-application-id">
+        <div className="bg-(--color-paper) rounded-(--radius-md) p-(--spacing-s4) border border-(--color-ink-900)/5 flex flex-col gap-(--spacing-s1)">
+          <span className="text-(--font-size-step--2) text-(--color-ink-400) font-mono">YOUR APPLICATION ID</span>
+          <span className="text-(--font-size-step-1) font-mono font-bold text-(--color-ink-900)" data-testid="success-application-id">
             {applicationId}
           </span>
         </div>
 
-        <div className="flex flex-col gap-[--spacing-s3]">
+        <div className="flex flex-col gap-(--spacing-s3)">
           <a href={waUrl} target="_blank" rel="noopener noreferrer">
-            <Button variant="primary" className="w-full bg-[#25D366] hover:bg-[#20BA5A] border-none text-white flex items-center justify-center gap-[--spacing-s2]">
+            <Button variant="primary" className="w-full bg-[#25D366] hover:bg-[#20BA5A] border-none text-white flex items-center justify-center gap-(--spacing-s2)">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17.472 14.382c-.022-.014-.029-.022-.05-.043l-.7-.7-.7-.7-.7-.7-.35-.35c-.07-.07-.15-.09-.23-.07-.08.02-.15.07-.2.13l-.5.7c-.12.16-.27.27-.45.32-.18.05-.38.01-.52-.1l-.4-.3c-1.1-1-1.9-2.1-2.4-3.2l-.2-.4c-.1-.14-.14-.34-.09-.52.05-.18.16-.33.32-.45l.7-.5c.06-.05.11-.12.13-.2.02-.08 0-.16-.07-.23l-.35-.35-.7-.7-.7-.7-.7-.7c-.021-.021-.029-.028-.043-.05-.14-.14-.36-.14-.5 0l-.8.8c-.28.28-.42.66-.38 1.05.08 1.25.6 2.45 1.45 3.4l.2.2c.95.85 2.15 1.37 3.4 1.45.39.04.77-.1 1.05-.38l.8-.8c.14-.14.14-.36 0-.5zm3.5-9.4c-4-4-10.5-4-14.5 0-3.6 3.6-4 9.1-1.2 13.1L3 21l3.1-2.2c4 2.8 9.5 2.4 13.1-1.2 4-4 4-10.5 0-14.5zm-1.8 12.7c-3.1 3.1-7.8 3.5-11.4 1.1l-.3-.2-1.9 1.3 1.3-1.9-.2-.3c-2.4-3.6-2-8.3 1.1-11.4 3.6-3.6 9.4-3.6 13 0 3.6 3.6 3.6 9.4 0 13z"/>
               </svg>
@@ -339,20 +339,20 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
 
   // ── WIZARD LAYOUT ──────────────────────────────────────────────────────────
   return (
-    <Card className="max-w-2xl mx-auto p-[--spacing-s6] bg-[--color-chalk] border border-[--color-ink-900]/10 shadow-md">
-      <div className="flex flex-col gap-[--spacing-s5]">
+    <Card className="max-w-2xl mx-auto p-(--spacing-s6) bg-(--color-chalk) border border-(--color-ink-900)/10 shadow-md">
+      <div className="flex flex-col gap-(--spacing-s5)">
         {/* Step Indicator */}
         <ProgressSteps
           currentStep={step}
           stepsLabels={['Personal details', 'Academic status', 'Resume & Review']}
         />
 
-        <div className="border-t border-[--color-ink-900]/10 pt-[--spacing-s5]">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-[--spacing-s5]">
+        <div className="border-t border-(--color-ink-900)/10 pt-(--spacing-s5)">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-(--spacing-s5)">
             
             {/* ── STEP 1: Personal Details ──────────────────────────────────── */}
             {step === 1 && (
-              <div className="flex flex-col gap-[--spacing-s4]" data-testid="apply-step-1">
+              <div className="flex flex-col gap-(--spacing-s4)" data-testid="apply-step-1">
                 <FieldWrapper id="fullName" label="Full Name" required error={step1Errors.fullName}>
                   <Input
                     id="fullName"
@@ -382,7 +382,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
                   />
                 </FieldWrapper>
 
-                <Button variant="primary" type="button" onClick={handleStep1Next} className="self-end mt-[--spacing-s2]" data-testid="step-next">
+                <Button variant="primary" type="button" onClick={handleStep1Next} className="self-end mt-(--spacing-s2)" data-testid="step-next">
                   Continue &rarr;
                 </Button>
               </div>
@@ -390,8 +390,8 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
 
             {/* ── STEP 2: Academic Status & College ─────────────────────────── */}
             {step === 2 && (
-              <div className="flex flex-col gap-[--spacing-s4]" data-testid="apply-step-2">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-[--spacing-s4]">
+              <div className="flex flex-col gap-(--spacing-s4)" data-testid="apply-step-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-(--spacing-s4)">
                   <FieldWrapper id="academicStatus" label="Current Academic Status" required error={step2Errors.academicStatus}>
                     <Select
                       id="academicStatus"
@@ -458,7 +458,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
                   />
                 </FieldWrapper>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-[--spacing-s4] items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-(--spacing-s4) items-center">
                   <FieldWrapper id="hasTwoWheeler" label="Two-wheeler Ownership" required error={step2Errors.hasTwoWheeler}>
                     <Select
                       id="hasTwoWheeler"
@@ -493,7 +493,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
                   />
                 </FieldWrapper>
 
-                <div className="flex justify-between items-center mt-[--spacing-s2]">
+                <div className="flex justify-between items-center mt-(--spacing-s2)">
                   <Button variant="secondary" type="button" onClick={() => setStep(1)} data-testid="step-back">
                     &larr; Back
                   </Button>
@@ -506,7 +506,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
 
             {/* ── STEP 3: Resume Upload & Review ────────────────────────────── */}
             {step === 3 && (
-              <div className="flex flex-col gap-[--spacing-s4]" data-testid="apply-step-3">
+              <div className="flex flex-col gap-(--spacing-s4)" data-testid="apply-step-3">
                 <FieldWrapper id="resumeKey" label="Upload Resume (PDF, DOC or DOCX)" required hint="File size limit is 5 MB" error={step3Errors.resumeKey || uploadError}>
                   <FileDropzone
                     onFileSelected={handleFileSelected}
@@ -521,7 +521,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
                   />
                 </FieldWrapper>
 
-                <div className="flex flex-col gap-[--spacing-s3] mt-[--spacing-s2] border-t border-[--color-ink-900]/5 pt-[--spacing-s4]">
+                <div className="flex flex-col gap-(--spacing-s3) mt-(--spacing-s2) border-t border-(--color-ink-900)/5 pt-(--spacing-s4)">
                   <Checkbox
                     id="consentGiven"
                     label="I consent to Akshara processing and retaining my candidate profile for 24 months."
@@ -540,12 +540,12 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
                 </div>
 
                 {submitError && (
-                  <div className="p-[--spacing-s3] bg-[--color-kumkum]/10 border border-[--color-kumkum]/20 text-[--color-kumkum] text-[--font-size-step--1] rounded-[--radius-sm] font-medium">
+                  <div className="p-(--spacing-s3) bg-(--color-kumkum)/10 border border-(--color-kumkum)/20 text-(--color-kumkum) text-(--font-size-step--1) rounded-(--radius-sm) font-medium">
                     {submitError}
                   </div>
                 )}
 
-                <div className="flex justify-between items-center mt-[--spacing-s2]">
+                <div className="flex justify-between items-center mt-(--spacing-s2)">
                   <Button variant="secondary" type="button" onClick={() => setStep(2)} disabled={isSubmitting} data-testid="step-back">
                     &larr; Back
                   </Button>

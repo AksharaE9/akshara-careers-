@@ -104,16 +104,16 @@ export function DataTable<T extends Record<string, any>>({
   const allSelected = data.length > 0 && data.every((item) => selectedIds.includes(String(item[keyField])))
 
   return (
-    <div data-testid="datatable" className="flex flex-col w-full bg-[--color-chalk] border border-[--color-ink-900]/10 rounded-lg overflow-hidden shadow-xs">
+    <div data-testid="datatable" className="flex flex-col w-full bg-(--color-chalk) border border-(--color-ink-900)/10 rounded-lg overflow-hidden shadow-xs">
       {/* Table Top Controls */}
-      <div className="px-4 py-2.5 bg-white border-b border-[--color-ink-900]/10 flex items-center justify-between text-[--font-size-step--2]">
-        <div className="flex items-center gap-3 text-[--color-graphite]">
+      <div className="px-4 py-2.5 bg-white border-b border-(--color-ink-900)/10 flex items-center justify-between text-(--font-size-step--2)">
+        <div className="flex items-center gap-3 text-(--color-graphite)">
           <span>
-            Showing <strong className="text-[--color-ink-900] font-mono tabular-nums">{Math.min(data.length, totalCount)}</strong> of{' '}
-            <strong className="text-[--color-ink-900] font-mono tabular-nums">{totalCount}</strong> records
+            Showing <strong className="text-(--color-ink-900) font-mono tabular-nums">{Math.min(data.length, totalCount)}</strong> of{' '}
+            <strong className="text-(--color-ink-900) font-mono tabular-nums">{totalCount}</strong> records
           </span>
           {selectedIds.length > 0 && (
-            <span className="px-2 py-0.5 rounded bg-[--color-marigold]/15 text-[--color-ink-900] font-medium font-mono">
+            <span className="px-2 py-0.5 rounded bg-(--color-marigold)/15 text-(--color-ink-900) font-medium font-mono">
               {selectedIds.length} selected
             </span>
           )}
@@ -123,7 +123,7 @@ export function DataTable<T extends Record<string, any>>({
           <button
             type="button"
             onClick={() => setDensity(density === 'comfortable' ? 'compact' : 'comfortable')}
-            className="px-2 py-1 border border-[--color-ink-900]/15 rounded hover:bg-[--color-ink-900]/5 text-[--color-ink-900] font-mono"
+            className="px-2 py-1 border border-(--color-ink-900)/15 rounded hover:bg-(--color-ink-900)/5 text-(--color-ink-900) font-mono"
             title="Toggle row density"
           >
             {density === 'comfortable' ? 'Compact' : 'Comfortable'}
@@ -133,8 +133,8 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Sticky Bulk Action Bar */}
       {selectedIds.length > 0 && bulkActions && (
-        <div data-testid="bulk-action-bar" className="sticky top-16 z-20 bg-[--color-ink-900] text-white px-4 py-2 flex items-center justify-between">
-          <span className="text-[--font-size-step--1] font-medium">
+        <div data-testid="bulk-action-bar" className="sticky top-16 z-20 bg-(--color-ink-900) text-white px-4 py-2 flex items-center justify-between">
+          <span className="text-(--font-size-step--1) font-medium">
             {selectedIds.length} items selected for bulk action
           </span>
           <div className="flex items-center gap-2">{bulkActions}</div>
@@ -145,14 +145,14 @@ export function DataTable<T extends Record<string, any>>({
       <div className="w-full overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-[--color-chalk] border-b border-[--color-ink-900]/10 text-[--font-size-step--2] uppercase font-mono tracking-wider text-[--color-graphite]">
+            <tr className="bg-(--color-chalk) border-b border-(--color-ink-900)/10 text-(--font-size-step--2) uppercase font-mono tracking-wider text-(--color-graphite)">
               {onSelectionChange && (
                 <th className="p-3 w-10 text-center">
                   <input
                     type="checkbox"
                     checked={allSelected}
                     onChange={handleSelectAll}
-                    className="rounded border-[--color-ink-900]/20 text-[--color-marigold] focus:ring-[--color-marigold]"
+                    className="rounded border-(--color-ink-900)/20 text-(--color-marigold) focus:ring-(--color-marigold)"
                   />
                 </th>
               )}
@@ -160,12 +160,12 @@ export function DataTable<T extends Record<string, any>>({
                 <th
                   key={col.id}
                   onClick={() => col.sortable && handleSort(col.id)}
-                  className={`p-3 font-semibold ${col.sortable ? 'cursor-pointer hover:text-[--color-ink-900]' : ''} ${col.className || ''}`}
+                  className={`p-3 font-semibold ${col.sortable ? 'cursor-pointer hover:text-(--color-ink-900)' : ''} ${col.className || ''}`}
                 >
                   <div className="flex items-center gap-1">
                     {col.header}
                     {col.sortable && currentSort === col.id && (
-                      <span className="text-[--color-marigold]">{currentOrder === 'asc' ? '▲' : '▼'}</span>
+                      <span className="text-(--color-marigold)">{currentOrder === 'asc' ? '▲' : '▼'}</span>
                     )}
                   </div>
                 </th>
@@ -173,37 +173,37 @@ export function DataTable<T extends Record<string, any>>({
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-[--color-ink-900]/5 bg-white">
+          <tbody className="divide-y divide-(--color-ink-900)/5 bg-white">
             {loading ? (
               // Skeleton rows (zero layout shift)
               Array.from({ length: 6 }).map((_, i) => (
                 <tr key={i} className="animate-pulse">
-                  {onSelectionChange && <td className="p-3 w-10"><div className="h-4 w-4 bg-[--color-ink-900]/10 rounded" /></td>}
+                  {onSelectionChange && <td className="p-3 w-10"><div className="h-4 w-4 bg-(--color-ink-900)/10 rounded" /></td>}
                   {columns.map((col) => (
                     <td key={col.id} className="p-3">
-                      <div className="h-4 bg-[--color-ink-900]/10 rounded w-3/4" />
+                      <div className="h-4 bg-(--color-ink-900)/10 rounded w-3/4" />
                     </td>
                   ))}
                 </tr>
               ))
             ) : error ? (
               <tr>
-                <td colSpan={columns.length + (onSelectionChange ? 1 : 0)} className="p-8 text-center text-[--color-kumkum]">
-                  <p className="font-medium text-[--font-size-step-0]">Failed to load data</p>
-                  <p className="text-[--font-size-step--1] mt-1 opacity-80">{error}</p>
+                <td colSpan={columns.length + (onSelectionChange ? 1 : 0)} className="p-8 text-center text-(--color-kumkum)">
+                  <p className="font-medium text-(--font-size-step-0)">Failed to load data</p>
+                  <p className="text-(--font-size-step--1) mt-1 opacity-80">{error}</p>
                 </td>
               </tr>
             ) : data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + (onSelectionChange ? 1 : 0)} className="p-12 text-center text-[--color-graphite]">
-                  <p className="font-medium text-[--font-size-step-0] text-[--color-ink-900]">
+                <td colSpan={columns.length + (onSelectionChange ? 1 : 0)} className="p-12 text-center text-(--color-graphite)">
+                  <p className="font-medium text-(--font-size-step-0) text-(--color-ink-900)">
                     {hasActiveFilters ? noFilterResultsMessage : emptyMessage}
                   </p>
                   {hasActiveFilters && (
                     <button
                       type="button"
                       onClick={() => router.push(pathname)}
-                      className="mt-3 text-[--font-size-step--1] text-[--color-marigold] underline font-medium"
+                      className="mt-3 text-(--font-size-step--1) text-(--color-marigold) underline font-medium"
                     >
                       Clear active filters
                     </button>
@@ -220,8 +220,8 @@ export function DataTable<T extends Record<string, any>>({
                   <tr
                     key={rowId}
                     data-testid={`datatable-row-${rowId}`}
-                    className={`hover:bg-[--color-ink-900]/[0.02] transition-colors ${
-                      isSelected ? 'bg-[--color-marigold]/5' : ''
+                    className={`hover:bg-(--color-ink-900)/[0.02] transition-colors ${
+                      isSelected ? 'bg-(--color-marigold)/5' : ''
                     }`}
                   >
                     {onSelectionChange && (
@@ -230,12 +230,12 @@ export function DataTable<T extends Record<string, any>>({
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => handleSelectRow(rowId)}
-                          className="rounded border-[--color-ink-900]/20 text-[--color-marigold] focus:ring-[--color-marigold]"
+                          className="rounded border-(--color-ink-900)/20 text-(--color-marigold) focus:ring-(--color-marigold)"
                         />
                       </td>
                     )}
                     {columns.map((col) => (
-                      <td key={col.id} className={`${paddingClass} text-[--font-size-step--1] text-[--color-ink-900] ${col.className || ''}`}>
+                      <td key={col.id} className={`${paddingClass} text-(--font-size-step--1) text-(--color-ink-900) ${col.className || ''}`}>
                         {col.accessor ? col.accessor(row) : String(row[col.id] ?? '')}
                       </td>
                     ))}
@@ -248,10 +248,10 @@ export function DataTable<T extends Record<string, any>>({
       </div>
 
       {/* Pagination Footer */}
-      <div data-testid="datatable-pagination" className="px-4 py-3 bg-[--color-chalk] border-t border-[--color-ink-900]/10 flex items-center justify-between text-[--font-size-step--1]">
-        <span className="text-[--color-graphite]">
-          Page <strong className="font-mono tabular-nums text-[--color-ink-900]">{currentPage}</strong> of{' '}
-          <strong className="font-mono tabular-nums text-[--color-ink-900]">{totalPages}</strong>
+      <div data-testid="datatable-pagination" className="px-4 py-3 bg-(--color-chalk) border-t border-(--color-ink-900)/10 flex items-center justify-between text-(--font-size-step--1)">
+        <span className="text-(--color-graphite)">
+          Page <strong className="font-mono tabular-nums text-(--color-ink-900)">{currentPage}</strong> of{' '}
+          <strong className="font-mono tabular-nums text-(--color-ink-900)">{totalPages}</strong>
         </span>
 
         <div className="flex items-center gap-2">
@@ -259,7 +259,7 @@ export function DataTable<T extends Record<string, any>>({
             type="button"
             disabled={currentPage <= 1 || loading}
             onClick={() => handlePageChange(currentPage - 1)}
-            className="px-3 py-1 bg-white border border-[--color-ink-900]/15 rounded text-[--font-size-step--2] font-medium text-[--color-ink-900] disabled:opacity-40 hover:bg-[--color-ink-900]/5"
+            className="px-3 py-1 bg-white border border-(--color-ink-900)/15 rounded text-(--font-size-step--2) font-medium text-(--color-ink-900) disabled:opacity-40 hover:bg-(--color-ink-900)/5"
           >
             &larr; Previous
           </button>
@@ -267,7 +267,7 @@ export function DataTable<T extends Record<string, any>>({
             type="button"
             disabled={currentPage >= totalPages || loading}
             onClick={() => handlePageChange(currentPage + 1)}
-            className="px-3 py-1 bg-white border border-[--color-ink-900]/15 rounded text-[--font-size-step--2] font-medium text-[--color-ink-900] disabled:opacity-40 hover:bg-[--color-ink-900]/5"
+            className="px-3 py-1 bg-white border border-(--color-ink-900)/15 rounded text-(--font-size-step--2) font-medium text-(--color-ink-900) disabled:opacity-40 hover:bg-(--color-ink-900)/5"
           >
             Next &rarr;
           </button>

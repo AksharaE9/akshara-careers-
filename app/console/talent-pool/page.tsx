@@ -46,8 +46,8 @@ export default function TalentPoolPage() {
       header: 'Candidate Name',
       accessor: (row) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-[--color-ink-900]">{row.fullName}</span>
-          <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">{row.emailNormalised}</span>
+          <span className="font-semibold text-(--color-ink-900)">{row.fullName}</span>
+          <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">{row.emailNormalised}</span>
         </div>
       ),
     },
@@ -55,7 +55,7 @@ export default function TalentPoolPage() {
       id: 'interestFamily',
       header: 'Interest Domain',
       accessor: (row) => (
-        <span className="font-mono text-[--font-size-step--2] px-2 py-0.5 rounded bg-[--color-marigold]/15 text-[--color-ink-900] font-semibold">
+        <span className="font-mono text-(--font-size-step--2) px-2 py-0.5 rounded bg-(--color-marigold)/15 text-(--color-ink-900) font-semibold">
           {row.interestFamily}
         </span>
       ),
@@ -64,7 +64,7 @@ export default function TalentPoolPage() {
       id: 'createdAt',
       header: 'Joined At',
       accessor: (row) => (
-        <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">
+        <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">
           {new Date(row.createdAt).toLocaleDateString()}
         </span>
       ),
@@ -73,12 +73,12 @@ export default function TalentPoolPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[--color-ink-900]/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-(--color-ink-900)/10">
         <div>
-          <span className="font-mono text-[--font-size-step--2] uppercase text-[--color-graphite] font-semibold tracking-wider">
+          <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) font-semibold tracking-wider">
             Passive Candidate Pipeline
           </span>
-          <h1 className="text-[--font-size-step-2] font-bold text-[--color-ink-900] tracking-tight">
+          <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             Talent Pool Registry
           </h1>
         </div>

@@ -56,8 +56,8 @@ export default function DrivesPerformancePage() {
       header: 'Drive Code',
       accessor: (row) => (
         <div className="flex flex-col">
-          <span className="font-mono font-bold text-[--color-ink-900]">{row.code}</span>
-          <span className="text-[--font-size-step--2] text-[--color-graphite]">{row.driveDate}</span>
+          <span className="font-mono font-bold text-(--color-ink-900)">{row.code}</span>
+          <span className="text-(--font-size-step--2) text-(--color-graphite)">{row.driveDate}</span>
         </div>
       ),
     },
@@ -66,8 +66,8 @@ export default function DrivesPerformancePage() {
       header: 'Partner College & City',
       accessor: (row) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-[--color-ink-900]">{row.collegeName}</span>
-          <span className="text-[--font-size-step--2] text-[--color-graphite]">{row.collegeCity || 'Bengaluru'}</span>
+          <span className="font-semibold text-(--color-ink-900)">{row.collegeName}</span>
+          <span className="text-(--font-size-step--2) text-(--color-graphite)">{row.collegeCity || 'Bengaluru'}</span>
         </div>
       ),
     },
@@ -83,8 +83,8 @@ export default function DrivesPerformancePage() {
         <span
           className={`font-mono font-bold px-2 py-0.5 rounded ${
             row.isZeroYield
-              ? 'bg-[--color-kumkum]/15 text-[--color-kumkum]'
-              : 'bg-[--color-leaf]/15 text-[--color-leaf]'
+              ? 'bg-(--color-kumkum)/15 text-(--color-kumkum)'
+              : 'bg-(--color-leaf)/15 text-(--color-leaf)'
           }`}
         >
           {row.submits} {row.isZeroYield ? '⚠️ 0 Apps' : 'apps'}
@@ -95,7 +95,7 @@ export default function DrivesPerformancePage() {
       id: 'conversion',
       header: 'Scan → Submit',
       accessor: (row) => (
-        <span className={`font-mono font-semibold ${row.isZeroYield ? 'text-[--color-kumkum]' : 'text-[--color-ink-900]'}`}>
+        <span className={`font-mono font-semibold ${row.isZeroYield ? 'text-(--color-kumkum)' : 'text-(--color-ink-900)'}`}>
           {row.conversion}
         </span>
       ),
@@ -108,7 +108,7 @@ export default function DrivesPerformancePage() {
           <Link
             href={`/d/${row.code}`}
             target="_blank"
-            className="px-2 py-1 rounded bg-[--color-ink-900]/5 hover:bg-[--color-ink-900]/10 text-[--font-size-step--2] font-semibold text-[--color-ink-900]"
+            className="px-2 py-1 rounded bg-(--color-ink-900)/5 hover:bg-(--color-ink-900)/10 text-(--font-size-step--2) font-semibold text-(--color-ink-900)"
           >
             Open QR Link &rarr;
           </Link>
@@ -119,12 +119,12 @@ export default function DrivesPerformancePage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[--color-ink-900]/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-(--color-ink-900)/10">
         <div>
-          <span className="font-mono text-[--font-size-step--2] uppercase text-[--color-graphite] font-semibold tracking-wider">
+          <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) font-semibold tracking-wider">
             Campus Recruitment Intelligence
           </span>
-          <h1 className="text-[--font-size-step-2] font-bold text-[--color-ink-900] tracking-tight">
+          <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             Campus Drives Yield & QR Conversion
           </h1>
         </div>

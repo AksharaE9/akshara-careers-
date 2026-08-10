@@ -22,21 +22,21 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
 
 const baseInput = [
   // Layout
-  'w-full min-h-[44px] px-[--spacing-s4] py-[--spacing-s3]',
+  'w-full min-h-[44px] px-(--spacing-s4) py-(--spacing-s3)',
   // Typography
-  'font-[family-name:--font-body] text-[--font-size-step-0] text-[--color-graphite]',
+  'font-sans text-(--font-size-step-0) text-(--color-graphite)',
   // Visual
-  'bg-[--color-chalk] rounded-[--radius-md]',
-  'border border-[--color-ink-900]/20',
+  'bg-(--color-chalk) rounded-(--radius-md)',
+  'border border-(--color-ink-900)/20',
   // Transitions
-  'transition-colors duration-[--duration-fast]',
+  'transition-colors duration-(--duration-fast)',
   // States
-  'placeholder:text-[--color-ink-400]',
-  'hover:border-[--color-ink-900]/40',
-  'focus:outline-none focus:border-[--color-marigold] focus:ring-1 focus:ring-[--color-marigold]',
-  'disabled:bg-[--color-ink-900]/4 disabled:text-[--color-ink-400] disabled:cursor-not-allowed',
-  'read-only:bg-[--color-ink-900]/4',
-  'aria-invalid:border-[--color-kumkum] aria-invalid:ring-1 aria-invalid:ring-[--color-kumkum]/30',
+  'placeholder:text-(--color-ink-400)',
+  'hover:border-(--color-ink-900)/40',
+  'focus:outline-none focus:border-(--color-marigold) focus:ring-1 focus:ring-(--color-marigold)',
+  'disabled:bg-(--color-ink-900)/4 disabled:text-(--color-ink-400) disabled:cursor-not-allowed',
+  'read-only:bg-(--color-ink-900)/4',
+  'aria-invalid:border-(--color-kumkum) aria-invalid:ring-1 aria-invalid:ring-(--color-kumkum)/30',
 ].join(' ')
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -51,7 +51,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       return (
         <div className="relative flex items-center">
           {prefix && (
-            <span className="absolute left-[--spacing-s4] text-[--color-ink-400] text-[--font-size-step-0] pointer-events-none select-none">
+            <span className="absolute left-(--spacing-s4) text-(--color-ink-400) text-(--font-size-step-0) pointer-events-none select-none">
               {prefix}
             </span>
           )}
@@ -72,7 +72,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...rest}
           />
           {suffix && (
-            <span className="absolute right-[--spacing-s4] text-[--color-ink-400] text-[--font-size-step-0] pointer-events-none select-none">
+            <span className="absolute right-(--spacing-s4) text-(--color-ink-400) text-(--font-size-step-0) pointer-events-none select-none">
               {suffix}
             </span>
           )}

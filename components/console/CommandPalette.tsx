@@ -127,11 +127,11 @@ export function CommandPalette({ isOpen, onClose, onToggleRail }: CommandPalette
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4 bg-[--color-ink-900]/40 backdrop-blur-xs">
-      <div className="w-full max-w-xl bg-[--color-chalk] border border-[--color-ink-900]/15 rounded-xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4 bg-(--color-ink-900)/40 backdrop-blur-xs">
+      <div className="w-full max-w-xl bg-(--color-chalk) border border-(--color-ink-900)/15 rounded-xl shadow-2xl overflow-hidden flex flex-col">
         {/* Search Header */}
-        <div className="flex items-center px-4 py-3 border-b border-[--color-ink-900]/10 bg-white">
-          <svg className="w-5 h-5 text-[--color-ink-400] mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="flex items-center px-4 py-3 border-b border-(--color-ink-900)/10 bg-white">
+          <svg className="w-5 h-5 text-(--color-ink-400) mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
@@ -144,9 +144,9 @@ export function CommandPalette({ isOpen, onClose, onToggleRail }: CommandPalette
               setSelectedIndex(0)
             }}
             placeholder="Type a command, screen name, or search..."
-            className="w-full bg-transparent text-[--font-size-step-0] text-[--color-ink-900] placeholder-[--color-ink-400] focus:outline-none"
+            className="w-full bg-transparent text-(--font-size-step-0) text-(--color-ink-900) placeholder-(--color-ink-400) focus:outline-none"
           />
-          <kbd className="px-2 py-0.5 text-[--font-size-step--2] font-mono text-[--color-ink-400] bg-[--color-ink-900]/5 rounded border border-[--color-ink-900]/10">
+          <kbd className="px-2 py-0.5 text-(--font-size-step--2) font-mono text-(--color-ink-400) bg-(--color-ink-900)/5 rounded border border-(--color-ink-900)/10">
             ESC
           </kbd>
         </div>
@@ -154,7 +154,7 @@ export function CommandPalette({ isOpen, onClose, onToggleRail }: CommandPalette
         {/* Results List */}
         <div className="max-h-[380px] overflow-y-auto p-2">
           {filtered.length === 0 ? (
-            <div className="py-8 text-center text-[--font-size-step--1] text-[--color-graphite]">
+            <div className="py-8 text-center text-(--font-size-step--1) text-(--color-graphite)">
               No commands or screens found for &ldquo;{query}&rdquo;
             </div>
           ) : (
@@ -167,20 +167,20 @@ export function CommandPalette({ isOpen, onClose, onToggleRail }: CommandPalette
                   onClick={() => executeItem(item)}
                   onMouseEnter={() => setSelectedIndex(index)}
                   className={`w-full text-left px-3 py-2.5 rounded-lg flex items-center justify-between transition-colors ${
-                    isSelected ? 'bg-[--color-marigold]/15 text-[--color-ink-900]' : 'text-[--color-graphite] hover:bg-[--color-ink-900]/5'
+                    isSelected ? 'bg-(--color-marigold)/15 text-(--color-ink-900)' : 'text-(--color-graphite) hover:bg-(--color-ink-900)/5'
                   }`}
                 >
                   <div className="flex flex-col">
-                    <span className="text-[--font-size-step--1] font-medium text-[--color-ink-900]">
+                    <span className="text-(--font-size-step--1) font-medium text-(--color-ink-900)">
                       {item.title}
                     </span>
                     {item.subtitle && (
-                      <span className="text-[--font-size-step--2] text-[--color-graphite]">
+                      <span className="text-(--font-size-step--2) text-(--color-graphite)">
                         {item.subtitle}
                       </span>
                     )}
                   </div>
-                  <span className="text-[--font-size-step--2] font-mono uppercase px-2 py-0.5 rounded bg-[--color-ink-900]/5 text-[--color-ink-600]">
+                  <span className="text-(--font-size-step--2) font-mono uppercase px-2 py-0.5 rounded bg-(--color-ink-900)/5 text-(--color-ink-600)">
                     {item.category}
                   </span>
                 </button>

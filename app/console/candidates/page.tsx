@@ -54,8 +54,8 @@ export default function CandidatesDirectoryPage() {
       header: 'Candidate Name',
       accessor: (row) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-[--color-ink-900]">{row.fullName}</span>
-          <span className="font-mono text-[--font-size-step--2] text-[--color-graphite]">{row.email}</span>
+          <span className="font-semibold text-(--color-ink-900)">{row.fullName}</span>
+          <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">{row.email}</span>
         </div>
       ),
     },
@@ -69,7 +69,7 @@ export default function CandidatesDirectoryPage() {
             href={`https://wa.me/${row.phone.replace(/[^0-9]/g, '')}`}
             target="_blank"
             rel="noreferrer"
-            className="text-[--font-size-step--2] text-[--color-leaf] font-semibold hover:underline"
+            className="text-(--font-size-step--2) text-(--color-leaf) font-semibold hover:underline"
           >
             WhatsApp
           </a>
@@ -80,7 +80,7 @@ export default function CandidatesDirectoryPage() {
       id: 'totalApplications',
       header: 'Applications',
       accessor: (row) => (
-        <span className="font-mono font-bold px-2 py-0.5 rounded bg-[--color-marigold]/15 text-[--color-ink-900]">
+        <span className="font-mono font-bold px-2 py-0.5 rounded bg-(--color-marigold)/15 text-(--color-ink-900)">
           {row.totalApplications}
         </span>
       ),
@@ -89,7 +89,7 @@ export default function CandidatesDirectoryPage() {
       id: 'latestStage',
       header: 'Furthest Stage',
       accessor: (row) => (
-        <span className="font-mono text-[--font-size-step--2] uppercase px-2 py-0.5 rounded bg-[--color-ink-900]/5 text-[--color-ink-900]">
+        <span className="font-mono text-(--font-size-step--2) uppercase px-2 py-0.5 rounded bg-(--color-ink-900)/5 text-(--color-ink-900)">
           {row.latestStage?.replace(/_/g, ' ') || 'None'}
         </span>
       ),
@@ -100,7 +100,7 @@ export default function CandidatesDirectoryPage() {
       accessor: (row) => (
         <div className="flex flex-wrap gap-1">
           {row.languages?.map((l) => (
-            <span key={l} className="px-1.5 py-0.5 text-[--font-size-step--2] bg-[--color-chalk] border border-[--color-ink-900]/10 rounded">
+            <span key={l} className="px-1.5 py-0.5 text-(--font-size-step--2) bg-(--color-chalk) border border-(--color-ink-900)/10 rounded">
               {l}
             </span>
           ))}
@@ -114,7 +114,7 @@ export default function CandidatesDirectoryPage() {
         <div className="flex items-center gap-2">
           <Link
             href={`/console/applications?q=${encodeURIComponent(row.email)}`}
-            className="px-2.5 py-1 rounded bg-[--color-ink-900]/5 hover:bg-[--color-ink-900]/10 text-[--font-size-step--2] font-semibold text-[--color-ink-900]"
+            className="px-2.5 py-1 rounded bg-(--color-ink-900)/5 hover:bg-(--color-ink-900)/10 text-(--font-size-step--2) font-semibold text-(--color-ink-900)"
           >
             View Applications &rarr;
           </Link>
@@ -125,12 +125,12 @@ export default function CandidatesDirectoryPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[--color-ink-900]/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-(--color-ink-900)/10">
         <div>
-          <span className="font-mono text-[--font-size-step--2] uppercase text-[--color-graphite] font-semibold tracking-wider">
+          <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) font-semibold tracking-wider">
             Talent Roster · 360° View
           </span>
-          <h1 className="text-[--font-size-step-2] font-bold text-[--color-ink-900] tracking-tight">
+          <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             Candidate Profiles
           </h1>
         </div>

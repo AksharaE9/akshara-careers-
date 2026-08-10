@@ -144,7 +144,7 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[--color-paper] text-[--color-ink-900] flex font-[family-name:--font-body]">
+    <div className="min-h-screen bg-(--color-paper) text-(--color-ink-900) flex font-sans">
       {/* ⌘K Command Palette */}
       <CommandPalette
         isOpen={isCmdkOpen}
@@ -154,12 +154,12 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
 
       {/* Left Navigation Rail (Desktop) */}
       <aside
-        className={`hidden lg:flex flex-col border-r border-[--color-ink-900]/10 bg-[--color-chalk] transition-all duration-200 sticky top-0 h-screen z-30 ${
+        className={`hidden lg:flex flex-col border-r border-(--color-ink-900)/10 bg-(--color-chalk) transition-all duration-200 sticky top-0 h-screen z-30 ${
           isRailCollapsed ? 'w-14' : 'w-60'
         }`}
       >
         {/* Rail Header */}
-        <div className="h-14 px-3 flex items-center justify-between border-b border-[--color-ink-900]/10">
+        <div className="h-14 px-3 flex items-center justify-between border-b border-(--color-ink-900)/10">
           {!isRailCollapsed && (
             <Link href="/console" className="flex items-center gap-2">
               <Image
@@ -170,7 +170,7 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
                 priority
                 style={{ width: 'auto', height: '24px' }}
               />
-              <span className="text-[--font-size-step--2] font-mono uppercase bg-[--color-marigold]/15 px-1.5 py-0.5 rounded font-semibold text-[--color-ink-900]">
+              <span className="text-(--font-size-step--2) font-mono uppercase bg-(--color-marigold)/15 px-1.5 py-0.5 rounded font-semibold text-(--color-ink-900)">
                 Admin
               </span>
             </Link>
@@ -179,7 +179,7 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
           <button
             type="button"
             onClick={() => setIsRailCollapsed((prev) => !prev)}
-            className="p-1.5 rounded hover:bg-[--color-ink-900]/5 text-[--color-graphite]"
+            className="p-1.5 rounded hover:bg-(--color-ink-900)/5 text-(--color-graphite)"
             title={isRailCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {isRailCollapsed ? '→' : '←'}
@@ -187,7 +187,7 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
         </div>
 
         {/* Navigation Items */}
-        <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-4 text-[--font-size-step--1]">
+        <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-4 text-(--font-size-step--1)">
           {navGroups.map((grp) => {
             const accessibleItems = grp.items.filter((item) => !item.capability || can(user, item.capability))
             if (accessibleItems.length === 0) return null
@@ -195,7 +195,7 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
             return (
               <div key={grp.group} className="space-y-1">
                 {!isRailCollapsed && (
-                  <div className="px-2 py-1 font-mono text-[--font-size-step--2] uppercase text-[--color-ink-400] font-semibold tracking-wider">
+                  <div className="px-2 py-1 font-mono text-(--font-size-step--2) uppercase text-(--color-ink-400) font-semibold tracking-wider">
                     {grp.group}
                   </div>
                 )}
@@ -208,8 +208,8 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
                       title={isRailCollapsed ? item.label : undefined}
                       className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg font-medium transition-colors ${
                         isActive
-                          ? 'bg-[--color-marigold]/15 text-[--color-ink-900] font-semibold'
-                          : 'text-[--color-graphite] hover:bg-[--color-ink-900]/5 hover:text-[--color-ink-900]'
+                          ? 'bg-(--color-marigold)/15 text-(--color-ink-900) font-semibold'
+                          : 'text-(--color-graphite) hover:bg-(--color-ink-900)/5 hover:text-(--color-ink-900)'
                       }`}
                     >
                       <span className="text-base">{item.icon}</span>
@@ -223,19 +223,19 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
         </nav>
 
         {/* Rail Footer */}
-        <div className="p-2 border-t border-[--color-ink-900]/10">
+        <div className="p-2 border-t border-(--color-ink-900)/10">
           {!isRailCollapsed && (
             <div className="px-2 py-1.5 mb-1 flex items-center justify-between">
               <div className="flex flex-col">
-                <span className="text-[--font-size-step--1] font-semibold leading-tight">{user.name}</span>
-                <span className="text-[--font-size-step--2] font-mono text-[--color-ink-400] capitalize">{user.role}</span>
+                <span className="text-(--font-size-step--1) font-semibold leading-tight">{user.name}</span>
+                <span className="text-(--font-size-step--2) font-mono text-(--color-ink-400) capitalize">{user.role}</span>
               </div>
             </div>
           )}
           <button
             type="button"
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 p-1.5 rounded text-[--font-size-step--1] text-[--color-kumkum] hover:bg-[--color-kumkum]/10 transition-colors font-medium"
+            className="w-full flex items-center justify-center gap-2 p-1.5 rounded text-(--font-size-step--1) text-(--color-kumkum) hover:bg-(--color-kumkum)/10 transition-colors font-medium"
           >
             <span>🚪</span>
             {!isRailCollapsed && <span>Sign out</span>}
@@ -249,7 +249,7 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
         {user.mustChangePassword && (
           <div
             data-testid="pulse-attention-P1"
-            className="bg-[--color-kumkum] text-white px-4 py-2 text-[--font-size-step--1] font-medium flex items-center justify-between shadow-sm z-50"
+            className="bg-(--color-kumkum) text-white px-4 py-2 text-(--font-size-step--1) font-medium flex items-center justify-between shadow-sm z-50"
           >
             <div className="flex items-center gap-2">
               <span className="font-bold">⚠️ CRITICAL SECURITY GATE:</span>
@@ -265,21 +265,21 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
         )}
 
         {/* Top Header Bar */}
-        <header className="h-14 bg-white border-b border-[--color-ink-900]/10 px-4 flex items-center justify-between sticky top-0 z-20 shadow-xs">
+        <header className="h-14 bg-white border-b border-(--color-ink-900)/10 px-4 flex items-center justify-between sticky top-0 z-20 shadow-xs">
           {/* Mobile Drawer Trigger & Breadcrumb */}
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setIsMobileDrawerOpen(true)}
-              className="lg:hidden p-1.5 text-[--color-graphite] rounded hover:bg-[--color-ink-900]/5"
+              className="lg:hidden p-1.5 text-(--color-graphite) rounded hover:bg-(--color-ink-900)/5"
             >
               ☰
             </button>
 
-            <div className="flex items-center gap-1.5 text-[--font-size-step--1] text-[--color-graphite]">
-              <Link href="/console" className="hover:text-[--color-ink-900]">Console</Link>
+            <div className="flex items-center gap-1.5 text-(--font-size-step--1) text-(--color-graphite)">
+              <Link href="/console" className="hover:text-(--color-ink-900)">Console</Link>
               <span>/</span>
-              <span className="text-[--color-ink-900] font-medium capitalize">
+              <span className="text-(--color-ink-900) font-medium capitalize">
                 {pathname.split('/')[2] || 'Pulse'}
               </span>
             </div>
@@ -288,12 +288,12 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
           {/* Top Actions: Date Range, ⌘K, Env Badge, SSE Indicator */}
           <div className="flex items-center gap-3">
             {/* Global Date Range Picker */}
-            <div className="hidden sm:flex items-center gap-1 bg-[--color-chalk] border border-[--color-ink-900]/10 rounded-lg p-1 text-[--font-size-step--2]">
+            <div className="hidden sm:flex items-center gap-1 bg-(--color-chalk) border border-(--color-ink-900)/10 rounded-lg p-1 text-(--font-size-step--2)">
               <button
                 type="button"
                 data-testid="date-range-picker"
                 onClick={() => handleDatePreset(7)}
-                className="px-2 py-0.5 rounded font-mono font-medium hover:bg-white text-[--color-ink-900]"
+                className="px-2 py-0.5 rounded font-mono font-medium hover:bg-white text-(--color-ink-900)"
               >
                 {currentDateRange}
               </button>
@@ -304,22 +304,22 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
               type="button"
               data-testid="cmdk-trigger"
               onClick={() => setIsCmdkOpen(true)}
-              className="flex items-center gap-2 px-2.5 py-1 bg-[--color-chalk] border border-[--color-ink-900]/10 rounded-lg text-[--font-size-step--2] text-[--color-graphite] hover:text-[--color-ink-900]"
+              className="flex items-center gap-2 px-2.5 py-1 bg-(--color-chalk) border border-(--color-ink-900)/10 rounded-lg text-(--font-size-step--2) text-(--color-graphite) hover:text-(--color-ink-900)"
             >
               <span>Search / Jump</span>
-              <kbd className="font-mono bg-white px-1.5 py-0.5 rounded border border-[--color-ink-900]/10">⌘K</kbd>
+              <kbd className="font-mono bg-white px-1.5 py-0.5 rounded border border-(--color-ink-900)/10">⌘K</kbd>
             </button>
 
             {/* Environment Badge */}
-            <span className="px-2 py-0.5 font-mono text-[--font-size-step--2] uppercase font-bold rounded bg-[--color-leaf]/15 text-[--color-leaf]">
+            <span className="px-2 py-0.5 font-mono text-(--font-size-step--2) uppercase font-bold rounded bg-(--color-leaf)/15 text-(--color-leaf)">
               {process.env.NODE_ENV === 'production' ? 'PROD' : 'LOCAL'}
             </span>
 
             {/* Live SSE Status Dot */}
-            <div data-testid="sse-status" className="flex items-center gap-1.5 text-[--font-size-step--2] font-mono text-[--color-graphite]">
+            <div data-testid="sse-status" className="flex items-center gap-1.5 text-(--font-size-step--2) font-mono text-(--color-graphite)">
               <div
                 className={`w-2 h-2 rounded-full ${
-                  isLiveConnected ? 'bg-[--color-leaf] animate-pulse' : 'bg-[--color-ink-400]'
+                  isLiveConnected ? 'bg-(--color-leaf) animate-pulse' : 'bg-(--color-ink-400)'
                 }`}
               />
               <span className="hidden sm:inline">{isLiveConnected ? 'Live' : 'Offline'}</span>
@@ -329,7 +329,7 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
             <Link
               href="/careers"
               target="_blank"
-              className="text-[--font-size-step--2] text-[--color-marigold] font-medium hover:underline hidden sm:inline"
+              className="text-(--font-size-step--2) text-(--color-marigold) font-medium hover:underline hidden sm:inline"
             >
               Public Board &rarr;
             </Link>
@@ -340,21 +340,21 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
         {isMobileDrawerOpen && (
           <div className="lg:hidden fixed inset-0 z-50 flex">
             <div className="fixed inset-0 bg-black/30" onClick={() => setIsMobileDrawerOpen(false)} />
-            <div className="relative w-64 bg-[--color-chalk] h-full flex flex-col p-4 shadow-xl z-10">
-              <div className="flex items-center justify-between pb-3 border-b border-[--color-ink-900]/10">
-                <span className="font-bold text-[--font-size-step-0]">Navigation</span>
+            <div className="relative w-64 bg-(--color-chalk) h-full flex flex-col p-4 shadow-xl z-10">
+              <div className="flex items-center justify-between pb-3 border-b border-(--color-ink-900)/10">
+                <span className="font-bold text-(--font-size-step-0)">Navigation</span>
                 <button type="button" onClick={() => setIsMobileDrawerOpen(false)} className="text-xl">×</button>
               </div>
               <div className="flex-1 overflow-y-auto py-3 space-y-4">
                 {navGroups.map((grp) => (
                   <div key={grp.group} className="space-y-1">
-                    <div className="font-mono text-[--font-size-step--2] uppercase text-[--color-ink-400] font-semibold">{grp.group}</div>
+                    <div className="font-mono text-(--font-size-step--2) uppercase text-(--color-ink-400) font-semibold">{grp.group}</div>
                     {grp.items.map((it) => (
                       <Link
                         key={it.href}
                         href={it.href}
                         onClick={() => setIsMobileDrawerOpen(false)}
-                        className="block px-2 py-1.5 rounded hover:bg-[--color-ink-900]/5 text-[--font-size-step--1]"
+                        className="block px-2 py-1.5 rounded hover:bg-(--color-ink-900)/5 text-(--font-size-step--1)"
                       >
                         {it.icon} {it.label}
                       </Link>
@@ -367,7 +367,7 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
         )}
 
         {/* Main Routed Content Container (Max width 1600px with dense rhythm) */}
-        <main className="flex-1 p-[--spacing-s4] md:p-[--spacing-s5] max-w-[1600px] w-full mx-auto">
+        <main className="flex-1 p-(--spacing-s4) md:p-(--spacing-s5) max-w-[1600px] w-full mx-auto">
           {children}
         </main>
       </div>

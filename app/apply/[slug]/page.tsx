@@ -81,23 +81,23 @@ export default async function ApplyPage({ params, searchParams }: ApplyPageProps
   }
 
   return (
-    <div className="min-h-screen bg-[--color-paper] flex flex-col">
+    <div className="min-h-screen bg-(--color-paper) flex flex-col">
       <Header />
 
-      <main className="mx-auto max-w-3xl w-full px-[--spacing-s5] py-[--spacing-s8] flex flex-col gap-[--spacing-s6] flex-1">
+      <main className="mx-auto max-w-3xl w-full px-(--spacing-s5) py-(--spacing-s8) flex flex-col gap-(--spacing-s6) flex-1">
         {/* Back Link */}
-        <Link href={`/careers/${job.slug}`} className="text-[--font-size-step--1] font-mono text-[--color-ink-600] hover:text-[--color-ink-900] transition-colors flex items-center gap-[--spacing-s1] self-start">
+        <Link href={`/careers/${job.slug}`} className="text-(--font-size-step--1) font-mono text-(--color-ink-600) hover:text-(--color-ink-900) transition-colors flex items-center gap-(--spacing-s1) self-start">
           <span>&larr;</span> Back to Job Details
         </Link>
 
         {/* Wizard Header */}
         <div>
-          <span className="eyebrow text-[--color-marigold]">Application Portal</span>
-          <h1 className="display text-[--font-size-step-2] font-bold text-[--color-ink-900] mt-[--spacing-s1]">
+          <span className="eyebrow text-(--color-marigold)">Application Portal</span>
+          <h1 className="display text-(--font-size-step-2) font-bold text-(--color-ink-900) mt-(--spacing-s1)">
             Apply for {job.title}
           </h1>
           {driveCode && (
-            <p className="text-[--font-size-step--1] text-[--color-leaf] font-semibold font-mono mt-[--spacing-s1]">
+            <p className="text-(--font-size-step--1) text-(--color-leaf) font-semibold font-mono mt-(--spacing-s1)">
               ✓ Campus Drive Session: {driveCode.toUpperCase()}
             </p>
           )}
