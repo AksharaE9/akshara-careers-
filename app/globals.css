@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Colour. Namespace --color-* generates bg-/text-/border- utilities ---- */
+  --color-ink-900: #0E1226;
+  --color-ink-800: #171D3D;
+  --color-ink-600: #2A3468;
+  --color-ink-400: #5A66A8;
+
+  --color-paper:    #F2EEE4;
+  --color-chalk:    #FBFAF6;
+  --color-graphite: #3A3A42;
+
+  --color-marigold:       #E8A33D;
+  --color-marigold-press: #C9861F;
+  --color-leaf:   #2E6B4F;
+  --color-kumkum: #C0392B;
+
+  /* Chart series — deliberately NOT the semantic colours (Doc 3 §14.21) */
+  --color-series-1: #4C6FBF;
+  --color-series-2: #E8A33D;
+  --color-series-3: #2E6B4F;
+  --color-series-4: #9B5DE5;
+  --color-series-5: #E4711E;
+  --color-series-6: #567C8D;
+
+  /* ---- Type. --font-* generates font-display / font-sans / font-mono ---- */
+  --font-display: var(--font-bricolage), 'Bricolage Grotesque', 'Arial Black', ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    var(--font-inter-tight), 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    var(--font-geist-mono), 'Geist Mono', 'Courier New', ui-monospace, monospace;
+
+  /* ---- Fluid type scale. --text-* generates text-step-N ---- */
+  --text-step--2: clamp(0.69rem, 0.66rem + 0.12vw, 0.78rem);
+  --text-step--1: clamp(0.80rem, 0.77rem + 0.15vw, 0.89rem);
+  --text-step-0:  clamp(1.00rem, 0.95rem + 0.25vw, 1.13rem);
+  --text-step-1:  clamp(1.25rem, 1.16rem + 0.45vw, 1.60rem);
+  --text-step-2:  clamp(1.56rem, 1.40rem + 0.80vw, 2.27rem);
+  --text-step-3:  clamp(1.95rem, 1.69rem + 1.31vw, 3.22rem);
+  --text-step-4:  clamp(2.44rem, 2.02rem + 2.09vw, 4.57rem);
+  --text-step-5:  clamp(3.05rem, 2.40rem + 3.25vw, 6.48rem);
+
+  /* Legacy alias compatibility */
+  --font-size-step--2: clamp(0.69rem, 0.66rem + 0.12vw, 0.78rem);
+  --font-size-step--1: clamp(0.80rem, 0.77rem + 0.15vw, 0.89rem);
+  --font-size-step-0:  clamp(1.00rem, 0.95rem + 0.25vw, 1.13rem);
+  --font-size-step-1:  clamp(1.25rem, 1.16rem + 0.45vw, 1.60rem);
+  --font-size-step-2:  clamp(1.56rem, 1.40rem + 0.80vw, 2.27rem);
+  --font-size-step-3:  clamp(1.95rem, 1.69rem + 1.31vw, 3.22rem);
+  --font-size-step-4:  clamp(2.44rem, 2.02rem + 2.09vw, 4.57rem);
+  --font-size-step-5:  clamp(3.05rem, 2.40rem + 3.25vw, 6.48rem);
+
+  /* Line heights paired to the scale — a size without a line-height is a bug */
+  --leading-tight-display: 0.95;
+  --leading-heading: 1.15;
+  --leading-body: 1.6;
+
+  /* ---- Spacing. 4px base. --spacing-* generates p-/m-/gap- ---- */
+  --spacing-1: 4px;    --spacing-2: 8px;    --spacing-3: 12px;
+  --spacing-4: 16px;   --spacing-5: 24px;   --spacing-6: 32px;
+  --spacing-7: 48px;   --spacing-8: 64px;   --spacing-9: 96px;
+  --spacing-10: 128px; --spacing-11: 160px; --spacing-12: 192px;
+
+  /* Legacy alias compatibility */
+  --spacing-s1: 4px;  --spacing-s2: 8px;   --spacing-s3: 12px;
+  --spacing-s4: 16px; --spacing-s5: 24px;  --spacing-s6: 32px;
+  --spacing-s7: 48px; --spacing-s8: 64px;  --spacing-s9: 96px;
+  --spacing-s10: 128px;
+
+  /* ---- Layout ---- */
+  --container-content: 1280px;
+  --container-prose: 68ch;
+  --container-wide: 1440px;
+
+  --radius-sm: 2px; --radius-md: 4px; --radius-lg: 8px; --radius-full: 999px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Base layer — resets and element defaults */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-graphite);
+    font-family: var(--font-sans);
+    font-size: var(--text-step-0);
+    line-height: var(--leading-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    line-height: var(--leading-heading);
+    letter-spacing: -0.03em;
+    text-wrap: balance;      /* stops orphan words in headlines */
+  }
+  p { text-wrap: pretty; }
+
+  /* Media never overflows its container — kills a whole class of h-scroll bugs */
+  img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-marigold);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Tabular figures everywhere numbers are compared */
+  .tabular, td[data-numeric], th[data-numeric] { font-variant-numeric: tabular-nums; }
+}
+
+@layer components {
+  .section-lg { padding-block: clamp(96px, 12vw, 192px); }   /* Hero, major moments */
+  .section-md { padding-block: clamp(64px, 8vw, 128px);  }   /* Standard sections */
+  .section-sm { padding-block: clamp(48px, 6vw, 80px);   }   /* Dense: proof strip, footer top */
+}

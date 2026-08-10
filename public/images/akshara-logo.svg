@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48">
+  <!-- Stylized modern monogram -->
+  <g transform="translate(10, 4)">
+    <rect width="40" height="40" rx="8" fill="#0E1226"/>
+    <!-- Letter A built with precise paths -->
+    <path d="M20 10 L30 30 L26 30 L20 17 L14 30 L10 30 Z" fill="#E8A33D"/>
+    <path d="M15 24 L25 24 L25 27 L15 27 Z" fill="#E8A33D"/>
+  </g>
+  <!-- Text Wordmark -->
+  <text x="62" y="32" font-family="'Inter', sans-serif" font-weight="700" font-size="20" fill="#0E1226" letter-spacing="0.5">akshara</text>
+  <text x="146" y="32" font-family="'Inter', sans-serif" font-weight="400" font-size="12" fill="#E8A33D" letter-spacing="1">CAREERS</text>
+</svg>

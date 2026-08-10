@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 60" width="500" height="60">
+  <style>
+    .kannada { font-family: 'Noto Sans Kannada', sans-serif; font-size: 24px; font-weight: 500; fill: #0E1226; }
+    .devanagari { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 24px; font-weight: 500; fill: #E8A33D; }
+    .english { font-family: 'Bricolage Grotesque', sans-serif; font-size: 28px; font-weight: 700; fill: #0E1226; letter-spacing: 0.5px; }
+    .divider { fill: #0E1226; opacity: 0.25; }
+  </style>
+  <text x="10" y="38" class="kannada">ಅಕ್ಷರ</text>
+  <text x="100" y="38" class="divider" font-size="24">|</text>
+  <text x="130" y="38" class="devanagari">अक्षर</text>
+  <text x="210" y="38" class="divider" font-size="24">|</text>
+  <text x="240" y="40" class="english">Akshara</text>
+</svg>
