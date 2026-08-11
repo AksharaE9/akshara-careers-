@@ -22,7 +22,7 @@ export async function PUT(request: NextRequest) {
         'ETag': '"mock-etag-value"',
       },
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Mock upload failed:', err)
     return NextResponse.json(
       { error: 'Mock upload failed' },

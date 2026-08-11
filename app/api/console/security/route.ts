@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
       recentEvents: serializedEvents,
       activeSessionsCount: 3,
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Security insight error:', err)
     return NextResponse.json({ error: 'Failed to query security analytics' }, { status: 500 })
   }

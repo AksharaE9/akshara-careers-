@@ -22,6 +22,7 @@ import { Switch } from '@/components/ui/Switch'
 import { ProgressSteps } from '@/components/ui/ProgressSteps'
 import { FileDropzone } from '@/components/ui/FileDropzone'
 import { FieldWrapper } from '@/components/ui/FieldWrapper'
+import { getErrorMessage } from '@/lib/errors'
 import {
   personalDetailsSchema,
   academicStatusSchemaForForm as academicStatusSchema,
@@ -114,7 +115,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
       if (data.statusToken) {
         router.push(`/status/${data.statusToken}`)
       }
-    } catch (err: any) {
+    } catch (err) {
       setLookupError('Network error while looking up application.')
     } finally {
       setIsLookingUp(false)
@@ -130,7 +131,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
       const fieldErrors: Record<string, string> = {}
       result.error.issues.forEach((err) => {
         if (err.path[0]) {
-          fieldErrors[err.path[0].toString()] = err.message
+          fieldErrors[err.path[0].toString()] = getErrorMessage(err)
         }
       })
       setStep1Errors(fieldErrors)
@@ -160,7 +161,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
       const fieldErrors: Record<string, string> = {}
       result.error.issues.forEach((err) => {
         if (err.path[0]) {
-          fieldErrors[err.path[0].toString()] = err.message
+          fieldErrors[err.path[0].toString()] = getErrorMessage(err)
         }
       })
       setStep2Errors(fieldErrors)
@@ -239,9 +240,9 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
       setResumeSizeBytes(file.size)
       setResumeMime(file.type || 'application/pdf')
       setUploadProgress(100)
-    } catch (err: any) {
+    } catch (err) {
       console.error(err)
-      setUploadError(err.message || 'File upload failed. Please try again.')
+      setUploadError(getErrorMessage(err) || 'File upload failed. Please try again.')
       setUploadProgress(undefined)
     }
   }
@@ -265,7 +266,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
       const fieldErrors: Record<string, string> = {}
       step3Result.error.issues.forEach((err) => {
         if (err.path[0]) {
-          fieldErrors[err.path[0].toString()] = err.message
+          fieldErrors[err.path[0].toString()] = getErrorMessage(err)
         }
       })
       setStep3Errors(fieldErrors)
@@ -317,8 +318,8 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
       }
 
       setApplicationId(data.applicationId || 'APP-RECEIVED')
-    } catch (err: any) {
-      setSubmitError(err.message || 'Failed to submit application. Please try again.')
+    } catch (err) {
+      setSubmitError(getErrorMessage(err) || 'Failed to submit application. Please try again.')
     } finally {
       setIsSubmitting(false)
     }

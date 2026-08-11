@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getR2Client, getR2BucketName } from '@/lib/storage/r2'
 import { GetObjectCommand } from '@aws-sdk/client-s3'
+import { getErrorMessage } from '@/lib/errors'
 
 /**
  * Sniffs the magic bytes of a buffer to verify its real MIME type.
@@ -126,10 +127,10 @@ export async function POST(request: NextRequest) {
       sizeBytes: totalSize,
       isMock: false,
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Error finalizing resume upload:', err)
     return NextResponse.json(
-      { error: err.message || 'Internal server error' },
+      { error: getErrorMessage(err) || 'Internal server error' },
       { status: 500 }
     )
   }

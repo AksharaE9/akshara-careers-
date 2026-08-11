@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
     })
 
     return NextResponse.json({ jobs: formatted })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Jobs insight error:', err)
     return NextResponse.json({ error: 'Failed to query jobs performance' }, { status: 500 })
   }

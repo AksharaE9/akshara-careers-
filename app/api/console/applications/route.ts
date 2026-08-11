@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getApplicationsList, getApplicationStats } from '@/lib/db/queries/applications'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
+import { getErrorMessage } from '@/lib/errors'
 
 export async function GET(request: NextRequest) {
   try {
@@ -34,10 +35,10 @@ export async function GET(request: NextRequest) {
       hasMore: paginatedResult.hasMore,
       stats,
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to fetch console applications:', err)
     return NextResponse.json(
-      { error: err.message || 'Internal server error' },
+      { error: getErrorMessage(err) || 'Internal server error' },
       { status: 500 }
     )
   }

@@ -4,6 +4,7 @@ import { getDb } from '@/lib/db/client'
 import { auditLog } from '@/lib/db/schema'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
+import { getErrorMessage } from '@/lib/errors'
 
 export async function GET(request: NextRequest) {
   try {
@@ -91,10 +92,10 @@ export async function GET(request: NextRequest) {
         'X-Export-Total-Matching': String(result.totalCount),
       },
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to generate CSV export:', err)
     return NextResponse.json(
-      { error: err.message || 'Export failed' },
+      { error: getErrorMessage(err) || 'Export failed' },
       { status: 500 }
     )
   }

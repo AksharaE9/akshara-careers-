@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
       .limit(50)
 
     return NextResponse.json({ logs })
-  } catch (err: any) {
+  } catch (err) {
     return NextResponse.json({ error: 'Failed to query audit log' }, { status: 500 })
   }
 }

@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     ]
 
     return NextResponse.json({ blocks: defaultBlocks })
-  } catch (err: any) {
+  } catch (err) {
     return NextResponse.json({ error: 'Failed to query content blocks' }, { status: 500 })
   }
 }
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ success: true, message: 'Content block updated successfully.' })
-  } catch (err: any) {
+  } catch (err) {
     return NextResponse.json({ error: 'Failed to update content' }, { status: 500 })
   }
 }

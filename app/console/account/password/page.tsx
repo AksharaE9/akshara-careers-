@@ -9,6 +9,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { getErrorMessage } from '@/lib/errors'
 
 export default function PasswordRotationPage() {
   const router = useRouter()
@@ -59,8 +60,8 @@ export default function PasswordRotationPage() {
         router.push('/console')
         router.refresh()
       }, 1200)
-    } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred.')
+    } catch (err) {
+      setError(getErrorMessage(err) || 'An unexpected error occurred.')
       setLoading(false)
     }
   }

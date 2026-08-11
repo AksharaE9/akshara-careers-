@@ -4,6 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { updateJobStatus } from '@/lib/db/queries/jobs'
+import { getErrorMessage } from '@/lib/errors'
 
 interface Params {
   params: Promise<{ id: string }>
@@ -20,10 +21,10 @@ export async function PATCH(request: NextRequest, { params }: Params) {
 
     const job = await updateJobStatus(id, status)
     return NextResponse.json({ success: true, job })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to update job:', err)
     return NextResponse.json(
-      { error: err.message || 'Failed to update job' },
+      { error: getErrorMessage(err) || 'Failed to update job' },
       { status: 500 }
     )
   }

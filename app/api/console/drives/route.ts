@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { listAllDrives, createDrive } from '@/lib/db/queries/drives'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
+import { getErrorMessage } from '@/lib/errors'
 
 export async function GET() {
   try {
@@ -11,10 +12,10 @@ export async function GET() {
 
     const drives = await listAllDrives()
     return NextResponse.json({ drives })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to list drives:', err)
     return NextResponse.json(
-      { error: err.message || 'Internal server error' },
+      { error: getErrorMessage(err) || 'Internal server error' },
       { status: 500 }
     )
   }
@@ -46,10 +47,10 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ success: true, drive })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to create drive:', err)
     return NextResponse.json(
-      { error: err.message || 'Failed to create drive' },
+      { error: getErrorMessage(err) || 'Failed to create drive' },
       { status: 500 }
     )
   }

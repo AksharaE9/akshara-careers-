@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { updateApplicationStage } from '@/lib/db/queries/applications'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
+import { getErrorMessage } from '@/lib/errors'
 
 interface Params {
   params: Promise<{ id: string }>
@@ -30,10 +31,10 @@ export async function PATCH(request: NextRequest, { params }: Params) {
 
     const result = await updateApplicationStage(id, stage, user.id)
     return NextResponse.json(result)
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to update stage:', err)
     return NextResponse.json(
-      { error: err.message || 'Failed to update stage' },
+      { error: getErrorMessage(err) || 'Failed to update stage' },
       { status: 500 }
     )
   }

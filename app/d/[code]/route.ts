@@ -19,7 +19,7 @@ export async function GET(
   const { code } = resolvedParams
 
   const hasDb = Boolean(process.env.NEON_DATABASE_URL)
-  let driveCode = code.toUpperCase().trim()
+  const driveCode = code.toUpperCase().trim()
 
   if (hasDb) {
     try {

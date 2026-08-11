@@ -3,6 +3,7 @@ dotenv.config({ path: '.env.local' })
 
 import { getDb } from '../lib/db/client'
 import { sql } from 'drizzle-orm'
+import { getErrorMessage } from '../lib/errors'
 
 async function fixIndices() {
   const db = getDb()
@@ -11,15 +12,15 @@ async function fixIndices() {
   try {
     await db.execute(sql`DROP INDEX IF EXISTS apps_candidate_job_recent;`)
     console.log('✓ Dropped index apps_candidate_job_recent')
-  } catch (e: any) {
-    console.log('Index drop info:', e.message)
+  } catch (e) {
+    console.log('Index drop info:', getErrorMessage(e))
   }
 
   try {
     await db.execute(sql`ALTER TABLE applications DROP CONSTRAINT IF EXISTS apps_candidate_job_recent;`)
     console.log('✓ Dropped constraint apps_candidate_job_recent if was a table constraint')
-  } catch (e: any) {
-    console.log('Constraint drop info:', e.message)
+  } catch (e) {
+    console.log('Constraint drop info:', getErrorMessage(e))
   }
 
   // Ensure correct partial index exists

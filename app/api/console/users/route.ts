@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
       .orderBy(desc(users.lastLoginAt))
 
     return NextResponse.json({ users: allUsers })
-  } catch (err: any) {
+  } catch (err) {
     return NextResponse.json({ error: 'Failed to query users' }, { status: 500 })
   }
 }
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ success: true, user: created })
-  } catch (err: any) {
+  } catch (err) {
     return NextResponse.json({ error: 'Failed to create user' }, { status: 500 })
   }
 }

@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
         },
       }
     )
-  } catch (err: any) {
+  } catch (err) {
     console.error('Candidate Applications API Error:', err)
     return NextResponse.json(
       { error: 'Failed to load candidate applications' },

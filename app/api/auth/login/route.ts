@@ -176,7 +176,7 @@ export async function POST(request: NextRequest) {
     })
 
     return response
-  } catch (err: any) {
+  } catch (err) {
     console.error('Console login error:', err)
     return NextResponse.json({ error: 'Email or password is incorrect.' }, { status: 401 })
   }

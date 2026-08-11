@@ -11,6 +11,7 @@ import { neon } from '@neondatabase/serverless'
 import { getDb } from './lib/db/client'
 import { users, jobs, colleges, courses, applications, campusDrives } from './lib/db/schema'
 import { count } from 'drizzle-orm'
+import { getErrorMessage } from './lib/errors'
 
 async function testConnection() {
   const url = process.env.NEON_DATABASE_URL
@@ -44,8 +45,8 @@ async function testConnection() {
     console.log(`   - Database User      : ${meta[0]?.user_name}`)
     console.log(`   - Server Timestamp   : ${meta[0]?.server_time}`)
     console.log(`   - Query Roundtrip    : ${latencyPing} ms\n`)
-  } catch (err: any) {
-    console.error('❌ Failed to ping database:', err.message)
+  } catch (err) {
+    console.error('❌ Failed to ping database:', getErrorMessage(err))
     process.exit(1)
   }
 
@@ -68,8 +69,8 @@ async function testConnection() {
     console.log(`   - Courses Table      : ${courseCount?.value} records`)
     console.log(`   - Applications Table : ${appCount?.value} records`)
     console.log(`   - Campus Drives Table: ${driveCount?.value} records\n`)
-  } catch (err: any) {
-    console.error('❌ Failed to query tables with Drizzle ORM:', err.message)
+  } catch (err) {
+    console.error('❌ Failed to query tables with Drizzle ORM:', getErrorMessage(err))
     process.exit(1)
   }
 
@@ -87,8 +88,8 @@ async function testConnection() {
     for (const j of sampleJobs) {
       console.log(`   - [${j.status.toUpperCase()}] ${j.title} (/careers/${j.slug})`)
     }
-  } catch (err: any) {
-    console.error('❌ Failed sample queries:', err.message)
+  } catch (err) {
+    console.error('❌ Failed sample queries:', getErrorMessage(err))
     process.exit(1)
   }
 

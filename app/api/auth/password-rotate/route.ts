@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
     } catch {}
 
     return NextResponse.json({ success: true, message: 'Password rotated successfully.' })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Password rotation error:', err)
     return NextResponse.json({ error: 'Failed to rotate password' }, { status: 500 })
   }

@@ -14,6 +14,7 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { FieldWrapper } from '@/components/ui/FieldWrapper'
+import { getErrorMessage } from '@/lib/errors'
 
 export default function ConsoleLoginPage() {
   const router = useRouter()
@@ -47,8 +48,8 @@ export default function ConsoleLoginPage() {
         router.push('/console')
       }
       router.refresh()
-    } catch (err: any) {
-      setError(err.message || 'Email or password is incorrect.')
+    } catch (err) {
+      setError(getErrorMessage(err) || 'Email or password is incorrect.')
     } finally {
       setLoading(false)
     }

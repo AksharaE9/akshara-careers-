@@ -15,6 +15,7 @@ import { candidates, applications, campusDrives, applicationStageEvents } from '
 import { findCandidate, upsertCandidate, checkApplicationEligibility } from '@/lib/db/queries/candidates'
 import { getDriveByCode } from '@/lib/db/queries/drives'
 import { randomUUID } from 'crypto'
+import { getErrorMessage, isPostgresError } from '@/lib/errors'
 
 export async function POST(request: NextRequest) {
   try {
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
     const db = getDb()
 
     // A. Upsert / resolve candidate identity by phone_e164
-    let candidate = await upsertCandidate({
+    const candidate = await upsertCandidate({
       emailNormalised: data.email,
       phoneE164: data.phone,
       fullName: data.fullName,
@@ -139,11 +140,11 @@ export async function POST(request: NextRequest) {
       statusToken,
       isMock: false,
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Error processing application submission:', err)
 
     // Handle postgres unique constraint key violations (e.g. idempotencyKey, one_active_application)
-    if (err.code === '23505') {
+    if (isPostgresError(err) && err.code === '23505') {
       if (err.constraint === 'one_active_application_per_candidate') {
         return NextResponse.json(
           {
@@ -160,7 +161,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: err.message || 'Internal server error' },
+      { error: getErrorMessage(err) || 'Internal server error' },
       { status: 500 }
     )
   }

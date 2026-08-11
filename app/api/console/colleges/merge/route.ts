@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { mergeColleges } from '@/lib/db/queries/colleges'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
+import { getErrorMessage } from '@/lib/errors'
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,10 +28,10 @@ export async function POST(request: NextRequest) {
 
     await mergeColleges(duplicateId, canonicalId)
     return NextResponse.json({ success: true })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to merge colleges:', err)
     return NextResponse.json(
-      { error: err.message || 'Failed to merge colleges' },
+      { error: getErrorMessage(err) || 'Failed to merge colleges' },
       { status: 500 }
     )
   }

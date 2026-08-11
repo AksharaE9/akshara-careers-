@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       statusToken: rows[0].statusToken,
       publicId: rows[0].publicId,
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Status lookup error:', err)
     return NextResponse.json(
       { error: 'Unable to check application status. Please try again.' },

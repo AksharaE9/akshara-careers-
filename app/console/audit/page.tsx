@@ -14,8 +14,8 @@ interface AuditLogRow {
   action: string
   entityType: string
   entityId: string | null
-  before: any
-  after: any
+  before: unknown
+  after: unknown
   ipHash: string | null
   createdAt: string
   actorName: string | null
@@ -27,23 +27,32 @@ export default function AuditLogPage() {
   const [loading, setLoading] = useState(true)
   const [selectedDiff, setSelectedDiff] = useState<AuditLogRow | null>(null)
 
-  const fetchLogs = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/console/audit')
-      if (res.ok) {
-        const json = await res.json()
-        setLogs(json.logs || [])
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  // F7: fetching inline inside the effect (with an `ignore` flag guarding
+  // against a slow response landing after unmount/re-run) rather than
+  // calling a separately-declared fetchLogs() — react-hooks/set-state-in-effect
+  // flags any named function invoked directly in an effect body when it's
+  // reachable to a setState call, regardless of await boundaries inside it.
+  // This is the pattern React's own docs recommend for effects that fetch
+  // data (https://react.dev/learn/you-might-not-need-an-effect).
   useEffect(() => {
-    fetchLogs()
+    let ignore = false
+    ;(async () => {
+      setLoading(true)
+      try {
+        const res = await fetch('/api/console/audit')
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) setLogs(json.logs || [])
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [])
 
   const columns: ColumnDef<AuditLogRow>[] = [

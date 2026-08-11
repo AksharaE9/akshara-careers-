@@ -1,3 +1,4 @@
+import { getErrorMessage } from '../lib/errors'
 /**
  * scripts/benchmark-concurrency.ts
  *
@@ -28,14 +29,14 @@ async function fetchWithTiming(url: string, options?: RequestInit): Promise<Late
       durationMs,
       ok: res.ok,
     }
-  } catch (err: any) {
+  } catch (err) {
     const durationMs = performance.now() - start
     return {
       url,
       status: 0,
       durationMs,
       ok: false,
-      error: err.message,
+      error: getErrorMessage(err),
     }
   }
 }

@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getApplicationById } from '@/lib/db/queries/applications'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
+import { getErrorMessage } from '@/lib/errors'
 
 interface Params {
   params: Promise<{ id: string }>
@@ -44,10 +45,10 @@ export async function GET(request: NextRequest, { params }: Params) {
     }
 
     return NextResponse.json({ application })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to fetch application detail:', err)
     return NextResponse.json(
-      { error: err.message || 'Internal server error' },
+      { error: getErrorMessage(err) || 'Internal server error' },
       { status: 500 }
     )
   }

@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       candidates: candidateRows,
       totalCount: candidateRows.length,
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Candidates 360 error:', err)
     return NextResponse.json({ error: 'Failed to query candidates' }, { status: 500 })
   }

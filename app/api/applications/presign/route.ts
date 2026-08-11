@@ -13,6 +13,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 // Custom UUID generator since we don't have crypto.randomUUID in older Node.js on some engines,
 // though Node 20+ has it. We can use standard crypto.randomUUID().
 import { randomUUID } from 'crypto'
+import { getErrorMessage } from '@/lib/errors'
 
 export async function POST(request: NextRequest) {
   try {
@@ -110,10 +111,10 @@ export async function POST(request: NextRequest) {
       filename,
       isMock: false,
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Error generating presigned URL:', err)
     return NextResponse.json(
-      { error: err.message || 'Internal server error' },
+      { error: getErrorMessage(err) || 'Internal server error' },
       { status: 500 }
     )
   }

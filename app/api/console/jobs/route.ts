@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { listAllJobsAdmin, createJobPosting } from '@/lib/db/queries/jobs'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
+import { getErrorMessage } from '@/lib/errors'
 
 export async function GET() {
   try {
@@ -11,10 +12,10 @@ export async function GET() {
 
     const jobs = await listAllJobsAdmin()
     return NextResponse.json({ jobs })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to list console jobs:', err)
     return NextResponse.json(
-      { error: err.message || 'Internal server error' },
+      { error: getErrorMessage(err) || 'Internal server error' },
       { status: 500 }
     )
   }
@@ -49,10 +50,10 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ success: true, job })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to create job:', err)
     return NextResponse.json(
-      { error: err.message || 'Failed to create job' },
+      { error: getErrorMessage(err) || 'Failed to create job' },
       { status: 500 }
     )
   }

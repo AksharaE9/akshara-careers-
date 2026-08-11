@@ -3,6 +3,7 @@ dotenv.config({ path: '.env.local' })
 
 import { getDb } from '../lib/db/client'
 import { sql } from 'drizzle-orm'
+import { getErrorMessage } from '../lib/errors'
 
 async function check() {
   const db = getDb()
@@ -14,8 +15,8 @@ async function check() {
       ADD CONSTRAINT candidates_phone_e164_unique UNIQUE (phone_e164);
     `)
     console.log('candidates_phone_e164_unique constraint added.')
-  } catch (e: any) {
-    console.log('candidates_phone_e164_unique constraint check:', e.message)
+  } catch (e) {
+    console.log('candidates_phone_e164_unique constraint check:', getErrorMessage(e))
   }
 
   // Ensure unique index
@@ -26,8 +27,8 @@ async function check() {
       WHERE stage NOT IN ('rejected', 'withdrawn', 'duplicate');
     `)
     console.log('one_active_application_per_candidate index verified.')
-  } catch (e: any) {
-    console.log('Index error:', e.message)
+  } catch (e) {
+    console.log('Index error:', getErrorMessage(e))
   }
 
   // Check tables

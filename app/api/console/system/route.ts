@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
         sha: 'akshara-main-build-v1.0',
       },
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('System health error:', err)
     return NextResponse.json({ error: 'Failed to query system health' }, { status: 500 })
   }

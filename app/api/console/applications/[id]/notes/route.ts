@@ -5,6 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { addApplicationNote } from '@/lib/db/queries/applications'
 import { getCurrentUser } from '@/lib/auth/session'
+import { getErrorMessage } from '@/lib/errors'
 
 interface Params {
   params: Promise<{ id: string }>
@@ -24,10 +25,10 @@ export async function POST(request: NextRequest, { params }: Params) {
     const note = await addApplicationNote(id, authorId, body)
 
     return NextResponse.json({ success: true, note })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to add note:', err)
     return NextResponse.json(
-      { error: err.message || 'Failed to add note' },
+      { error: getErrorMessage(err) || 'Failed to add note' },
       { status: 500 }
     )
   }

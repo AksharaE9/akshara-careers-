@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
     })
 
     return NextResponse.json({ drives: formatted })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Drives insight error:', err)
     return NextResponse.json({ error: 'Failed to query drives performance' }, { status: 500 })
   }

@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
         { metric: 'TTFB (Time to First Byte)', p75: '240ms', target: '< 800ms', status: 'good' },
       ],
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Traffic insight error:', err)
     return NextResponse.json({ error: 'Failed to query traffic analytics' }, { status: 500 })
   }

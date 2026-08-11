@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
       errorLeaderboard,
       resumeHealth,
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Funnel API error:', err)
     return NextResponse.json({ error: 'Failed to query funnel data' }, { status: 500 })
   }

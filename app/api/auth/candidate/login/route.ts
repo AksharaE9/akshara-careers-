@@ -10,6 +10,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { loginCandidate } from '@/lib/auth/candidate-password'
 import { CANDIDATE_SESSION_COOKIE } from '@/lib/auth/candidate-session'
 import { getClientIp } from '@/lib/security/client-ip'
+import { getErrorMessage } from '@/lib/errors'
 
 export async function POST(request: NextRequest) {
   try {
@@ -61,10 +62,10 @@ export async function POST(request: NextRequest) {
     })
 
     return response
-  } catch (err: any) {
+  } catch (err) {
     console.error('Candidate Login Error:', err)
     return NextResponse.json(
-      { error: 'SERVER_ERROR', message: err.message || 'Failed to complete login.' },
+      { error: 'SERVER_ERROR', message: getErrorMessage(err) || 'Failed to complete login.' },
       { status: 500 }
     )
   }

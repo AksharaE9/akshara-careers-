@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { listAllCollegesAdmin, addCollegeAlias } from '@/lib/db/queries/colleges'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
+import { getErrorMessage } from '@/lib/errors'
 
 export async function GET() {
   try {
@@ -11,10 +12,10 @@ export async function GET() {
 
     const colleges = await listAllCollegesAdmin()
     return NextResponse.json({ colleges })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to list colleges:', err)
     return NextResponse.json(
-      { error: err.message || 'Internal server error' },
+      { error: getErrorMessage(err) || 'Internal server error' },
       { status: 500 }
     )
   }
@@ -37,10 +38,10 @@ export async function POST(request: NextRequest) {
 
     const updated = await addCollegeAlias(collegeId, alias)
     return NextResponse.json({ success: true, college: updated })
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to add alias:', err)
     return NextResponse.json(
-      { error: err.message || 'Failed to add alias' },
+      { error: getErrorMessage(err) || 'Failed to add alias' },
       { status: 500 }
     )
   }

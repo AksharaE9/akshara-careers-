@@ -14,6 +14,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { FieldWrapper } from '@/components/ui/FieldWrapper'
 import { Input } from '@/components/ui/Input'
+import { getErrorMessage } from '@/lib/errors'
 
 export default function CandidateLoginPage() {
   const router = useRouter()
@@ -98,8 +99,8 @@ export default function CandidateLoginPage() {
       // Successful auth - route to candidate dashboard
       router.push('/dashboard')
       router.refresh()
-    } catch (err: any) {
-      setError(err.message || 'An error occurred. Please try again.')
+    } catch (err) {
+      setError(getErrorMessage(err) || 'An error occurred. Please try again.')
     } finally {
       setIsLoading(false)
     }

@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
       c.label.toLowerCase().includes(q.toLowerCase())
     )
     return NextResponse.json(filtered)
-  } catch (err: any) {
+  } catch (err) {
     console.error('Course lookup failed:', err)
     // Final safety fallback
     const filtered = FALLBACK_COURSES.filter((c) =>

@@ -5,6 +5,7 @@ import { getDb } from '../lib/db/client'
 import { sql } from 'drizzle-orm'
 import fs from 'fs'
 import path from 'path'
+import { getErrorMessage } from '../lib/errors'
 
 async function run() {
   console.log('Applying migration 0003...')
@@ -24,8 +25,8 @@ async function run() {
     try {
       await db.execute(sql.raw(stmt))
       console.log('Executed statement successfully.')
-    } catch (err: any) {
-      console.error('Statement error (might already exist):', err.message)
+    } catch (err) {
+      console.error('Statement error (might already exist):', getErrorMessage(err))
     }
   }
 

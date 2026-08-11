@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     const entries = await db.select().from(talentPool).orderBy(desc(talentPool.createdAt)).limit(50)
 
     return NextResponse.json({ talentPool: entries })
-  } catch (err: any) {
+  } catch (err) {
     return NextResponse.json({ error: 'Failed to query talent pool' }, { status: 500 })
   }
 }
