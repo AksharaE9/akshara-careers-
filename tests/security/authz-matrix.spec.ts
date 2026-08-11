@@ -18,6 +18,7 @@
 import { test, expect, type APIRequestContext } from '@playwright/test'
 
 const BASE = 'http://localhost:3000'
+const SEED_ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD || 'Admin@123'
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
@@ -33,7 +34,7 @@ async function login(
   // Extract cookie from response
   const setCookie = res.headers()['set-cookie'] ?? ''
   const match = setCookie.match(/akshara_console_session=([^;]+)/)
-  return match ? match[1] : ''
+  return match?.[1] ?? ''
 }
 
 async function apiGet(
@@ -81,7 +82,7 @@ interface Fixtures {
 
 async function loadFixtures(request: APIRequestContext): Promise<Fixtures> {
   // Login as super_admin to fetch fixtures
-  const superAdminCookie = await login(request, 'admin@gmail.com', 'Admin@123')
+  const superAdminCookie = await login(request, 'admin@gmail.com', SEED_ADMIN_PASSWORD)
   
   const res = await apiGet(request, '/api/console/qa-fixtures', superAdminCookie)
   expect(res.status(), 'QA fixtures endpoint must return 200').toBe(200)
@@ -418,7 +419,7 @@ test.describe('Authorization Matrix — Security Sweep (§17.4.1)', () => {
   // ── I. QA fixtures endpoint is 404 in production ──────────────────────────
   test.describe('I — Fixtures endpoint production guard', () => {
     test('QA fixtures endpoint exists in dev (non-prod environment)', async ({ request }) => {
-      const superAdminCookie = await login(request, 'admin@gmail.com', 'Admin@123')
+      const superAdminCookie = await login(request, 'admin@gmail.com', SEED_ADMIN_PASSWORD)
       const res = await apiGet(request, '/api/console/qa-fixtures', superAdminCookie)
       // In dev environment, super_admin can access it
       expect([200, 403]).toContain(res.status())

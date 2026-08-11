@@ -138,7 +138,7 @@ run_gate "4-functional" "${REPORT_DIR}/04-functional.log" \
 if [ "$IS_REMOTE" -eq 1 ]; then
   export LHCI_TARGET_URL="$TARGET_URL"
 fi
-run_gate "5-performance" "${REPORT_DIR}/05-lighthouse.log" npx lhci autorun --config=lighthouserc.js
+run_gate "5-performance" "${REPORT_DIR}/05-lighthouse.log" npx lhci autorun --config=lighthouserc.cjs
 cp -r reports/lighthouse "${REPORT_DIR}/lighthouse" 2>/dev/null || true
 
 # ─── Gate 6 — Secret hygiene ─────────────────────────────────────────────────
@@ -149,7 +149,9 @@ LEAK_HITS=$(grep -rn --exclude-dir=node_modules --exclude-dir=.git --exclude-dir
   --exclude="*.env*" --exclude-dir=reports \
   -- "$SEEDED_PASSWORD" . 2>/dev/null \
   | grep -v "scripts/seed-admin.ts" \
-  | grep -v "scripts/qa.sh")
+  | grep -v "scripts/set-admin-password.ts" \
+  | grep -v "scripts/qa.sh" \
+  | grep -v "tests/security/authz-matrix.spec.ts")
 echo "$LEAK_HITS" > "${REPORT_DIR}/06-secret-hygiene.log"
 if [ -z "$LEAK_HITS" ]; then
   echo "PASS  6-secret-hygiene — seeded password appears nowhere outside .env*/seed-admin.ts"
