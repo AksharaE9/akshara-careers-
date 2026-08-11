@@ -1,0 +1,144 @@
+npm notice run akshara-careers@0.1.0 npx
+npm notice run tsx scripts/db-audit.ts --explain
+Akshara Careers — DB audit (read-only)
+=======================================
+
+INFO  env                      Connected host: ep-odd-thunder-axo9k09u.c-4.us-east-2.aws.neon.tech
+WARN  env                      Host name does not obviously look like a QA/dev/test Neon branch. This script is read-only and safe either way, but the rest of the suite (Playwright, k6, seed scripts) is destructive — confirm this is a branch, not main, before running qa.sh end-to-end (§16.0).
+WARN  security                 Server-reported ssl = off
+PASS  extensions               uuid-ossp installed
+PASS  extensions               pg_trgm installed
+PASS  tables                   colleges exists
+PASS  tables                   courses exists
+PASS  tables                   jobs exists
+PASS  tables                   campus_drives exists
+PASS  tables                   users exists
+PASS  tables                   candidates exists
+PASS  tables                   applications exists
+PASS  tables                   application_notes exists
+PASS  tables                   talent_pool exists
+PASS  tables                   audit_log exists
+PASS  tables                   analytics_events exists
+PASS  tables                   analytics_daily exists
+PASS  tables                   funnel_daily exists
+PASS  tables                   field_analytics_daily exists
+PASS  tables                   web_vitals exists
+PASS  tables                   security_events exists
+PASS  tables                   saved_views exists
+PASS  tables                   content_blocks exists
+PASS  tables                   content_block_versions exists
+PASS  tables                   scheduled_reports exists
+PASS  tables                   alert_rules exists
+PASS  tables                   alert_incidents exists
+PASS  tables                   console_sessions exists
+PASS  tables                   candidate_login_attempts exists
+PASS  tables                   candidate_sessions exists
+PASS  tables                   application_stage_events exists
+PASS  columns                  candidates.id : uuid
+PASS  columns                  candidates.email_normalised : text
+PASS  columns                  candidates.phone_e164 : text
+PASS  columns                  candidates.full_name : text
+PASS  columns                  candidates.password_hash : text
+PASS  columns                  candidates.languages : ARRAY
+PASS  columns                  applications.id : uuid
+PASS  columns                  applications.public_id : text
+PASS  columns                  applications.status_token : text
+PASS  columns                  applications.candidate_id : uuid
+PASS  columns                  applications.job_id : uuid
+PASS  columns                  applications.drive_id : uuid
+PASS  columns                  applications.college_id : uuid
+PASS  columns                  applications.college_raw : text
+PASS  columns                  applications.course_id : uuid
+PASS  columns                  applications.course_raw : text
+PASS  columns                  applications.academic_status : text
+PASS  columns                  applications.academic_note : text
+PASS  columns                  applications.resume_key : text
+PASS  columns                  applications.resume_mime : text
+PASS  columns                  applications.stage : text
+PASS  columns                  applications.duplicate_of : uuid
+PASS  columns                  applications.consent_given_at : timestamp with time zone
+PASS  columns                  applications.consent_version : text
+PASS  columns                  candidate_login_attempts.id : uuid
+PASS  columns                  candidate_login_attempts.phone_e164 : text
+PASS  columns                  candidate_login_attempts.ip_address : text
+PASS  columns                  candidate_login_attempts.succeeded : boolean
+PASS  columns                  candidate_sessions.id : uuid
+PASS  columns                  candidate_sessions.candidate_id : uuid
+PASS  columns                  candidate_sessions.token_hash : text
+PASS  columns                  application_stage_events.id : uuid
+PASS  columns                  application_stage_events.application_id : uuid
+PASS  columns                  application_stage_events.stage : text
+PASS  columns                  colleges.id : uuid
+PASS  columns                  colleges.name : text
+PASS  columns                  colleges.merged_into : uuid
+PASS  columns                  courses.id : uuid
+PASS  columns                  courses.name : text
+PASS  columns                  courses.level : text
+PASS  columns                  campus_drives.id : uuid
+PASS  columns                  campus_drives.code : text
+PASS  columns                  campus_drives.view_count : integer
+PASS  columns                  application_notes.id : uuid
+PASS  columns                  application_notes.application_id : uuid
+PASS  columns                  application_notes.author_id : uuid
+PASS  columns                  application_notes.body : text
+PASS  columns                  users.id : uuid
+PASS  columns                  users.email : text
+PASS  columns                  users.password_hash : text
+PASS  columns                  users.must_change_password : boolean
+PASS  indexes                  colleges.colleges_name_trgm present
+PASS  indexes                  colleges.colleges_name_city_uq present
+PASS  indexes                  courses.courses_name_trgm present
+PASS  indexes                  jobs.jobs_status_posted present
+PASS  indexes                  campus_drives.drives_date present
+PASS  indexes                  applications.apps_stage_submitted present
+PASS  indexes                  applications.apps_job present
+PASS  indexes                  applications.apps_drive present
+PASS  indexes                  applications.one_active_application_per_candidate present
+PASS  checks                   applications.apps_academic_status_check — CHECK ((academic_status = ANY (ARRAY['sem_1'::text, 'sem_2'::text, 'sem_3'::text, 'sem_4'::text, 'sem_5'::text, 'sem_6'::text, 'sem_7'::text, 'sem_8'::text, 'final_year_results_awaited'::text, 'graduated'::text])))
+PASS  checks                   applications.apps_experience_type_check — CHECK ((experience_type = ANY (ARRAY['fresher'::text, 'experienced'::text])))
+PASS  checks                   applications.apps_source_check — CHECK ((source = ANY (ARRAY['organic'::text, 'campus_drive'::text, 'referral'::text, 'job_board'::text, 'social'::text])))
+PASS  checks                   applications.apps_stage_check — CHECK ((stage = ANY (ARRAY['received'::text, 'under_review'::text, 'shortlisted'::text, 'interview_scheduled'::text, 'interviewed'::text, 'offered'::text, 'hired'::text, 'rejected'::text, 'withdrawn'::text, 'duplicate'::text])))
+PASS  checks                   applications.apps_two_wheeler_check — CHECK ((has_two_wheeler = ANY (ARRAY['yes'::text, 'no'::text, 'can_arrange'::text])))
+PASS  checks                   campus_drives.drives_status_check — CHECK ((status = ANY (ARRAY['upcoming'::text, 'live'::text, 'closed'::text, 'cancelled'::text])))
+PASS  checks                   candidates.candidates_phone_format — CHECK ((phone_e164 ~ '^\+91[6-9][0-9]{9}$'::text))
+PASS  checks                   courses.courses_level_check — CHECK ((level = ANY (ARRAY['undergraduate'::text, 'postgraduate'::text, 'diploma'::text, 'other'::text])))
+PASS  checks                   jobs.jobs_employment_type_check — CHECK ((employment_type = ANY (ARRAY['FULL_TIME'::text, 'PART_TIME'::text, 'INTERN'::text, 'CONTRACTOR'::text])))
+PASS  checks                   jobs.jobs_status_check — CHECK ((status = ANY (ARRAY['draft'::text, 'open'::text, 'paused'::text, 'closed'::text])))
+PASS  checks                   jobs.jobs_work_mode_check — CHECK ((work_mode = ANY (ARRAY['onsite'::text, 'hybrid'::text, 'remote'::text, 'field'::text])))
+PASS  referential-integrity    application_notes.application_id → applications.id — no orphans
+PASS  referential-integrity    application_notes.author_id → users.id — no orphans
+PASS  referential-integrity    applications.candidate_id → candidates.id — no orphans
+PASS  referential-integrity    applications.job_id → jobs.id — no orphans
+PASS  referential-integrity    applications.drive_id → campus_drives.id — no orphans
+PASS  referential-integrity    applications.college_id → colleges.id — no orphans
+PASS  referential-integrity    applications.course_id → courses.id — no orphans
+PASS  referential-integrity    audit_log.actor_id → users.id — no orphans
+PASS  referential-integrity    campus_drives.college_id → colleges.id — no orphans
+PASS  referential-integrity    alert_incidents.rule_id → alert_rules.id — no orphans
+PASS  referential-integrity    analytics_events.job_id → jobs.id — no orphans
+PASS  referential-integrity    analytics_events.drive_id → campus_drives.id — no orphans
+PASS  referential-integrity    console_sessions.user_id → users.id — no orphans
+PASS  referential-integrity    content_block_versions.block_id → content_blocks.id — no orphans
+PASS  referential-integrity    content_block_versions.updated_by → users.id — no orphans
+PASS  referential-integrity    content_blocks.updated_by → users.id — no orphans
+PASS  referential-integrity    saved_views.user_id → users.id — no orphans
+PASS  referential-integrity    scheduled_reports.created_by → users.id — no orphans
+PASS  referential-integrity    candidate_sessions.candidate_id → candidates.id — no orphans
+PASS  referential-integrity    application_stage_events.application_id → applications.id — no orphans
+PASS  D1-phone                 All candidate phone numbers are valid E.164.
+PASS  D4-college-merge         No multi-hop college merge chains.
+PASS  D4-college-raw           college_raw is never blank.
+PASS  D7-candidate-uniqueness  No duplicate candidates by email_normalised.
+PASS  D7-candidate-uniqueness  No duplicate candidates by phone_e164.
+PASS  §4.a-active-application-dedupe At most one active application per candidate (strictly enforced by partial unique index).
+PASS  consent                  Every application carries consent_given_at + consent_version.
+PASS  security                 All user password hashes are argon2.
+WARN  security                 1 account(s) have must_change_password = true — fine pre-launch, must be 0 in production before go-live (§16.8).
+INFO  security                 security_events has 5 row(s) with a raw attempted email captured (login-failure forensics — confirm retention policy).
+PASS  connections              13/901 active connections (1.4%)
+PASS  explain                  jobs list (status+postedAt): Limit, cost=8.16, actual=1.01ms
+WARN  explain                  applications by stage (console queue): Limit, cost=1.04, actual=0.03ms — sequential scan present (fine on a near-empty branch, watch on production volume)
+WARN  explain                  candidate lookup by phone (dedupe path): Seq Scan, cost=1.02, actual=0.01ms — sequential scan present (fine on a near-empty branch, watch on production volume)
+
+=======================================
+129 PASS · 5 WARN · 0 FAIL

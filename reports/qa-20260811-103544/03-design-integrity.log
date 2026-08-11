@@ -1,0 +1,1284 @@
+npm notice run akshara-careers@0.1.0 npx
+npm notice run playwright test tests/e2e/design-integrity.spec.ts --reporter=list
+
+Running 126 tests using 16 workers
+
+  ✓    6 [chromium] › tests\e2e\design-integrity.spec.ts:122:3 › Design Integrity — Spacing (§15.7) › section padding is symmetric (top === bottom) for every section (4.3s)
+  ✓   16 [chromium] › tests\e2e\design-integrity.spec.ts:316:3 › Design Integrity — Stability (§15.7) › every <img> declares width and height (or fills a sized container) (5.0s)
+  ✓    3 [chromium] › tests\e2e\design-integrity.spec.ts:35:3 › Design Integrity — Alignment (§15.7) › every standard [data-container] shares one left edge and one right edge at 1440px (5.3s)
+  ✓    4 [chromium] › tests\e2e\design-integrity.spec.ts:136:3 › Design Integrity — Spacing (§15.7) › section spacing is differentiated — not every section uses the same padding value (5.2s)
+  ✓    7 [chromium] › tests\e2e\design-integrity.spec.ts:206:3 › Design Integrity — Typography (§15.7) › no paragraph exceeds an 80ch measure (5.3s)
+  ✓    8 [chromium] › tests\e2e\design-integrity.spec.ts:148:3 › Design Integrity — Cards (§15.7) › job cards in the same row have equal computed height (±1px) (5.3s)
+  ✓    5 [chromium] › tests\e2e\design-integrity.spec.ts:221:3 › Design Integrity — Typography (§15.7) › every heading has text-wrap: balance (or equivalent) applied (5.2s)
+  ✓   12 [chromium] › tests\e2e\design-integrity.spec.ts:185:3 › Design Integrity — Typography (§15.7) › the display face actually loaded — no silent fallback to a system font (5.3s)
+  ✓   14 [chromium] › tests\e2e\design-integrity.spec.ts:249:3 › Design Integrity — Targets (§15.7) › the primary CTA meets 4.5:1 contrast using real rendered colours (5.2s)
+  ✓   11 [chromium] › tests\e2e\design-integrity.spec.ts:277:3 › Design Integrity — Targets (§15.7) › focus ring is visible on keyboard focus of the primary CTA (5.3s)
+  ✘    9 [chromium] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row (5.3s)
+  ✘   15 [chromium] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) (5.1s)
+  ✓   13 [chromium] › tests\e2e\design-integrity.spec.ts:293:3 › Design Integrity — Stability (§15.7) › cumulative layout shift stays ≤0.02 through first paint (5.6s)
+  ✓   10 [chromium] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 (5.9s)
+  ✓   17 [chromium] › tests\e2e\design-integrity.spec.ts:326:3 › Design Integrity — Stability (§15.7) › proof-strip logos are height-normalised (1.9s)
+  ✓    1 [chromium] › tests\e2e\design-integrity.spec.ts:69:3 › Design Integrity — Overflow (§15.7) › zero horizontal scroll at 9 standard widths, and the offending element is named on failure (6.3s)
+  ✓    2 [chromium] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) (6.4s)
+  ✓   19 [chromium] › tests\e2e\design-integrity.spec.ts:343:3 › Design Integrity — Structure (§15.7) › heading levels never skip (h1 → h2 → h3, no gaps) (1.7s)
+  ✓   18 [chromium] › tests\e2e\design-integrity.spec.ts:337:3 › Design Integrity — Structure (§15.7) › exactly one h1 on the page (1.7s)
+  ✓   21 [chromium] › tests\e2e\design-integrity.spec.ts:355:3 › Design Integrity — Structure (§15.7) › landmarks are present: header, main, footer, nav (1.8s)
+  ✓   20 [chromium] › tests\e2e\design-integrity.spec.ts:363:3 › Design Integrity — Structure (§15.7) › adjacent sections sharing the same background have a visible divider (1.9s)
+  ✓   31 [firefox] › tests\e2e\design-integrity.spec.ts:206:3 › Design Integrity — Typography (§15.7) › no paragraph exceeds an 80ch measure (11.1s)
+  ✓   34 [firefox] › tests\e2e\design-integrity.spec.ts:277:3 › Design Integrity — Targets (§15.7) › focus ring is visible on keyboard focus of the primary CTA (35.3s)
+  ✓   24 [firefox] › tests\e2e\design-integrity.spec.ts:136:3 › Design Integrity — Spacing (§15.7) › section spacing is differentiated — not every section uses the same padding value (36.7s)
+  ✘   26 [firefox] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) (37.3s)
+  ✘   29 [firefox] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row (37.4s)
+  ✓   23 [firefox] › tests\e2e\design-integrity.spec.ts:69:3 › Design Integrity — Overflow (§15.7) › zero horizontal scroll at 9 standard widths, and the offending element is named on failure (38.8s)
+  ✓   38 [firefox] › tests\e2e\design-integrity.spec.ts:326:3 › Design Integrity — Stability (§15.7) › proof-strip logos are height-normalised (27.3s)
+  ✓   37 [firefox] › tests\e2e\design-integrity.spec.ts:316:3 › Design Integrity — Stability (§15.7) › every <img> declares width and height (or fills a sized container) (38.9s)
+  ✓   40 [firefox] › tests\e2e\design-integrity.spec.ts:343:3 › Design Integrity — Structure (§15.7) › heading levels never skip (h1 → h2 → h3, no gaps) (3.4s)
+  ✓   39 [firefox] › tests\e2e\design-integrity.spec.ts:337:3 › Design Integrity — Structure (§15.7) › exactly one h1 on the page (4.2s)
+  ✘   36 [firefox] › tests\e2e\design-integrity.spec.ts:293:3 › Design Integrity — Stability (§15.7) › cumulative layout shift stays ≤0.02 through first paint (36.3s)
+  ✘   33 [firefox] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) (40.6s)
+  ✘   25 [firefox] › tests\e2e\design-integrity.spec.ts:122:3 › Design Integrity — Spacing (§15.7) › section padding is symmetric (top === bottom) for every section (32.8s)
+  ✘   28 [firefox] › tests\e2e\design-integrity.spec.ts:148:3 › Design Integrity — Cards (§15.7) › job cards in the same row have equal computed height (±1px) (46.9s)
+  ✘   30 [firefox] › tests\e2e\design-integrity.spec.ts:185:3 › Design Integrity — Typography (§15.7) › the display face actually loaded — no silent fallback to a system font (38.1s)
+  ✘   27 [firefox] › tests\e2e\design-integrity.spec.ts:35:3 › Design Integrity — Alignment (§15.7) › every standard [data-container] shares one left edge and one right edge at 1440px (35.3s)
+  ✘   22 [firefox] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 (51.5s)
+  ✘   35 [firefox] › tests\e2e\design-integrity.spec.ts:249:3 › Design Integrity — Targets (§15.7) › the primary CTA meets 4.5:1 contrast using real rendered colours (37.2s)
+  ✘   32 [firefox] › tests\e2e\design-integrity.spec.ts:221:3 › Design Integrity — Typography (§15.7) › every heading has text-wrap: balance (or equivalent) applied (32.4s)
+  ✓   53 [webkit] › tests\e2e\design-integrity.spec.ts:221:3 › Design Integrity — Typography (§15.7) › every heading has text-wrap: balance (or equivalent) applied (4.5s)
+  ✓   44 [webkit] › tests\e2e\design-integrity.spec.ts:35:3 › Design Integrity — Alignment (§15.7) › every standard [data-container] shares one left edge and one right edge at 1440px (4.8s)
+  ✘   54 [webkit] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) (3.9s)
+  ✓   49 [webkit] › tests\e2e\design-integrity.spec.ts:148:3 › Design Integrity — Cards (§15.7) › job cards in the same row have equal computed height (±1px) (5.4s)
+  ✓   56 [webkit] › tests\e2e\design-integrity.spec.ts:277:3 › Design Integrity — Targets (§15.7) › focus ring is visible on keyboard focus of the primary CTA (2.6s)
+  ✘   50 [webkit] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row (5.4s)
+  ✓   51 [webkit] › tests\e2e\design-integrity.spec.ts:185:3 › Design Integrity — Typography (§15.7) › the display face actually loaded — no silent fallback to a system font (6.0s)
+  ✓   47 [webkit] › tests\e2e\design-integrity.spec.ts:136:3 › Design Integrity — Spacing (§15.7) › section spacing is differentiated — not every section uses the same padding value (6.0s)
+  ✓   55 [webkit] › tests\e2e\design-integrity.spec.ts:249:3 › Design Integrity — Targets (§15.7) › the primary CTA meets 4.5:1 contrast using real rendered colours (5.0s)
+  ✓   48 [webkit] › tests\e2e\design-integrity.spec.ts:122:3 › Design Integrity — Spacing (§15.7) › section padding is symmetric (top === bottom) for every section (6.2s)
+  ✓   52 [webkit] › tests\e2e\design-integrity.spec.ts:206:3 › Design Integrity — Typography (§15.7) › no paragraph exceeds an 80ch measure (6.8s)
+  ✓   46 [webkit] › tests\e2e\design-integrity.spec.ts:69:3 › Design Integrity — Overflow (§15.7) › zero horizontal scroll at 9 standard widths, and the offending element is named on failure (6.8s)
+  ✓   58 [webkit] › tests\e2e\design-integrity.spec.ts:316:3 › Design Integrity — Stability (§15.7) › every <img> declares width and height (or fills a sized container) (3.1s)
+  ✓   45 [webkit] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) (8.4s)
+  ✓   59 [webkit] › tests\e2e\design-integrity.spec.ts:337:3 › Design Integrity — Structure (§15.7) › exactly one h1 on the page (3.0s)
+  ✓   57 [webkit] › tests\e2e\design-integrity.spec.ts:293:3 › Design Integrity — Stability (§15.7) › cumulative layout shift stays ≤0.02 through first paint (3.8s)
+  ✓   60 [webkit] › tests\e2e\design-integrity.spec.ts:343:3 › Design Integrity — Structure (§15.7) › heading levels never skip (h1 → h2 → h3, no gaps) (3.1s)
+  ✓   41 [firefox] › tests\e2e\design-integrity.spec.ts:363:3 › Design Integrity — Structure (§15.7) › adjacent sections sharing the same background have a visible divider (11.7s)
+  ✓   42 [firefox] › tests\e2e\design-integrity.spec.ts:355:3 › Design Integrity — Structure (§15.7) › landmarks are present: header, main, footer, nav (12.6s)
+  ✓   43 [webkit] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 (8.9s)
+  ✓   62 [webkit] › tests\e2e\design-integrity.spec.ts:363:3 › Design Integrity — Structure (§15.7) › adjacent sections sharing the same background have a visible divider (3.1s)
+  ✓   61 [webkit] › tests\e2e\design-integrity.spec.ts:326:3 › Design Integrity — Stability (§15.7) › proof-strip logos are height-normalised (3.3s)
+  ✓   63 [webkit] › tests\e2e\design-integrity.spec.ts:355:3 › Design Integrity — Structure (§15.7) › landmarks are present: header, main, footer, nav (2.9s)
+  ✓   64 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:35:3 › Design Integrity — Alignment (§15.7) › every standard [data-container] shares one left edge and one right edge at 1440px (4.1s)
+  ✓   68 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:122:3 › Design Integrity — Spacing (§15.7) › section padding is symmetric (top === bottom) for every section (3.4s)
+  ✓   69 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:136:3 › Design Integrity — Spacing (§15.7) › section spacing is differentiated — not every section uses the same padding value (2.8s)
+  ✓   65 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:69:3 › Design Integrity — Overflow (§15.7) › zero horizontal scroll at 9 standard widths, and the offending element is named on failure (5.0s)
+  ✘   70 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row (2.7s)
+  ✓   71 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:185:3 › Design Integrity — Typography (§15.7) › the display face actually loaded — no silent fallback to a system font (2.7s)
+  ✓   72 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:206:3 › Design Integrity — Typography (§15.7) › no paragraph exceeds an 80ch measure (2.5s)
+  ✓   74 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:293:3 › Design Integrity — Stability (§15.7) › cumulative layout shift stays ≤0.02 through first paint (2.3s)
+  ✓   73 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:148:3 › Design Integrity — Cards (§15.7) › job cards in the same row have equal computed height (±1px) (2.7s)
+  ✓   75 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:249:3 › Design Integrity — Targets (§15.7) › the primary CTA meets 4.5:1 contrast using real rendered colours (2.5s)
+  ✓   79 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:316:3 › Design Integrity — Stability (§15.7) › every <img> declares width and height (or fills a sized container) (2.1s)
+  ✓   77 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:221:3 › Design Integrity — Typography (§15.7) › every heading has text-wrap: balance (or equivalent) applied (2.3s)
+  ✓   76 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:277:3 › Design Integrity — Targets (§15.7) › focus ring is visible on keyboard focus of the primary CTA (2.4s)
+  ✓   81 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:337:3 › Design Integrity — Structure (§15.7) › exactly one h1 on the page (1.6s)
+  ✓   80 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:326:3 › Design Integrity — Stability (§15.7) › proof-strip logos are height-normalised (2.4s)
+  ✓   82 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:343:3 › Design Integrity — Structure (§15.7) › heading levels never skip (h1 → h2 → h3, no gaps) (1.8s)
+  ✓   83 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:355:3 › Design Integrity — Structure (§15.7) › landmarks are present: header, main, footer, nav (1.8s)
+  ✓   84 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:363:3 › Design Integrity — Structure (§15.7) › adjacent sections sharing the same background have a visible divider (3.0s)
+  ✓   85 [mobile-safari] › tests\e2e\design-integrity.spec.ts:35:3 › Design Integrity — Alignment (§15.7) › every standard [data-container] shares one left edge and one right edge at 1440px (4.3s)
+  ✓   90 [mobile-safari] › tests\e2e\design-integrity.spec.ts:136:3 › Design Integrity — Spacing (§15.7) › section spacing is differentiated — not every section uses the same padding value (4.7s)
+  ✓   89 [mobile-safari] › tests\e2e\design-integrity.spec.ts:122:3 › Design Integrity — Spacing (§15.7) › section padding is symmetric (top === bottom) for every section (4.9s)
+  ✘   95 [mobile-safari] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) (3.5s)
+  ✘   92 [mobile-safari] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row (4.8s)
+  ✓   91 [mobile-safari] › tests\e2e\design-integrity.spec.ts:148:3 › Design Integrity — Cards (§15.7) › job cards in the same row have equal computed height (±1px) (5.1s)
+  ✓   93 [mobile-safari] › tests\e2e\design-integrity.spec.ts:185:3 › Design Integrity — Typography (§15.7) › the display face actually loaded — no silent fallback to a system font (4.9s)
+  ✓   87 [mobile-safari] › tests\e2e\design-integrity.spec.ts:69:3 › Design Integrity — Overflow (§15.7) › zero horizontal scroll at 9 standard widths, and the offending element is named on failure (5.9s)
+  ✓   96 [mobile-safari] › tests\e2e\design-integrity.spec.ts:221:3 › Design Integrity — Typography (§15.7) › every heading has text-wrap: balance (or equivalent) applied (4.3s)
+  ✓   94 [mobile-safari] › tests\e2e\design-integrity.spec.ts:206:3 › Design Integrity — Typography (§15.7) › no paragraph exceeds an 80ch measure (5.2s)
+  ✓   88 [mobile-safari] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) (6.4s)
+  ✓   86 [mobile-safari] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 (7.4s)
+  ✓  101 [mobile-safari] › tests\e2e\design-integrity.spec.ts:343:3 › Design Integrity — Structure (§15.7) › heading levels never skip (h1 → h2 → h3, no gaps) (2.3s)
+  ✓  102 [mobile-safari] › tests\e2e\design-integrity.spec.ts:355:3 › Design Integrity — Structure (§15.7) › landmarks are present: header, main, footer, nav (2.4s)
+  ✓   97 [mobile-safari] › tests\e2e\design-integrity.spec.ts:249:3 › Design Integrity — Targets (§15.7) › the primary CTA meets 4.5:1 contrast using real rendered colours (3.9s)
+  ✓   98 [mobile-safari] › tests\e2e\design-integrity.spec.ts:277:3 › Design Integrity — Targets (§15.7) › focus ring is visible on keyboard focus of the primary CTA (4.3s)
+  ✓   99 [mobile-safari] › tests\e2e\design-integrity.spec.ts:293:3 › Design Integrity — Stability (§15.7) › cumulative layout shift stays ≤0.02 through first paint (3.4s)
+  ✓  104 [mobile-safari] › tests\e2e\design-integrity.spec.ts:337:3 › Design Integrity — Structure (§15.7) › exactly one h1 on the page (2.6s)
+  ✓  105 [mobile-safari] › tests\e2e\design-integrity.spec.ts:326:3 › Design Integrity — Stability (§15.7) › proof-strip logos are height-normalised (3.0s)
+  ✓  106 [tablet] › tests\e2e\design-integrity.spec.ts:35:3 › Design Integrity — Alignment (§15.7) › every standard [data-container] shares one left edge and one right edge at 1440px (2.7s)
+  ✓  107 [tablet] › tests\e2e\design-integrity.spec.ts:69:3 › Design Integrity — Overflow (§15.7) › zero horizontal scroll at 9 standard widths, and the offending element is named on failure (3.5s)
+  ✓  110 [tablet] › tests\e2e\design-integrity.spec.ts:122:3 › Design Integrity — Spacing (§15.7) › section padding is symmetric (top === bottom) for every section (2.9s)
+  ✓  111 [tablet] › tests\e2e\design-integrity.spec.ts:136:3 › Design Integrity — Spacing (§15.7) › section spacing is differentiated — not every section uses the same padding value (3.3s)
+  ✘  116 [tablet] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) (2.6s)
+  ✓  115 [tablet] › tests\e2e\design-integrity.spec.ts:206:3 › Design Integrity — Typography (§15.7) › no paragraph exceeds an 80ch measure (3.0s)
+  ✓  112 [tablet] › tests\e2e\design-integrity.spec.ts:148:3 › Design Integrity — Cards (§15.7) › job cards in the same row have equal computed height (±1px) (3.8s)
+  ✓  109 [tablet] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) (4.5s)
+  ✓  117 [tablet] › tests\e2e\design-integrity.spec.ts:221:3 › Design Integrity — Typography (§15.7) › every heading has text-wrap: balance (or equivalent) applied (3.3s)
+  ✘  113 [tablet] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row (4.1s)
+  ✓  118 [tablet] › tests\e2e\design-integrity.spec.ts:249:3 › Design Integrity — Targets (§15.7) › the primary CTA meets 4.5:1 contrast using real rendered colours (2.8s)
+  ✓  114 [tablet] › tests\e2e\design-integrity.spec.ts:185:3 › Design Integrity — Typography (§15.7) › the display face actually loaded — no silent fallback to a system font (4.3s)
+  ✓  108 [tablet] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 (6.2s)
+  ✓  119 [tablet] › tests\e2e\design-integrity.spec.ts:277:3 › Design Integrity — Targets (§15.7) › focus ring is visible on keyboard focus of the primary CTA (2.8s)
+  ✓  125 [tablet] › tests\e2e\design-integrity.spec.ts:355:3 › Design Integrity — Structure (§15.7) › landmarks are present: header, main, footer, nav (2.1s)
+  ✓  121 [tablet] › tests\e2e\design-integrity.spec.ts:326:3 › Design Integrity — Stability (§15.7) › proof-strip logos are height-normalised (3.0s)
+  ✓  122 [tablet] › tests\e2e\design-integrity.spec.ts:337:3 › Design Integrity — Structure (§15.7) › exactly one h1 on the page (2.8s)
+  ✓  120 [tablet] › tests\e2e\design-integrity.spec.ts:293:3 › Design Integrity — Stability (§15.7) › cumulative layout shift stays ≤0.02 through first paint (3.5s)
+  ✓  123 [tablet] › tests\e2e\design-integrity.spec.ts:343:3 › Design Integrity — Structure (§15.7) › heading levels never skip (h1 → h2 → h3, no gaps) (2.7s)
+  ✓  124 [tablet] › tests\e2e\design-integrity.spec.ts:316:3 › Design Integrity — Stability (§15.7) › every <img> declares width and height (or fills a sized container) (2.7s)
+  ✓  126 [tablet] › tests\e2e\design-integrity.spec.ts:363:3 › Design Integrity — Structure (§15.7) › adjacent sections sharing the same background have a visible divider (2.3s)
+  ✓  100 [mobile-safari] › tests\e2e\design-integrity.spec.ts:316:3 › Design Integrity — Stability (§15.7) › every <img> declares width and height (or fills a sized container) (17.3s)
+  ✓  103 [mobile-safari] › tests\e2e\design-integrity.spec.ts:363:3 › Design Integrity — Structure (§15.7) › adjacent sections sharing the same background have a visible divider (17.7s)
+  ✘   66 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 (30.3s)
+  ✘   67 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) (30.2s)
+  ✘   78 [mobile-chrome] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) (30.2s)
+
+
+  1) [chromium] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+
+    Error: expected at least one [data-card-meta] row
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      174 |       els.map((e) => Math.round(e.getBoundingClientRect().top)),
+      175 |     )
+    > 176 |     expect(metas.length, 'expected at least one [data-card-meta] row').toBeGreaterThan(0)
+          |                                                                        ^
+      177 |     // All cards in this grid are in one row at 1440px (3-up) — every meta
+      178 |     // row should land on the same y.
+      179 |     const distinct = new Set(metas)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:176:72
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-chromium\error-context.md
+
+  2) [chromium] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+
+    Error: tap target(s) under 44×44px: [{"tag":"A","text":"Open Roles","w":105,"h":42},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"SPAN","text":"","w":32,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"BUTTON","text":"← Prev","w":80,"h":36},{"tag":"BUTTON","text":"Next →","w":80,"h":36},{"tag":"A","text":"AaksharaCAREERS","w":350,"h":32}]
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "h": 42,
+    +     "tag": "A",
+    +     "text": "Open Roles",
+    +     "w": 105,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 32,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "← Prev",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "Next →",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 32,
+    +     "tag": "A",
+    +     "text": "AaksharaCAREERS",
+    +     "w": 350,
+    +   },
+    + ]
+
+      244 |         .filter((t) => t.w > 0 && t.h > 0 && (t.w < 44 || t.h < 44)),
+      245 |     )
+    > 246 |     expect(small, `tap target(s) under 44×44px: ${JSON.stringify(small)}`).toEqual([])
+          |                                                                            ^
+      247 |   })
+      248 |
+      249 |   test('the primary CTA meets 4.5:1 contrast using real rendered colours', async ({ page }) => {
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:246:76
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--chromium\error-context.md
+
+  3) [firefox] › tests\e2e\design-integrity.spec.ts:35:3 › Design Integrity — Alignment (§15.7) › every standard [data-container] shares one left edge and one right edge at 1440px 
+
+    Tearing down "context" exceeded the test timeout of 30000ms.
+
+    Error: browserContext.close: Test ended.
+    Browser logs:
+
+    <launching> C:\Users\jishn\AppData\Local\ms-playwright\firefox-1538\firefox\firefox.exe -no-remote -headless -profile C:\Users\jishn\AppData\Local\Temp\playwright_firefoxdev_profile-FfvovU -juggler-pipe -silent
+    <launched> pid=46352
+    [pid=46352][err] *** You are running in headless mode.
+    [pid=46352][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 119: unreachable code after return statement
+    [pid=46352][out] 
+    [pid=46352][out] Juggler listening to the pipe
+    [pid=46352][out] Crash Annotation GraphicsCriticalError: |[0][GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt (t=3.34437) [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+    [pid=46352][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=46352][out] console.error: "Error fetching remote settings base url from CDN. Falling back to https://firefox-settings-attachments.cdn.mozilla.net/" (new SyntaxError("XMLHttpRequest.open: '/' is not a valid URL.", (void 0), 126))
+    [pid=46352][out] console.warn: services.settings: #fetchAttachment: Forcing fallbackToDump to false due to Utils.LOAD_DUMPS being false
+    [pid=46352][out] console.error: (new NotFoundError("Could not find fa0fc42c-d91d-fca7-34eb-806ff46062dc in cache or dump", "resource://services-settings/Attachments.sys.mjs", 48))
+    [pid=46352][out] console.warn: "Unable to find the attachment for" "fa0fc42c-d91d-fca7-34eb-806ff46062dc"
+    [pid=46352][out] console.error: services.settings: 
+    [pid=46352][out]   Message: EmptyDatabaseError: "main/nimbus-desktop-experiments" has not been synced yet
+    [pid=46352][out]   Stack:
+    [pid=46352][out]     EmptyDatabaseError@resource://services-settings/Database.sys.mjs:19:5
+    [pid=46352][out] list@resource://services-settings/Database.sys.mjs:96:13
+    [pid=46352][out] 
+    [pid=46352][out] console.error: [Exception... "Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIWinTaskbar.getTaskbarProgress]"  nsresult: "0x80070057 (NS_ERROR_ILLEGAL_VALUE)"  location: "JS frame :: moz-src:///browser/components/downloads/DownloadsTaskbar.sys.mjs :: #windowsAttachIndicator :: line 181"  data: no]
+    [pid=46352] <gracefully close start>
+    [pid=46352][out] 
+    [pid=46352][out]         ERROR: Failed "callFunction": connector for namespace "page" in channel "undefined" is disposed. _rejectCallbacksFromConnector@chrome://juggler/content/SimpleChannel.js:108:25
+    [pid=46352][out] dispose@chrome://juggler/content/SimpleChannel.js:119:27
+    [pid=46352][out] dispose@chrome://juggler/content/protocol/PageHandler.js:152:23
+    [pid=46352][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=46352][out] destroySession@chrome://juggler/content/protocol/Dispatcher.js:35:13
+    [pid=46352][out] dispose@chrome://juggler/content/protocol/BrowserHandler.js:77:24
+    [pid=46352][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=46352][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:41:23
+    [pid=46352][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:142:22
+    [pid=46352][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=46352][out] 
+    [pid=46352][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=46352][out]       
+    [pid=46352][out]         ERROR: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage] send@chrome://juggler/content/components/Juggler.js:134:18
+    [pid=46352][out] _dispatch@chrome://juggler/content/protocol/Dispatcher.js:76:24
+    [pid=46352][out] ssi_onQuitApplicationGranted@resource:///modules/sessionstore/SessionStore.sys.mjs:2945:19
+    [pid=46352][out] ssi_observe@resource:///modules/sessionstore/SessionStore.sys.mjs:1632:14
+    [pid=46352][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:143:16
+    [pid=46352][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=46352][out] 
+    [pid=46352][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=46352][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=46352][err] JavaScript warning: resource://gre/modules/UpdateService.sys.mjs, line 4029: unreachable code after return statement
+    [pid=46352][out]       1786424873971	addons.xpi	ERROR	System addon update list error [Exception... "<no message>"  nsresult: "0x8046001e (<unknown>)"  location: "JS frame :: resource://gre/modules/ServiceRequest.sys.mjs :: open :: line 126"  data: no]
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-36248-nd-one-right-edge-at-1440px-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-36248-nd-one-right-edge-at-1440px-firefox\error-context.md
+
+  4) [firefox] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/careers", waiting until "load"
+
+
+      23 |
+      24 | async function gotoStable(page: Page, path: string) {
+    > 25 |   await page.goto(path)
+         |              ^
+      26 |   await page.waitForLoadState('networkidle')
+      27 |   await page.evaluate(() => document.fonts.ready)
+      28 | }
+        at gotoStable (D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:25:14)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:60:13
+
+    Error Context: test-results\design-integrity-Design-In-04dc3-32-48-scale-at-390-768-1440-firefox\error-context.md
+
+  5) [firefox] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/careers", waiting until "load"
+
+
+      23 |
+      24 | async function gotoStable(page: Page, path: string) {
+    > 25 |   await page.goto(path)
+         |              ^
+      26 |   await page.waitForLoadState('networkidle')
+      27 |   await page.evaluate(() => document.fonts.ready)
+      28 | }
+        at gotoStable (D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:25:14)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:109:13
+
+    Error Context: test-results\design-integrity-Design-In-0e747-mp-bounds-375px-and-1920px--firefox\error-context.md
+
+  6) [firefox] › tests\e2e\design-integrity.spec.ts:122:3 › Design Integrity — Spacing (§15.7) › section padding is symmetric (top === bottom) for every section 
+
+    Tearing down "context" exceeded the test timeout of 30000ms.
+
+    Error: browserContext.close: Test ended.
+    Browser logs:
+
+    <launching> C:\Users\jishn\AppData\Local\ms-playwright\firefox-1538\firefox\firefox.exe -no-remote -headless -profile C:\Users\jishn\AppData\Local\Temp\playwright_firefoxdev_profile-yqgqCN -juggler-pipe -silent
+    <launched> pid=44016
+    [pid=44016][err] *** You are running in headless mode.
+    [pid=44016][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 119: unreachable code after return statement
+    [pid=44016][out] 
+    [pid=44016][out] Juggler listening to the pipe
+    [pid=44016][out] Crash Annotation GraphicsCriticalError: |[0][GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt (t=2.04995) [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+    [pid=44016][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=44016][out] console.error: "Error fetching remote settings base url from CDN. Falling back to https://firefox-settings-attachments.cdn.mozilla.net/" (new SyntaxError("XMLHttpRequest.open: '/' is not a valid URL.", (void 0), 126))
+    [pid=44016][out] console.warn: services.settings: #fetchAttachment: Forcing fallbackToDump to false due to Utils.LOAD_DUMPS being false
+    [pid=44016][out] console.error: (new NotFoundError("Could not find fa0fc42c-d91d-fca7-34eb-806ff46062dc in cache or dump", "resource://services-settings/Attachments.sys.mjs", 48))
+    [pid=44016][out] console.warn: "Unable to find the attachment for" "fa0fc42c-d91d-fca7-34eb-806ff46062dc"
+    [pid=44016][out] console.error: services.settings: 
+    [pid=44016][out]   Message: EmptyDatabaseError: "main/nimbus-desktop-experiments" has not been synced yet
+    [pid=44016][out]   Stack:
+    [pid=44016][out]     EmptyDatabaseError@resource://services-settings/Database.sys.mjs:19:5
+    [pid=44016][out] list@resource://services-settings/Database.sys.mjs:96:13
+    [pid=44016][out] 
+    [pid=44016][out] console.error: [Exception... "Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIWinTaskbar.getTaskbarProgress]"  nsresult: "0x80070057 (NS_ERROR_ILLEGAL_VALUE)"  location: "JS frame :: moz-src:///browser/components/downloads/DownloadsTaskbar.sys.mjs :: #windowsAttachIndicator :: line 181"  data: no]
+    [pid=44016] <gracefully close start>
+    [pid=44016][out] 
+    [pid=44016][out]         ERROR: Failed "callFunction": connector for namespace "page" in channel "undefined" is disposed. _rejectCallbacksFromConnector@chrome://juggler/content/SimpleChannel.js:108:25
+    [pid=44016][out] dispose@chrome://juggler/content/SimpleChannel.js:119:27
+    [pid=44016][out] dispose@chrome://juggler/content/protocol/PageHandler.js:152:23
+    [pid=44016][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=44016][out] destroySession@chrome://juggler/content/protocol/Dispatcher.js:35:13
+    [pid=44016][out] dispose@chrome://juggler/content/protocol/BrowserHandler.js:77:24
+    [pid=44016][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=44016][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:41:23
+    [pid=44016][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:142:22
+    [pid=44016][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=44016][out] 
+    [pid=44016][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=44016][out]       
+    [pid=44016][out]         ERROR: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage] send@chrome://juggler/content/components/Juggler.js:134:18
+    [pid=44016][out] _dispatch@chrome://juggler/content/protocol/Dispatcher.js:76:24
+    [pid=44016][out] ssi_onQuitApplicationGranted@resource:///modules/sessionstore/SessionStore.sys.mjs:2945:19
+    [pid=44016][out] ssi_observe@resource:///modules/sessionstore/SessionStore.sys.mjs:1632:14
+    [pid=44016][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:143:16
+    [pid=44016][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=44016][out] 
+    [pid=44016][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=44016][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=44016][out]       1786424870426	addons.xpi	ERROR	System addon update list error [Exception... "<no message>"  nsresult: "0x8046001e (<unknown>)"  location: "JS frame :: resource://gre/modules/ServiceRequest.sys.mjs :: open :: line 126"  data: no]
+    [pid=44016][err] JavaScript warning: resource://gre/modules/UpdateService.sys.mjs, line 4029: unreachable code after return statement
+
+    Error Context: test-results\design-integrity-Design-In-6267b-op-bottom-for-every-section-firefox\error-context.md
+
+  7) [firefox] › tests\e2e\design-integrity.spec.ts:148:3 › Design Integrity — Cards (§15.7) › job cards in the same row have equal computed height (±1px) 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.$$eval: Test timeout of 30000ms exceeded.
+
+      149 |     await page.setViewportSize({ width: 1440, height: 900 })
+      150 |     await gotoStable(page, PAGE)
+    > 151 |     const cards = await page.$$eval('[data-testid^="job-card-"]', (els) =>
+          |                              ^
+      152 |       els.map((e) => {
+      153 |         const r = e.getBoundingClientRect()
+      154 |         return { top: Math.round(r.top), height: Math.round(r.height) }
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:151:30
+
+    Error Context: test-results\design-integrity-Design-In-8f667-equal-computed-height-±1px--firefox\error-context.md
+
+  8) [firefox] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+
+    Error: expected at least one [data-card-meta] row
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      174 |       els.map((e) => Math.round(e.getBoundingClientRect().top)),
+      175 |     )
+    > 176 |     expect(metas.length, 'expected at least one [data-card-meta] row').toBeGreaterThan(0)
+          |                                                                        ^
+      177 |     // All cards in this grid are in one row at 1440px (3-up) — every meta
+      178 |     // row should land on the same y.
+      179 |     const distinct = new Set(metas)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:176:72
+
+    Error Context: test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-firefox\error-context.md
+
+  9) [firefox] › tests\e2e\design-integrity.spec.ts:185:3 › Design Integrity — Typography (§15.7) › the display face actually loaded — no silent fallback to a system font 
+
+    Tearing down "context" exceeded the test timeout of 30000ms.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-72b40-t-fallback-to-a-system-font-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-72b40-t-fallback-to-a-system-font-firefox\error-context.md
+
+  10) [firefox] › tests\e2e\design-integrity.spec.ts:221:3 › Design Integrity — Typography (§15.7) › every heading has text-wrap: balance (or equivalent) applied 
+
+    Tearing down "context" exceeded the test timeout of 30000ms.
+
+    Error: browserContext.close: Test ended.
+    Browser logs:
+
+    <launching> C:\Users\jishn\AppData\Local\ms-playwright\firefox-1538\firefox\firefox.exe -no-remote -headless -profile C:\Users\jishn\AppData\Local\Temp\playwright_firefoxdev_profile-DKJawt -juggler-pipe -silent
+    <launched> pid=46916
+    [pid=46916][err] *** You are running in headless mode.
+    [pid=46916][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 119: unreachable code after return statement
+    [pid=46916][out] 
+    [pid=46916][out] Juggler listening to the pipe
+    [pid=46916][out] Crash Annotation GraphicsCriticalError: |[0][GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt (t=0.886552) [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+    [pid=46916][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=46916][out] console.error: "Error fetching remote settings base url from CDN. Falling back to https://firefox-settings-attachments.cdn.mozilla.net/" (new SyntaxError("XMLHttpRequest.open: '/' is not a valid URL.", (void 0), 126))
+    [pid=46916][out] console.warn: services.settings: #fetchAttachment: Forcing fallbackToDump to false due to Utils.LOAD_DUMPS being false
+    [pid=46916][out] console.error: (new NotFoundError("Could not find fa0fc42c-d91d-fca7-34eb-806ff46062dc in cache or dump", "resource://services-settings/Attachments.sys.mjs", 48))
+    [pid=46916][out] console.warn: "Unable to find the attachment for" "fa0fc42c-d91d-fca7-34eb-806ff46062dc"
+    [pid=46916][out] console.error: services.settings: 
+    [pid=46916][out]   Message: EmptyDatabaseError: "main/nimbus-desktop-experiments" has not been synced yet
+    [pid=46916][out]   Stack:
+    [pid=46916][out]     EmptyDatabaseError@resource://services-settings/Database.sys.mjs:19:5
+    [pid=46916][out] list@resource://services-settings/Database.sys.mjs:96:13
+    [pid=46916][out] 
+    [pid=46916][out] console.error: [Exception... "Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIWinTaskbar.getTaskbarProgress]"  nsresult: "0x80070057 (NS_ERROR_ILLEGAL_VALUE)"  location: "JS frame :: moz-src:///browser/components/downloads/DownloadsTaskbar.sys.mjs :: #windowsAttachIndicator :: line 181"  data: no]
+    [pid=46916] <gracefully close start>
+    [pid=46916][out] 
+    [pid=46916][out]         ERROR: Failed "callFunction": connector for namespace "page" in channel "undefined" is disposed. _rejectCallbacksFromConnector@chrome://juggler/content/SimpleChannel.js:108:25
+    [pid=46916][out] dispose@chrome://juggler/content/SimpleChannel.js:119:27
+    [pid=46916][out] dispose@chrome://juggler/content/protocol/PageHandler.js:152:23
+    [pid=46916][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=46916][out] destroySession@chrome://juggler/content/protocol/Dispatcher.js:35:13
+    [pid=46916][out] dispose@chrome://juggler/content/protocol/BrowserHandler.js:77:24
+    [pid=46916][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=46916][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:41:23
+    [pid=46916][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:142:22
+    [pid=46916][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=46916][out] 
+    [pid=46916][out]       
+    [pid=46916][out]         ERROR: Failed "callFunction": connector for namespace "page" in channel "undefined" is disposed. _rejectCallbacksFromConnector@chrome://juggler/content/SimpleChannel.js:108:25
+    [pid=46916][out] dispose@chrome://juggler/content/SimpleChannel.js:119:27
+    [pid=46916][out] dispose@chrome://juggler/content/protocol/PageHandler.js:152:23
+    [pid=46916][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=46916][out] destroySession@chrome://juggler/content/protocol/Dispatcher.js:35:13
+    [pid=46916][out] dispose@chrome://juggler/content/protocol/BrowserHandler.js:77:24
+    [pid=46916][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=46916][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:41:23
+    [pid=46916][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:142:22
+    [pid=46916][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=46916][out] 
+    [pid=46916][out]       
+    [pid=46916][out]         ERROR: Failed "callFunction": connector for namespace "page" in channel "undefined" is disposed. _rejectCallbacksFromConnector@chrome://juggler/content/SimpleChannel.js:108:25
+    [pid=46916][out] dispose@chrome://juggler/content/SimpleChannel.js:119:27
+    [pid=46916][out] dispose@chrome://juggler/content/protocol/PageHandler.js:152:23
+    [pid=46916][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=46916][out] destroySession@chrome://juggler/content/protocol/Dispatcher.js:35:13
+    [pid=46916][out] dispose@chrome://juggler/content/protocol/BrowserHandler.js:77:24
+    [pid=46916][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=46916][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:41:23
+    [pid=46916][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:142:22
+    [pid=46916][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=46916][out] 
+    [pid=46916][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=46916][out]       
+    [pid=46916][out]         ERROR: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage] send@chrome://juggler/content/components/Juggler.js:134:18
+    [pid=46916][out] _dispatch@chrome://juggler/content/protocol/Dispatcher.js:76:24
+    [pid=46916][out] ssi_onQuitApplicationGranted@resource:///modules/sessionstore/SessionStore.sys.mjs:2945:19
+    [pid=46916][out] ssi_observe@resource:///modules/sessionstore/SessionStore.sys.mjs:1632:14
+    [pid=46916][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:143:16
+    [pid=46916][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=46916][out] 
+    [pid=46916][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=46916][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=46916][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=46916][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=46916][out]       1786424876048	addons.xpi	ERROR	System addon update list error [Exception... "<no message>"  nsresult: "0x8046001e (<unknown>)"  location: "JS frame :: resource://gre/modules/ServiceRequest.sys.mjs :: open :: line 126"  data: no]
+    [pid=46916][err] JavaScript warning: resource://gre/modules/UpdateService.sys.mjs, line 4029: unreachable code after return statement
+    [pid=46916] <process did exit: exitCode=0, signal=null>
+    [pid=46916] starting temporary directories cleanup
+
+    Error Context: test-results\design-integrity-Design-In-87e0c-lance-or-equivalent-applied-firefox\error-context.md
+
+  11) [firefox] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+
+    Error: tap target(s) under 44×44px: [{"tag":"A","text":"Open Roles","w":105,"h":42},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"SPAN","text":"","w":32,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"BUTTON","text":"← Prev","w":80,"h":36},{"tag":"BUTTON","text":"Next →","w":80,"h":36},{"tag":"A","text":"AaksharaCAREERS","w":350,"h":32}]
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "h": 42,
+    +     "tag": "A",
+    +     "text": "Open Roles",
+    +     "w": 105,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 32,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "← Prev",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "Next →",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 32,
+    +     "tag": "A",
+    +     "text": "AaksharaCAREERS",
+    +     "w": 350,
+    +   },
+    + ]
+
+      244 |         .filter((t) => t.w > 0 && t.h > 0 && (t.w < 44 || t.h < 44)),
+      245 |     )
+    > 246 |     expect(small, `tap target(s) under 44×44px: ${JSON.stringify(small)}`).toEqual([])
+          |                                                                            ^
+      247 |   })
+      248 |
+      249 |   test('the primary CTA meets 4.5:1 contrast using real rendered colours', async ({ page }) => {
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:246:76
+
+    Tearing down "context" exceeded the test timeout of 30000ms.
+
+    Error: browserContext.close: Test ended.
+    Browser logs:
+
+    <launching> C:\Users\jishn\AppData\Local\ms-playwright\firefox-1538\firefox\firefox.exe -no-remote -headless -profile C:\Users\jishn\AppData\Local\Temp\playwright_firefoxdev_profile-lrXw5r -juggler-pipe -silent
+    <launched> pid=45812
+    [pid=45812][err] *** You are running in headless mode.
+    [pid=45812][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 119: unreachable code after return statement
+    [pid=45812][out] 
+    [pid=45812][out] Juggler listening to the pipe
+    [pid=45812][out] Crash Annotation GraphicsCriticalError: |[0][GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt (t=7.28435) [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+    [pid=45812][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=45812][out] console.warn: services.settings: #fetchAttachment: Forcing fallbackToDump to false due to Utils.LOAD_DUMPS being false
+    [pid=45812][out] console.error: (new NotFoundError("Could not find fa0fc42c-d91d-fca7-34eb-806ff46062dc in cache or dump", "resource://services-settings/Attachments.sys.mjs", 48))
+    [pid=45812][out] console.warn: "Unable to find the attachment for" "fa0fc42c-d91d-fca7-34eb-806ff46062dc"
+    [pid=45812][out] console.error: "Error fetching remote settings base url from CDN. Falling back to https://firefox-settings-attachments.cdn.mozilla.net/" (new SyntaxError("XMLHttpRequest.open: '/' is not a valid URL.", (void 0), 126))
+    [pid=45812][out] console.error: services.settings: 
+    [pid=45812][out]   Message: EmptyDatabaseError: "main/nimbus-desktop-experiments" has not been synced yet
+    [pid=45812][out]   Stack:
+    [pid=45812][out]     EmptyDatabaseError@resource://services-settings/Database.sys.mjs:19:5
+    [pid=45812][out] list@resource://services-settings/Database.sys.mjs:96:13
+    [pid=45812][out] 
+    [pid=45812][out] console.error: [Exception... "Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIWinTaskbar.getTaskbarProgress]"  nsresult: "0x80070057 (NS_ERROR_ILLEGAL_VALUE)"  location: "JS frame :: moz-src:///browser/components/downloads/DownloadsTaskbar.sys.mjs :: #windowsAttachIndicator :: line 181"  data: no]
+    [pid=45812] <gracefully close start>
+    [pid=45812][err] JavaScript warning: http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js, line 2: Script terminated by timeout at:
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:2:19584
+    [pid=45812][err] EventListener.handleEvent*@http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:2:19547
+    [pid=45812][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45812][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45812][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:3:37759
+    [pid=45812][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45812][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45812][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:2:32462
+    [pid=45812][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45812][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45812][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:3:5442
+    [pid=45812][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45812][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45812][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:2:3776
+    [pid=45812][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45812][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45812][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:5653
+    [pid=45812][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45812][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45812][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:9266
+    [pid=45812][err] n@http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:11682
+    [pid=45812][err] a@http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:12005
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:9244
+    [pid=45812][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45812][err] registerChunk/<@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:9524
+    [pid=45812][err] registerChunk@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:9540
+    [pid=45812][err] async*L@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:7168
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:9638
+    [pid=45812][err] @http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:9650
+    [pid=45812][err] 
+    [pid=45812][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=45812][out] 
+    [pid=45812][out]         ERROR: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage] send@chrome://juggler/content/components/Juggler.js:134:18
+    [pid=45812][out] _dispatch@chrome://juggler/content/protocol/Dispatcher.js:76:24
+    [pid=45812][out] ssi_onQuitApplicationGranted@resource:///modules/sessionstore/SessionStore.sys.mjs:2945:19
+    [pid=45812][out] ssi_observe@resource:///modules/sessionstore/SessionStore.sys.mjs:1632:14
+    [pid=45812][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:143:16
+    [pid=45812][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=45812][out] 
+    [pid=45812][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=45812][err] JavaScript warning: resource://gre/modules/UpdateService.sys.mjs, line 4029: unreachable code after return statement
+    [pid=45812][out]       1786424870558	addons.xpi	ERROR	System addon update list error [Exception... "<no message>"  nsresult: "0x8046001e (<unknown>)"  location: "JS frame :: resource://gre/modules/ServiceRequest.sys.mjs :: open :: line 126"  data: no]
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--firefox\error-context.md
+
+  12) [firefox] › tests\e2e\design-integrity.spec.ts:249:3 › Design Integrity — Targets (§15.7) › the primary CTA meets 4.5:1 contrast using real rendered colours 
+
+    Tearing down "context" exceeded the test timeout of 30000ms.
+
+    Error: browserContext.close: Test ended.
+    Browser logs:
+
+    <launching> C:\Users\jishn\AppData\Local\ms-playwright\firefox-1538\firefox\firefox.exe -no-remote -headless -profile C:\Users\jishn\AppData\Local\Temp\playwright_firefoxdev_profile-uQvfZi -juggler-pipe -silent
+    <launched> pid=45392
+    [pid=45392][err] *** You are running in headless mode.
+    [pid=45392][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 119: unreachable code after return statement
+    [pid=45392][out] 
+    [pid=45392][out] Juggler listening to the pipe
+    [pid=45392][out] Crash Annotation GraphicsCriticalError: |[0][GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt (t=4.56321) [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+    [pid=45392][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=45392][out] console.warn: services.settings: #fetchAttachment: Forcing fallbackToDump to false due to Utils.LOAD_DUMPS being false
+    [pid=45392][out] console.error: (new NotFoundError("Could not find fa0fc42c-d91d-fca7-34eb-806ff46062dc in cache or dump", "resource://services-settings/Attachments.sys.mjs", 48))
+    [pid=45392][out] console.warn: "Unable to find the attachment for" "fa0fc42c-d91d-fca7-34eb-806ff46062dc"
+    [pid=45392][out] console.error: "Error fetching remote settings base url from CDN. Falling back to https://firefox-settings-attachments.cdn.mozilla.net/" (new SyntaxError("XMLHttpRequest.open: '/' is not a valid URL.", (void 0), 126))
+    [pid=45392][out] console.error: services.settings: 
+    [pid=45392][out]   Message: EmptyDatabaseError: "main/nimbus-desktop-experiments" has not been synced yet
+    [pid=45392][out]   Stack:
+    [pid=45392][out]     EmptyDatabaseError@resource://services-settings/Database.sys.mjs:19:5
+    [pid=45392][out] list@resource://services-settings/Database.sys.mjs:96:13
+    [pid=45392][out] 
+    [pid=45392][out] console.error: [Exception... "Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIWinTaskbar.getTaskbarProgress]"  nsresult: "0x80070057 (NS_ERROR_ILLEGAL_VALUE)"  location: "JS frame :: moz-src:///browser/components/downloads/DownloadsTaskbar.sys.mjs :: #windowsAttachIndicator :: line 181"  data: no]
+    [pid=45392] <gracefully close start>
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-a4059-using-real-rendered-colours-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-a4059-using-real-rendered-colours-firefox\error-context.md
+
+  13) [firefox] › tests\e2e\design-integrity.spec.ts:293:3 › Design Integrity — Stability (§15.7) › cumulative layout shift stays ≤0.02 through first paint 
+
+    Tearing down "context" exceeded the test timeout of 30000ms.
+
+    Error: browserContext.close: Test ended.
+    Browser logs:
+
+    <launching> C:\Users\jishn\AppData\Local\ms-playwright\firefox-1538\firefox\firefox.exe -no-remote -headless -profile C:\Users\jishn\AppData\Local\Temp\playwright_firefoxdev_profile-k5E69n -juggler-pipe -silent
+    <launched> pid=45436
+    [pid=45436][err] *** You are running in headless mode.
+    [pid=45436][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 119: unreachable code after return statement
+    [pid=45436][out] 
+    [pid=45436][out] Juggler listening to the pipe
+    [pid=45436][out] Crash Annotation GraphicsCriticalError: |[0][GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt (t=3.12244) [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+    [pid=45436][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=45436][out] console.warn: services.settings: #fetchAttachment: Forcing fallbackToDump to false due to Utils.LOAD_DUMPS being false
+    [pid=45436][out] console.error: (new NotFoundError("Could not find fa0fc42c-d91d-fca7-34eb-806ff46062dc in cache or dump", "resource://services-settings/Attachments.sys.mjs", 48))
+    [pid=45436][out] console.warn: "Unable to find the attachment for" "fa0fc42c-d91d-fca7-34eb-806ff46062dc"
+    [pid=45436][out] console.error: "Error fetching remote settings base url from CDN. Falling back to https://firefox-settings-attachments.cdn.mozilla.net/" (new SyntaxError("XMLHttpRequest.open: '/' is not a valid URL.", (void 0), 126))
+    [pid=45436][out] console.error: services.settings: 
+    [pid=45436][out]   Message: EmptyDatabaseError: "main/nimbus-desktop-experiments" has not been synced yet
+    [pid=45436][out]   Stack:
+    [pid=45436][out]     EmptyDatabaseError@resource://services-settings/Database.sys.mjs:19:5
+    [pid=45436][out] list@resource://services-settings/Database.sys.mjs:96:13
+    [pid=45436][out] 
+    [pid=45436][out] console.error: [Exception... "Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIWinTaskbar.getTaskbarProgress]"  nsresult: "0x80070057 (NS_ERROR_ILLEGAL_VALUE)"  location: "JS frame :: moz-src:///browser/components/downloads/DownloadsTaskbar.sys.mjs :: #windowsAttachIndicator :: line 181"  data: no]
+    [pid=45436] <gracefully close start>
+    [pid=45436][out] 
+    [pid=45436][out]         ERROR: Failed "callFunction": connector for namespace "page" in channel "undefined" is disposed. _rejectCallbacksFromConnector@chrome://juggler/content/SimpleChannel.js:108:25
+    [pid=45436][out] dispose@chrome://juggler/content/SimpleChannel.js:119:27
+    [pid=45436][out] dispose@chrome://juggler/content/protocol/PageHandler.js:152:23
+    [pid=45436][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=45436][out] destroySession@chrome://juggler/content/protocol/Dispatcher.js:35:13
+    [pid=45436][out] dispose@chrome://juggler/content/protocol/BrowserHandler.js:77:24
+    [pid=45436][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:117:21
+    [pid=45436][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:41:23
+    [pid=45436][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:142:22
+    [pid=45436][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=45436][out] 
+    [pid=45436][err] JavaScript warning: http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js, line 2: Script terminated by timeout at:
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:2:19584
+    [pid=45436][err] EventListener.handleEvent*@http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:2:19547
+    [pid=45436][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45436][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45436][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:3:37759
+    [pid=45436][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45436][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45436][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:2:32462
+    [pid=45436][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45436][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45436][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:3:5442
+    [pid=45436][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45436][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45436][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/3o_bl66c6bjla.js:2:3776
+    [pid=45436][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45436][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45436][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:5653
+    [pid=45436][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45436][err] K@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:5824
+    [pid=45436][err] u.r@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:3401
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:9266
+    [pid=45436][err] n@http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:11682
+    [pid=45436][err] a@http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:12005
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/3adyvxhqtm-cx.js:2:9244
+    [pid=45436][err] N@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:6284
+    [pid=45436][err] registerChunk/<@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:9524
+    [pid=45436][err] registerChunk@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:9540
+    [pid=45436][err] async*L@http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:7168
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:9638
+    [pid=45436][err] @http://localhost:3000/_next/static/chunks/turbopack-28250mq9ggtjp.js:2:9650
+    [pid=45436][err] 
+    [pid=45436][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+    [pid=45436][out]       
+    [pid=45436][out]         ERROR: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage] send@chrome://juggler/content/components/Juggler.js:134:18
+    [pid=45436][out] _dispatch@chrome://juggler/content/protocol/Dispatcher.js:76:24
+    [pid=45436][out] ssi_onQuitApplicationGranted@resource:///modules/sessionstore/SessionStore.sys.mjs:2945:19
+    [pid=45436][out] ssi_observe@resource:///modules/sessionstore/SessionStore.sys.mjs:1632:14
+    [pid=45436][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:143:16
+    [pid=45436][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:156:10
+    [pid=45436][out] 
+    [pid=45436][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=45436][err] JavaScript error: chrome://juggler/content/components/Juggler.js, line 134: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIRemoteDebuggingPipe.sendMessage]
+    [pid=45436][err] JavaScript warning: resource://gre/modules/UpdateService.sys.mjs, line 4029: unreachable code after return statement
+    [pid=45436][out]       1786424869157	addons.xpi	ERROR	System addon update list error [Exception... "<no message>"  nsresult: "0x8046001e (<unknown>)"  location: "JS frame :: resource://gre/modules/ServiceRequest.sys.mjs :: open :: line 126"  data: no]
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-223cf-s-≤0-02-through-first-paint-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-223cf-s-≤0-02-through-first-paint-firefox\error-context.md
+
+  14) [webkit] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+
+    Error: expected at least one [data-card-meta] row
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      174 |       els.map((e) => Math.round(e.getBoundingClientRect().top)),
+      175 |     )
+    > 176 |     expect(metas.length, 'expected at least one [data-card-meta] row').toBeGreaterThan(0)
+          |                                                                        ^
+      177 |     // All cards in this grid are in one row at 1440px (3-up) — every meta
+      178 |     // row should land on the same y.
+      179 |     const distinct = new Set(metas)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:176:72
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-webkit\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-webkit\error-context.md
+
+  15) [webkit] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+
+    Error: tap target(s) under 44×44px: [{"tag":"A","text":"Open Roles","w":105,"h":42},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"SPAN","text":"","w":32,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"BUTTON","text":"← Prev","w":80,"h":36},{"tag":"BUTTON","text":"Next →","w":80,"h":36},{"tag":"A","text":"AaksharaCAREERS","w":350,"h":32}]
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "h": 42,
+    +     "tag": "A",
+    +     "text": "Open Roles",
+    +     "w": 105,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 32,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "← Prev",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "Next →",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 32,
+    +     "tag": "A",
+    +     "text": "AaksharaCAREERS",
+    +     "w": 350,
+    +   },
+    + ]
+
+      244 |         .filter((t) => t.w > 0 && t.h > 0 && (t.w < 44 || t.h < 44)),
+      245 |     )
+    > 246 |     expect(small, `tap target(s) under 44×44px: ${JSON.stringify(small)}`).toEqual([])
+          |                                                                            ^
+      247 |   })
+      248 |
+      249 |   test('the primary CTA meets 4.5:1 contrast using real rendered colours', async ({ page }) => {
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:246:76
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--webkit\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--webkit\error-context.md
+
+  16) [mobile-chrome] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/careers", waiting until "load"
+
+
+      23 |
+      24 | async function gotoStable(page: Page, path: string) {
+    > 25 |   await page.goto(path)
+         |              ^
+      26 |   await page.waitForLoadState('networkidle')
+      27 |   await page.evaluate(() => document.fonts.ready)
+      28 | }
+        at gotoStable (D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:25:14)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:60:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-04dc3-32-48-scale-at-390-768-1440-mobile-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-04dc3-32-48-scale-at-390-768-1440-mobile-chrome\error-context.md
+
+  17) [mobile-chrome] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/careers", waiting until "load"
+
+
+      23 |
+      24 | async function gotoStable(page: Page, path: string) {
+    > 25 |   await page.goto(path)
+         |              ^
+      26 |   await page.waitForLoadState('networkidle')
+      27 |   await page.evaluate(() => document.fonts.ready)
+      28 | }
+        at gotoStable (D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:25:14)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:109:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-0e747-mp-bounds-375px-and-1920px--mobile-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-0e747-mp-bounds-375px-and-1920px--mobile-chrome\error-context.md
+
+  18) [mobile-chrome] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+
+    Error: expected at least one [data-card-meta] row
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      174 |       els.map((e) => Math.round(e.getBoundingClientRect().top)),
+      175 |     )
+    > 176 |     expect(metas.length, 'expected at least one [data-card-meta] row').toBeGreaterThan(0)
+          |                                                                        ^
+      177 |     // All cards in this grid are in one row at 1440px (3-up) — every meta
+      178 |     // row should land on the same y.
+      179 |     const distinct = new Set(metas)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:176:72
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-mobile-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-mobile-chrome\error-context.md
+
+  19) [mobile-chrome] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/careers", waiting until "load"
+
+
+      23 |
+      24 | async function gotoStable(page: Page, path: string) {
+    > 25 |   await page.goto(path)
+         |              ^
+      26 |   await page.waitForLoadState('networkidle')
+      27 |   await page.evaluate(() => document.fonts.ready)
+      28 | }
+        at gotoStable (D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:25:14)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:236:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--mobile-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--mobile-chrome\error-context.md
+
+  20) [mobile-safari] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+
+    Error: expected at least one [data-card-meta] row
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      174 |       els.map((e) => Math.round(e.getBoundingClientRect().top)),
+      175 |     )
+    > 176 |     expect(metas.length, 'expected at least one [data-card-meta] row').toBeGreaterThan(0)
+          |                                                                        ^
+      177 |     // All cards in this grid are in one row at 1440px (3-up) — every meta
+      178 |     // row should land on the same y.
+      179 |     const distinct = new Set(metas)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:176:72
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-mobile-safari\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-mobile-safari\error-context.md
+
+  21) [mobile-safari] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+
+    Error: tap target(s) under 44×44px: [{"tag":"A","text":"Open Roles","w":105,"h":42},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"SPAN","text":"","w":32,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"BUTTON","text":"← Prev","w":80,"h":36},{"tag":"BUTTON","text":"Next →","w":80,"h":36},{"tag":"A","text":"AaksharaCAREERS","w":350,"h":32}]
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "h": 42,
+    +     "tag": "A",
+    +     "text": "Open Roles",
+    +     "w": 105,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 32,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "← Prev",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "Next →",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 32,
+    +     "tag": "A",
+    +     "text": "AaksharaCAREERS",
+    +     "w": 350,
+    +   },
+    + ]
+
+      244 |         .filter((t) => t.w > 0 && t.h > 0 && (t.w < 44 || t.h < 44)),
+      245 |     )
+    > 246 |     expect(small, `tap target(s) under 44×44px: ${JSON.stringify(small)}`).toEqual([])
+          |                                                                            ^
+      247 |   })
+      248 |
+      249 |   test('the primary CTA meets 4.5:1 contrast using real rendered colours', async ({ page }) => {
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:246:76
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--mobile-safari\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--mobile-safari\error-context.md
+
+  22) [tablet] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+
+    Error: expected at least one [data-card-meta] row
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      174 |       els.map((e) => Math.round(e.getBoundingClientRect().top)),
+      175 |     )
+    > 176 |     expect(metas.length, 'expected at least one [data-card-meta] row').toBeGreaterThan(0)
+          |                                                                        ^
+      177 |     // All cards in this grid are in one row at 1440px (3-up) — every meta
+      178 |     // row should land on the same y.
+      179 |     const distinct = new Set(metas)
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:176:72
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-tablet\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-95569--same-baseline-within-a-row-tablet\error-context.md
+
+  23) [tablet] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+
+    Error: tap target(s) under 44×44px: [{"tag":"A","text":"Open Roles","w":105,"h":42},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"A","text":"Apply Now →","w":300,"h":36},{"tag":"SPAN","text":"","w":32,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"SPAN","text":"","w":10,"h":10},{"tag":"BUTTON","text":"← Prev","w":80,"h":36},{"tag":"BUTTON","text":"Next →","w":80,"h":36},{"tag":"A","text":"AaksharaCAREERS","w":350,"h":32}]
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "h": 42,
+    +     "tag": "A",
+    +     "text": "Open Roles",
+    +     "w": 105,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "A",
+    +     "text": "Apply Now →",
+    +     "w": 300,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 32,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 10,
+    +     "tag": "SPAN",
+    +     "text": "",
+    +     "w": 10,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "← Prev",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 36,
+    +     "tag": "BUTTON",
+    +     "text": "Next →",
+    +     "w": 80,
+    +   },
+    +   Object {
+    +     "h": 32,
+    +     "tag": "A",
+    +     "text": "AaksharaCAREERS",
+    +     "w": 350,
+    +   },
+    + ]
+
+      244 |         .filter((t) => t.w > 0 && t.h > 0 && (t.w < 44 || t.h < 44)),
+      245 |     )
+    > 246 |     expect(small, `tap target(s) under 44×44px: ${JSON.stringify(small)}`).toEqual([])
+          |                                                                            ^
+      247 |   })
+      248 |
+      249 |   test('the primary CTA meets 4.5:1 contrast using real rendered colours', async ({ page }) => {
+        at D:\akshara careers\akshara-careers\tests\e2e\design-integrity.spec.ts:246:76
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--tablet\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-integrity-Design-In-4b669-st-44×44px-on-mobile-390px--tablet\error-context.md
+
+  23 failed
+    [chromium] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+    [chromium] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+    [firefox] › tests\e2e\design-integrity.spec.ts:35:3 › Design Integrity — Alignment (§15.7) › every standard [data-container] shares one left edge and one right edge at 1440px 
+    [firefox] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 
+    [firefox] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) 
+    [firefox] › tests\e2e\design-integrity.spec.ts:122:3 › Design Integrity — Spacing (§15.7) › section padding is symmetric (top === bottom) for every section 
+    [firefox] › tests\e2e\design-integrity.spec.ts:148:3 › Design Integrity — Cards (§15.7) › job cards in the same row have equal computed height (±1px) 
+    [firefox] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+    [firefox] › tests\e2e\design-integrity.spec.ts:185:3 › Design Integrity — Typography (§15.7) › the display face actually loaded — no silent fallback to a system font 
+    [firefox] › tests\e2e\design-integrity.spec.ts:221:3 › Design Integrity — Typography (§15.7) › every heading has text-wrap: balance (or equivalent) applied 
+    [firefox] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+    [firefox] › tests\e2e\design-integrity.spec.ts:249:3 › Design Integrity — Targets (§15.7) › the primary CTA meets 4.5:1 contrast using real rendered colours 
+    [firefox] › tests\e2e\design-integrity.spec.ts:293:3 › Design Integrity — Stability (§15.7) › cumulative layout shift stays ≤0.02 through first paint 
+    [webkit] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+    [webkit] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+    [mobile-chrome] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 
+    [mobile-chrome] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) 
+    [mobile-chrome] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+    [mobile-chrome] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+    [mobile-safari] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+    [mobile-safari] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+    [tablet] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+    [tablet] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+  103 passed (1.8m)

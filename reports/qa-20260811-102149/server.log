@@ -1,0 +1,11 @@
+npm notice run akshara-careers@0.1.0 start
+npm notice run next start
+▲ Next.js 16.3.0
+- Local:         http://localhost:3000
+- Network:       http://10.17.21.6:3000
+✓ Ready in 101ms
+[@sentry/nextjs] DEPRECATION WARNING: disableLogger is deprecated and will be removed in a future version. Use webpack.treeshake.removeDebugLogging instead.
+[@sentry/nextjs] DEPRECATION WARNING: automaticVercelMonitors is deprecated and will be removed in a future version. Use webpack.automaticVercelMonitors instead.
+✓ Running next.config.ts took 328ms
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at ignore-listed frames

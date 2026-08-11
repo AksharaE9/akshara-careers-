@@ -1,0 +1,133 @@
+Akshara Careers — QA suite
+Target: http://localhost:3000
+Report: reports/qa-20260811-103544
+===============================================
+
+── Gate: 0-build-typecheck ──────────────────────────────
+PASS  0-build-typecheck
+
+── Gate: 0-build-lint ──────────────────────────────
+FAIL  0-build-lint  (see reports/qa-20260811-103544/00-lint.log)
+      19:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+    
+    D:\akshara careers\akshara-careers\tests\integration\college-search.test.ts
+      19:14  warning  'sql' is defined but never used  @typescript-eslint/no-unused-vars
+    
+    D:\akshara careers\akshara-careers\tests\security\authz-matrix.spec.ts
+      62:16  warning  'apiPatch' is defined but never used      @typescript-eslint/no-unused-vars
+      80:28  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+    
+    D:\akshara careers\akshara-careers\tests\security\upload-hardening.spec.ts
+      49:36  error    Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+      58:7   warning  'MINIMAL_PDF_HEADER' is assigned a value but never used  @typescript-eslint/no-unused-vars
+      61:7   warning  'PHP_WEBSHELL' is assigned a value but never used        @typescript-eslint/no-unused-vars
+    
+    D:\akshara careers\akshara-careers\tests\unit\normalisers.property.test.ts
+      37:49  warning  'd2' is defined but never used  @typescript-eslint/no-unused-vars
+    
+    ✖ 208 problems (117 errors, 91 warnings)
+      2 errors and 0 warnings potentially fixable with the `--fix` option.
+    
+
+── Gate: 0-build-unit ──────────────────────────────
+PASS  0-build-unit
+
+── Gate: 0-build-production ──────────────────────────────
+PASS  0-build-production
+
+── Gate: 1-css-emitted ─────────────────────────
+CSS emitted: 88844 bytes
+PASS  1-css-emitted
+
+── Gate: 2-database ──────────────────────────────
+PASS  2-database
+
+Starting production server for design/functional/perf gates...
+
+── Gate: 3-design-integrity ──────────────────────────────
+FAIL  3-design-integrity  (see reports/qa-20260811-103544/03-design-integrity.log)
+        [firefox] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) 
+        [firefox] › tests\e2e\design-integrity.spec.ts:122:3 › Design Integrity — Spacing (§15.7) › section padding is symmetric (top === bottom) for every section 
+        [firefox] › tests\e2e\design-integrity.spec.ts:148:3 › Design Integrity — Cards (§15.7) › job cards in the same row have equal computed height (±1px) 
+        [firefox] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+        [firefox] › tests\e2e\design-integrity.spec.ts:185:3 › Design Integrity — Typography (§15.7) › the display face actually loaded — no silent fallback to a system font 
+        [firefox] › tests\e2e\design-integrity.spec.ts:221:3 › Design Integrity — Typography (§15.7) › every heading has text-wrap: balance (or equivalent) applied 
+        [firefox] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+        [firefox] › tests\e2e\design-integrity.spec.ts:249:3 › Design Integrity — Targets (§15.7) › the primary CTA meets 4.5:1 contrast using real rendered colours 
+        [firefox] › tests\e2e\design-integrity.spec.ts:293:3 › Design Integrity — Stability (§15.7) › cumulative layout shift stays ≤0.02 through first paint 
+        [webkit] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+        [webkit] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+        [mobile-chrome] › tests\e2e\design-integrity.spec.ts:55:3 › Design Integrity — Alignment (§15.7) › container gutters match the 20/32/48 scale at 390/768/1440 
+        [mobile-chrome] › tests\e2e\design-integrity.spec.ts:106:3 › Design Integrity — Spacing (§15.7) › section padding resolves to the 4px scale at fluid clamp bounds (375px and 1920px) 
+        [mobile-chrome] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+        [mobile-chrome] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+        [mobile-safari] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+        [mobile-safari] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+        [tablet] › tests\e2e\design-integrity.spec.ts:170:3 › Design Integrity — Cards (§15.7) › card meta rows (footer) align to the same baseline within a row 
+        [tablet] › tests\e2e\design-integrity.spec.ts:234:3 › Design Integrity — Targets (§15.7) › every tap target is at least 44×44px on mobile (390px) 
+      103 passed (1.8m)
+
+── Gate: 4-functional ──────────────────────────────
+FAIL  4-functional  (see reports/qa-20260811-103544/04-functional.log)
+        attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+        test-results\console-dashboard-Admin-Co-0bb6d-riggers-and-filters-screens-tablet\test-failed-1.png
+        ────────────────────────────────────────────────────────────────────────────────────────────────
+    
+        Error Context: test-results\console-dashboard-Admin-Co-0bb6d-riggers-and-filters-screens-tablet\error-context.md
+    
+      12 failed
+        [chromium] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+        [firefox] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+        [firefox] › tests\e2e\console-auth.spec.ts:54:3 › Console Authentication & Password Rotation (§14.1) › Fast demo recruiter login accesses candidate pipeline seamlessly 
+        [firefox] › tests\e2e\sync-consistency.spec.ts:135:3 › Real-Time Cross-Dashboard Sync Consistency (§3 & §8) › Context A (Recruiter) mutation propagates to Context B (Candidate) within 2s target 
+        [webkit] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+        [webkit] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens 
+        [mobile-chrome] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+        [mobile-chrome] › tests\e2e\careers-screenshots.spec.ts:7:3 › Public Careers Board Page Screenshots › Capture Careers Board - Mobile 390px 
+        [mobile-safari] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+        [mobile-safari] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens 
+        [tablet] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+        [tablet] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens 
+      204 passed (2.1m)
+
+── Gate: 5-performance ──────────────────────────────
+FAIL  5-performance  (see reports/qa-20260811-103544/05-lighthouse.log)
+    2026-08-11T05:11:55.493Z LH:status Auditing: Legacy JavaScript
+    2026-08-11T05:11:55.494Z LH:status Auditing: Modern HTTP
+    2026-08-11T05:11:55.494Z LH:status Auditing: Network dependency tree
+    2026-08-11T05:11:55.495Z LH:status Auditing: Render blocking requests
+    2026-08-11T05:11:55.495Z LH:status Auditing: 3rd parties
+    2026-08-11T05:11:55.498Z LH:status Auditing: Optimize viewport for mobile
+    2026-08-11T05:11:55.498Z LH:status Generating results...
+    2026-08-11T05:11:55.576Z LH:ChromeLauncher Killing Chrome instance 25540
+    2026-08-11T05:11:55.742Z LH:ChromeLauncher Killing Chrome instance 25540
+    2026-08-11T05:11:55.895Z LH:ChromeLauncher:error taskkill stderr ERROR: The process "25540" not found.
+    
+    Runtime error encountered: EPERM, Permission denied: \\?\C:\Users\jishn\AppData\Local\Temp\lighthouse.80599900 '\\?\C:\Users\jishn\AppData\Local\Temp\lighthouse.80599900'
+    Error: EPERM, Permission denied: \\?\C:\Users\jishn\AppData\Local\Temp\lighthouse.80599900 '\\?\C:\Users\jishn\AppData\Local\Temp\lighthouse.80599900'
+        at rmSync (node:fs:1222:18)
+        at Launcher.destroyTmp (file:///D:/akshara%20careers/akshara-careers/node_modules/lighthouse/node_modules/chrome-launcher/dist/chrome-launcher.js:367:9)
+        at Launcher.kill (file:///D:/akshara%20careers/akshara-careers/node_modules/lighthouse/node_modules/chrome-launcher/dist/chrome-launcher.js:349:14)
+        at Object.kill (file:///D:/akshara%20careers/akshara-careers/node_modules/lighthouse/node_modules/chrome-launcher/dist/chrome-launcher.js:39:18)
+        at runLighthouse (file:///D:/akshara%20careers/akshara-careers/node_modules/lighthouse/cli/run.js:217:21)
+        at async file:///D:/akshara%20careers/akshara-careers/node_modules/lighthouse/cli/index.js:10:1
+    
+
+── Gate: 6-secret-hygiene ──────────────────────
+PASS  6-secret-hygiene — seeded password appears nowhere outside .env*/seed-admin.ts
+
+===============================================
+QA SUMMARY — reports/qa-20260811-103544
+===============================================
+0-build-typecheck            PASS
+0-build-lint                 FAIL
+0-build-unit                 PASS
+0-build-production           PASS
+1-css-emitted                PASS
+2-database                   PASS
+3-design-integrity           FAIL
+4-functional                 FAIL
+5-performance                FAIL
+6-secret-hygiene             PASS
+===============================================
+RESULT: FAIL — see reports/qa-20260811-103544 for full logs per gate.

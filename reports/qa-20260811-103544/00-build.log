@@ -1,0 +1,125 @@
+npm notice run akshara-careers@0.1.0 build
+npm notice run next build
+▲ Next.js 16.3.0 (Turbopack)
+- Environments: .env.local
+[@sentry/nextjs] DEPRECATION WARNING: disableLogger is deprecated and will be removed in a future version. Use webpack.treeshake.removeDebugLogging instead. (Not supported with Turbopack.)
+[@sentry/nextjs] DEPRECATION WARNING: automaticVercelMonitors is deprecated and will be removed in a future version. Use webpack.automaticVercelMonitors instead. (Not supported with Turbopack.)
+✓ Running next.config.ts took 449ms
+- Experiments (use with caution):
+  · clientTraceMetadata
+
+  Creating an optimized production build ...
+[@sentry/nextjs] DEPRECATION WARNING: disableLogger is deprecated and will be removed in a future version. Use webpack.treeshake.removeDebugLogging instead. (Not supported with Turbopack.)
+[@sentry/nextjs] DEPRECATION WARNING: automaticVercelMonitors is deprecated and will be removed in a future version. Use webpack.automaticVercelMonitors instead. (Not supported with Turbopack.)
+✓ Compiled successfully in 1038ms
+  Running next.config.js provided runAfterProductionCompile ...
+✓ Completed runAfterProductionCompile in 298ms
+  Running TypeScript ...
+  Finished TypeScript in 1943ms ...
+  Collecting page data using 31 workers ...
+⚠ The Edge Runtime is deprecated. You can use the "nodejs" runtime instead. Learn more: https://nextjs.org/docs/messages/edge-runtime-deprecated
+⚠ Using edge runtime on a page currently disables static generation for that page
+  Generating static pages using 31 workers (0/69) ...
+  Generating static pages using 31 workers (17/69) 
+  Generating static pages using 31 workers (34/69) 
+  Generating static pages using 31 workers (51/69) 
+Error in getCurrentCandidate: Error: Dynamic server usage: Route /dashboard couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (lib\auth\candidate-session.ts:68:31)
+    at q (app\dashboard\page.tsx:19:27)
+  66 | export async function getCurrentCandidate(): Promise<CurrentCandidate | null> {
+  67 |   try {
+> 68 |     const cookieStore = await cookies()
+     |                               ^
+  69 |     const sessionCookie = cookieStore.get(CANDIDATE_SESSION_COOKIE)
+  70 |     if (!sessionCookie || !sessionCookie.value) {
+  71 |       return null {
+  description: "Route /dashboard couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+✓ Generating static pages using 31 workers (69/69) in 471ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/applications
+├ ƒ /api/applications/finalize
+├ ƒ /api/applications/mock-upload
+├ ƒ /api/applications/presign
+├ ƒ /api/applications/submit
+├ ƒ /api/auth/candidate/login
+├ ƒ /api/auth/candidate/logout
+├ ƒ /api/auth/candidate/otp/send
+├ ƒ /api/auth/candidate/otp/verify
+├ ƒ /api/auth/candidate/signup
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/me
+├ ƒ /api/auth/password-rotate
+├ ƒ /api/candidate/applications
+├ ƒ /api/console/applications
+├ ƒ /api/console/applications/[id]
+├ ƒ /api/console/applications/[id]/notes
+├ ƒ /api/console/applications/[id]/stage
+├ ƒ /api/console/audit
+├ ƒ /api/console/candidates
+├ ƒ /api/console/colleges
+├ ƒ /api/console/colleges/merge
+├ ƒ /api/console/content
+├ ƒ /api/console/drives
+├ ƒ /api/console/exports
+├ ƒ /api/console/funnel
+├ ƒ /api/console/insight/drives
+├ ƒ /api/console/insight/jobs
+├ ƒ /api/console/insight/traffic
+├ ƒ /api/console/jobs
+├ ƒ /api/console/jobs/[id]
+├ ƒ /api/console/pulse
+├ ƒ /api/console/qa-fixtures
+├ ƒ /api/console/security
+├ ƒ /api/console/stream
+├ ƒ /api/console/system
+├ ƒ /api/console/talent-pool
+├ ƒ /api/console/users
+├ ƒ /api/health
+├ ƒ /api/lookup/colleges
+├ ƒ /api/lookup/courses
+├ ƒ /api/status/lookup
+├ ƒ /api/track
+├ ƒ /api/vitals
+├ ƒ /apply/[slug]
+├ ƒ /careers
+├ ƒ /careers/[slug]
+├ ƒ /console
+├ ƒ /console/account/password
+├ ƒ /console/applications
+├ ƒ /console/applications/[id]
+├ ƒ /console/audit
+├ ƒ /console/candidates
+├ ƒ /console/colleges
+├ ƒ /console/content
+├ ƒ /console/drives
+├ ƒ /console/exports
+├ ƒ /console/insight/colleges
+├ ƒ /console/insight/drives
+├ ƒ /console/insight/funnel
+├ ƒ /console/insight/jobs
+├ ƒ /console/insight/traffic
+├ ƒ /console/jobs
+├ ƒ /console/login
+├ ƒ /console/lookups
+├ ƒ /console/security
+├ ƒ /console/system
+├ ƒ /console/talent-pool
+├ ƒ /console/users
+├ ƒ /d/[code]
+├ ƒ /dashboard
+├ ○ /dev/ui
+├ ○ /login
+├ ○ /privacy
+└ ƒ /status/[token]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

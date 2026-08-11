@@ -1,0 +1,720 @@
+npm notice run akshara-careers@0.1.0 lint
+npm notice run eslint
+
+D:\akshara careers\akshara-careers\app\api\applications\finalize\route.ts
+   94:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   95:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  129:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\applications\mock-upload\route.ts
+  25:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\applications\presign\route.ts
+  113:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\applications\route.ts
+   14:10  warning  'candidates' is defined but never used                @typescript-eslint/no-unused-vars
+   14:36  warning  'campusDrives' is defined but never used              @typescript-eslint/no-unused-vars
+   15:10  warning  'findCandidate' is defined but never used             @typescript-eslint/no-unused-vars
+   49:9   error    'candidate' is never reassigned. Use 'const' instead  prefer-const
+  142:17  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\auth\candidate\login\route.ts
+  63:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\auth\candidate\signup\route.ts
+  52:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\auth\login\route.ts
+  163:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\auth\password-rotate\route.ts
+  94:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\candidate\applications\route.ts
+  69:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\applications\[id]\notes\route.ts
+  27:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\applications\[id]\route.ts
+  47:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\applications\[id]\stage\route.ts
+  33:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\applications\route.ts
+  37:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\audit\route.ts
+  14:27  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  42:12  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+  42:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\candidates\route.ts
+  11:36  warning  'colleges' is defined but never used      @typescript-eslint/no-unused-vars
+  11:46  warning  'jobs' is defined but never used          @typescript-eslint/no-unused-vars
+  14:27  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  46:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\colleges\merge\route.ts
+  30:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\colleges\route.ts
+  14:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\content\route.ts
+  11:10  warning  'contentBlocks' is defined but never used  @typescript-eslint/no-unused-vars
+  12:10  warning  'eq' is defined but never used             @typescript-eslint/no-unused-vars
+  14:27  warning  'request' is defined but never used        @typescript-eslint/no-unused-vars
+  43:12  warning  'err' is defined but never used            @typescript-eslint/no-unused-vars
+  43:17  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  66:12  warning  'err' is defined but never used            @typescript-eslint/no-unused-vars
+  66:17  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\drives\route.ts
+  14:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  49:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\exports\route.ts
+  83:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\funnel\route.ts
+  12:24  warning  'candidates' is defined but never used    @typescript-eslint/no-unused-vars
+  12:36  warning  'colleges' is defined but never used      @typescript-eslint/no-unused-vars
+  12:46  warning  'jobs' is defined but never used          @typescript-eslint/no-unused-vars
+  13:10  warning  'desc' is defined but never used          @typescript-eslint/no-unused-vars
+  13:16  warning  'eq' is defined but never used            @typescript-eslint/no-unused-vars
+  77:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\insight\drives\route.ts
+  13:27  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  58:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\insight\jobs\route.ts
+  13:27  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  71:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\insight\traffic\route.ts
+  10:27  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  50:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\jobs\[id]\route.ts
+  23:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\jobs\route.ts
+  14:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  52:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\pulse\route.ts
+  11:27  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  20:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\security\route.ts
+  11:26  warning  'users' is defined but never used            @typescript-eslint/no-unused-vars
+  11:33  warning  'consoleSessions' is defined but never used  @typescript-eslint/no-unused-vars
+  12:16  warning  'sql' is defined but never used              @typescript-eslint/no-unused-vars
+  12:21  warning  'eq' is defined but never used               @typescript-eslint/no-unused-vars
+  14:27  warning  'request' is defined but never used          @typescript-eslint/no-unused-vars
+  57:17  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\system\route.ts
+  13:27  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  46:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\talent-pool\route.ts
+  13:27  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  24:12  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+  24:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\console\users\route.ts
+  12:10  warning  'eq' is defined but never used            @typescript-eslint/no-unused-vars
+  15:27  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  37:12  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+  37:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  79:12  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+  79:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\lookup\colleges\route.ts
+  47:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\lookup\courses\route.ts
+  45:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\status\lookup\route.ts
+  59:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\api\track\route.ts
+  98:12  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\app\console\(auth)\login\page.tsx
+  50:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\console\account\password\page.tsx
+  62:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\console\applications\[id]\client.tsx
+  10:8   warning  'Link' is defined but never used             @typescript-eslint/no-unused-vars
+  28:71  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  29:15  warning  'setApp' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  34:38  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\console\applications\[id]\page.tsx
+  10:10  warning  'Card' is defined but never used          @typescript-eslint/no-unused-vars
+  35:51  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\console\audit\page.tsx
+  17:11  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+  18:10  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+  46:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\audit\page.tsx:46:5
+  44 |
+  45 |   useEffect(() => {
+> 46 |     fetchLogs()
+     |     ^^^^^^^^^ Avoid calling setState() directly within an effect
+  47 |   }, [])
+  48 |
+  49 |   const columns: ColumnDef<AuditLogRow>[] = [  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\candidates\page.tsx
+  48:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\candidates\page.tsx:48:5
+  46 |
+  47 |   useEffect(() => {
+> 48 |     fetchCandidates()
+     |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  49 |   }, [])
+  50 |
+  51 |   const columns: ColumnDef<CandidateRow>[] = [  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\colleges\page.tsx
+  47:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\colleges\page.tsx:47:5
+  45 |
+  46 |   useEffect(() => {
+> 47 |     fetchColleges()
+     |     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  48 |   }, [])
+  49 |
+  50 |   const handleAddAlias = async (collegeId: string) => {  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\content\page.tsx
+  21:10  warning  'loading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+  40:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\content\page.tsx:40:5
+  38 |
+  39 |   useEffect(() => {
+> 40 |     fetchBlocks()
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  41 |   }, [])
+  42 |
+  43 |   const handleSave = async (slug: string, content: string) => {  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\drives\page.tsx
+  44:56  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+  62:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\drives\page.tsx:62:5
+  60 |
+  61 |   useEffect(() => {
+> 62 |     fetchDrives()
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  63 |   }, [])
+  64 |
+  65 |   const searchColleges = async (q: string) => {  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\exports\page.tsx
+  24:5  warning  Do not use `window.location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  @next/next/no-location-assign-relative-destination
+
+D:\akshara careers\akshara-careers\app\console\insight\drives\page.tsx
+  50:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\insight\drives\page.tsx:50:5
+  48 |
+  49 |   useEffect(() => {
+> 50 |     fetchDrives()
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  51 |   }, [])
+  52 |
+  53 |   const columns: ColumnDef<DrivePerformanceRow>[] = [  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\insight\funnel\page.tsx
+   54:36  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+   55:19  warning  'setLoading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   71:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\insight\funnel\page.tsx:71:5
+  69 |
+  70 |   useEffect(() => {
+> 71 |     fetchFunnel(connectionFilter)
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  72 |   }, [connectionFilter])
+  73 |
+  74 |   return (  react-hooks/set-state-in-effect
+   72:6   warning  React Hook useEffect has a missing dependency: 'fetchFunnel'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-hooks/exhaustive-deps
+  120:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+  168:47  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+  195:50  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+  229:61  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\console\insight\jobs\page.tsx
+  49:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\insight\jobs\page.tsx:49:5
+  47 |
+  48 |   useEffect(() => {
+> 49 |     fetchJobs()
+     |     ^^^^^^^^^ Avoid calling setState() directly within an effect
+  50 |   }, [])
+  51 |
+  52 |   const columns: ColumnDef<JobPerformanceRow>[] = [  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\insight\traffic\page.tsx
+   12:36  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+   31:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\insight\traffic\page.tsx:31:5
+  29 |
+  30 |   useEffect(() => {
+> 31 |     fetchTraffic()
+     |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  32 |   }, [])
+  33 |
+  34 |   if (loading || !data) {  react-hooks/set-state-in-effect
+   85:36  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+  123:36  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\console\jobs\page.tsx
+  42:24  warning  'setLocationCity' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+  63:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\jobs\page.tsx:63:5
+  61 |
+  62 |   useEffect(() => {
+> 63 |     fetchJobs()
+     |     ^^^^^^^^^ Avoid calling setState() directly within an effect
+  64 |   }, [])
+  65 |
+  66 |   const handleTitleChange = (val: string) => {  react-hooks/set-state-in-effect
+  85:71  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\console\page.tsx
+  138:10  warning  'loading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  138:19  warning  'setLoading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  155:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\page.tsx:155:5
+  153 |
+  154 |   useEffect(() => {
+> 155 |     fetchPulse()
+      |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  156 |     const interval = setInterval(fetchPulse, 30000)
+  157 |     const tick = setInterval(() => setSecondsAgo((prev) => prev + 1), 1000)
+  158 |     return () => {  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\security\page.tsx
+  13:36  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+  14:10  warning  'loading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  32:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\security\page.tsx:32:5
+  30 |
+  31 |   useEffect(() => {
+> 32 |     fetchSecurity()
+     |     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  33 |   }, [])
+  34 |
+  35 |   const defaultLayers = {  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\system\page.tsx
+   34:36  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+   35:10  warning  'loading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   35:19  warning  'setLoading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   50:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\system\page.tsx:50:5
+  48 |
+  49 |   useEffect(() => {
+> 50 |     fetchHealth()
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  51 |   }, [])
+  52 |
+  53 |   return (  react-hooks/set-state-in-effect
+   68:34  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  114:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\console\talent-pool\page.tsx
+  40:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\talent-pool\page.tsx:40:5
+  38 |
+  39 |   useEffect(() => {
+> 40 |     fetchTalent()
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  41 |   }, [])
+  42 |
+  43 |   const columns: ColumnDef<TalentPoolRow>[] = [  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\app\console\users\page.tsx
+   48:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\app\console\users\page.tsx:48:5
+  46 |
+  47 |   useEffect(() => {
+> 48 |     fetchUsers()
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  49 |   }, [])
+  50 |
+  51 |   const handleCreateUser = async (e: React.FormEvent) => {  react-hooks/set-state-in-effect
+  119:18  warning  'row' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\app\d\[code]\route.ts
+  22:7  error  'driveCode' is never reassigned. Use 'const' instead  prefer-const
+
+D:\akshara careers\akshara-careers\app\login\page.tsx
+  101:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\app\status\[token]\page.tsx
+    9:8   warning  'Link' is defined but never used               @typescript-eslint/no-unused-vars
+  102:21  warning  'isFuture' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\check-r0.js
+  23:9  warning  'links' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\components\apply\JobApplyForm.tsx
+   15:10  warning  'Button' is defined but never used                @typescript-eslint/no-unused-vars
+   29:8   warning  'PersonalDetailsInput' is defined but never used  @typescript-eslint/no-unused-vars
+   30:8   warning  'AcademicStatusInput' is defined but never used   @typescript-eslint/no-unused-vars
+  117:14  warning  'err' is defined but never used                   @typescript-eslint/no-unused-vars
+  117:19  error    Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+  242:19  error    Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+  320:19  error    Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\components\candidate\CandidateDashboardLive.tsx
+   14:10  warning  'SmoothLoader' is defined but never used           @typescript-eslint/no-unused-vars
+   76:24  error    Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+   91:36  error    Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+   94:10  warning  'isSyncing' is assigned a value but never used     @typescript-eslint/no-unused-vars
+   94:21  warning  'setIsSyncing' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  143:16  warning  'err' is defined but never used                    @typescript-eslint/no-unused-vars
+  287:48  error    Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\components\console\CommandPalette.tsx
+   65:29  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\akshara careers\akshara-careers\components\console\CommandPalette.tsx:65:29
+  63 |     { id: 'act-date-7d', title: 'Filter: Last 7 Days', subtitle: 'Apply date range to current screen', category: 'Actions', action: () => {
+  64 |       const now = new Date()
+> 65 |       const prev = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+     |                             ^^^^^^^^^^ Cannot call impure function
+  66 |       router.push(`?from=${prev.toISOString().split('T')[0]}&to=${now.toISOString().split('T')[0]}`)
+  67 |     }},
+  68 |     { id: 'act-date-30d', title: 'Filter: Last 30 Days', subtitle: 'Apply date range to current screen', category: 'Actions', action: () => {                                                                                                                                                                                                                                 react-hooks/purity
+   70:29  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\akshara careers\akshara-careers\components\console\CommandPalette.tsx:70:29
+  68 |     { id: 'act-date-30d', title: 'Filter: Last 30 Days', subtitle: 'Apply date range to current screen', category: 'Actions', action: () => {
+  69 |       const now = new Date()
+> 70 |       const prev = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+     |                             ^^^^^^^^^^ Cannot call impure function
+  71 |       router.push(`?from=${prev.toISOString().split('T')[0]}&to=${now.toISOString().split('T')[0]}`)
+  72 |     }},
+  73 |   ]                                                                                                                                                                                                                                                                                                                                                                        react-hooks/purity
+   86:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\components\console\CommandPalette.tsx:86:7
+  84 |   useEffect(() => {
+  85 |     if (isOpen) {
+> 86 |       setQuery('')
+     |       ^^^^^^^^ Avoid calling setState() directly within an effect
+  87 |       setSelectedIndex(0)
+  88 |       setTimeout(() => inputRef.current?.focus(), 50)
+  89 |     }                                                                                                                                                                                                      react-hooks/set-state-in-effect
+  106:11  error    Error: Cannot access variable before it is declared
+
+`executeItem` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\akshara careers\akshara-careers\components\console\CommandPalette.tsx:106:11
+  104 |         const selected = filtered[selectedIndex]
+  105 |         if (selected) {
+> 106 |           executeItem(selected)
+      |           ^^^^^^^^^^^ `executeItem` accessed before it is declared
+  107 |         }
+  108 |       } else if (e.key === 'Escape') {
+  109 |         e.preventDefault()
+
+D:\akshara careers\akshara-careers\components\console\CommandPalette.tsx:118:3
+  116 |   }, [isOpen, filtered, selectedIndex])
+  117 |
+> 118 |   const executeItem = (item: CommandItem) => {
+      |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 119 |     onClose()
+      | ^^^^^^^^^^^^^
+> 120 |     if (item.action) {
+      | ^^^^^^^^^^^^^
+> 121 |       item.action()
+      | ^^^^^^^^^^^^^
+> 122 |     } else if (item.href) {
+      | ^^^^^^^^^^^^^
+> 123 |       router.push(item.href)
+      | ^^^^^^^^^^^^^
+> 124 |     }
+      | ^^^^^^^^^^^^^
+> 125 |   }
+      | ^^^^ `executeItem` is declared here
+  126 |
+  127 |   if (!isOpen) return null
+  128 |  react-hooks/immutability
+  116:6   warning  React Hook useEffect has missing dependencies: 'executeItem' and 'onClose'. Either include them or remove the dependency array. If 'onClose' changes too often, find the parent component that defines it and wrap that definition in useCallback                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react-hooks/exhaustive-deps
+
+D:\akshara careers\akshara-careers\components\console\ConsoleShell.tsx
+  68:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\components\console\ConsoleShell.tsx:68:7
+  66 |       eventSource.onerror = () => setIsLiveConnected(false)
+  67 |     } catch {
+> 68 |       setIsLiveConnected(false)
+     |       ^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  69 |     }
+  70 |
+  71 |     return () => {  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\components\console\DataTable.tsx
+  42:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\components\ui\Combobox.tsx
+  21:8  warning  'ReactNode' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  90:7  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\akshara careers\akshara-careers\components\ui\Combobox.tsx:90:7
+  88 |     }
+  89 |     if (inputValue.length < minChars) {
+> 90 |       setOptions([])
+     |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  91 |       setOpen(false)
+  92 |       return
+  93 |     }  react-hooks/set-state-in-effect
+
+D:\akshara careers\akshara-careers\lib\analytics\track.ts
+   39:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   48:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   91:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   99:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  100:18  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  101:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  131:12  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\lib\auth\candidate-password.ts
+  11:29  warning  'sql' is defined but never used     @typescript-eslint/no-unused-vars
+  14:8   warning  'crypto' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\lib\auth\candidate-session.ts
+  49:12  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\lib\auth\password.ts
+  21:12  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\lib\auth\session.ts
+   9:10  warning  'getDb' is defined but never used  @typescript-eslint/no-unused-vars
+  10:10  warning  'users' is defined but never used  @typescript-eslint/no-unused-vars
+  11:10  warning  'eq' is defined but never used     @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\lib\db\queries\applications.ts
+   33:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   52:61  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  278:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  285:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\lib\db\queries\candidates.ts
+   9:36  warning  'applicationStageEvents' is defined but never used  @typescript-eslint/no-unused-vars
+  10:18  warning  'sql' is defined but never used                     @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\lib\db\queries\colleges.ts
+  10:14  warning  'and' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\lib\db\queries\courses.ts
+  10:10  warning  'eq' is defined but never used   @typescript-eslint/no-unused-vars
+  10:14  warning  'and' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\lib\db\queries\pulse.ts
+  10:66  warning  'users' is defined but never used           @typescript-eslint/no-unused-vars
+  10:73  warning  'securityEvents' is defined but never used  @typescript-eslint/no-unused-vars
+  10:89  warning  'auditLog' is defined but never used        @typescript-eslint/no-unused-vars
+  11:25  warning  'and' is defined but never used             @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\lib\db\seed.ts
+  15:56  warning  'candidates' is defined but never used        @typescript-eslint/no-unused-vars
+  15:68  warning  'applications' is defined but never used      @typescript-eslint/no-unused-vars
+  15:82  warning  'applicationNotes' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\scripts\apply-migration-0003.ts
+  27:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\scripts\apply-migration-0004.ts
+  27:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\scripts\benchmark-concurrency.ts
+  31:17  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  50:9   warning  'endpoints' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\scripts\clean-test-data.ts
+  24:10  warning  'sql' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\scripts\fix-legacy-index.ts
+  14:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  21:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\scripts\load-drive-spike.js
+  130:1  warning  Unexpected default export of anonymous function  import/no-anonymous-default-export
+
+D:\akshara careers\akshara-careers\scripts\verify-candidate-cooldown.ts
+  6:39  warning  'upsertCandidate' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\scripts\verify-db-setup.ts
+  17:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  37:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\test-neon-connection.ts
+  47:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  71:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  90:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\tests\e2e\sync-consistency.spec.ts
+  19:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\tests\integration\college-search.test.ts
+  19:14  warning  'sql' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\tests\security\authz-matrix.spec.ts
+  62:16  warning  'apiPatch' is defined but never used      @typescript-eslint/no-unused-vars
+  80:28  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\akshara careers\akshara-careers\tests\security\upload-hardening.spec.ts
+  49:36  error    Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  58:7   warning  'MINIMAL_PDF_HEADER' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  61:7   warning  'PHP_WEBSHELL' is assigned a value but never used        @typescript-eslint/no-unused-vars
+
+D:\akshara careers\akshara-careers\tests\unit\normalisers.property.test.ts
+  37:49  warning  'd2' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 208 problems (117 errors, 91 warnings)
+  2 errors and 0 warnings potentially fixable with the `--fix` option.
+

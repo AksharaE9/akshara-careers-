@@ -1,0 +1,79 @@
+npm notice run akshara-careers@0.1.0 typecheck
+npm notice run tsc --noEmit
+app/api/console/exports/route.ts(28,27): error TS2339: Property 'length' does not exist on type 'PaginatedApplicationsResult'.
+app/api/console/exports/route.ts(54,15): error TS2339: Property 'map' does not exist on type 'PaginatedApplicationsResult'.
+app/api/console/exports/route.ts(54,20): error TS7006: Parameter 'a' implicitly has an 'any' type.
+app/api/status/lookup/route.ts(13,32): error TS2307: Cannot find module '@/lib/validation/normalisers' or its corresponding type declarations.
+app/dashboard/page.tsx(39,13): error TS2375: Type '{ allowed: boolean; reason: "ACTIVE_APPLICATION_EXISTS" | "COOLDOWN_ACTIVE" | undefined; message: string | undefined; reapplyAvailableAt: string | undefined; daysRemaining: number | undefined; }' is not assignable to type '{ allowed: boolean; reason?: string; message?: string; reapplyAvailableAt?: string; daysRemaining?: number; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'reason' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+lib/auth/candidate-password.ts(116,53): error TS18048: 'cand' is possibly 'undefined'.
+lib/auth/candidate-password.ts(121,11): error TS18048: 'cand' is possibly 'undefined'.
+lib/auth/candidate-password.ts(122,17): error TS18048: 'cand' is possibly 'undefined'.
+lib/auth/candidate-password.ts(123,18): error TS18048: 'cand' is possibly 'undefined'.
+lib/auth/candidate-password.ts(124,24): error TS18048: 'cand' is possibly 'undefined'.
+lib/auth/candidate-password.ts(160,36): error TS18048: 'fifthFailure' is possibly 'undefined'.
+lib/auth/candidate-password.ts(208,53): error TS18048: 'candidate' is possibly 'undefined'.
+lib/auth/candidate-password.ts(213,11): error TS18048: 'candidate' is possibly 'undefined'.
+lib/auth/candidate-password.ts(214,17): error TS18048: 'candidate' is possibly 'undefined'.
+lib/auth/candidate-password.ts(215,18): error TS18048: 'candidate' is possibly 'undefined'.
+lib/auth/candidate-password.ts(216,24): error TS18048: 'candidate' is possibly 'undefined'.
+scripts/benchmark-concurrency.ts(113,15): error TS2532: Object is possibly 'undefined'.
+scripts/benchmark-concurrency.ts(114,15): error TS2532: Object is possibly 'undefined'.
+scripts/benchmark-concurrency.ts(115,15): error TS2532: Object is possibly 'undefined'.
+scripts/benchmark-concurrency.ts(116,15): error TS2532: Object is possibly 'undefined'.
+scripts/benchmark-concurrency.ts(117,15): error TS2532: Object is possibly 'undefined'.
+scripts/set-admin-password.ts(42,9): error TS2353: Object literal may only specify known properties, and 'updatedAt' does not exist in type '{ name?: string | SQL<unknown> | PgColumn<ColumnBaseConfig<ColumnDataType, string>, {}, {}> | undefined; email?: string | SQL<unknown> | PgColumn<...> | undefined; ... 11 more ...; prefs?: unknown; }'.
+scripts/verify-candidate-cooldown.ts(84,20): error TS18048: 'app1' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(89,46): error TS18048: 'app1' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(89,67): error TS18048: 'app1' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(89,91): error TS18048: 'app1' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(99,32): error TS18048: 'app1' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(116,32): error TS18048: 'app1' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(150,20): error TS18048: 'app2' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(155,46): error TS18048: 'app2' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(155,67): error TS18048: 'app2' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(155,91): error TS18048: 'app2' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(187,57): error TS18048: 'app1' is possibly 'undefined'.
+scripts/verify-candidate-cooldown.ts(187,69): error TS18048: 'app2' is possibly 'undefined'.
+tests/e2e/control-sizing.spec.ts(57,28): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(58,28): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(75,28): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(76,28): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(77,28): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(95,30): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(96,30): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(97,30): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(113,26): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(114,26): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/control-sizing.spec.ts(115,26): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/e2e/sync-consistency.spec.ts(81,20): error TS18048: 'cand' is possibly 'undefined'.
+tests/e2e/sync-consistency.spec.ts(91,11): error TS18048: 'adminUser' is possibly 'undefined'.
+tests/e2e/sync-consistency.spec.ts(92,14): error TS18048: 'adminUser' is possibly 'undefined'.
+tests/e2e/sync-consistency.spec.ts(93,13): error TS18048: 'adminUser' is possibly 'undefined'.
+tests/e2e/sync-consistency.spec.ts(94,13): error TS18048: 'adminUser' is possibly 'undefined'.
+tests/e2e/sync-consistency.spec.ts(103,22): error TS18048: 'cand' is possibly 'undefined'.
+tests/e2e/sync-consistency.spec.ts(122,17): error TS18048: 'app' is possibly 'undefined'.
+tests/e2e/sync-consistency.spec.ts(125,22): error TS18048: 'app' is possibly 'undefined'.
+tests/security/authz-matrix.spec.ts(36,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/security/upload-hardening.spec.ts(41,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/unit/normalisers.property.test.ts(274,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/unit/normalisers.property.test.ts(275,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/unit/normalisers.property.test.ts(278,20): error TS18048: 'email1' is possibly 'undefined'.
+tests/unit/normalisers.property.test.ts(278,52): error TS18048: 'email2' is possibly 'undefined'.

@@ -1,0 +1,11 @@
+npm notice run akshara-careers@0.1.0 test:unit
+npm notice run vitest run
+
+ RUN  v4.1.10 D:/akshara careers/akshara-careers
+
+
+ Test Files  4 passed (4)
+      Tests  54 passed (54)
+   Start at  10:35:51
+   Duration  5.46s (transform 189ms, setup 464ms, import 536ms, tests 4.42s, environment 2.12s)
+

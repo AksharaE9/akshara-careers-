@@ -1,0 +1,578 @@
+npm notice run akshara-careers@0.1.0 npx
+npm notice run playwright test tests/e2e --grep-invert Design Integrity --reporter=list
+
+Running 216 tests using 16 workers
+
+  ✓   12 [chromium] › tests\e2e\a11y.spec.ts:54:3 › WCAG 2.1 AA Accessibility Audits › Console Login Page (/console/login) has 0 critical/serious a11y violations (991ms)
+  ✓    8 [chromium] › tests\e2e\a11y.spec.ts:44:3 › WCAG 2.1 AA Accessibility Audits › Dev UI Component Gallery (/dev/ui) has 0 critical/serious a11y violations (1.3s)
+  ✓    7 [chromium] › tests\e2e\a11y.spec.ts:64:3 › WCAG 2.1 AA Accessibility Audits › Candidate Status Tracker (/status/[token]) has 0 critical/serious a11y violations (1.9s)
+  ✓   10 [chromium] › tests\e2e\a11y.spec.ts:24:3 › WCAG 2.1 AA Accessibility Audits › Job Detail Page (/careers/business-development-executive) has 0 critical/serious a11y violations (2.0s)
+  ✓   11 [chromium] › tests\e2e\console-dashboard.spec.ts:19:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 1 — Pulse dashboard renders 6 KPI tiles and live feed (2.3s)
+  ✓    5 [chromium] › tests\e2e\careers-screenshots.spec.ts:18:3 › Public Careers Board Page Screenshots › Capture Careers Board - Desktop 1440px (3.3s)
+  ✓   17 [chromium] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens (2.2s)
+  ✓    2 [chromium] › tests\e2e\careers-screenshots.spec.ts:7:3 › Public Careers Board Page Screenshots › Capture Careers Board - Mobile 390px (3.5s)
+  ✓    6 [chromium] › tests\e2e\careers-screenshots.spec.ts:29:3 › Public Careers Board Page Screenshots › Capture Job Detail - Mobile 390px (3.6s)
+  ✓    9 [chromium] › tests\e2e\a11y.spec.ts:34:3 › WCAG 2.1 AA Accessibility Audits › Application Wizard (/apply/business-development-executive) has 0 critical/serious a11y violations (3.7s)
+  ✓    1 [chromium] › tests\e2e\careers-screenshots.spec.ts:40:3 › Public Careers Board Page Screenshots › Capture Job Detail - Desktop 1440px (4.0s)
+  ✓    3 [chromium] › tests\e2e\a11y.spec.ts:14:3 › WCAG 2.1 AA Accessibility Audits › Public Careers Board (/careers) has 0 critical/serious a11y violations (4.2s)
+  ✓   15 [chromium] › tests\e2e\console-auth.spec.ts:54:3 › Console Authentication & Password Rotation (§14.1) › Fast demo recruiter login accesses candidate pipeline seamlessly (2.5s)
+  ✓   19 [chromium] › tests\e2e\console-dashboard.spec.ts:49:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 9 — Security & Bot Activity renders 8-layer defense counters (2.4s)
+  ✓   18 [chromium] › tests\e2e\console-dashboard.spec.ts:41:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 2 — Funnel & Form Analytics renders conversion journey and field diagnostics (3.1s)
+  ✓   20 [chromium] › tests\e2e\console-dashboard.spec.ts:56:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 10 — System Health renders live probes and endpoint table (2.4s)
+  ✓   16 [chromium] › tests\e2e\console-auth.spec.ts:24:3 › Console Authentication & Password Rotation (§14.1) › Wrong credentials show generic error message and never reveal account existence (3.0s)
+  ✓    4 [chromium] › tests\e2e\careers-screenshots.spec.ts:51:3 › Public Careers Board Page Screenshots › Capture Drive Landing Redirect Destination - Desktop 1440px (4.9s)
+  ✓   13 [chromium] › tests\e2e\console-auth.spec.ts:40:3 › Console Authentication & Password Rotation (§14.1) › Seeded super_admin logs in and handles password rotation redirect (3.6s)
+  ✓   21 [chromium] › tests\e2e\control-sizing.spec.ts:9:3 › Control Sizing & Theme Remediation (§18.6) › 1. No interactive control exceeds 64px tall on the landing page (2.9s)
+Desktop 1440px screenshot captured.
+Mobile 390px screenshot captured.
+  ✓   31 [chromium] › tests\e2e\layout.spec.ts:6:3 › Layout System & Alignment Audits (§15.4–§15.8) › 1. Every section container shares an identical left edge at desktop 1440px (1.6s)
+  ✓   23 [chromium] › tests\e2e\control-sizing.spec.ts:39:3 › Control Sizing & Theme Remediation (§18.6) › 3. paddingTop <= 4px on buttons (height derived from height property, not padding) (2.8s)
+  ✓   30 [chromium] › tests\e2e\dev-ui-screenshots.spec.ts:9:3 › Dev UI Gallery Screenshots › Capture Mobile 390px Viewport (1.6s)
+  ✓   22 [chromium] › tests\e2e\control-sizing.spec.ts:26:3 › Control Sizing & Theme Remediation (§18.6) › 2. No button has a height/width ratio above 0.5 (no boxy/square buttons) (2.9s)
+  ✓   32 [chromium] › tests\e2e\dev-ui-screenshots.spec.ts:24:3 › Dev UI Gallery Screenshots › Capture Desktop 1440px Viewport (1.8s)
+  ✓   27 [chromium] › tests\e2e\control-sizing.spec.ts:106:3 › Control Sizing & Theme Remediation (§18.6) › 7. Wordmark contrast >= 4.5:1 (L-02) (2.4s)
+  ✓   28 [chromium] › tests\e2e\control-sizing.spec.ts:121:3 › Control Sizing & Theme Remediation (§18.6) › 8. Nothing overflows the header bar (72px fixed height) (2.2s)
+  ✓   24 [chromium] › tests\e2e\control-sizing.spec.ts:49:3 › Control Sizing & Theme Remediation (§18.6) › 4. No warm ground survives on sections (red channel not > blue + 8) (3.0s)
+  ✓   34 [chromium] › tests\e2e\layout.spec.ts:35:3 › Layout System & Alignment Audits (§15.4–§15.8) › 3. Job cards in a row have equal computed height (h-full rhythm) (1.7s)
+  ✓   29 [chromium] › tests\e2e\control-sizing.spec.ts:128:3 › Control Sizing & Theme Remediation (§18.6) › 9. Heading-block-to-content gap is under 80px (L-07) (2.6s)
+  ✓   35 [chromium] › tests\e2e\layout.spec.ts:49:3 › Layout System & Alignment Audits (§15.4–§15.8) › 4. Hero typography resolves to Bricolage Grotesque display font with optical left margin (1.5s)
+  ✓   25 [chromium] › tests\e2e\control-sizing.spec.ts:67:3 › Control Sizing & Theme Remediation (§18.6) › 5. Body prose is not saturated blue (L-04 desaturation check) (3.3s)
+  ✓   26 [chromium] › tests\e2e\control-sizing.spec.ts:85:3 › Control Sizing & Theme Remediation (§18.6) › 6. Amber never appears as text on a light ground ([data-ground="light"]) (3.8s)
+  ✓   33 [chromium] › tests\e2e\layout.spec.ts:22:3 › Layout System & Alignment Audits (§15.4–§15.8) › 2. Zero horizontal overflow across all 9 standard responsive viewport widths (3.0s)
+[MUTATION] Recruiter stage update API latency: 1539ms (Budget: <400ms)
+[SYNC PROPAGATION] Cross-dashboard propagation latency: 1366ms (Target: <2000ms, Ceiling: 5000ms)
+  ✓   36 [chromium] › tests\e2e\sync-consistency.spec.ts:135:3 › Real-Time Cross-Dashboard Sync Consistency (§3 & §8) › Context A (Recruiter) mutation propagates to Context B (Candidate) within 2s target (5.0s)
+  ✘   14 [chromium] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout (15.9s)
+  ✓   47 [firefox] › tests\e2e\careers-screenshots.spec.ts:51:3 › Public Careers Board Page Screenshots › Capture Drive Landing Redirect Destination - Desktop 1440px (17.1s)
+  ✓   53 [firefox] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens (1.9s)
+  ✓   43 [firefox] › tests\e2e\a11y.spec.ts:64:3 › WCAG 2.1 AA Accessibility Audits › Candidate Status Tracker (/status/[token]) has 0 critical/serious a11y violations (20.2s)
+  ✓   54 [firefox] › tests\e2e\console-dashboard.spec.ts:41:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 2 — Funnel & Form Analytics renders conversion journey and field diagnostics (2.0s)
+  ✓   55 [firefox] › tests\e2e\console-dashboard.spec.ts:49:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 9 — Security & Bot Activity renders 8-layer defense counters (2.7s)
+  ✓   56 [firefox] › tests\e2e\console-dashboard.spec.ts:56:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 10 — System Health renders live probes and endpoint table (1.7s)
+  ✓   45 [firefox] › tests\e2e\careers-screenshots.spec.ts:29:3 › Public Careers Board Page Screenshots › Capture Job Detail - Mobile 390px (23.2s)
+  ✓   58 [firefox] › tests\e2e\control-sizing.spec.ts:26:3 › Control Sizing & Theme Remediation (§18.6) › 2. No button has a height/width ratio above 0.5 (no boxy/square buttons) (1.6s)
+  ✓   57 [firefox] › tests\e2e\control-sizing.spec.ts:9:3 › Control Sizing & Theme Remediation (§18.6) › 1. No interactive control exceeds 64px tall on the landing page (2.1s)
+  ✓   41 [firefox] › tests\e2e\a11y.spec.ts:24:3 › WCAG 2.1 AA Accessibility Audits › Job Detail Page (/careers/business-development-executive) has 0 critical/serious a11y violations (24.3s)
+  ✓   59 [firefox] › tests\e2e\control-sizing.spec.ts:39:3 › Control Sizing & Theme Remediation (§18.6) › 3. paddingTop <= 4px on buttons (height derived from height property, not padding) (2.3s)
+  ✓   40 [firefox] › tests\e2e\a11y.spec.ts:34:3 › WCAG 2.1 AA Accessibility Audits › Application Wizard (/apply/business-development-executive) has 0 critical/serious a11y violations (21.8s)
+  ✓   60 [firefox] › tests\e2e\control-sizing.spec.ts:49:3 › Control Sizing & Theme Remediation (§18.6) › 4. No warm ground survives on sections (red channel not > blue + 8) (2.4s)
+  ✓   49 [firefox] › tests\e2e\console-auth.spec.ts:24:3 › Console Authentication & Password Rotation (§14.1) › Wrong credentials show generic error message and never reveal account existence (24.8s)
+  ✓   39 [firefox] › tests\e2e\a11y.spec.ts:54:3 › WCAG 2.1 AA Accessibility Audits › Console Login Page (/console/login) has 0 critical/serious a11y violations (24.2s)
+  ✓   46 [firefox] › tests\e2e\careers-screenshots.spec.ts:40:3 › Public Careers Board Page Screenshots › Capture Job Detail - Desktop 1440px (22.2s)
+  ✓   37 [firefox] › tests\e2e\a11y.spec.ts:44:3 › WCAG 2.1 AA Accessibility Audits › Dev UI Component Gallery (/dev/ui) has 0 critical/serious a11y violations (25.7s)
+  ✓   61 [firefox] › tests\e2e\control-sizing.spec.ts:67:3 › Control Sizing & Theme Remediation (§18.6) › 5. Body prose is not saturated blue (L-04 desaturation check) (3.0s)
+  ✓   52 [firefox] › tests\e2e\console-dashboard.spec.ts:19:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 1 — Pulse dashboard renders 6 KPI tiles and live feed (15.1s)
+  ✓   42 [firefox] › tests\e2e\careers-screenshots.spec.ts:7:3 › Public Careers Board Page Screenshots › Capture Careers Board - Mobile 390px (22.8s)
+  ✓   50 [firefox] › tests\e2e\console-auth.spec.ts:40:3 › Console Authentication & Password Rotation (§14.1) › Seeded super_admin logs in and handles password rotation redirect (22.3s)
+  ✓   44 [firefox] › tests\e2e\careers-screenshots.spec.ts:18:3 › Public Careers Board Page Screenshots › Capture Careers Board - Desktop 1440px (24.7s)
+  ✘   51 [firefox] › tests\e2e\console-auth.spec.ts:54:3 › Console Authentication & Password Rotation (§14.1) › Fast demo recruiter login accesses candidate pipeline seamlessly (14.5s)
+  ✓   63 [firefox] › tests\e2e\control-sizing.spec.ts:106:3 › Control Sizing & Theme Remediation (§18.6) › 7. Wordmark contrast >= 4.5:1 (L-02) (3.3s)
+Mobile 390px screenshot captured.
+Desktop 1440px screenshot captured.
+  ✓   67 [firefox] › tests\e2e\dev-ui-screenshots.spec.ts:9:3 › Dev UI Gallery Screenshots › Capture Mobile 390px Viewport (3.1s)
+  ✓   68 [firefox] › tests\e2e\layout.spec.ts:6:3 › Layout System & Alignment Audits (§15.4–§15.8) › 1. Every section container shares an identical left edge at desktop 1440px (3.3s)
+  ✓   66 [firefox] › tests\e2e\dev-ui-screenshots.spec.ts:24:3 › Dev UI Gallery Screenshots › Capture Desktop 1440px Viewport (3.5s)
+  ✓   70 [firefox] › tests\e2e\layout.spec.ts:49:3 › Layout System & Alignment Audits (§15.4–§15.8) › 4. Hero typography resolves to Bricolage Grotesque display font with optical left margin (3.2s)
+  ✓   64 [firefox] › tests\e2e\control-sizing.spec.ts:121:3 › Control Sizing & Theme Remediation (§18.6) › 8. Nothing overflows the header bar (72px fixed height) (4.5s)
+  ✓   38 [firefox] › tests\e2e\a11y.spec.ts:14:3 › WCAG 2.1 AA Accessibility Audits › Public Careers Board (/careers) has 0 critical/serious a11y violations (26.4s)
+  ✓   71 [firefox] › tests\e2e\layout.spec.ts:35:3 › Layout System & Alignment Audits (§15.4–§15.8) › 3. Job cards in a row have equal computed height (h-full rhythm) (3.5s)
+  ✓   62 [firefox] › tests\e2e\control-sizing.spec.ts:85:3 › Control Sizing & Theme Remediation (§18.6) › 6. Amber never appears as text on a light ground ([data-ground="light"]) (5.7s)
+  ✓   65 [firefox] › tests\e2e\control-sizing.spec.ts:128:3 › Control Sizing & Theme Remediation (§18.6) › 9. Heading-block-to-content gap is under 80px (L-07) (4.5s)
+  ✓   69 [firefox] › tests\e2e\layout.spec.ts:22:3 › Layout System & Alignment Audits (§15.4–§15.8) › 2. Zero horizontal overflow across all 9 standard responsive viewport widths (4.3s)
+  ✓   73 [webkit] › tests\e2e\a11y.spec.ts:34:3 › WCAG 2.1 AA Accessibility Audits › Application Wizard (/apply/business-development-executive) has 0 critical/serious a11y violations (3.9s)
+  ✓   76 [webkit] › tests\e2e\a11y.spec.ts:54:3 › WCAG 2.1 AA Accessibility Audits › Console Login Page (/console/login) has 0 critical/serious a11y violations (2.8s)
+  ✓   74 [webkit] › tests\e2e\a11y.spec.ts:24:3 › WCAG 2.1 AA Accessibility Audits › Job Detail Page (/careers/business-development-executive) has 0 critical/serious a11y violations (3.4s)
+  ✓   75 [webkit] › tests\e2e\a11y.spec.ts:44:3 › WCAG 2.1 AA Accessibility Audits › Dev UI Component Gallery (/dev/ui) has 0 critical/serious a11y violations (3.3s)
+  ✓   79 [webkit] › tests\e2e\a11y.spec.ts:64:3 › WCAG 2.1 AA Accessibility Audits › Candidate Status Tracker (/status/[token]) has 0 critical/serious a11y violations (3.2s)
+  ✓   77 [webkit] › tests\e2e\careers-screenshots.spec.ts:7:3 › Public Careers Board Page Screenshots › Capture Careers Board - Mobile 390px (4.0s)
+  ✓   84 [webkit] › tests\e2e\careers-screenshots.spec.ts:29:3 › Public Careers Board Page Screenshots › Capture Job Detail - Mobile 390px (3.5s)
+  ✓   80 [webkit] › tests\e2e\a11y.spec.ts:14:3 › WCAG 2.1 AA Accessibility Audits › Public Careers Board (/careers) has 0 critical/serious a11y violations (4.3s)
+  ✓   81 [webkit] › tests\e2e\careers-screenshots.spec.ts:40:3 › Public Careers Board Page Screenshots › Capture Job Detail - Desktop 1440px (4.9s)
+  ✓   89 [webkit] › tests\e2e\console-dashboard.spec.ts:41:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 2 — Funnel & Form Analytics renders conversion journey and field diagnostics (5.0s)
+  ✓   78 [webkit] › tests\e2e\careers-screenshots.spec.ts:18:3 › Public Careers Board Page Screenshots › Capture Careers Board - Desktop 1440px (7.8s)
+  ✘   48 [firefox] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout (30.7s)
+  ✓   87 [webkit] › tests\e2e\console-dashboard.spec.ts:19:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 1 — Pulse dashboard renders 6 KPI tiles and live feed (5.6s)
+  ✓   82 [webkit] › tests\e2e\careers-screenshots.spec.ts:51:3 › Public Careers Board Page Screenshots › Capture Drive Landing Redirect Destination - Desktop 1440px (7.6s)
+  ✓   85 [webkit] › tests\e2e\console-auth.spec.ts:24:3 › Console Authentication & Password Rotation (§14.1) › Wrong credentials show generic error message and never reveal account existence (5.9s)
+  ✓   90 [webkit] › tests\e2e\console-auth.spec.ts:54:3 › Console Authentication & Password Rotation (§14.1) › Fast demo recruiter login accesses candidate pipeline seamlessly (5.2s)
+  ✓   91 [webkit] › tests\e2e\console-dashboard.spec.ts:49:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 9 — Security & Bot Activity renders 8-layer defense counters (5.6s)
+  ✓   86 [webkit] › tests\e2e\console-auth.spec.ts:40:3 › Console Authentication & Password Rotation (§14.1) › Seeded super_admin logs in and handles password rotation redirect (6.2s)
+  ✓   92 [webkit] › tests\e2e\console-dashboard.spec.ts:56:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 10 — System Health renders live probes and endpoint table (5.8s)
+  ✓   94 [webkit] › tests\e2e\control-sizing.spec.ts:26:3 › Control Sizing & Theme Remediation (§18.6) › 2. No button has a height/width ratio above 0.5 (no boxy/square buttons) (6.4s)
+  ✓   95 [webkit] › tests\e2e\control-sizing.spec.ts:39:3 › Control Sizing & Theme Remediation (§18.6) › 3. paddingTop <= 4px on buttons (height derived from height property, not padding) (6.3s)
+Mobile 390px screenshot captured.
+  ✓  101 [webkit] › tests\e2e\dev-ui-screenshots.spec.ts:9:3 › Dev UI Gallery Screenshots › Capture Mobile 390px Viewport (4.1s)
+  ✓   99 [webkit] › tests\e2e\control-sizing.spec.ts:121:3 › Control Sizing & Theme Remediation (§18.6) › 8. Nothing overflows the header bar (72px fixed height) (5.0s)
+  ✓   98 [webkit] › tests\e2e\control-sizing.spec.ts:106:3 › Control Sizing & Theme Remediation (§18.6) › 7. Wordmark contrast >= 4.5:1 (L-02) (5.3s)
+  ✓  104 [webkit] › tests\e2e\layout.spec.ts:6:3 › Layout System & Alignment Audits (§15.4–§15.8) › 1. Every section container shares an identical left edge at desktop 1440px (4.5s)
+Desktop 1440px screenshot captured.
+  ✓   96 [webkit] › tests\e2e\control-sizing.spec.ts:49:3 › Control Sizing & Theme Remediation (§18.6) › 4. No warm ground survives on sections (red channel not > blue + 8) (6.5s)
+  ✓   93 [webkit] › tests\e2e\control-sizing.spec.ts:9:3 › Control Sizing & Theme Remediation (§18.6) › 1. No interactive control exceeds 64px tall on the landing page (11.2s)
+  ✓  100 [webkit] › tests\e2e\control-sizing.spec.ts:128:3 › Control Sizing & Theme Remediation (§18.6) › 9. Heading-block-to-content gap is under 80px (L-07) (7.1s)
+  ✓  105 [webkit] › tests\e2e\layout.spec.ts:22:3 › Layout System & Alignment Audits (§15.4–§15.8) › 2. Zero horizontal overflow across all 9 standard responsive viewport widths (5.5s)
+  ✓  102 [webkit] › tests\e2e\dev-ui-screenshots.spec.ts:24:3 › Dev UI Gallery Screenshots › Capture Desktop 1440px Viewport (6.6s)
+[MUTATION] Recruiter stage update API latency: 1496ms (Budget: <400ms)
+  ✓  106 [webkit] › tests\e2e\layout.spec.ts:35:3 › Layout System & Alignment Audits (§15.4–§15.8) › 3. Job cards in a row have equal computed height (h-full rhythm) (4.9s)
+  ✓  107 [webkit] › tests\e2e\layout.spec.ts:49:3 › Layout System & Alignment Audits (§15.4–§15.8) › 4. Hero typography resolves to Bricolage Grotesque display font with optical left margin (4.3s)
+  ✓   97 [webkit] › tests\e2e\control-sizing.spec.ts:67:3 › Control Sizing & Theme Remediation (§18.6) › 5. Body prose is not saturated blue (L-04 desaturation check) (8.2s)
+  ✓  103 [webkit] › tests\e2e\control-sizing.spec.ts:85:3 › Control Sizing & Theme Remediation (§18.6) › 6. Amber never appears as text on a light ground ([data-ground="light"]) (8.6s)
+  ✓  110 [mobile-chrome] › tests\e2e\a11y.spec.ts:24:3 › WCAG 2.1 AA Accessibility Audits › Job Detail Page (/careers/business-development-executive) has 0 critical/serious a11y violations (2.8s)
+  ✓  111 [mobile-chrome] › tests\e2e\a11y.spec.ts:34:3 › WCAG 2.1 AA Accessibility Audits › Application Wizard (/apply/business-development-executive) has 0 critical/serious a11y violations (2.8s)
+  ✓  113 [mobile-chrome] › tests\e2e\a11y.spec.ts:54:3 › WCAG 2.1 AA Accessibility Audits › Console Login Page (/console/login) has 0 critical/serious a11y violations (1.7s)
+  ✓  112 [mobile-chrome] › tests\e2e\a11y.spec.ts:44:3 › WCAG 2.1 AA Accessibility Audits › Dev UI Component Gallery (/dev/ui) has 0 critical/serious a11y violations (2.8s)
+  ✓  109 [mobile-chrome] › tests\e2e\a11y.spec.ts:14:3 › WCAG 2.1 AA Accessibility Audits › Public Careers Board (/careers) has 0 critical/serious a11y violations (3.5s)
+  ✓  114 [mobile-chrome] › tests\e2e\a11y.spec.ts:64:3 › WCAG 2.1 AA Accessibility Audits › Candidate Status Tracker (/status/[token]) has 0 critical/serious a11y violations (2.1s)
+  ✓  117 [mobile-chrome] › tests\e2e\careers-screenshots.spec.ts:29:3 › Public Careers Board Page Screenshots › Capture Job Detail - Mobile 390px (2.6s)
+  ✘   72 [firefox] › tests\e2e\sync-consistency.spec.ts:135:3 › Real-Time Cross-Dashboard Sync Consistency (§3 & §8) › Context A (Recruiter) mutation propagates to Context B (Candidate) within 2s target (18.8s)
+  ✓  120 [mobile-chrome] › tests\e2e\console-dashboard.spec.ts:19:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 1 — Pulse dashboard renders 6 KPI tiles and live feed (2.4s)
+[MUTATION] Recruiter stage update API latency: 1564ms (Budget: <400ms)
+  ✓  118 [mobile-chrome] › tests\e2e\careers-screenshots.spec.ts:40:3 › Public Careers Board Page Screenshots › Capture Job Detail - Desktop 1440px (3.7s)
+  ✓  123 [mobile-chrome] › tests\e2e\console-dashboard.spec.ts:41:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 2 — Funnel & Form Analytics renders conversion journey and field diagnostics (2.5s)
+  ✓  122 [mobile-chrome] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens (2.8s)
+[SYNC PROPAGATION] Cross-dashboard propagation latency: 978ms (Target: <2000ms, Ceiling: 5000ms)
+  ✓  125 [mobile-chrome] › tests\e2e\console-dashboard.spec.ts:49:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 9 — Security & Bot Activity renders 8-layer defense counters (2.6s)
+  ✓  126 [mobile-chrome] › tests\e2e\console-auth.spec.ts:54:3 › Console Authentication & Password Rotation (§14.1) › Fast demo recruiter login accesses candidate pipeline seamlessly (2.1s)
+  ✓  108 [webkit] › tests\e2e\sync-consistency.spec.ts:135:3 › Real-Time Cross-Dashboard Sync Consistency (§3 & §8) › Context A (Recruiter) mutation propagates to Context B (Candidate) within 2s target (6.6s)
+  ✓  124 [mobile-chrome] › tests\e2e\console-auth.spec.ts:24:3 › Console Authentication & Password Rotation (§14.1) › Wrong credentials show generic error message and never reveal account existence (2.6s)
+  ✓  127 [mobile-chrome] › tests\e2e\console-auth.spec.ts:40:3 › Console Authentication & Password Rotation (§14.1) › Seeded super_admin logs in and handles password rotation redirect (3.0s)
+  ✓  128 [mobile-chrome] › tests\e2e\control-sizing.spec.ts:9:3 › Control Sizing & Theme Remediation (§18.6) › 1. No interactive control exceeds 64px tall on the landing page (2.8s)
+  ✓  129 [mobile-chrome] › tests\e2e\control-sizing.spec.ts:26:3 › Control Sizing & Theme Remediation (§18.6) › 2. No button has a height/width ratio above 0.5 (no boxy/square buttons) (2.4s)
+  ✓  130 [mobile-chrome] › tests\e2e\control-sizing.spec.ts:39:3 › Control Sizing & Theme Remediation (§18.6) › 3. paddingTop <= 4px on buttons (height derived from height property, not padding) (2.4s)
+  ✓  131 [mobile-chrome] › tests\e2e\control-sizing.spec.ts:49:3 › Control Sizing & Theme Remediation (§18.6) › 4. No warm ground survives on sections (red channel not > blue + 8) (2.3s)
+  ✓  132 [mobile-chrome] › tests\e2e\console-dashboard.spec.ts:56:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 10 — System Health renders live probes and endpoint table (2.1s)
+  ✓  133 [mobile-chrome] › tests\e2e\control-sizing.spec.ts:67:3 › Control Sizing & Theme Remediation (§18.6) › 5. Body prose is not saturated blue (L-04 desaturation check) (2.3s)
+  ✓  135 [mobile-chrome] › tests\e2e\control-sizing.spec.ts:121:3 › Control Sizing & Theme Remediation (§18.6) › 8. Nothing overflows the header bar (72px fixed height) (2.2s)
+Mobile 390px screenshot captured.
+  ✓  134 [mobile-chrome] › tests\e2e\control-sizing.spec.ts:85:3 › Control Sizing & Theme Remediation (§18.6) › 6. Amber never appears as text on a light ground ([data-ground="light"]) (3.1s)
+  ✓  137 [mobile-chrome] › tests\e2e\dev-ui-screenshots.spec.ts:9:3 › Dev UI Gallery Screenshots › Capture Mobile 390px Viewport (2.1s)
+  ✓  116 [mobile-chrome] › tests\e2e\careers-screenshots.spec.ts:18:3 › Public Careers Board Page Screenshots › Capture Careers Board - Desktop 1440px (9.0s)
+  ✓  136 [mobile-chrome] › tests\e2e\control-sizing.spec.ts:128:3 › Control Sizing & Theme Remediation (§18.6) › 9. Heading-block-to-content gap is under 80px (L-07) (2.4s)
+Desktop 1440px screenshot captured.
+  ✓  142 [mobile-chrome] › tests\e2e\control-sizing.spec.ts:106:3 › Control Sizing & Theme Remediation (§18.6) › 7. Wordmark contrast >= 4.5:1 (L-02) (2.2s)
+  ✓  139 [mobile-chrome] › tests\e2e\layout.spec.ts:6:3 › Layout System & Alignment Audits (§15.4–§15.8) › 1. Every section container shares an identical left edge at desktop 1440px (2.7s)
+  ✓  141 [mobile-chrome] › tests\e2e\layout.spec.ts:35:3 › Layout System & Alignment Audits (§15.4–§15.8) › 3. Job cards in a row have equal computed height (h-full rhythm) (2.7s)
+  ✓  138 [mobile-chrome] › tests\e2e\dev-ui-screenshots.spec.ts:24:3 › Dev UI Gallery Screenshots › Capture Desktop 1440px Viewport (3.2s)
+  ✓  143 [mobile-chrome] › tests\e2e\layout.spec.ts:49:3 › Layout System & Alignment Audits (§15.4–§15.8) › 4. Hero typography resolves to Bricolage Grotesque display font with optical left margin (2.6s)
+  ✓  121 [mobile-chrome] › tests\e2e\careers-screenshots.spec.ts:51:3 › Public Careers Board Page Screenshots › Capture Drive Landing Redirect Destination - Desktop 1440px (8.6s)
+  ✓  140 [mobile-chrome] › tests\e2e\layout.spec.ts:22:3 › Layout System & Alignment Audits (§15.4–§15.8) › 2. Zero horizontal overflow across all 9 standard responsive viewport widths (3.7s)
+  ✓  146 [mobile-safari] › tests\e2e\a11y.spec.ts:24:3 › WCAG 2.1 AA Accessibility Audits › Job Detail Page (/careers/business-development-executive) has 0 critical/serious a11y violations (3.5s)
+  ✓  149 [mobile-safari] › tests\e2e\a11y.spec.ts:54:3 › WCAG 2.1 AA Accessibility Audits › Console Login Page (/console/login) has 0 critical/serious a11y violations (3.3s)
+  ✓  145 [mobile-safari] › tests\e2e\a11y.spec.ts:14:3 › WCAG 2.1 AA Accessibility Audits › Public Careers Board (/careers) has 0 critical/serious a11y violations (4.0s)
+  ✓  147 [mobile-safari] › tests\e2e\a11y.spec.ts:34:3 › WCAG 2.1 AA Accessibility Audits › Application Wizard (/apply/business-development-executive) has 0 critical/serious a11y violations (4.0s)
+  ✓  150 [mobile-safari] › tests\e2e\a11y.spec.ts:64:3 › WCAG 2.1 AA Accessibility Audits › Candidate Status Tracker (/status/[token]) has 0 critical/serious a11y violations (3.3s)
+  ✓  148 [mobile-safari] › tests\e2e\a11y.spec.ts:44:3 › WCAG 2.1 AA Accessibility Audits › Dev UI Component Gallery (/dev/ui) has 0 critical/serious a11y violations (4.0s)
+  ✓  153 [mobile-safari] › tests\e2e\careers-screenshots.spec.ts:29:3 › Public Careers Board Page Screenshots › Capture Job Detail - Mobile 390px (3.5s)
+  ✘   88 [webkit] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens (30.4s)
+  ✓  155 [mobile-safari] › tests\e2e\careers-screenshots.spec.ts:40:3 › Public Careers Board Page Screenshots › Capture Job Detail - Desktop 1440px (5.0s)
+  ✓  151 [mobile-safari] › tests\e2e\careers-screenshots.spec.ts:7:3 › Public Careers Board Page Screenshots › Capture Careers Board - Mobile 390px (5.8s)
+[MUTATION] Recruiter stage update API latency: 1647ms (Budget: <400ms)
+  ✘   83 [webkit] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout (30.7s)
+[SYNC PROPAGATION] Cross-dashboard propagation latency: 891ms (Target: <2000ms, Ceiling: 5000ms)
+  ✓  157 [mobile-safari] › tests\e2e\console-dashboard.spec.ts:19:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 1 — Pulse dashboard renders 6 KPI tiles and live feed (4.0s)
+  ✓  162 [mobile-safari] › tests\e2e\console-dashboard.spec.ts:41:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 2 — Funnel & Form Analytics renders conversion journey and field diagnostics (3.5s)
+  ✓  144 [mobile-chrome] › tests\e2e\sync-consistency.spec.ts:135:3 › Real-Time Cross-Dashboard Sync Consistency (§3 & §8) › Context A (Recruiter) mutation propagates to Context B (Candidate) within 2s target (5.2s)
+  ✓  161 [mobile-safari] › tests\e2e\console-auth.spec.ts:54:3 › Console Authentication & Password Rotation (§14.1) › Fast demo recruiter login accesses candidate pipeline seamlessly (3.5s)
+  ✓  159 [mobile-safari] › tests\e2e\console-auth.spec.ts:24:3 › Console Authentication & Password Rotation (§14.1) › Wrong credentials show generic error message and never reveal account existence (4.4s)
+  ✓  160 [mobile-safari] › tests\e2e\console-auth.spec.ts:40:3 › Console Authentication & Password Rotation (§14.1) › Seeded super_admin logs in and handles password rotation redirect (4.6s)
+  ✓  163 [mobile-safari] › tests\e2e\console-dashboard.spec.ts:49:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 9 — Security & Bot Activity renders 8-layer defense counters (4.3s)
+  ✓  164 [mobile-safari] › tests\e2e\console-dashboard.spec.ts:56:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 10 — System Health renders live probes and endpoint table (4.0s)
+  ✘  119 [mobile-chrome] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout (17.5s)
+  ✓  166 [mobile-safari] › tests\e2e\control-sizing.spec.ts:39:3 › Control Sizing & Theme Remediation (§18.6) › 3. paddingTop <= 4px on buttons (height derived from height property, not padding) (3.2s)
+  ✓  168 [mobile-safari] › tests\e2e\control-sizing.spec.ts:49:3 › Control Sizing & Theme Remediation (§18.6) › 4. No warm ground survives on sections (red channel not > blue + 8) (3.2s)
+  ✓  167 [mobile-safari] › tests\e2e\control-sizing.spec.ts:26:3 › Control Sizing & Theme Remediation (§18.6) › 2. No button has a height/width ratio above 0.5 (no boxy/square buttons) (3.3s)
+  ✓  152 [mobile-safari] › tests\e2e\careers-screenshots.spec.ts:18:3 › Public Careers Board Page Screenshots › Capture Careers Board - Desktop 1440px (10.8s)
+  ✓  165 [mobile-safari] › tests\e2e\control-sizing.spec.ts:9:3 › Control Sizing & Theme Remediation (§18.6) › 1. No interactive control exceeds 64px tall on the landing page (5.2s)
+  ✓  171 [mobile-safari] › tests\e2e\control-sizing.spec.ts:106:3 › Control Sizing & Theme Remediation (§18.6) › 7. Wordmark contrast >= 4.5:1 (L-02) (2.8s)
+  ✓  172 [mobile-safari] › tests\e2e\control-sizing.spec.ts:121:3 › Control Sizing & Theme Remediation (§18.6) › 8. Nothing overflows the header bar (72px fixed height) (2.6s)
+Mobile 390px screenshot captured.
+  ✓  156 [mobile-safari] › tests\e2e\careers-screenshots.spec.ts:51:3 › Public Careers Board Page Screenshots › Capture Drive Landing Redirect Destination - Desktop 1440px (10.4s)
+  ✓  174 [mobile-safari] › tests\e2e\control-sizing.spec.ts:128:3 › Control Sizing & Theme Remediation (§18.6) › 9. Heading-block-to-content gap is under 80px (L-07) (3.1s)
+  ✓  170 [mobile-safari] › tests\e2e\control-sizing.spec.ts:67:3 › Control Sizing & Theme Remediation (§18.6) › 5. Body prose is not saturated blue (L-04 desaturation check) (4.2s)
+  ✓  173 [mobile-safari] › tests\e2e\dev-ui-screenshots.spec.ts:9:3 › Dev UI Gallery Screenshots › Capture Mobile 390px Viewport (3.7s)
+  ✓  169 [mobile-safari] › tests\e2e\control-sizing.spec.ts:85:3 › Control Sizing & Theme Remediation (§18.6) › 6. Amber never appears as text on a light ground ([data-ground="light"]) (5.3s)
+  ✓  175 [mobile-safari] › tests\e2e\layout.spec.ts:6:3 › Layout System & Alignment Audits (§15.4–§15.8) › 1. Every section container shares an identical left edge at desktop 1440px (4.3s)
+  ✓  177 [mobile-safari] › tests\e2e\layout.spec.ts:35:3 › Layout System & Alignment Audits (§15.4–§15.8) › 3. Job cards in a row have equal computed height (h-full rhythm) (3.8s)
+  ✓  178 [mobile-safari] › tests\e2e\layout.spec.ts:49:3 › Layout System & Alignment Audits (§15.4–§15.8) › 4. Hero typography resolves to Bricolage Grotesque display font with optical left margin (4.3s)
+  ✓  176 [mobile-safari] › tests\e2e\layout.spec.ts:22:3 › Layout System & Alignment Audits (§15.4–§15.8) › 2. Zero horizontal overflow across all 9 standard responsive viewport widths (4.6s)
+Desktop 1440px screenshot captured.
+  ✓  182 [tablet] › tests\e2e\a11y.spec.ts:24:3 › WCAG 2.1 AA Accessibility Audits › Job Detail Page (/careers/business-development-executive) has 0 critical/serious a11y violations (2.9s)
+  ✓  181 [tablet] › tests\e2e\a11y.spec.ts:14:3 › WCAG 2.1 AA Accessibility Audits › Public Careers Board (/careers) has 0 critical/serious a11y violations (3.7s)
+  ✓  184 [tablet] › tests\e2e\a11y.spec.ts:54:3 › WCAG 2.1 AA Accessibility Audits › Console Login Page (/console/login) has 0 critical/serious a11y violations (3.1s)
+  ✓  179 [mobile-safari] › tests\e2e\dev-ui-screenshots.spec.ts:24:3 › Dev UI Gallery Screenshots › Capture Desktop 1440px Viewport (6.3s)
+  ✓  183 [tablet] › tests\e2e\a11y.spec.ts:44:3 › WCAG 2.1 AA Accessibility Audits › Dev UI Component Gallery (/dev/ui) has 0 critical/serious a11y violations (3.5s)
+  ✓  185 [tablet] › tests\e2e\a11y.spec.ts:64:3 › WCAG 2.1 AA Accessibility Audits › Candidate Status Tracker (/status/[token]) has 0 critical/serious a11y violations (3.0s)
+  ✓  186 [tablet] › tests\e2e\a11y.spec.ts:34:3 › WCAG 2.1 AA Accessibility Audits › Application Wizard (/apply/business-development-executive) has 0 critical/serious a11y violations (3.3s)
+  ✘  115 [mobile-chrome] › tests\e2e\careers-screenshots.spec.ts:7:3 › Public Careers Board Page Screenshots › Capture Careers Board - Mobile 390px (30.9s)
+  ✓  191 [tablet] › tests\e2e\careers-screenshots.spec.ts:29:3 › Public Careers Board Page Screenshots › Capture Job Detail - Mobile 390px (3.1s)
+  ✓  188 [tablet] › tests\e2e\careers-screenshots.spec.ts:7:3 › Public Careers Board Page Screenshots › Capture Careers Board - Mobile 390px (3.9s)
+  ✓  192 [tablet] › tests\e2e\careers-screenshots.spec.ts:40:3 › Public Careers Board Page Screenshots › Capture Job Detail - Desktop 1440px (4.1s)
+  ✓  193 [tablet] › tests\e2e\console-dashboard.spec.ts:19:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 1 — Pulse dashboard renders 6 KPI tiles and live feed (4.2s)
+  ✓  189 [tablet] › tests\e2e\careers-screenshots.spec.ts:18:3 › Public Careers Board Page Screenshots › Capture Careers Board - Desktop 1440px (5.9s)
+  ✓  197 [tablet] › tests\e2e\console-dashboard.spec.ts:41:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 2 — Funnel & Form Analytics renders conversion journey and field diagnostics (4.1s)
+[MUTATION] Recruiter stage update API latency: 2490ms (Budget: <400ms)
+[SYNC PROPAGATION] Cross-dashboard propagation latency: 42ms (Target: <2000ms, Ceiling: 5000ms)
+  ✓  190 [tablet] › tests\e2e\careers-screenshots.spec.ts:51:3 › Public Careers Board Page Screenshots › Capture Drive Landing Redirect Destination - Desktop 1440px (7.2s)
+  ✓  180 [mobile-safari] › tests\e2e\sync-consistency.spec.ts:135:3 › Real-Time Cross-Dashboard Sync Consistency (§3 & §8) › Context A (Recruiter) mutation propagates to Context B (Candidate) within 2s target (7.7s)
+  ✓  194 [tablet] › tests\e2e\console-auth.spec.ts:24:3 › Console Authentication & Password Rotation (§14.1) › Wrong credentials show generic error message and never reveal account existence (5.6s)
+  ✓  196 [tablet] › tests\e2e\console-auth.spec.ts:40:3 › Console Authentication & Password Rotation (§14.1) › Seeded super_admin logs in and handles password rotation redirect (5.7s)
+  ✓  198 [tablet] › tests\e2e\console-auth.spec.ts:54:3 › Console Authentication & Password Rotation (§14.1) › Fast demo recruiter login accesses candidate pipeline seamlessly (4.6s)
+  ✓  199 [tablet] › tests\e2e\console-dashboard.spec.ts:56:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 10 — System Health renders live probes and endpoint table (5.6s)
+  ✓  201 [tablet] › tests\e2e\control-sizing.spec.ts:26:3 › Control Sizing & Theme Remediation (§18.6) › 2. No button has a height/width ratio above 0.5 (no boxy/square buttons) (4.7s)
+  ✓  202 [tablet] › tests\e2e\console-dashboard.spec.ts:49:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Screen 9 — Security & Bot Activity renders 8-layer defense counters (4.7s)
+  ✓  203 [tablet] › tests\e2e\control-sizing.spec.ts:39:3 › Control Sizing & Theme Remediation (§18.6) › 3. paddingTop <= 4px on buttons (height derived from height property, not padding) (4.1s)
+  ✓  204 [tablet] › tests\e2e\control-sizing.spec.ts:49:3 › Control Sizing & Theme Remediation (§18.6) › 4. No warm ground survives on sections (red channel not > blue + 8) (4.0s)
+Mobile 390px screenshot captured.
+  ✓  205 [tablet] › tests\e2e\control-sizing.spec.ts:67:3 › Control Sizing & Theme Remediation (§18.6) › 5. Body prose is not saturated blue (L-04 desaturation check) (5.2s)
+  ✓  207 [tablet] › tests\e2e\control-sizing.spec.ts:121:3 › Control Sizing & Theme Remediation (§18.6) › 8. Nothing overflows the header bar (72px fixed height) (3.0s)
+  ✓  209 [tablet] › tests\e2e\dev-ui-screenshots.spec.ts:9:3 › Dev UI Gallery Screenshots › Capture Mobile 390px Viewport (2.8s)
+  ✓  200 [tablet] › tests\e2e\control-sizing.spec.ts:9:3 › Control Sizing & Theme Remediation (§18.6) › 1. No interactive control exceeds 64px tall on the landing page (8.3s)
+  ✓  212 [tablet] › tests\e2e\layout.spec.ts:6:3 › Layout System & Alignment Audits (§15.4–§15.8) › 1. Every section container shares an identical left edge at desktop 1440px (2.8s)
+  ✓  214 [tablet] › tests\e2e\layout.spec.ts:35:3 › Layout System & Alignment Audits (§15.4–§15.8) › 3. Job cards in a row have equal computed height (h-full rhythm) (2.6s)
+Desktop 1440px screenshot captured.
+  ✓  208 [tablet] › tests\e2e\control-sizing.spec.ts:128:3 › Control Sizing & Theme Remediation (§18.6) › 9. Heading-block-to-content gap is under 80px (L-07) (3.7s)
+  ✓  210 [tablet] › tests\e2e\control-sizing.spec.ts:106:3 › Control Sizing & Theme Remediation (§18.6) › 7. Wordmark contrast >= 4.5:1 (L-02) (3.2s)
+  ✓  215 [tablet] › tests\e2e\layout.spec.ts:49:3 › Layout System & Alignment Audits (§15.4–§15.8) › 4. Hero typography resolves to Bricolage Grotesque display font with optical left margin (2.9s)
+  ✓  213 [tablet] › tests\e2e\layout.spec.ts:22:3 › Layout System & Alignment Audits (§15.4–§15.8) › 2. Zero horizontal overflow across all 9 standard responsive viewport widths (3.4s)
+  ✓  211 [tablet] › tests\e2e\dev-ui-screenshots.spec.ts:24:3 › Dev UI Gallery Screenshots › Capture Desktop 1440px Viewport (4.0s)
+  ✓  206 [tablet] › tests\e2e\control-sizing.spec.ts:85:3 › Control Sizing & Theme Remediation (§18.6) › 6. Amber never appears as text on a light ground ([data-ground="light"]) (5.7s)
+  ✘  154 [mobile-safari] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout (30.2s)
+  ✘  158 [mobile-safari] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens (30.2s)
+[MUTATION] Recruiter stage update API latency: 1709ms (Budget: <400ms)
+[SYNC PROPAGATION] Cross-dashboard propagation latency: 1342ms (Target: <2000ms, Ceiling: 5000ms)
+  ✓  216 [tablet] › tests\e2e\sync-consistency.spec.ts:135:3 › Real-Time Cross-Dashboard Sync Consistency (§3 & §8) › Context A (Recruiter) mutation propagates to Context B (Candidate) within 2s target (6.2s)
+  ✘  195 [tablet] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens (30.2s)
+  ✘  187 [tablet] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout (30.1s)
+
+
+  1) [chromium] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('[data-testid="auth-error-message"]')
+    Expected substring: "Too many failed login attempts"
+    Received string:    "Invalid phone number or password."
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for locator('[data-testid="auth-error-message"]')
+        14 × locator resolved to <div data-testid="auth-error-message" class="p-4 bg-red-500/15 border border-red-500/30 text-red-300 text-(--font-size-step--1) rounded-(--radius-sm) font-medium">Invalid phone number or password.</div>
+           - unexpected value "Invalid phone number or password."
+
+
+      124 |
+      125 |     await expect(errorMsg).toBeVisible()
+    > 126 |     await expect(errorMsg).toContainText('Too many failed login attempts')
+          |                            ^
+      127 |
+      128 |     // Verify 429 status code from API directly
+      129 |     const apiLockoutRes = await page.request.post('http://localhost:3000/api/auth/candidate/login', {
+        at D:\akshara careers\akshara-careers\tests\e2e\candidate-auth.spec.ts:126:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-chromium\error-context.md
+
+  2) [firefox] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('button[type="submit"]')
+        - locator resolved to <button type="submit" class="btn btn--md btn--primary w-full mt-2">Sign In →</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - performing click action
+
+
+      114 |     for (let i = 1; i <= 5; i++) {
+      115 |       await page.fill('input#password', `wrongpass${i}`)
+    > 116 |       await page.click('button[type="submit"]')
+          |                  ^
+      117 |       await expect(errorMsg).toBeVisible()
+      118 |       await expect(errorMsg).toContainText('Invalid phone number or password')
+      119 |     }
+        at D:\akshara careers\akshara-careers\tests\e2e\candidate-auth.spec.ts:116:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-firefox\error-context.md
+
+  3) [firefox] › tests\e2e\console-auth.spec.ts:54:3 › Console Authentication & Password Rotation (§14.1) › Fast demo recruiter login accesses candidate pipeline seamlessly 
+
+    TimeoutError: page.waitForURL: Timeout 8000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/console" until "load"
+    ============================================================
+
+      55 |     await page.goto(`${BASE_URL}/console/login`)
+      56 |     await page.click('[data-testid="demo-recruiter-login"]')
+    > 57 |     await page.waitForURL('**/console', { timeout: 8000 })
+         |                ^
+      58 |     await expect(page.locator('text=Operations Pulse')).toBeVisible()
+      59 |   })
+      60 | })
+        at D:\akshara careers\akshara-careers\tests\e2e\console-auth.spec.ts:57:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\console-auth-Console-Authe-936f8-ndidate-pipeline-seamlessly-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\console-auth-Console-Authe-936f8-ndidate-pipeline-seamlessly-firefox\error-context.md
+
+  4) [firefox] › tests\e2e\sync-consistency.spec.ts:135:3 › Real-Time Cross-Dashboard Sync Consistency (§3 & §8) › Context A (Recruiter) mutation propagates to Context B (Candidate) within 2s target 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('[data-testid="candidate-stage-badge"]')
+    Expected substring: "Shortlisted"
+    Received string:    "Application Submitted"
+    Timeout: 4000ms
+
+    Call log:
+      - Expect "toContainText" with timeout 4000ms
+      - waiting for locator('[data-testid="candidate-stage-badge"]')
+        11 × locator resolved to <span data-testid="candidate-stage-badge" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-(--font-size-step--1) font-mono font-semibold border transition-all text-(--color-amber-400) bg-(--color-amber-400)/10 border-(--color-amber-400)/30">…</span>
+           - unexpected value "Application Submitted"
+
+
+      192 |
+      193 |     // Assert that without manual reload, Context B's stage badge automatically updates to 'Shortlisted'
+    > 194 |     await expect(candidateBadge).toContainText('Shortlisted', { timeout: 4000 })
+          |                                  ^
+      195 |
+      196 |     const totalSyncLatency = Date.now() - syncWaitStart
+      197 |     console.log(
+        at D:\akshara careers\akshara-careers\tests\e2e\sync-consistency.spec.ts:194:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sync-consistency-Real-Time-112aa--Candidate-within-2s-target-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sync-consistency-Real-Time-112aa--Candidate-within-2s-target-firefox\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sync-consistency-Real-Time-112aa--Candidate-within-2s-target-firefox\error-context.md
+
+  5) [webkit] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('button:has-text("Sign Out")')
+
+
+      86 |
+      87 |     // Sign out to test duplicate detection and login
+    > 88 |     await page.click('button:has-text("Sign Out")')
+         |                ^
+      89 |     await page.waitForURL('**/login')
+      90 |
+      91 |     // ── 4. Duplicate Signup Auto-Tab Switch ──────────────────────────────────
+        at D:\akshara careers\akshara-careers\tests\e2e\candidate-auth.spec.ts:88:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-webkit\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-webkit\error-context.md
+
+  6) [webkit] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="cmdk-trigger"]')
+
+
+      30 |   test('Command Palette (⌘K) triggers and filters screens', async ({ page }) => {
+      31 |     await page.goto(`${BASE_URL}/console`)
+    > 32 |     await page.click('[data-testid="cmdk-trigger"]')
+         |                ^
+      33 |     const cmdkInput = page.locator('[data-testid="cmdk-input"]')
+      34 |     await expect(cmdkInput).toBeVisible()
+      35 |     await cmdkInput.fill('Funnel')
+        at D:\akshara careers\akshara-careers\tests\e2e\console-dashboard.spec.ts:32:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\console-dashboard-Admin-Co-0bb6d-riggers-and-filters-screens-webkit\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\console-dashboard-Admin-Co-0bb6d-riggers-and-filters-screens-webkit\error-context.md
+
+  7) [mobile-chrome] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('[data-testid="auth-error-message"]')
+    Expected substring: "Too many failed login attempts"
+    Received string:    "Invalid phone number or password."
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for locator('[data-testid="auth-error-message"]')
+        14 × locator resolved to <div data-testid="auth-error-message" class="p-4 bg-red-500/15 border border-red-500/30 text-red-300 text-(--font-size-step--1) rounded-(--radius-sm) font-medium">Invalid phone number or password.</div>
+           - unexpected value "Invalid phone number or password."
+
+
+      124 |
+      125 |     await expect(errorMsg).toBeVisible()
+    > 126 |     await expect(errorMsg).toContainText('Too many failed login attempts')
+          |                            ^
+      127 |
+      128 |     // Verify 429 status code from API directly
+      129 |     const apiLockoutRes = await page.request.post('http://localhost:3000/api/auth/candidate/login', {
+        at D:\akshara careers\akshara-careers\tests\e2e\candidate-auth.spec.ts:126:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-mobile-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-mobile-chrome\error-context.md
+
+  8) [mobile-chrome] › tests\e2e\careers-screenshots.spec.ts:7:3 › Public Careers Board Page Screenshots › Capture Careers Board - Mobile 390px 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/careers", waiting until "load"
+
+
+       7 |   test('Capture Careers Board - Mobile 390px', async ({ page }) => {
+       8 |     await page.setViewportSize({ width: 390, height: 2200 })
+    >  9 |     await page.goto('/careers')
+         |                ^
+      10 |     await page.waitForLoadState('networkidle')
+      11 |     await page.evaluate(() => document.fonts.ready)
+      12 |     await page.screenshot({
+        at D:\akshara careers\akshara-careers\tests\e2e\careers-screenshots.spec.ts:9:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\careers-screenshots-Public-dedd3-areers-Board---Mobile-390px-mobile-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\careers-screenshots-Public-dedd3-areers-Board---Mobile-390px-mobile-chrome\error-context.md
+
+  9) [mobile-safari] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('button:has-text("Sign Out")')
+
+
+      86 |
+      87 |     // Sign out to test duplicate detection and login
+    > 88 |     await page.click('button:has-text("Sign Out")')
+         |                ^
+      89 |     await page.waitForURL('**/login')
+      90 |
+      91 |     // ── 4. Duplicate Signup Auto-Tab Switch ──────────────────────────────────
+        at D:\akshara careers\akshara-careers\tests\e2e\candidate-auth.spec.ts:88:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-mobile-safari\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-mobile-safari\error-context.md
+
+  10) [mobile-safari] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="cmdk-trigger"]')
+
+
+      30 |   test('Command Palette (⌘K) triggers and filters screens', async ({ page }) => {
+      31 |     await page.goto(`${BASE_URL}/console`)
+    > 32 |     await page.click('[data-testid="cmdk-trigger"]')
+         |                ^
+      33 |     const cmdkInput = page.locator('[data-testid="cmdk-input"]')
+      34 |     await expect(cmdkInput).toBeVisible()
+      35 |     await cmdkInput.fill('Funnel')
+        at D:\akshara careers\akshara-careers\tests\e2e\console-dashboard.spec.ts:32:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\console-dashboard-Admin-Co-0bb6d-riggers-and-filters-screens-mobile-safari\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\console-dashboard-Admin-Co-0bb6d-riggers-and-filters-screens-mobile-safari\error-context.md
+
+  11) [tablet] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('button:has-text("Sign Out")')
+
+
+      86 |
+      87 |     // Sign out to test duplicate detection and login
+    > 88 |     await page.click('button:has-text("Sign Out")')
+         |                ^
+      89 |     await page.waitForURL('**/login')
+      90 |
+      91 |     // ── 4. Duplicate Signup Auto-Tab Switch ──────────────────────────────────
+        at D:\akshara careers\akshara-careers\tests\e2e\candidate-auth.spec.ts:88:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-tablet\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\candidate-auth-Candidate-P-33123--redirect-and-login-lockout-tablet\error-context.md
+
+  12) [tablet] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="cmdk-trigger"]')
+
+
+      30 |   test('Command Palette (⌘K) triggers and filters screens', async ({ page }) => {
+      31 |     await page.goto(`${BASE_URL}/console`)
+    > 32 |     await page.click('[data-testid="cmdk-trigger"]')
+         |                ^
+      33 |     const cmdkInput = page.locator('[data-testid="cmdk-input"]')
+      34 |     await expect(cmdkInput).toBeVisible()
+      35 |     await cmdkInput.fill('Funnel')
+        at D:\akshara careers\akshara-careers\tests\e2e\console-dashboard.spec.ts:32:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\console-dashboard-Admin-Co-0bb6d-riggers-and-filters-screens-tablet\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\console-dashboard-Admin-Co-0bb6d-riggers-and-filters-screens-tablet\error-context.md
+
+  12 failed
+    [chromium] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+    [firefox] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+    [firefox] › tests\e2e\console-auth.spec.ts:54:3 › Console Authentication & Password Rotation (§14.1) › Fast demo recruiter login accesses candidate pipeline seamlessly 
+    [firefox] › tests\e2e\sync-consistency.spec.ts:135:3 › Real-Time Cross-Dashboard Sync Consistency (§3 & §8) › Context A (Recruiter) mutation propagates to Context B (Candidate) within 2s target 
+    [webkit] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+    [webkit] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens 
+    [mobile-chrome] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+    [mobile-chrome] › tests\e2e\careers-screenshots.spec.ts:7:3 › Public Careers Board Page Screenshots › Capture Careers Board - Mobile 390px 
+    [mobile-safari] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+    [mobile-safari] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens 
+    [tablet] › tests\e2e\candidate-auth.spec.ts:52:3 › Candidate Password-Based Auth & Security E2E › Valid signup, duplicate signup auto-redirect, and login lockout 
+    [tablet] › tests\e2e\console-dashboard.spec.ts:30:3 › Admin Console & Intelligence Screens (§14.5–§14.17) › Command Palette (⌘K) triggers and filters screens 
+  204 passed (2.1m)

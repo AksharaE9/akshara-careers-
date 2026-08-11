@@ -1,0 +1,50 @@
+npm notice run akshara-careers@0.1.0 start
+npm notice run next start
+▲ Next.js 16.3.0
+- Local:         http://localhost:3000
+- Network:       http://10.17.21.6:3000
+✓ Ready in 119ms
+[@sentry/nextjs] DEPRECATION WARNING: disableLogger is deprecated and will be removed in a future version. Use webpack.treeshake.removeDebugLogging instead.
+[@sentry/nextjs] DEPRECATION WARNING: automaticVercelMonitors is deprecated and will be removed in a future version. Use webpack.automaticVercelMonitors instead.
+✓ Running next.config.ts took 479ms
+Failed to insert application stage event: Error: Failed query: insert into "application_stage_events" ("id", "application_id", "stage", "note", "occurred_at") values (default, $1, $2, $3, $4)
+params: d4c3eeeb-a3bf-4202-8990-9a873cd32640,shortlisted,,2026-08-11T05:09:37.950Z
+    at sF.queryWithCache (D:\akshara careers\akshara-careers\.next\server\chunks\lib_db_client_ts_0uh62cz._.js:26:34217)
+    at async d (D:\akshara careers\akshara-careers\.next\server\chunks\[root-of-the-server]__0horvw8._.js:2:16535)
+    at async i (D:\akshara careers\akshara-careers\.next\server\chunks\_1l8l8b2._.js:2:453)
+    at async Z (D:\akshara careers\akshara-careers\.next\server\chunks\_1l8l8b2._.js:2:3777)
+    at async J (D:\akshara careers\akshara-careers\.next\server\chunks\_1l8l8b2._.js:2:4855)
+    at async Module.x [as handler] (D:\akshara careers\akshara-careers\.next\server\chunks\_1l8l8b2._.js:2:6912) {
+  query: 'insert into "application_stage_events" ("id", "application_id", "stage", "note", "occurred_at") values (default, $1, $2, $3, $4)',
+  params: [
+    'd4c3eeeb-a3bf-4202-8990-9a873cd32640',
+    'shortlisted',
+    null,
+    '2026-08-11T05:09:37.950Z'
+  ],
+  [cause]: Error [NeonDbError]: insert or update on table "application_stage_events" violates foreign key constraint "application_stage_events_application_id_fkey"
+      at t_.execute (D:\akshara careers\akshara-careers\.next\server\chunks\lib_db_client_ts_0uh62cz._.js:15:10934)
+      at async sF.queryWithCache (D:\akshara careers\akshara-careers\.next\server\chunks\lib_db_client_ts_0uh62cz._.js:26:34192)
+      at async d (D:\akshara careers\akshara-careers\.next\server\chunks\[root-of-the-server]__0horvw8._.js:2:16535)
+      at async i (D:\akshara careers\akshara-careers\.next\server\chunks\_1l8l8b2._.js:2:453)
+      at async Z (D:\akshara careers\akshara-careers\.next\server\chunks\_1l8l8b2._.js:2:3777)
+      at async J (D:\akshara careers\akshara-careers\.next\server\chunks\_1l8l8b2._.js:2:4855) {
+    severity: 'ERROR',
+    code: '23503',
+    detail: 'Key (application_id)=(d4c3eeeb-a3bf-4202-8990-9a873cd32640) is not present in table "applications".',
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: 'public',
+    table: 'application_stage_events',
+    column: undefined,
+    dataType: undefined,
+    constraint: 'application_stage_events_application_id_fkey',
+    file: 'ri_triggers.c',
+    line: '2772',
+    routine: 'ri_ReportViolation',
+    sourceError: undefined
+  }
+}

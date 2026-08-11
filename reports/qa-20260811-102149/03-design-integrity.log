@@ -1,0 +1,10 @@
+npm notice run akshara-careers@0.1.0 npx
+npm notice run playwright test tests/e2e/design-integrity.spec.ts --reporter=list
+[WebServer] npm notice run akshara-careers@0.1.0 start
+[WebServer] npm notice run next start
+[WebServer] [@sentry/nextjs] DEPRECATION WARNING: disableLogger is deprecated and will be removed in a future version. Use webpack.treeshake.removeDebugLogging instead.
+[WebServer] [@sentry/nextjs] DEPRECATION WARNING: automaticVercelMonitors is deprecated and will be removed in a future version. Use webpack.automaticVercelMonitors instead.
+[WebServer] Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+[WebServer]     at ignore-listed frames
+Error: Process from config.webServer was not able to start. Exit code: 1
+

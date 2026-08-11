@@ -1,0 +1,153 @@
+Akshara Careers — QA suite
+Target: http://localhost:3000
+Report: reports/qa-20260811-102149
+===============================================
+
+── Gate: 0-build-typecheck ──────────────────────────────
+FAIL  0-build-typecheck  (see reports/qa-20260811-102149/00-typecheck.log)
+    tests/e2e/control-sizing.spec.ts(115,26): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+    tests/e2e/sync-consistency.spec.ts(81,20): error TS18048: 'cand' is possibly 'undefined'.
+    tests/e2e/sync-consistency.spec.ts(91,11): error TS18048: 'adminUser' is possibly 'undefined'.
+    tests/e2e/sync-consistency.spec.ts(92,14): error TS18048: 'adminUser' is possibly 'undefined'.
+    tests/e2e/sync-consistency.spec.ts(93,13): error TS18048: 'adminUser' is possibly 'undefined'.
+    tests/e2e/sync-consistency.spec.ts(94,13): error TS18048: 'adminUser' is possibly 'undefined'.
+    tests/e2e/sync-consistency.spec.ts(103,22): error TS18048: 'cand' is possibly 'undefined'.
+    tests/e2e/sync-consistency.spec.ts(122,17): error TS18048: 'app' is possibly 'undefined'.
+    tests/e2e/sync-consistency.spec.ts(125,22): error TS18048: 'app' is possibly 'undefined'.
+    tests/security/authz-matrix.spec.ts(36,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+    tests/security/upload-hardening.spec.ts(41,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+    tests/unit/normalisers.property.test.ts(274,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+    tests/unit/normalisers.property.test.ts(275,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+    tests/unit/normalisers.property.test.ts(278,20): error TS18048: 'email1' is possibly 'undefined'.
+    tests/unit/normalisers.property.test.ts(278,52): error TS18048: 'email2' is possibly 'undefined'.
+
+── Gate: 0-build-lint ──────────────────────────────
+FAIL  0-build-lint  (see reports/qa-20260811-102149/00-lint.log)
+      19:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+    
+    D:\akshara careers\akshara-careers\tests\integration\college-search.test.ts
+      19:14  warning  'sql' is defined but never used  @typescript-eslint/no-unused-vars
+    
+    D:\akshara careers\akshara-careers\tests\security\authz-matrix.spec.ts
+      61:16  warning  'apiPatch' is defined but never used      @typescript-eslint/no-unused-vars
+      79:28  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+    
+    D:\akshara careers\akshara-careers\tests\security\upload-hardening.spec.ts
+      49:36  error    Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+      58:7   warning  'MINIMAL_PDF_HEADER' is assigned a value but never used  @typescript-eslint/no-unused-vars
+      61:7   warning  'PHP_WEBSHELL' is assigned a value but never used        @typescript-eslint/no-unused-vars
+    
+    D:\akshara careers\akshara-careers\tests\unit\normalisers.property.test.ts
+      37:49  warning  'd2' is defined but never used  @typescript-eslint/no-unused-vars
+    
+    ✖ 208 problems (117 errors, 91 warnings)
+      2 errors and 0 warnings potentially fixable with the `--fix` option.
+    
+
+── Gate: 0-build-unit ──────────────────────────────
+PASS  0-build-unit
+
+── Gate: 0-build-production ──────────────────────────────
+FAIL  0-build-production  (see reports/qa-20260811-102149/00-build.log)
+    > Build error occurred
+    Error: Turbopack build failed with 1 error:
+    ./app/api/status/lookup/route.ts:13:1
+    Error: Module not found: Can't resolve '@/lib/validation/normalisers'
+      [90m11 |[0m [36mimport[0m { applications, candidates } [36mfrom[0m [32m'@/lib/db/schema'[0m
+      [90m12 |[0m [36mimport[0m { eq, or, sql } [36mfrom[0m [32m'drizzle-orm'[0m
+    [31m[1m>[0m [90m13 |[0m [36mimport[0m { normaliseEmail } [36mfrom[0m [32m'@/lib/validation/normalisers'[0m
+      [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+      [90m14 |[0m
+      [90m15 |[0m [36mexport[0m [36masync[0m [36mfunction[0m [33mPOST[0m(request: [33mNextRequest[0m) {
+      [90m16 |[0m   [36mtry[0m {
+    
+    Import map: aliased to relative './lib/validation/normalisers' inside of [project]/
+    
+    
+    https://nextjs.org/docs/messages/module-not-found
+    
+    
+        at <unknown> (./app/api/status/lookup/route.ts:13:1)
+        at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+
+── Gate: 1-css-emitted ─────────────────────────
+CSS emitted: 88871 bytes
+PASS  1-css-emitted
+
+── Gate: 2-database ──────────────────────────────
+PASS  2-database
+
+Starting production server for design/functional/perf gates...
+
+── Gate: 3-design-integrity ──────────────────────────────
+FAIL  3-design-integrity  (see reports/qa-20260811-102149/03-design-integrity.log)
+    npm notice run akshara-careers@0.1.0 npx
+    npm notice run playwright test tests/e2e/design-integrity.spec.ts --reporter=list
+    [WebServer] npm notice run akshara-careers@0.1.0 start
+    [WebServer] npm notice run next start
+    [WebServer] [@sentry/nextjs] DEPRECATION WARNING: disableLogger is deprecated and will be removed in a future version. Use webpack.treeshake.removeDebugLogging instead.
+    [WebServer] [@sentry/nextjs] DEPRECATION WARNING: automaticVercelMonitors is deprecated and will be removed in a future version. Use webpack.automaticVercelMonitors instead.
+    [WebServer] Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    [WebServer]     at ignore-listed frames
+    Error: Process from config.webServer was not able to start. Exit code: 1
+    
+
+── Gate: 4-functional ──────────────────────────────
+FAIL  4-functional  (see reports/qa-20260811-102149/04-functional.log)
+    npm notice run akshara-careers@0.1.0 npx
+    npm notice run playwright test tests/e2e --grep-invert Design Integrity --reporter=list
+    [WebServer] npm notice run akshara-careers@0.1.0 start
+    [WebServer] npm notice run next start
+    [WebServer] [@sentry/nextjs] DEPRECATION WARNING: disableLogger is deprecated and will be removed in a future version. Use webpack.treeshake.removeDebugLogging instead.
+    [WebServer] [@sentry/nextjs] DEPRECATION WARNING: automaticVercelMonitors is deprecated and will be removed in a future version. Use webpack.automaticVercelMonitors instead.
+    [WebServer] Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    [WebServer]     at ignore-listed frames
+    Error: Process from config.webServer was not able to start. Exit code: 1
+    
+
+── Gate: 5-performance ──────────────────────────────
+FAIL  5-performance  (see reports/qa-20260811-102149/05-lighthouse.log)
+    npm notice run akshara-careers@0.1.0 npx
+    npm notice run lhci autorun --config=lighthouserc.js
+    cli.js autorun
+    
+    Run collect/assert/upload with sensible defaults
+    
+    Options:
+      --help                 Show help  [boolean]
+      --version              Show version number  [boolean]
+      --no-lighthouserc      Disables automatic usage of a .lighthouserc file.  [boolean]
+      --config               The lighthouserc.json file preferences.
+      --failOnUploadFailure  Exit with an error code if upload fails.  [boolean]
+      --collect              Overrides for the collect command. e.g. --collect.numberOfRuns=5
+      --assert               Overrides for the assert command. e.g. --assert.preset=lighthouse:all
+      --upload               Overrides for the upload command. e.g. --upload.token=$TOKEN
+    
+    module is not defined in ES module scope
+    This file is being treated as an ES module because it has a '.js' file extension and '\\?\D:\akshara careers\akshara-careers\package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+
+── Gate: 6-secret-hygiene ──────────────────────
+FAIL  6-secret-hygiene — seeded password literal found outside its expected homes:
+    ./tests/security/authz-matrix.spec.ts:84:  const superAdminCookie = await login(request, 'admin@gmail.com', 'Admin@123')
+    ./tests/security/authz-matrix.spec.ts:421:      const superAdminCookie = await login(request, 'admin@gmail.com', 'Admin@123')
+
+===============================================
+QA SUMMARY — reports/qa-20260811-102149
+===============================================
+0-build-typecheck            FAIL
+0-build-lint                 FAIL
+0-build-unit                 PASS
+0-build-production           FAIL
+1-css-emitted                PASS
+2-database                   PASS
+3-design-integrity           FAIL
+4-functional                 FAIL
+5-performance                FAIL
+6-secret-hygiene             FAIL
+===============================================
+RESULT: FAIL — see reports/qa-20260811-102149 for full logs per gate.

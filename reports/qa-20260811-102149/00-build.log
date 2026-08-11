@@ -1,0 +1,34 @@
+npm notice run akshara-careers@0.1.0 build
+npm notice run next build
+▲ Next.js 16.3.0 (Turbopack)
+- Environments: .env.local
+[@sentry/nextjs] DEPRECATION WARNING: disableLogger is deprecated and will be removed in a future version. Use webpack.treeshake.removeDebugLogging instead. (Not supported with Turbopack.)
+[@sentry/nextjs] DEPRECATION WARNING: automaticVercelMonitors is deprecated and will be removed in a future version. Use webpack.automaticVercelMonitors instead. (Not supported with Turbopack.)
+✓ Running next.config.ts took 3.9s
+- Experiments (use with caution):
+  · clientTraceMetadata
+
+  Creating an optimized production build ...
+[@sentry/nextjs] DEPRECATION WARNING: disableLogger is deprecated and will be removed in a future version. Use webpack.treeshake.removeDebugLogging instead. (Not supported with Turbopack.)
+[@sentry/nextjs] DEPRECATION WARNING: automaticVercelMonitors is deprecated and will be removed in a future version. Use webpack.automaticVercelMonitors instead. (Not supported with Turbopack.)
+
+> Build error occurred
+Error: Turbopack build failed with 1 error:
+./app/api/status/lookup/route.ts:13:1
+Error: Module not found: Can't resolve '@/lib/validation/normalisers'
+  [90m11 |[0m [36mimport[0m { applications, candidates } [36mfrom[0m [32m'@/lib/db/schema'[0m
+  [90m12 |[0m [36mimport[0m { eq, or, sql } [36mfrom[0m [32m'drizzle-orm'[0m
+[31m[1m>[0m [90m13 |[0m [36mimport[0m { normaliseEmail } [36mfrom[0m [32m'@/lib/validation/normalisers'[0m
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36masync[0m [36mfunction[0m [33mPOST[0m(request: [33mNextRequest[0m) {
+  [90m16 |[0m   [36mtry[0m {
+
+Import map: aliased to relative './lib/validation/normalisers' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./app/api/status/lookup/route.ts:13:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)

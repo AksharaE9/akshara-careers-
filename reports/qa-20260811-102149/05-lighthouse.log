@@ -1,0 +1,18 @@
+npm notice run akshara-careers@0.1.0 npx
+npm notice run lhci autorun --config=lighthouserc.js
+cli.js autorun
+
+Run collect/assert/upload with sensible defaults
+
+Options:
+  --help                 Show help  [boolean]
+  --version              Show version number  [boolean]
+  --no-lighthouserc      Disables automatic usage of a .lighthouserc file.  [boolean]
+  --config               The lighthouserc.json file preferences.
+  --failOnUploadFailure  Exit with an error code if upload fails.  [boolean]
+  --collect              Overrides for the collect command. e.g. --collect.numberOfRuns=5
+  --assert               Overrides for the assert command. e.g. --assert.preset=lighthouse:all
+  --upload               Overrides for the upload command. e.g. --upload.token=$TOKEN
+
+module is not defined in ES module scope
+This file is being treated as an ES module because it has a '.js' file extension and '\\?\D:\akshara careers\akshara-careers\package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.

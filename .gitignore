@@ -43,6 +43,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# ephemeral lighthouse CI run artifacts (large, regenerated every run)
+/.lighthouseci/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
