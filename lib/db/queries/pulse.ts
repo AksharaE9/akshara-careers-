@@ -14,14 +14,58 @@ import { SessionUser } from '@/lib/auth/session'
 export async function getPulseData(currentUser: SessionUser) {
   const db = getDb()
 
-  // 1. Total applications & stage counts
-  const stageRows = await db
-    .select({
-      stage: applications.stage,
-      count: sql<number>`count(*)::int`,
-    })
-    .from(applications)
-    .groupBy(applications.stage)
+  // Run all Pulse aggregations concurrently in a single parallel step
+  const [stageRows, recentApps, drives, unverifiedColleges] = await Promise.all([
+    // 1. Total applications & stage counts
+    db
+      .select({
+        stage: applications.stage,
+        count: sql<number>`count(*)::int`,
+      })
+      .from(applications)
+      .groupBy(applications.stage),
+
+    // 2. Recent Applications for Live Feed
+    db
+      .select({
+        id: applications.id,
+        publicId: applications.publicId,
+        stage: applications.stage,
+        candidateName: candidates.fullName,
+        jobTitle: jobs.title,
+        collegeName: sql<string>`coalesce(${colleges.name}, ${applications.collegeRaw})`,
+        submittedAt: applications.submittedAt,
+      })
+      .from(applications)
+      .innerJoin(candidates, eq(applications.candidateId, candidates.id))
+      .leftJoin(jobs, eq(applications.jobId, jobs.id))
+      .leftJoin(colleges, eq(applications.collegeId, colleges.id))
+      .orderBy(desc(applications.submittedAt))
+      .limit(10),
+
+    // 3. Live & Upcoming Campus Drives
+    db
+      .select({
+        id: campusDrives.id,
+        code: campusDrives.code,
+        venue: campusDrives.venue,
+        driveDate: campusDrives.driveDate,
+        seats: campusDrives.seats,
+        status: campusDrives.status,
+        viewCount: campusDrives.viewCount,
+        collegeName: colleges.name,
+      })
+      .from(campusDrives)
+      .innerJoin(colleges, eq(campusDrives.collegeId, colleges.id))
+      .orderBy(desc(campusDrives.driveDate))
+      .limit(5),
+
+    // 4. Unverified Colleges Pending Merge
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(colleges)
+      .where(eq(colleges.isVerified, false)),
+  ])
 
   const stageCounts: Record<string, number> = {
     received: 0,
@@ -40,42 +84,7 @@ export async function getPulseData(currentUser: SessionUser) {
     totalApps += r.count
   })
 
-  // 2. Recent Applications for Live Feed
-  const recentApps = await db
-    .select({
-      id: applications.id,
-      publicId: applications.publicId,
-      stage: applications.stage,
-      candidateName: candidates.fullName,
-      jobTitle: jobs.title,
-      collegeName: sql<string>`coalesce(${colleges.name}, ${applications.collegeRaw})`,
-      submittedAt: applications.submittedAt,
-    })
-    .from(applications)
-    .innerJoin(candidates, eq(applications.candidateId, candidates.id))
-    .leftJoin(jobs, eq(applications.jobId, jobs.id))
-    .leftJoin(colleges, eq(applications.collegeId, colleges.id))
-    .orderBy(desc(applications.submittedAt))
-    .limit(10)
-
-  // 3. Live & Upcoming Campus Drives
-  const drives = await db
-    .select({
-      id: campusDrives.id,
-      code: campusDrives.code,
-      venue: campusDrives.venue,
-      driveDate: campusDrives.driveDate,
-      seats: campusDrives.seats,
-      status: campusDrives.status,
-      viewCount: campusDrives.viewCount,
-      collegeName: colleges.name,
-    })
-    .from(campusDrives)
-    .innerJoin(colleges, eq(campusDrives.collegeId, colleges.id))
-    .orderBy(desc(campusDrives.driveDate))
-    .limit(5)
-
-  // 4. Attention Required Check list
+  // Attention Required Check list
   const attentionItems: Array<{ id: string; severity: 'P1' | 'P2' | 'P3'; message: string; href: string }> = []
 
   // Check P1: Default Admin Password
@@ -89,11 +98,6 @@ export async function getPulseData(currentUser: SessionUser) {
   }
 
   // Check P2: Unverified Colleges Pending Merge
-  const unverifiedColleges = await db
-    .select({ count: sql<number>`count(*)::int` })
-    .from(colleges)
-    .where(eq(colleges.isVerified, false))
-
   if (unverifiedColleges[0] && unverifiedColleges[0].count > 0) {
     attentionItems.push({
       id: 'att-colleges',

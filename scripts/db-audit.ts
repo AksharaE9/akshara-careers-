@@ -140,6 +140,9 @@ const EXPECTED_TABLES = [
   'alert_rules',
   'alert_incidents',
   'console_sessions',
+  'candidate_login_attempts',
+  'candidate_sessions',
+  'application_stage_events',
 ]
 
 const EXPECTED_EXTENSIONS = ['uuid-ossp', 'pg_trgm']
@@ -152,6 +155,7 @@ const CORE_COLUMN_CONTRACT: Record<string, Record<string, string>> = {
     email_normalised: 'text',
     phone_e164: 'text', // D1 — must NEVER be numeric
     full_name: 'text',
+    password_hash: 'text',
     languages: 'ARRAY', // D5
   },
   applications: {
@@ -173,6 +177,22 @@ const CORE_COLUMN_CONTRACT: Record<string, Record<string, string>> = {
     duplicate_of: 'uuid',
     consent_given_at: 'timestamp with time zone',
     consent_version: 'text',
+  },
+  candidate_login_attempts: {
+    id: 'uuid',
+    phone_e164: 'text',
+    ip_address: 'text',
+    succeeded: 'boolean',
+  },
+  candidate_sessions: {
+    id: 'uuid',
+    candidate_id: 'uuid',
+    token_hash: 'text',
+  },
+  application_stage_events: {
+    id: 'uuid',
+    application_id: 'uuid',
+    stage: 'text',
   },
   colleges: {
     id: 'uuid',
@@ -216,9 +236,9 @@ const EXPECTED_INDEXES: { table: string; name: string; requiredFor?: string }[] 
   { table: 'applications', name: 'apps_drive' },
   {
     table: 'applications',
-    name: 'apps_candidate_job_recent',
+    name: 'one_active_application_per_candidate',
     requiredFor:
-      'D7 — blocks same candidate+job re-application within 90 days at the DB level',
+      'Part 18 §4.a — partial unique index enforcing at most one active application per candidate',
   },
 ]
 
@@ -487,21 +507,20 @@ async function auditDefectGuards() {
   }
 
   if (await tableExists('applications')) {
-    const dupApps = await q<{ candidate_id: string; job_id: string; n: number }>(
-      `SELECT candidate_id, job_id, count(*)::int AS n
+    const dupApps = await q<{ candidate_id: string; n: number }>(
+      `SELECT candidate_id, count(*)::int AS n
        FROM applications
-       WHERE stage NOT IN ('withdrawn','duplicate')
-         AND submitted_at > now() - interval '90 days'
-       GROUP BY candidate_id, job_id
+       WHERE stage NOT IN ('rejected', 'withdrawn', 'duplicate')
+       GROUP BY candidate_id
        HAVING count(*) > 1
        LIMIT 5`,
     )
     record(
-      'D7-application-dedupe',
+      '§4.a-active-application-dedupe',
       dupApps.length === 0 ? 'PASS' : 'FAIL',
       dupApps.length === 0
-        ? 'No un-flagged duplicate applications (same candidate+job within 90 days).'
-        : `${dupApps.length} candidate+job pair(s) have unblocked duplicate applications inside the 90-day window.`,
+        ? 'At most one active application per candidate (strictly enforced by partial unique index).'
+        : `${dupApps.length} candidate(s) have multiple concurrent active applications.`,
     )
   }
 

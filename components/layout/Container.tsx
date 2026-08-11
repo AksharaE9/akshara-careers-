@@ -30,7 +30,7 @@ export function Container({
       // like `px-8`. This project's @theme redefines --spacing-N non-linearly
       // (--spacing-8: 64px, --spacing-12: 192px), so `px-8`/`px-12` silently
       // resolved to the wrong pixel values instead of the intended rail.
-      className={`mx-auto w-full px-[20px] md:px-(--spacing-s6) lg:px-(--spacing-s7) ${WIDTH_MAP[width]} ${className}`.trim()}
+      className={`mx-auto w-full px-[20px] md:px-[32px] lg:px-[48px] ${WIDTH_MAP[width]} ${className}`.trim()}
       {...props}
     >
       {children}

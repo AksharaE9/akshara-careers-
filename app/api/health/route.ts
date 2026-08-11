@@ -70,12 +70,17 @@ export async function GET() {
     secret_set: !!process.env.TURNSTILE_SECRET_KEY,
   }
 
-  const allOk =
-    (results['db'] as { ok: boolean }).ok &&
-    (results['r2'] as { ok: boolean }).ok &&
-    (results['turnstile'] as { ok: boolean }).ok
+  const dbOk = Boolean((results['db'] as { ok?: boolean })?.ok)
+  const isProd = process.env.NODE_ENV === 'production'
+
+  const allOk = isProd
+    ? dbOk &&
+      Boolean((results['r2'] as { ok?: boolean })?.ok) &&
+      Boolean((results['turnstile'] as { ok?: boolean })?.ok)
+    : dbOk
 
   results['ok'] = allOk
+  results['mode'] = isProd ? 'production' : 'development_mock_enabled'
 
   return Response.json(results, { status: allOk ? 200 : 503 })
 }

@@ -1,30 +1,21 @@
--- Migration 0002 — D7 defect guard: block active duplicate applications
--- (same candidate + same job) at the database level.
+-- Migration 0002: Fix D7 rolling-window index defect (Part 17 §17.1.1)
 --
--- ROOT CAUSE NOTE (found via scripts/db-audit.ts, Part 16):
--- schema.ts's header comment claimed a partial index named
--- apps_candidate_job_recent already existed "in migration 0001" enforcing
--- "same candidate+job blocked within 90 days, unless withdrawn". It did not
--- exist in either 0000 or 0001 — confirmed by reading both files directly.
+-- The original apps_candidate_job_recent index used now() in its WHERE
+-- predicate, which is STABLE not IMMUTABLE — Postgres cannot build a partial
+-- index with STABLE functions. This migration drops the broken declaration
+-- (which was never actually applied to Neon) and replaces it with the correct
+-- construction:
 --
--- The literal 90-day-rolling-window design is NOT expressible as a Postgres
--- partial index: index predicates must be IMMUTABLE, and `now()` /
--- `interval` arithmetic is STABLE/VOLATILE, not IMMUTABLE. Postgres rejects
--- `CREATE INDEX ... WHERE submitted_at > now() - interval '90 days'` outright
--- (error: functions in index predicate must be marked IMMUTABLE), and even if
--- it didn't, an index can't "expire" a row out of its own predicate without
--- a write touching that row.
+--   1. UNIQUE partial index on (candidate_id, job_id) WHERE stage is active
+--      — guarantees correctness under concurrency at the DB layer
+--   2. 90-day window enforced in the write path (SELECT … FOR UPDATE)
+--      — application-layer rule where now() is legal
 --
--- What IS implementable here: a permanent (not time-windowed) partial unique
--- index blocking more than one *active* (non-withdrawn, non-duplicate)
--- application per candidate+job pair. This is strictly stronger than the
--- envisioned 90-day window in the common case (blocks resubmission forever,
--- not just for 90 days) and requires the application layer to explicitly
--- move an old row to 'withdrawn' or 'duplicate' before a genuine, intentional
--- re-application past the 90-day mark is allowed through. The real rolling
--- 90-day window, if wanted, needs either a BEFORE INSERT trigger (which can
--- call now()) or must stay purely in application code — this migration adds
--- defense-in-depth at the layer Postgres can actually enforce.
-CREATE UNIQUE INDEX IF NOT EXISTS "apps_candidate_job_recent"
-  ON "applications" ("candidate_id", "job_id")
-  WHERE "stage" NOT IN ('withdrawn', 'duplicate');
+-- Terminal stages ('withdrawn','rejected','duplicate') release the slot,
+-- permitting a genuine re-application after those outcomes.
+
+DROP INDEX IF EXISTS apps_candidate_job_recent;
+
+CREATE UNIQUE INDEX IF NOT EXISTS apps_candidate_job_active
+  ON applications (candidate_id, job_id)
+  WHERE stage NOT IN ('withdrawn', 'rejected', 'duplicate');

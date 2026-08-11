@@ -1,23 +1,22 @@
-/**
- * app/api/console/exports/route.ts
- *
- * DPDP-compliant CSV candidate data export with audit trail.
- */
-
 import { NextRequest, NextResponse } from 'next/server'
 import { getApplicationsList } from '@/lib/db/queries/applications'
 import { getDb } from '@/lib/db/client'
 import { auditLog } from '@/lib/db/schema'
 import { getCurrentUser } from '@/lib/auth/session'
+import { can } from '@/lib/auth/rbac'
 
 export async function GET(request: NextRequest) {
   try {
     const user = await getCurrentUser()
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (!can(user, 'export_data')) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
     const { searchParams } = new URL(request.url)
     const stage = searchParams.get('stage') || undefined
     const jobId = searchParams.get('jobId') || undefined
 
     const apps = await getApplicationsList({ stage, jobId })
+
 
     // Log export event into audit_log
     const db = getDb()

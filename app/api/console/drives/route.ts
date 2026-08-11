@@ -1,14 +1,14 @@
-/**
- * app/api/console/drives/route.ts
- *
- * Console Campus Drives API.
- */
-
 import { NextRequest, NextResponse } from 'next/server'
 import { listAllDrives, createDrive } from '@/lib/db/queries/drives'
+import { getCurrentUser } from '@/lib/auth/session'
+import { can } from '@/lib/auth/rbac'
 
 export async function GET() {
   try {
+    const user = await getCurrentUser()
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (!can(user, 'view_applications')) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
     const drives = await listAllDrives()
     return NextResponse.json({ drives })
   } catch (err: any) {
@@ -22,6 +22,10 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const user = await getCurrentUser()
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (!can(user, 'manage_drives')) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
     const body = await request.json()
     const { code, collegeId, driveDate, venue, seats, notes } = body
 

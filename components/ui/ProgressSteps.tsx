@@ -30,26 +30,26 @@ export function ProgressSteps({
     >
       {/* Step Numbers & Labels */}
       <div className="flex justify-between items-center text-(--font-size-step--1)">
-        <div className="flex items-center gap-(--spacing-s2) font-mono text-(--color-marigold)">
+        <div className="flex items-center gap-2 font-mono text-(--color-amber-400)">
           <span className="font-bold">0{currentStep}</span>
           <span className="opacity-50">/</span>
           <span className="opacity-50">0{totalSteps}</span>
         </div>
-        <span className="font-medium text-(--color-ink-900) tracking-wide uppercase font-mono">
+        <span className="font-semibold text-(--color-text-on-dark) tracking-wider uppercase font-mono text-(--font-size-step--2)">
           {stepsLabels[currentStep - 1]}
         </span>
       </div>
 
       {/* Progress Bar Container */}
-      <div className="h-[3px] w-full bg-(--color-ink-900)/10 rounded-full overflow-hidden">
+      <div className="h-[4px] w-full bg-(--color-ink-600) rounded-full overflow-hidden">
         <div
-          className="h-full bg-(--color-marigold) transition-all duration-(--duration-slow) ease-out rounded-full"
+          className="h-full bg-(--color-amber-400) transition-all duration-(--duration-slow) ease-out rounded-full"
           style={{ width: `${percentage}%` }}
         />
       </div>
 
       {/* Step dots for context */}
-      <div className="flex gap-(--spacing-s2) mt-(--spacing-s1)">
+      <div className="flex gap-2 mt-1">
         {Array.from({ length: totalSteps }).map((_, idx) => {
           const stepNum = idx + 1
           const isActive = stepNum === currentStep
@@ -61,10 +61,10 @@ export function ProgressSteps({
               className={[
                 'h-[6px] w-[6px] rounded-full transition-colors duration-(--duration-base)',
                 isCompleted
-                  ? 'bg-(--color-ink-900)'
+                  ? 'bg-(--color-amber-400)'
                   : isActive
-                    ? 'bg-(--color-marigold)'
-                    : 'bg-(--color-ink-900)/15',
+                    ? 'bg-(--color-amber-400)'
+                    : 'bg-(--color-ink-600)',
               ]
                 .filter(Boolean)
                 .join(' ')}

@@ -38,17 +38,17 @@ export function FieldWrapper({
   // Clone children to inject aria props — children should be a single form element
   return (
     <div
-      className={`flex flex-col gap-(--spacing-s2) ${className}`}
+      className={`flex flex-col gap-2 ${className}`}
       data-testid={testId}
     >
       <label
         htmlFor={id}
-        className="text-(--font-size-step--1) font-medium text-(--color-graphite) leading-tight"
+        className="text-(--font-size-step--1) font-semibold text-(--color-text-on-dark) [data-ground=light]:text-(--color-text-on-light) leading-tight"
       >
         {label}
         {required && (
           <span
-            className="ml-(--spacing-s1) text-(--color-kumkum)"
+            className="ml-1 text-(--color-amber-400)"
             aria-hidden="true"
           >
             *
@@ -57,9 +57,6 @@ export function FieldWrapper({
         {required && <span className="sr-only">(required)</span>}
       </label>
 
-      {/* Children receive id, aria-describedby, aria-invalid, aria-required
-          These are set at the child input level, not here — the consumer is
-          responsible for wiring aria. See Input.tsx for the pattern. */}
       <div className="relative">
         {children}
       </div>
@@ -67,7 +64,7 @@ export function FieldWrapper({
       {hint && !error && (
         <p
           id={hintId}
-          className="text-(--font-size-step--1) text-(--color-ink-400) leading-snug"
+          className="text-(--font-size-step--2) text-(--color-text-on-dark-muted) [data-ground=light]:text-(--color-text-on-light-muted) leading-snug"
         >
           {hint}
         </p>
@@ -78,7 +75,7 @@ export function FieldWrapper({
           id={errorId}
           role="alert"
           data-testid={`error-${id}`}
-          className="flex items-center gap-(--spacing-s2) text-(--font-size-step--1) text-(--color-kumkum) leading-snug font-medium"
+          className="flex items-center gap-1.5 text-(--font-size-step--2) text-red-400 font-medium leading-snug"
         >
           <svg
             width="14"

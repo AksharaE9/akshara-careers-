@@ -24,7 +24,7 @@ async function seed() {
   // ── 1. Users (Recruiters & Admins) ──────────────────────────────────────────
   console.log('Seeding users...')
   const defaultHash = await hashPassword('DemoPassword@123')
-  const adminHash = await hashPassword(process.env.SEED_ADMIN_PASSWORD || 'Admin@123')
+  const adminHash = await hashPassword(process.env.SEED_ADMIN_PASSWORD || 'admin123')
 
   const seedUsers = [
     {
@@ -33,7 +33,7 @@ async function seed() {
       passwordHash: adminHash,
       role: 'super_admin' as const,
       isActive: true,
-      mustChangePassword: true,
+      mustChangePassword: false,
     },
     {
       email: 'recruiter1@akshara.in',
@@ -463,118 +463,74 @@ async function seed() {
     .limit(1)
 
   if (ylkCollege[0] && bdeJob[0]) {
-    const drive = {
-      code: 'GFGC-YLK-0726',
-      collegeId: ylkCollege[0].id,
-      driveDate: '2026-08-25',
-      venue: 'Main Seminar Hall, Ground Floor',
-      jobIds: [bdeJob[0].id],
-      seats: 120,
-      status: 'upcoming' as const,
-    }
+    const allColleges = await db.select().from(colleges).limit(10)
+    const rvce = allColleges.find((c) => c.name.includes('R.V.')) || ylkCollege[0]
+    const bmsce = allColleges.find((c) => c.name.includes('B.M.S.')) || ylkCollege[0]
+    const pes = allColleges.find((c) => c.name.includes('PES')) || ylkCollege[0]
+    const ramaiah = allColleges.find((c) => c.name.includes('Ramaiah')) || ylkCollege[0]
 
-    await db
-      .insert(campusDrives)
-      .values(drive)
-      .onConflictDoUpdate({
-        target: campusDrives.code,
-        set: {
-          driveDate: drive.driveDate,
-          venue: drive.venue,
-          seats: drive.seats,
-          status: drive.status,
-        },
-      })
-  }
+    const seedDriveList = [
+      {
+        code: 'GFGC-YLK-0726',
+        collegeId: ylkCollege[0].id,
+        driveDate: '2026-08-25',
+        venue: 'Main Seminar Hall, Ground Floor',
+        jobIds: [bdeJob[0].id],
+        seats: 120,
+        status: 'upcoming' as const,
+      },
+      {
+        code: 'RVCE-2026',
+        collegeId: rvce.id,
+        driveDate: '2026-08-28',
+        venue: 'Auditorium Block A',
+        jobIds: [bdeJob[0].id],
+        seats: 60,
+        status: 'upcoming' as const,
+      },
+      {
+        code: 'BMSCE-2026',
+        collegeId: bmsce.id,
+        driveDate: '2026-09-02',
+        venue: 'Placement Cell Hall 2',
+        jobIds: [bdeJob[0].id],
+        seats: 50,
+        status: 'upcoming' as const,
+      },
+      {
+        code: 'PES-2026',
+        collegeId: pes.id,
+        driveDate: '2026-09-10',
+        venue: 'Golden Jubilee Block',
+        jobIds: [bdeJob[0].id],
+        seats: 80,
+        status: 'upcoming' as const,
+      },
+      {
+        code: 'MSRIT-2026',
+        collegeId: ramaiah.id,
+        driveDate: '2026-09-15',
+        venue: 'Apex Seminar Hall',
+        jobIds: [bdeJob[0].id],
+        seats: 45,
+        status: 'upcoming' as const,
+      },
+    ]
 
-  // ── 6. Candidate Applications (Demo Pipeline) ──────────────────────────────
-  console.log('Seeding sample candidate pipeline...')
-  const sampleCandidates = [
-    {
-      emailNormalised: 'aditi.seed@gmail.com',
-      phoneE164: '+919876543221',
-      fullName: 'Aditi Sharma',
-      languages: ['Kannada', 'English', 'Hindi'],
-      whatsappOptIn: true,
-    },
-    {
-      emailNormalised: 'rahul.seed@gmail.com',
-      phoneE164: '+919876543222',
-      fullName: 'Rahul Nair',
-      languages: ['English', 'Malayalam', 'Kannada'],
-      whatsappOptIn: true,
-    },
-    {
-      emailNormalised: 'sneha.seed@gmail.com',
-      phoneE164: '+919876543223',
-      fullName: 'Sneha Patel',
-      languages: ['English', 'Hindi'],
-      whatsappOptIn: false,
-    },
-    {
-      emailNormalised: 'vikram.seed@gmail.com',
-      phoneE164: '+919876543224',
-      fullName: 'Vikram Rao',
-      languages: ['Kannada', 'Telugu', 'English'],
-      whatsappOptIn: true,
-    },
-  ]
-
-  const firstUser = await db.select().from(users).limit(1)
-
-  for (let i = 0; i < sampleCandidates.length; i++) {
-    const sc = sampleCandidates[i]!
-    const [cand] = await db
-      .insert(candidates)
-      .values(sc)
-      .onConflictDoUpdate({
-        target: candidates.emailNormalised,
-        set: { fullName: sc.fullName },
-      })
-      .returning()
-
-    if (cand && bdeJob[0] && ylkCollege[0]) {
-      const stagesList = ['under_review', 'shortlisted', 'interview_scheduled', 'offered'] as const
-      const appStage = stagesList[i % stagesList.length]!
-
-      const [newApp] = await db
-        .insert(applications)
-        .values({
-          publicId: `APP-ORG-3427${i + 1}`,
-          statusToken: `status-token-demo-00000000000${i + 1}`,
-          candidateId: cand.id,
-          jobId: bdeJob[0].id,
-          collegeId: ylkCollege[0].id,
-          collegeRaw: 'Government First Grade College, Yelahanka',
-          courseRaw: 'BBA (Finance)',
-          academicStatus: 'graduated',
-          academicNote: 'First class distinction, active placement coordinator.',
-          experienceType: 'fresher',
-          hasDrivingLicence: true,
-          hasTwoWheeler: 'yes',
-          resumeKey: 'resumes/demo-resume.pdf',
-          resumeFilename: 'Aditi_Sharma_Resume.pdf',
-          resumeSizeBytes: 142000,
-          resumeMime: 'application/pdf',
-          source: 'organic',
-          stage: appStage,
-          consentGivenAt: new Date(),
-          consentVersion: 'v1.0-dpdp',
-          idempotencyKey: `idemp-seed-${cand.emailNormalised}`,
-        })
+    for (const drive of seedDriveList) {
+      await db
+        .insert(campusDrives)
+        .values(drive)
         .onConflictDoUpdate({
-          target: applications.publicId,
-          set: { stage: appStage },
+          target: campusDrives.code,
+          set: {
+            collegeId: drive.collegeId,
+            driveDate: drive.driveDate,
+            venue: drive.venue,
+            seats: drive.seats,
+            status: drive.status,
+          },
         })
-        .returning()
-
-      if (newApp && firstUser[0]) {
-        await db.insert(applicationNotes).values({
-          applicationId: newApp.id,
-          authorId: firstUser[0].id,
-          body: `Initial screening completed. Candidate demonstrates strong communication in English and Kannada. Recommended for hiring manager interview round.`,
-        })
-      }
     }
   }
 

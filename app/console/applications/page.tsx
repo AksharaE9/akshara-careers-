@@ -2,11 +2,12 @@
  * app/console/applications/page.tsx
  *
  * Recruiter Candidate Pipeline & Kanban Stage Manager.
+ * Optimized for 100,000+ records with server-driven search, filtering, and pagination.
  */
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
@@ -55,32 +56,51 @@ export default function ApplicationsPipelinePage() {
   const [filterStage, setFilterStage] = useState('')
   const [updatingId, setUpdatingId] = useState<string | null>(null)
 
-  const fetchApplications = async () => {
+  // Server pagination state
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
+  const pageSize = 50
+
+  const fetchApplications = useCallback(async () => {
     try {
       setLoading(true)
       const params = new URLSearchParams()
-      if (filterStage) params.set('stage', filterStage)
-      if (searchQuery) params.set('q', searchQuery)
+      if (filterStage && filterStage !== 'all') params.set('stage', filterStage)
+      if (searchQuery.trim()) params.set('q', searchQuery.trim())
+      if (filterJob) params.set('jobId', filterJob)
+      params.set('page', String(page))
+      params.set('limit', String(pageSize))
 
       const res = await fetch(`/api/console/applications?${params.toString()}`)
       const data = await res.json()
       if (res.ok) {
         setApplications(data.applications || [])
         setStats(data.stats || {})
+        setTotalCount(data.totalCount || 0)
+        setTotalPages(data.totalPages || 1)
       }
     } catch (err) {
-      console.error(err)
+      console.error('Failed to fetch applications:', err)
     } finally {
       setLoading(false)
     }
-  }
+  }, [filterStage, searchQuery, filterJob, page])
 
   useEffect(() => {
-    fetchApplications()
-  }, [filterStage])
+    const timer = setTimeout(() => {
+      fetchApplications()
+    }, 250) // 250ms debounced fetch
+    return () => clearTimeout(timer)
+  }, [fetchApplications])
 
   const handleStageChange = async (appId: string, newStage: string) => {
     setUpdatingId(appId)
+    // Optimistic UI update
+    setApplications((prev) =>
+      prev.map((app) => (app.id === appId ? { ...app, stage: newStage } : app))
+    )
+
     try {
       const res = await fetch(`/api/console/applications/${appId}/stage`, {
         method: 'PATCH',
@@ -88,30 +108,18 @@ export default function ApplicationsPipelinePage() {
         body: JSON.stringify({ stage: newStage }),
       })
       if (res.ok) {
-        setApplications((prev) =>
-          prev.map((app) => (app.id === appId ? { ...app, stage: newStage } : app))
-        )
-        // Refresh stats
+        fetchApplications()
+      } else {
+        // Rollback on failure
         fetchApplications()
       }
     } catch (err) {
       console.error('Failed to change stage:', err)
+      fetchApplications()
     } finally {
       setUpdatingId(null)
     }
   }
-
-  const filteredApps = applications.filter((app) => {
-    const matchesSearch =
-      !searchQuery ||
-      app.candidateName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.candidateEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.candidatePhone.includes(searchQuery) ||
-      app.publicId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.collegeName.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesJob = !filterJob || app.jobTitle === filterJob
-    return matchesSearch && matchesJob
-  })
 
   // Unique job titles for filter dropdown
   const uniqueJobs = Array.from(new Set(applications.map((a) => a.jobTitle)))
@@ -121,7 +129,7 @@ export default function ApplicationsPipelinePage() {
       {/* Page Header & View Toggle */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-(--spacing-s4)">
         <div>
-          <span className="eyebrow text-(--color-marigold)">Recruitment Pipeline</span>
+          <span className="eyebrow text-(--color-amber-400)">Recruitment Pipeline</span>
           <h1 className="display text-(--font-size-step-3) font-bold text-(--color-ink-900)">
             Candidates & Applications
           </h1>
@@ -229,21 +237,45 @@ export default function ApplicationsPipelinePage() {
       </div>
 
       {/* Filter Bar */}
-      <Card className="p-(--spacing-s4) bg-(--color-chalk) border border-(--color-ink-900)/10 flex flex-col sm:flex-row gap-(--spacing-s3)">
-        <div className="flex-1">
+      <Card className="p-(--spacing-s4) bg-(--color-chalk) border border-(--color-ink-900)/10 flex flex-col sm:flex-row items-center gap-(--spacing-s3)">
+        <div className="flex-1 w-full">
           <Input
             id="searchQuery"
-            placeholder="Search candidate name, email, phone, college, or ID..."
+            placeholder="Search candidate name, email, phone, college, or application ID..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value)
+              setPage(1)
+            }}
           />
+        </div>
+
+        <div className="w-full sm:w-64">
+          <Select
+            id="filterStage"
+            value={filterStage}
+            onChange={(e) => {
+              setFilterStage(e.target.value)
+              setPage(1)
+            }}
+          >
+            <option value="">All Pipeline Stages</option>
+            {STAGES.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.label}
+              </option>
+            ))}
+          </Select>
         </div>
 
         <div className="w-full sm:w-64">
           <Select
             id="filterJob"
             value={filterJob}
-            onChange={(e) => setFilterJob(e.target.value)}
+            onChange={(e) => {
+              setFilterJob(e.target.value)
+              setPage(1)
+            }}
           >
             <option value="">All Job Roles</option>
             {uniqueJobs.map((job) => (
@@ -255,12 +287,39 @@ export default function ApplicationsPipelinePage() {
         </div>
       </Card>
 
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-between text-(--font-size-step--1) text-(--color-graphite)">
+        <div>
+          Showing <span className="font-bold text-(--color-ink-900)">{applications.length}</span> of{' '}
+          <span className="font-bold text-(--color-ink-900)">{totalCount}</span> records (Page {page} of {totalPages || 1})
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Button
+            variant="secondary"
+            size="sm"
+            disabled={page <= 1 || loading}
+            onClick={() => setPage((p) => Math.max(p - 1, 1))}
+          >
+            ← Previous
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            disabled={page >= totalPages || loading}
+            onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+          >
+            Next →
+          </Button>
+        </div>
+      </div>
+
       {/* ── KANBAN BOARD VIEW ────────────────────────────────────────────────── */}
       {viewMode === 'kanban' ? (
         <div className="overflow-x-auto pb-6">
           <div className="flex gap-(--spacing-s4) min-w-[1200px]">
             {STAGES.slice(0, 7).map((col) => {
-              const colApps = filteredApps.filter((a) => a.stage === col.id)
+              const colApps = applications.filter((a) => a.stage === col.id)
 
               return (
                 <div
@@ -292,7 +351,7 @@ export default function ApplicationsPipelinePage() {
                           <div className="flex items-start justify-between gap-2">
                             <Link
                               href={`/console/applications/${app.id}`}
-                              className="font-bold text-(--font-size-step-0) text-(--color-ink-900) hover:text-(--color-marigold) transition-colors leading-tight"
+                              className="font-bold text-(--font-size-step-0) text-(--color-ink-900) hover:text-(--color-amber-400) transition-colors leading-tight"
                             >
                               {app.candidateName}
                             </Link>
@@ -364,14 +423,14 @@ export default function ApplicationsPipelinePage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-(--color-ink-900)/5">
-                {filteredApps.length === 0 ? (
+                {applications.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="py-8 text-center text-(--color-ink-400) italic">
                       No applications found matching filters.
                     </td>
                   </tr>
                 ) : (
-                  filteredApps.map((app) => (
+                  applications.map((app) => (
                     <tr key={app.id} className="hover:bg-(--color-ink-900)/2 transition-colors">
                       <td className="py-3 px-4">
                         <Link
@@ -414,7 +473,7 @@ export default function ApplicationsPipelinePage() {
                       <td className="py-3 px-4 text-right">
                         <Link
                           href={`/console/applications/${app.id}`}
-                          className="text-(--font-size-step--2) font-semibold text-(--color-marigold) hover:underline"
+                          className="text-(--font-size-step--2) font-semibold text-(--color-amber-400) hover:underline"
                         >
                           Review &rarr;
                         </Link>

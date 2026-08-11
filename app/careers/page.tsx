@@ -6,8 +6,8 @@ import { Footer } from '@/components/layout/Footer'
 import { Container } from '@/components/layout/Container'
 import { Grid } from '@/components/layout/Grid'
 import { getOpenJobs, type JobCardResult } from '@/lib/db/queries/jobs'
-import { listAllDrives } from '@/lib/db/queries/drives'
 import { TalentPoolForm } from '@/components/talent-pool/TalentPoolForm'
+import { HiringProcessCarousel } from '@/components/landing/HiringProcessCarousel'
 
 const FALLBACK_JOBS: JobCardResult[] = [
   {
@@ -48,52 +48,6 @@ const FALLBACK_JOBS: JobCardResult[] = [
     requiresDrivingLicence: false,
     postedAt: new Date(),
   },
-  {
-    id: 'f3',
-    slug: 'credit-analyst',
-    title: 'Junior Credit Analyst',
-    family: 'Credit & Risk',
-    summary: 'Assess applicant financial profiles, verify income documents, and underwrite educational financing proposals.',
-    employmentType: 'FULL_TIME',
-    workMode: 'onsite',
-    locationCity: 'Bengaluru',
-    locationState: 'Karnataka',
-    salaryMin: 420000,
-    salaryMax: 550000,
-    salaryCurrency: 'INR',
-    salaryUnit: 'YEAR',
-    salaryIsPublic: true,
-    requiresTwoWheeler: false,
-    requiresDrivingLicence: false,
-    postedAt: new Date(),
-  },
-]
-
-const FALLBACK_DRIVES = [
-  {
-    code: 'RVCE-2026',
-    collegeName: 'RV College of Engineering',
-    collegeCity: 'Bengaluru',
-    driveDate: '2026-08-20',
-    seats: 45,
-    status: 'upcoming',
-  },
-  {
-    code: 'BMSCE-2026',
-    collegeName: 'BMS College of Engineering',
-    collegeCity: 'Bengaluru',
-    driveDate: '2026-08-25',
-    seats: 30,
-    status: 'upcoming',
-  },
-  {
-    code: 'PES-2026',
-    collegeName: 'PES University Ring Road Campus',
-    collegeCity: 'Bengaluru',
-    driveDate: '2026-09-02',
-    seats: 60,
-    status: 'upcoming',
-  },
 ]
 
 interface CareersPageProps {
@@ -109,16 +63,14 @@ export default async function CareersPage({ searchParams }: CareersPageProps) {
   const queryFilter = resolvedParams.query?.toLowerCase() || ''
   const familyFilter = resolvedParams.family || ''
   const locationFilter = resolvedParams.location || ''
+  const hasActiveFilters = Boolean(queryFilter || familyFilter || locationFilter)
 
   let openJobs = FALLBACK_JOBS
-  let drives: any[] = FALLBACK_DRIVES
 
   try {
     if (process.env.NEON_DATABASE_URL) {
       const dbJobs = await getOpenJobs()
       if (dbJobs && dbJobs.length > 0) openJobs = dbJobs
-      const dbDrives = await listAllDrives()
-      if (dbDrives && dbDrives.length > 0) drives = dbDrives
     }
   } catch (err) {
     console.error('Failed to query database, using fallback data:', err)
@@ -141,141 +93,146 @@ export default async function CareersPage({ searchParams }: CareersPageProps) {
   const uniqueLocations = Array.from(new Set(openJobs.map((j) => j.locationCity)))
 
   return (
-    <div className="min-h-screen bg-paper flex flex-col">
+    <div className="min-h-screen bg-(--color-ink-950) flex flex-col font-sans">
       <Header />
 
       <main className="flex-1">
-        {/* S1: HERO · .section-lg · bg-ink-900 */}
-        <section data-section="hero" className="bg-ink-900 section-lg min-h-[78svh] flex items-center text-chalk">
-          <Container width="content">
-            <div className="flex flex-col items-start">
-              {/* Eyebrow */}
-              <span className="text-step--1 font-mono tracking-[0.12em] uppercase text-marigold font-semibold">
-                Careers at Akshara
-              </span>
+        {/* S1: HERO · .section-lg · bg-ink-950 with background image */}
+        <section data-section="hero" className="relative bg-(--color-ink-950) section-lg min-h-[620px] flex items-center text-(--color-text-on-dark) overflow-hidden">
+          {/* Background Image with Dark Vignette & Gradient Overlays */}
+          <div className="absolute inset-0 z-0 pointer-events-none select-none">
+            <Image
+              src="/images/hero-bg.png"
+              alt="Akshara Education Infrastructure"
+              fill
+              priority
+              className="object-cover object-center opacity-20"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-(--color-ink-950) via-(--color-ink-950)/90 to-(--color-ink-950)/70" />
+            <div className="absolute inset-0 bg-gradient-to-t from-(--color-ink-950) via-transparent to-(--color-ink-950)/50" />
+          </div>
 
-              {/* H1 Headline */}
-              <h1 className="mt-3 text-step-5 font-display leading-[0.95] text-chalk max-w-[16ch] ml-[-0.04em]">
-                Build educational infrastructure.
-              </h1>
+          <Container width="content" className="relative z-10">
+            <Grid className="items-center gap-y-12">
+              {/* Left Column: 7 Cols on desktop */}
+              <div className="col-span-4 md:col-span-8 lg:col-span-7 flex flex-col items-start">
+                <span className="font-mono text-(--font-size-step--1) tracking-[0.12em] uppercase text-(--color-amber-400) font-semibold mb-3">
+                  Careers at Akshara
+                </span>
 
-              {/* Sub-paragraph */}
-              <p className="mt-6 text-step-1 text-ink-400 max-w-[52ch] leading-relaxed">
-                Join our mission to finance higher education for ambitious students across India. High autonomy, transparent compensation, and fast career progression.
-              </p>
+                <h1 className="text-(--font-size-step-5) font-display font-bold leading-[1.05] text-(--color-text-on-dark) tracking-tight max-w-[16ch]">
+                  Build educational infrastructure.
+                </h1>
 
-              {/* CTA Row */}
-              <div className="mt-12 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <a
-                  href="#roles"
-                  className="h-12 px-6 bg-marigold text-ink-900 rounded-(--radius-md) inline-flex items-center justify-center font-semibold hover:bg-marigold-press transition-colors"
-                >
-                  View Open Roles
-                </a>
-                <a
-                  href="#drives"
-                  className="h-12 px-6 border border-ink-600 text-chalk rounded-(--radius-md) inline-flex items-center justify-center font-semibold hover:border-chalk transition-colors"
-                >
-                  Campus Drives
-                </a>
-              </div>
+                <p className="mt-5 text-(--font-size-step-0) text-(--color-text-on-dark-muted) max-w-[50ch] leading-relaxed">
+                  Join our mission to finance higher education for ambitious students across India. High autonomy, transparent compensation, and fast career progression.
+                </p>
 
-              {/* Stat Line */}
-              <div className="mt-16 text-step--1 font-mono text-ink-400 tabular-nums">
-                {openJobs.length} active requisitions · Bengaluru Hub · Fast-track 4-stage hiring
-              </div>
-            </div>
-          </Container>
-        </section>
-
-        {/* S2: DRIVE BOARD · .section-md · bg-ink-800 · Container(wide) */}
-        <section id="drives" data-section="drives" className="bg-ink-800 section-md text-chalk border-t border-ink-600/30">
-          <Container width="wide">
-            {/* Heading Block */}
-            <div className="max-w-2xl mb-12">
-              <span className="text-step--1 font-mono tracking-[0.12em] uppercase text-marigold font-semibold">
-                Live Campus Recruitment
-              </span>
-              <h2 className="mt-3 text-step-3 font-display font-bold text-chalk">
-                Campus Placement Board
-              </h2>
-              <p className="mt-4 text-step-0 text-ink-400">
-                Upcoming campus recruitment drives and on-site evaluation schedules.
-              </p>
-            </div>
-
-            {/* Drive Board Table */}
-            <div className="overflow-x-auto relative rounded-lg border border-ink-600 bg-ink-900/60 backdrop-blur">
-              <div className="min-w-[720px]">
-                {/* Header Row */}
-                <div className="grid grid-cols-[120px_1fr_120px_140px_90px_120px] items-center px-6 h-12 border-b border-ink-600 font-mono text-step--1 text-ink-400 uppercase tracking-wider">
-                  <div>Drive Code</div>
-                  <div>College / Venue</div>
-                  <div>Location</div>
-                  <div>Date</div>
-                  <div>Seats</div>
-                  <div className="text-right">Action</div>
+                {/* CTAs with shared min-width (L-13) */}
+                <div className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                  <a
+                    href="#roles"
+                    data-testid="hero-cta-roles"
+                    className="btn btn--md btn--primary min-w-[180px]"
+                  >
+                    View Open Roles
+                  </a>
+                  <a
+                    href="#process"
+                    data-testid="hero-cta-drives"
+                    className="btn btn--md btn--secondary min-w-[180px]"
+                  >
+                    Hiring Process
+                  </a>
                 </div>
 
-                {/* Data Rows */}
-                {drives.map((drive) => (
-                  <div
-                    key={drive.code}
-                    className="grid grid-cols-[120px_1fr_120px_140px_90px_120px] items-center px-6 h-14 border-b border-ink-600/40 last:border-0 font-mono text-step--1 text-chalk hover:bg-ink-600/20 transition-colors"
-                  >
-                    <div className="font-bold text-marigold">{drive.code}</div>
-                    <div className="font-sans font-medium truncate pr-4">{drive.collegeName}</div>
-                    <div className="text-ink-400">{drive.collegeCity || 'Bengaluru'}</div>
-                    <div className="tabular-nums">{drive.driveDate}</div>
-                    <div className="tabular-nums">{drive.seats || 50} seats</div>
-                    <div className="text-right">
-                      <Link
-                        href={`/d/${drive.code}`}
-                        className="inline-flex items-center justify-end min-h-[44px] text-xs font-sans font-semibold text-marigold hover:underline"
-                      >
-                        Register →
-                      </Link>
+                <div className="mt-10 text-(--font-size-step--1) font-mono text-(--color-text-on-dark-muted) tabular-nums">
+                  {openJobs.length} active requisitions · Bengaluru Innovation Hub · 4-stage hiring
+                </div>
+              </div>
+
+              {/* Right Column: 5 Cols on desktop — Career Space Visual Photo */}
+              <div className="col-span-4 md:col-span-8 lg:col-span-5 relative">
+                <div className="relative rounded-(--radius-lg) overflow-hidden border border-(--color-ink-600) shadow-2xl bg-(--color-ink-900) min-h-[380px] flex items-end">
+                  <Image
+                    src="/images/hero-team.png"
+                    alt="Akshara Careers & Collaborative Team"
+                    fill
+                    priority
+                    className="object-cover object-center transition-all duration-700 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-(--color-ink-950) via-(--color-ink-950)/40 to-transparent" />
+
+                  {/* Floating Metric Card */}
+                  <div className="relative z-10 m-5 p-4 bg-(--color-ink-950)/85 backdrop-blur-md border border-(--color-ink-600) rounded-(--radius-md) flex flex-col gap-1.5 w-full">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-(--font-size-step--2) text-(--color-amber-400) font-bold uppercase tracking-wider">
+                        Bengaluru Innovation Hub
+                      </span>
+                      <span className="flex h-2 w-2 rounded-full bg-(--color-leaf) animate-pulse" />
                     </div>
+                    <p className="text-(--font-size-step--1) text-(--color-text-on-dark) font-medium">
+                      Empowering ambitious talent to scale educational financing across India.
+                    </p>
                   </div>
-                ))}
+                </div>
+              </div>
+            </Grid>
+            {/* Proof Strip of Supported Institutions (L-12) */}
+            <div className="mt-12 border-t border-(--color-ink-600)/30 pt-6">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-(--color-text-on-dark-muted) block mb-4">
+                Supported Partner Institutions
+              </span>
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-4 opacity-50">
+                <div data-proof-logo className="h-[28px] text-(--color-text-on-dark) font-display font-bold text-sm tracking-tight flex items-center">
+                  GC Yelahanka
+                </div>
+                <div data-proof-logo className="h-[28px] text-(--color-text-on-dark) font-display font-bold text-sm tracking-tight flex items-center">
+                  GFGC Bangalore
+                </div>
+                <div data-proof-logo className="h-[28px] text-(--color-text-on-dark) font-display font-bold text-sm tracking-tight flex items-center">
+                  PES University
+                </div>
+                <div data-proof-logo className="h-[28px] text-(--color-text-on-dark) font-display font-bold text-sm tracking-tight flex items-center">
+                  RV College of Engineering
+                </div>
               </div>
             </div>
           </Container>
         </section>
 
-        {/* S3: OPEN ROLES · .section-md · bg-paper · Container(content) */}
-        <section id="roles" data-section="roles" className="bg-paper section-md">
+        {/* S2: OPEN ROLES · .section-md · bg-frost-100 · data-ground="light" */}
+        <section id="roles" data-section="roles" data-ground="light" className="bg-(--color-frost-100) section-md text-(--color-text-on-light)">
           <Container width="content">
-            {/* Heading Block */}
-            <div className="max-w-2xl">
-              <span className="text-step--1 font-mono tracking-[0.12em] uppercase text-graphite/80 font-semibold">
+            <div className="heading-block max-w-2xl">
+              <span className="heading-block-eyebrow">
                 Opportunities
               </span>
-              <h2 className="mt-3 text-step-3 font-display font-bold text-ink-900">
+              <h2 className="heading-block-title text-(--font-size-step-3)">
                 Open Requisitions
               </h2>
-              <p className="mt-4 text-step-0 text-graphite/80">
+              <p className="heading-block-sub">
                 Explore open opportunities across our commercial, risk, and operations divisions.
               </p>
             </div>
 
-            {/* Filter Bar (Sticky) */}
-            <div className="mt-8 sticky top-16 z-20 bg-paper/95 backdrop-blur py-4 border-b border-graphite/10 flex flex-wrap items-center gap-3">
-              <form method="GET" action="/careers" className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 w-full">
+            {/* Filter Bar (Sticky Live Filtering per §18.5) */}
+            <div className="sticky top-[72px] z-20 bg-(--color-frost-100)/95 backdrop-blur py-4 border-b border-(--color-frost-300) flex flex-wrap items-center gap-3">
+              <form method="GET" action="/careers#roles" className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 w-full">
                 <input
                   type="text"
                   name="query"
                   aria-label="Search keywords or job title"
                   defaultValue={queryFilter}
                   placeholder="Search keywords or job title..."
-                  className="w-full sm:flex-1 h-12 px-4 bg-chalk border border-graphite/20 rounded-md text-step-0 text-ink-900 placeholder:text-graphite/50 focus-visible:outline-2 focus-visible:outline-marigold"
+                  className="input-control w-full sm:flex-1 h-12"
                 />
 
                 <select
                   name="family"
-                  aria-label="Filter by job family"
+                  aria-label="Filter by Job Family"
                   defaultValue={familyFilter}
-                  className="w-full sm:w-auto h-12 px-4 bg-chalk border border-graphite/20 rounded-md text-step-0 text-ink-900 focus-visible:outline-2 focus-visible:outline-marigold"
+                  className="select-control w-full sm:w-52 h-12"
                 >
                   <option value="">All Job Families</option>
                   {uniqueFamilies.map((f) => (
@@ -287,273 +244,174 @@ export default async function CareersPage({ searchParams }: CareersPageProps) {
 
                 <select
                   name="location"
-                  aria-label="Filter by location"
+                  aria-label="Filter by Location"
                   defaultValue={locationFilter}
-                  className="w-full sm:w-auto h-12 px-4 bg-chalk border border-graphite/20 rounded-md text-step-0 text-ink-900 focus-visible:outline-2 focus-visible:outline-marigold"
+                  className="select-control w-full sm:w-52 h-12"
                 >
                   <option value="">All Locations</option>
-                  {uniqueLocations.map((l) => (
-                    <option key={l} value={l}>
-                      {l}
+                  {uniqueLocations.map((loc) => (
+                    <option key={loc} value={loc}>
+                      {loc}
                     </option>
                   ))}
                 </select>
 
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto h-12 px-6 bg-ink-900 text-chalk font-semibold rounded-md hover:bg-ink-800 transition-colors"
-                >
-                  Filter
-                </button>
+                {hasActiveFilters && (
+                  <Link
+                    href="/careers#roles"
+                    className="text-(--font-size-step--1) text-(--color-text-on-light-muted) hover:text-(--color-text-on-light) font-semibold self-center underline ml-2"
+                  >
+                    Clear filters
+                  </Link>
+                )}
               </form>
             </div>
 
-            {/* Result Count */}
-            <div className="mt-4 text-step--1 text-graphite/70" aria-live="polite">
-              Showing {filteredJobs.length} of {openJobs.length} active roles
-            </div>
+            {/* Role Cards List */}
+            <div className="mt-8 flex flex-col gap-4">
+              {filteredJobs.length === 0 ? (
+                <div className="p-12 text-center bg-(--color-frost-50) rounded-(--radius-lg) border border-(--color-frost-300)">
+                  <h3 className="text-(--font-size-step-1) font-bold text-(--color-text-on-light)">No open roles match your filters</h3>
+                  <p className="text-(--font-size-step-0) text-(--color-text-on-light-muted) mt-2">
+                    Try clearing search terms or join our talent pool to get notified when new roles open.
+                  </p>
+                  <div className="mt-6">
+                    <Link href="/careers#roles" className="btn btn--sm btn--secondary">
+                      Clear filters
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                filteredJobs.map((job) => (
+                  <div
+                    key={job.id}
+                    data-testid={`job-card-${job.slug}`}
+                    className="p-6 sm:p-8 bg-(--color-frost-50) border border-(--color-frost-300) rounded-(--radius-lg) hover:border-(--color-ink-500) transition-all flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xs"
+                  >
+                    <div className="flex flex-col gap-2 max-w-2xl">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="font-mono text-(--font-size-step--2) uppercase font-semibold text-(--color-text-on-light-muted) bg-(--color-frost-200) px-2.5 py-1 rounded">
+                          {job.family}
+                        </span>
+                        <span className="font-mono text-(--font-size-step--2) text-(--color-text-on-light-muted)">
+                          {job.employmentType.replace('_', ' ')} · {job.workMode}
+                        </span>
+                      </div>
 
-            {/* Card Grid */}
-            <Grid className="mt-6">
-              {filteredJobs.map((job) => (
-                <div key={job.id} data-testid={`job-card-${job.slug}`} className="col-span-4 min-w-0">
-                  <div className="bg-chalk border border-graphite/12 rounded-lg p-6 h-full flex flex-col hover:border-marigold hover:translate-y-[-2px] transition-all duration-180">
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="font-mono text-step--2 uppercase font-semibold text-graphite/70 bg-paper px-2.5 py-1 rounded">
-                        {job.family}
-                      </span>
-                      <span className="font-mono text-step--2 text-leaf font-semibold">
-                        {job.workMode === 'field' ? 'Field' : 'On-Site'}
-                      </span>
+                      <h3 className="font-display text-(--font-size-step-2) font-bold text-(--color-text-on-light)">
+                        {job.title}
+                      </h3>
+
+                      <p className="text-(--font-size-step-0) text-(--color-text-on-light-muted) leading-relaxed">
+                        {job.summary}
+                      </p>
+
+                      <div className="flex flex-wrap items-center gap-4 mt-2 font-mono text-(--font-size-step--1) text-(--color-text-on-light-muted)">
+                        <span>📍 {job.locationCity}, {job.locationState}</span>
+                        {job.requiresTwoWheeler && (
+                          <span className="text-(--color-leaf) font-medium">✓ Two-wheeler required</span>
+                        )}
+                      </div>
                     </div>
 
-                    <h3 className="text-step-1 font-bold text-ink-900 line-clamp-2">
-                      <Link href={`/careers/${job.slug}`} className="hover:text-marigold transition-colors">
-                        {job.title}
-                      </Link>
-                    </h3>
-
-                    <p className="mt-2 text-step-0 line-clamp-2 text-graphite/75 leading-relaxed">
-                      {job.summary}
-                    </p>
-
-                    <div data-card-meta className="mt-auto pt-6 border-t border-graphite/10 flex items-center justify-between">
-                      <span className="text-step--1 font-mono font-medium text-graphite">
-                        {job.locationCity}, {job.locationState}
-                      </span>
+                    <div className="flex items-center md:self-center shrink-0">
                       <Link
                         href={`/apply/${job.slug}`}
-                        className="h-10 px-4 bg-marigold text-ink-900 rounded-md font-semibold text-step--1 inline-flex items-center justify-center hover:bg-marigold-press transition-colors"
+                        className="btn btn--sm btn--primary w-full sm:w-auto"
                       >
                         Apply Now →
                       </Link>
                     </div>
                   </div>
-                </div>
-              ))}
-            </Grid>
+                ))
+              )}
+            </div>
           </Container>
         </section>
 
-        {/* S4: HIRING PROCESS · .section-md · bg-ink-900 · Container(content) */}
-        <section id="process" data-section="process" className="bg-ink-900 section-md text-chalk border-t border-ink-600/30">
+        {/* S3: HIRING PROCESS · .section-md · bg-ink-950 with Interactive Carousel */}
+        <section id="process" data-section="process" className="bg-(--color-ink-950) section-md text-(--color-text-on-dark) border-t border-(--color-ink-600)/40">
           <Container width="content">
-            {/* Heading */}
-            <div className="max-w-2xl mb-12">
-              <span className="text-step--1 font-mono tracking-[0.12em] uppercase text-marigold font-semibold">
-                Transparent Evaluation
+            <div className="heading-block max-w-2xl">
+              <span className="heading-block-eyebrow">
+                Methodology
               </span>
-              <h2 className="mt-3 text-step-3 font-display font-bold text-chalk">
-                4-Stage Hiring Process
+              <h2 className="heading-block-title text-(--font-size-step-3)">
+                How We Hire
               </h2>
-              <p className="mt-4 text-step-0 text-ink-400">
-                Clear expectations, guaranteed feedback, and no multi-week ghosting.
+              <p className="heading-block-sub">
+                A streamlined, transparent 4-stage evaluation designed to respect your time and give you real clarity.
               </p>
             </div>
 
-            {/* 4 Process Steps */}
-            <div className="relative">
-              {/* Connector line on desktop */}
-              <div className="hidden lg:block absolute top-7 left-0 right-0 h-[1px] bg-ink-600 z-0" />
-
-              <Grid className="relative z-10">
-                <div className="col-span-4 lg:col-span-3 bg-ink-900 pr-4">
-                  <div className="font-mono text-step-3 text-marigold font-bold">01</div>
-                  <h3 className="mt-3 text-step-1 text-chalk font-semibold">Application & Screening</h3>
-                  <p className="mt-2 text-step--1 text-ink-400">Review within 24 hours of submission</p>
-                </div>
-
-                <div className="col-span-4 lg:col-span-3 bg-ink-900 pr-4">
-                  <div className="font-mono text-step-3 text-marigold font-bold">02</div>
-                  <h3 className="mt-3 text-step-1 text-chalk font-semibold">Domain Assessment</h3>
-                  <p className="mt-2 text-step--1 text-ink-400">Practical role-specific scenario exercise</p>
-                </div>
-
-                <div className="col-span-4 lg:col-span-3 bg-ink-900 pr-4">
-                  <div className="font-mono text-step-3 text-marigold font-bold">03</div>
-                  <h3 className="mt-3 text-step-1 text-chalk font-semibold">Leadership Discussion</h3>
-                  <p className="mt-2 text-step--1 text-ink-400">Strategic alignment and team fit interview</p>
-                </div>
-
-                <div className="col-span-4 lg:col-span-3 bg-ink-900">
-                  <div className="font-mono text-step-3 text-marigold font-bold">04</div>
-                  <h3 className="mt-3 text-step-1 text-chalk font-semibold">Offer & Onboarding</h3>
-                  <p className="mt-2 text-step--1 text-ink-400">Same-day formal offer letter release</p>
-                </div>
-              </Grid>
+            {/* Interactive Visual Carousel */}
+            <div className="mt-8">
+              <HiringProcessCarousel />
             </div>
           </Container>
         </section>
 
-        {/* S5: LIFE AT AKSHARA · .section-lg · bg-paper · Container(content) */}
-        <section id="life" data-section="life" className="bg-paper section-lg">
+        {/* S4: LIFE AT AKSHARA · .section-md · bg-frost-200 · data-ground="light" */}
+        <section data-section="culture" data-ground="light" className="bg-(--color-frost-200) section-md text-(--color-text-on-light)">
           <Container width="content">
-            {/* Heading Block */}
-            <div className="max-w-2xl mb-16">
-              <span className="text-step--1 font-mono tracking-[0.12em] uppercase text-graphite/80 font-semibold">
-                Culture & Community
+            <div className="heading-block max-w-2xl">
+              <span className="heading-block-eyebrow">
+                Culture & Environment
               </span>
-              <h2 className="mt-3 text-step-3 font-display font-bold text-ink-900">
+              <h2 className="heading-block-title text-(--font-size-step-3)">
                 Life at Akshara
               </h2>
-              <p className="mt-4 text-step-0 text-graphite/80">
-                Empowering teams to make high-impact decisions every day.
+              <p className="heading-block-sub">
+                We combine the rigorous execution of enterprise fintech with the speed, autonomy, and direct impact of an early-stage team.
               </p>
             </div>
 
-            {/* 3 Alternating Feature Blocks with 96px gap */}
-            <div className="flex flex-col gap-24">
-              {/* Feature Block 1: Text Left, Image Right */}
-              <Grid className="items-center">
-                <div className="col-span-4 md:col-span-8 lg:col-span-5 self-center">
-                  <span className="font-mono text-step--2 text-marigold-press font-bold uppercase tracking-wider">
-                    Ground Reality
-                  </span>
-                  <h3 className="mt-2 text-step-2 font-display font-bold text-ink-900">
-                    Real Campus Engagements
-                  </h3>
-                  <p className="mt-4 text-step-0 text-graphite/85 leading-relaxed">
-                    Our sales and operations teams visit partner colleges across Karnataka, interacting directly with students and parents to demystify higher education loans.
-                  </p>
-                </div>
-                <div className="col-span-4 md:col-span-8 lg:col-span-6 lg:col-start-7">
-                  <div className="aspect-[4/3] rounded-lg overflow-hidden border border-graphite/15 relative">
-                    <Image
-                      src="/images/life/campus-drive-recruiter.png"
-                      alt="Akshara Campus Recruitment Team"
-                      width={600}
-                      height={450}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                </div>
-              </Grid>
-
-              {/* Feature Block 2: Image Left, Text Right (Reversed) */}
-              <Grid className="items-center">
-                <div className="col-span-4 md:col-span-8 lg:col-span-6 order-2 lg:order-1">
-                  <div className="aspect-[4/3] rounded-lg overflow-hidden border border-graphite/15 relative">
-                    <Image
-                      src="/images/life/team-meeting.png"
-                      alt="Akshara Collaborative Team Meeting"
-                      width={600}
-                      height={450}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                </div>
-                <div className="col-span-4 md:col-span-8 lg:col-span-5 lg:col-start-8 order-1 lg:order-2 self-center">
-                  <span className="font-mono text-step--2 text-marigold-press font-bold uppercase tracking-wider">
-                    High Autonomy
-                  </span>
-                  <h3 className="mt-2 text-step-2 font-display font-bold text-ink-900">
-                    Collaborative Problem Solving
-                  </h3>
-                  <p className="mt-4 text-step-0 text-graphite/85 leading-relaxed">
-                    We eliminate bureaucracy. Cross-functional teams work in tight sprint loops to improve credit underwriting models, reduce disbursement turnaround, and scale partner operations.
-                  </p>
-                </div>
-              </Grid>
-
-              {/* Feature Block 3: Text Left, Image Right */}
-              <Grid className="items-center">
-                <div className="col-span-4 md:col-span-8 lg:col-span-5 self-center">
-                  <span className="font-mono text-step--2 text-marigold-press font-bold uppercase tracking-wider">
-                    Celebration & Milestones
-                  </span>
-                  <h3 className="mt-2 text-step-2 font-display font-bold text-ink-900">
-                    Shared Success
-                  </h3>
-                  <p className="mt-4 text-step-0 text-graphite/85 leading-relaxed">
-                    From celebrating team milestones in Bengaluru to rewarding top performers in campus outreach, we recognize and reward dedication and excellence.
-                  </p>
-                </div>
-                <div className="col-span-4 md:col-span-8 lg:col-span-6 lg:col-start-7">
-                  <div className="aspect-[4/3] rounded-lg overflow-hidden border border-graphite/15 relative">
-                    <Image
-                      src="/images/life/celebration.png"
-                      alt="Akshara Team Celebration"
-                      width={600}
-                      height={450}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                </div>
-              </Grid>
-            </div>
-          </Container>
-        </section>
-
-        {/* S6: PROOF STRIP · .section-sm · bg-chalk · Container(content) */}
-        <section data-section="proof-strip" className="bg-chalk section-sm border-t border-b border-graphite/10">
-          <Container width="content">
-            <div className="text-center mb-8">
-              <span className="text-step--2 font-mono uppercase tracking-widest text-graphite/60 font-semibold">
-                Trusted by leading educational institutions
-              </span>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-12 gap-y-6">
-              <span data-proof-logo className="font-display font-bold text-step-1 text-graphite/60 h-8 flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-                RVCE Bengaluru
-              </span>
-              <span data-proof-logo className="font-display font-bold text-step-1 text-graphite/60 h-8 flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-                BMSCE
-              </span>
-              <span data-proof-logo className="font-display font-bold text-step-1 text-graphite/60 h-8 flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-                PES University
-              </span>
-              <span data-proof-logo className="font-display font-bold text-step-1 text-graphite/60 h-8 flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-                MS Ramaiah
-              </span>
-              <span data-proof-logo className="font-display font-bold text-step-1 text-graphite/60 h-8 flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-                Dayananda Sagar
-              </span>
-            </div>
-          </Container>
-        </section>
-
-        {/* S7: TALENT POOL · .section-md · bg-ink-900 · Container(content) */}
-        <section id="talent-pool" data-section="talent-pool" className="bg-ink-900 section-md text-chalk border-t border-ink-600/30">
-          <Container width="content">
-            <Grid className="items-start">
-              <div className="col-span-4 md:col-span-8 lg:col-span-5">
-                <span className="text-step--1 font-mono tracking-[0.12em] uppercase text-marigold font-semibold">
-                  Future Opportunities
-                </span>
-                <h2 className="mt-3 text-step-3 font-display font-bold text-chalk">
-                  Join our Talent Pool
-                </h2>
-                <p className="mt-4 text-step-0 text-ink-400 leading-relaxed">
-                  Don't see the right open requisition today? Submit your profile to our talent roster and our recruitment team will reach out when matching opportunities open.
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 bg-(--color-frost-50) border border-(--color-frost-300) rounded-(--radius-lg) flex flex-col gap-3">
+                <span className="text-2xl">⚡</span>
+                <h3 className="font-display text-(--font-size-step-1) font-bold text-(--color-text-on-light)">High Ownership</h3>
+                <p className="text-(--font-size-step--1) text-(--color-text-on-light-muted) leading-relaxed">
+                  Every team member owns real operational and financial outcomes from day one with clear mandate and minimal bureaucracy.
                 </p>
               </div>
 
-              <div className="col-span-4 md:col-span-8 lg:col-span-6 lg:col-start-7">
-                <div className="bg-ink-800 border border-ink-600 rounded-lg p-6">
-                  <TalentPoolForm />
-                </div>
+              <div className="p-6 bg-(--color-frost-50) border border-(--color-frost-300) rounded-(--radius-lg) flex flex-col gap-3">
+                <span className="text-2xl">📈</span>
+                <h3 className="font-display text-(--font-size-step-1) font-bold text-(--color-text-on-light)">Transparent Growth</h3>
+                <p className="text-(--font-size-step--1) text-(--color-text-on-light-muted) leading-relaxed">
+                  Clear performance benchmarks, uncapped sales incentives for commercial roles, and structured promotion tracks.
+                </p>
               </div>
-            </Grid>
+
+              <div className="p-6 bg-(--color-frost-50) border border-(--color-frost-300) rounded-(--radius-lg) flex flex-col gap-3">
+                <span className="text-2xl">🎓</span>
+                <h3 className="font-display text-(--font-size-step-1) font-bold text-(--color-text-on-light)">Mission Driven</h3>
+                <p className="text-(--font-size-step--1) text-(--color-text-on-light-muted) leading-relaxed">
+                  Direct impact enabling students across tier-2/3 institutions to access credit and complete degree education.
+                </p>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* S5: TALENT POOL · .section-md · bg-ink-900 */}
+        <section id="talent" data-section="talent-pool" className="bg-(--color-ink-900) section-md text-(--color-text-on-dark) border-t border-(--color-ink-600)/40">
+          <Container width="content">
+            <div className="heading-block max-w-2xl">
+              <span className="heading-block-eyebrow">
+                Future Openings
+              </span>
+              <h2 className="heading-block-title text-(--font-size-step-3)">
+                Join the Akshara Talent Pool
+              </h2>
+              <p className="heading-block-sub">
+                Don&apos;t see an exact match today? Register your interest to be notified immediately when relevant commercial or credit roles open.
+              </p>
+            </div>
+
+            <div className="mt-8 max-w-xl">
+              <TalentPoolForm />
+            </div>
           </Container>
         </section>
       </main>

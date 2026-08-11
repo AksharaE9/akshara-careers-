@@ -2,6 +2,7 @@ import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs'
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   // ── TypeScript ──────────────────────────────────────────────────────────────
   // Fail build on type errors — no warnings-only mode
   typescript: {

@@ -27,6 +27,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Client-side file size verification fallback (5 MB max)
+    if (fileSize !== undefined && fileSize <= 0) {
+      return NextResponse.json(
+        { error: 'File cannot be empty' },
+        { status: 400 }
+      )
+    }
+
     if (fileSize && fileSize > 5 * 1024 * 1024) {
       return NextResponse.json(
         { error: 'File size exceeds the 5 MB limit' },
@@ -41,8 +48,29 @@ export async function POST(request: NextRequest) {
       Boolean(process.env.CLOUDFLARE_R2_BUCKET_NAME)
 
     const fileId = randomUUID()
-    // Clean filename of unsafe path characters
-    const cleanFilename = filename.replace(/[^a-zA-Z0-9.-]/g, '_')
+    // Strip dangerous extensions — keep only the final safe extension.
+    // Blocklist covers webshells, scripts, executables, and markup that can be served.
+    const DANGEROUS_EXT = /\.(php|phtml|exe|sh|bash|zsh|cmd|bat|com|msi|jar|war|js|ts|mjs|cjs|html|htm|svg|xml|py|rb|pl|asp|aspx|cfm)$/i
+
+    // Clean unsafe path characters
+    let cleanFilename = filename.replace(/[^a-zA-Z0-9._-]/g, '_')
+
+    // Strip any dangerous extension from intermediate components and the final extension
+    // e.g. "resume.php.pdf" → "resume__pdf", "evil.exe" → "evil"
+    const parts = cleanFilename.split('.')
+    // Always keep the first part (basename)
+    const safeParts = [parts[0]]
+    for (let i = 1; i < parts.length; i++) {
+      const ext = parts[i].toLowerCase()
+      if (DANGEROUS_EXT.test(`.${ext}`)) {
+        // Replace dangerous extension with double-underscore separator
+        safeParts.push('_')  // separator, not the ext
+      } else {
+        safeParts.push(parts[i])
+      }
+    }
+    cleanFilename = safeParts.join('_')
+
     const key = `resumes/${fileId}-${cleanFilename}`
 
     if (!hasR2) {

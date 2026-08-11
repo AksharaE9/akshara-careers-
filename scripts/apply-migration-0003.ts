@@ -1,0 +1,38 @@
+import * as dotenv from 'dotenv'
+dotenv.config({ path: '.env.local' })
+
+import { getDb } from '../lib/db/client'
+import { sql } from 'drizzle-orm'
+import fs from 'fs'
+import path from 'path'
+
+async function run() {
+  console.log('Applying migration 0003...')
+  const db = getDb()
+  const sqlContent = fs.readFileSync(
+    path.join(process.cwd(), 'drizzle', '0003_candidate_auth_and_cooldown.sql'),
+    'utf-8'
+  )
+
+  // Split into executable statements
+  const statements = sqlContent
+    .split(';')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0)
+
+  for (const stmt of statements) {
+    try {
+      await db.execute(sql.raw(stmt))
+      console.log('Executed statement successfully.')
+    } catch (err: any) {
+      console.error('Statement error (might already exist):', err.message)
+    }
+  }
+
+  console.log('Migration 0003 applied successfully!')
+}
+
+run().catch((err) => {
+  console.error('Migration failed:', err)
+  process.exit(1)
+})

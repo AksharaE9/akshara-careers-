@@ -81,24 +81,29 @@ export default async function ApplyPage({ params, searchParams }: ApplyPageProps
   }
 
   return (
-    <div className="min-h-screen bg-(--color-paper) flex flex-col">
+    <div className="min-h-screen bg-(--color-ink-950) text-(--color-text-on-dark) flex flex-col font-sans">
       <Header />
 
-      <main className="mx-auto max-w-3xl w-full px-(--spacing-s5) py-(--spacing-s8) flex flex-col gap-(--spacing-s6) flex-1">
+      <main className="mx-auto max-w-3xl w-full px-4 sm:px-6 py-10 flex flex-col gap-6 flex-1">
         {/* Back Link */}
-        <Link href={`/careers/${job.slug}`} className="text-(--font-size-step--1) font-mono text-(--color-ink-600) hover:text-(--color-ink-900) transition-colors flex items-center gap-(--spacing-s1) self-start">
-          <span>&larr;</span> Back to Job Details
+        <Link
+          href={`/careers`}
+          className="text-(--font-size-step--1) font-mono text-(--color-text-on-dark-muted) hover:text-(--color-amber-400) transition-colors flex items-center gap-2 self-start"
+        >
+          <span>&larr;</span> Back to Careers
         </Link>
 
         {/* Wizard Header */}
         <div>
-          <span className="eyebrow text-(--color-marigold)">Application Portal</span>
-          <h1 className="display text-(--font-size-step-2) font-bold text-(--color-ink-900) mt-(--spacing-s1)">
+          <span className="font-mono text-(--font-size-step--1) tracking-[0.12em] uppercase text-(--color-amber-400) font-semibold">
+            Application Portal
+          </span>
+          <h1 className="font-display text-(--font-size-step-3) font-bold text-(--color-text-on-dark) mt-2">
             Apply for {job.title}
           </h1>
           {driveCode && (
-            <p className="text-(--font-size-step--1) text-(--color-leaf) font-semibold font-mono mt-(--spacing-s1)">
-              ✓ Campus Drive Session: {driveCode.toUpperCase()}
+            <p className="text-(--font-size-step--1) text-(--color-leaf) font-semibold font-mono mt-1">
+              ✓ Campus Placement Drive: {driveCode.toUpperCase()}
             </p>
           )}
         </div>

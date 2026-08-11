@@ -14,7 +14,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getDb } from '@/lib/db/client'
 import { users, auditLog, securityEvents } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
-import { setSessionCookie } from '@/lib/auth/session'
+import { setSessionCookie, createSessionToken } from '@/lib/auth/session'
 import { verifyPassword } from '@/lib/auth/password'
 import crypto from 'crypto'
 
@@ -45,7 +45,14 @@ export async function POST(request: NextRequest) {
     const user = dbUsers[0]
 
     if (!user || !user.isActive) {
-      // Record security event & audit log for unknown / inactive account
+      // ── TIMING ORACLE FIX ─────────────────────────────────────────────────
+      // For unknown/inactive accounts, perform a dummy Argon2id comparison so
+      // response time is indistinguishable from a valid-account wrong-password.
+      // Uses a valid Argon2id hash format to ensure the full derivation executes.
+      const DUMMY_HASH = '$argon2id$v=19$m=19456,t=2,p=1$fzrJapWQKvDhRpURLv4EtA$48McOJnSPFXCaGxJUs+mXZX5bzAQ/r7Kf2U8sg1SZ58'
+      await verifyPassword(password, DUMMY_HASH).catch(() => {})
+      // ─────────────────────────────────────────────────────────────────────
+
       try {
         await db.insert(securityEvents).values({
           layer: 'login',
@@ -114,8 +121,6 @@ export async function POST(request: NextRequest) {
         lockedUntil: null,
         lastLoginAt: new Date(),
       })
-      .where(eq(users.id, user.id))
-
     const sessionUser = {
       id: user.id,
       email: user.email,
@@ -125,6 +130,7 @@ export async function POST(request: NextRequest) {
       assignedDriveIds: user.assignedDriveIds || [],
     }
 
+    const sessionToken = createSessionToken(sessionUser)
     await setSessionCookie(sessionUser)
 
     // Write audit log
@@ -139,11 +145,21 @@ export async function POST(request: NextRequest) {
       })
     } catch {}
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       user: sessionUser,
       mustChangePassword: user.mustChangePassword,
     })
+
+    response.cookies.set('akshara_console_session', sessionToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production' && !process.env.PLAYWRIGHT_TEST,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60,
+    })
+
+    return response
   } catch (err: any) {
     console.error('Console login error:', err)
     return NextResponse.json({ error: 'Email or password is incorrect.' }, { status: 401 })

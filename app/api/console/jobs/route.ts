@@ -1,14 +1,14 @@
-/**
- * app/api/console/jobs/route.ts
- *
- * Console Jobs management API.
- */
-
 import { NextRequest, NextResponse } from 'next/server'
 import { listAllJobsAdmin, createJobPosting } from '@/lib/db/queries/jobs'
+import { getCurrentUser } from '@/lib/auth/session'
+import { can } from '@/lib/auth/rbac'
 
 export async function GET() {
   try {
+    const user = await getCurrentUser()
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (!can(user, 'view_applications')) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
     const jobs = await listAllJobsAdmin()
     return NextResponse.json({ jobs })
   } catch (err: any) {
@@ -22,6 +22,10 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const user = await getCurrentUser()
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (!can(user, 'manage_jobs')) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
     const body = await request.json()
     const { title, slug, family, summary, descriptionHtml, locationCity, salaryMin, salaryMax } = body
 

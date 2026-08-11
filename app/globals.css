@@ -1,121 +1,279 @@
 @import "tailwindcss";
 
 @theme {
-  /* ---- Colour. Namespace --color-* generates bg-/text-/border- utilities ---- */
-  --color-ink-900: #0E1226;
-  --color-ink-800: #171D3D;
-  --color-ink-600: #2A3468;
-  --color-ink-400: #5A66A8;
+  /* ---- Palette Tokens (§18.2) ---- */
+  --color-ink-950: #0A1220;
+  --color-ink-900: #0F1A2E;
+  --color-ink-800: #16243D;
+  --color-ink-700: #1C2E4A;
+  --color-ink-600: #22354F;
+  --color-ink-500: #4A6892;
 
-  --color-paper:    #F2EEE4;
-  --color-chalk:    #FBFAF6;
-  --color-graphite: #3A3A42;
+  --color-frost-50:  #F7FAFD;
+  --color-frost-100: #EEF4FB;
+  --color-frost-200: #DFE9F5;
+  --color-frost-300: #C6D6E8;
 
-  --color-marigold:       #E8A33D;
-  --color-marigold-press: #C9861F;
+  --color-text-on-dark:       #E9EFF8;
+  --color-text-on-dark-muted: #A9BAD1;
+  --color-text-on-light:       #0F1A2E;
+  --color-text-on-light-muted: #4A5D77;
+
+  --color-amber-400: #F0A93B;
+  --color-amber-500: #D98A1F;
+
+  /* Aliases & Semantic Compatibility */
+  --color-marigold:       #F0A93B;
+  --color-marigold-press: #D98A1F;
   --color-leaf:   #2E6B4F;
   --color-kumkum: #C0392B;
+  --color-paper:  #EEF4FB;
+  --color-chalk:  #F7FAFD;
+  --color-graphite: #4A5D77;
 
-  /* Chart series — deliberately NOT the semantic colours (Doc 3 §14.21) */
-  --color-series-1: #4C6FBF;
-  --color-series-2: #E8A33D;
-  --color-series-3: #2E6B4F;
-  --color-series-4: #9B5DE5;
-  --color-series-5: #E4711E;
-  --color-series-6: #567C8D;
-
-  /* ---- Type. --font-* generates font-display / font-sans / font-mono ---- */
-  --font-display: var(--font-bricolage), 'Bricolage Grotesque', 'Arial Black', ui-sans-serif, system-ui, sans-serif;
+  /* ---- Type Tokens ---- */
+  --font-display: var(--font-bricolage), 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-sans:    var(--font-inter-tight), 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-mono:    var(--font-geist-mono), 'Geist Mono', 'Courier New', ui-monospace, monospace;
+  --font-mono:    var(--font-geist-mono), 'Geist Mono', ui-monospace, monospace;
 
-  /* ---- Fluid type scale. --text-* generates text-step-N ---- */
+  /* Fluid type scale (§18.4) — tightened step-5 peaks at 3.75rem */
   --text-step--2: clamp(0.69rem, 0.66rem + 0.12vw, 0.78rem);
   --text-step--1: clamp(0.80rem, 0.77rem + 0.15vw, 0.89rem);
   --text-step-0:  clamp(1.00rem, 0.95rem + 0.25vw, 1.13rem);
-  --text-step-1:  clamp(1.25rem, 1.16rem + 0.45vw, 1.60rem);
-  --text-step-2:  clamp(1.56rem, 1.40rem + 0.80vw, 2.27rem);
-  --text-step-3:  clamp(1.95rem, 1.69rem + 1.31vw, 3.22rem);
-  --text-step-4:  clamp(2.44rem, 2.02rem + 2.09vw, 4.57rem);
-  --text-step-5:  clamp(3.05rem, 2.40rem + 3.25vw, 6.48rem);
+  --text-step-1:  clamp(1.20rem, 1.12rem + 0.40vw, 1.45rem);
+  --text-step-2:  clamp(1.44rem, 1.30rem + 0.70vw, 1.90rem);
+  --text-step-3:  clamp(1.75rem, 1.50rem + 1.10vw, 2.40rem);
+  --text-step-4:  clamp(2.10rem, 1.75rem + 1.60vw, 3.00rem);
+  --text-step-5:  clamp(2.50rem, 2.00rem + 2.20vw, 3.75rem);
 
   /* Legacy alias compatibility */
   --font-size-step--2: clamp(0.69rem, 0.66rem + 0.12vw, 0.78rem);
   --font-size-step--1: clamp(0.80rem, 0.77rem + 0.15vw, 0.89rem);
   --font-size-step-0:  clamp(1.00rem, 0.95rem + 0.25vw, 1.13rem);
-  --font-size-step-1:  clamp(1.25rem, 1.16rem + 0.45vw, 1.60rem);
-  --font-size-step-2:  clamp(1.56rem, 1.40rem + 0.80vw, 2.27rem);
-  --font-size-step-3:  clamp(1.95rem, 1.69rem + 1.31vw, 3.22rem);
-  --font-size-step-4:  clamp(2.44rem, 2.02rem + 2.09vw, 4.57rem);
-  --font-size-step-5:  clamp(3.05rem, 2.40rem + 3.25vw, 6.48rem);
+  --font-size-step-1:  clamp(1.20rem, 1.12rem + 0.40vw, 1.45rem);
+  --font-size-step-2:  clamp(1.44rem, 1.30rem + 0.70vw, 1.90rem);
+  --font-size-step-3:  clamp(1.75rem, 1.50rem + 1.10vw, 2.40rem);
+  --font-size-step-4:  clamp(2.10rem, 1.75rem + 1.60vw, 3.00rem);
+  --font-size-step-5:  clamp(2.50rem, 2.00rem + 2.20vw, 3.75rem);
 
-  /* Line heights paired to the scale — a size without a line-height is a bug */
-  --leading-tight-display: 0.95;
-  --leading-heading: 1.15;
-  --leading-body: 1.6;
+  /* Section Spacing (§18.4) */
+  --space-section-lg: clamp(72px, 7vw, 128px);
+  --space-section-md: clamp(56px, 5vw, 96px);
+  --space-section-sm: clamp(40px, 3.5vw, 64px);
 
-  /* ---- Spacing. 4px base. --spacing-* generates p-/m-/gap- ---- */
-  --spacing-1: 4px;    --spacing-2: 8px;    --spacing-3: 12px;
-  --spacing-4: 16px;   --spacing-5: 24px;   --spacing-6: 32px;
-  --spacing-7: 48px;   --spacing-8: 64px;   --spacing-9: 96px;
-  --spacing-10: 128px; --spacing-11: 160px; --spacing-12: 192px;
-
-  /* Legacy alias compatibility */
-  --spacing-s1: 4px;  --spacing-s2: 8px;   --spacing-s3: 12px;
-  --spacing-s4: 16px; --spacing-s5: 24px;  --spacing-s6: 32px;
-  --spacing-s7: 48px; --spacing-s8: 64px;  --spacing-s9: 96px;
-  --spacing-s10: 128px;
-
-  /* ---- Layout ---- */
+  /* Layout */
   --container-content: 1280px;
   --container-prose: 68ch;
   --container-wide: 1440px;
 
-  --radius-sm: 2px; --radius-md: 4px; --radius-lg: 8px; --radius-full: 999px;
-
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-full: 999px;
 }
 
-/* Base layer — resets and element defaults */
+/* Base layer */
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
   body {
-    background-color: var(--color-paper);
-    color: var(--color-graphite);
+    background-color: var(--color-ink-950);
+    color: var(--color-text-on-dark);
     font-family: var(--font-sans);
     font-size: var(--text-step-0);
-    line-height: var(--leading-body);
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    line-height: var(--leading-heading);
-    letter-spacing: -0.03em;
-    text-wrap: balance;      /* stops orphan words in headlines */
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
   }
-  p { text-wrap: pretty; }
 
-  /* Media never overflows its container — kills a whole class of h-scroll bugs */
-  img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
-
+  /* Focus ring management (§18.2) */
   :focus-visible {
-    outline: 2px solid var(--color-marigold);
+    outline: 2px solid var(--color-amber-400);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
   }
 
-  /* Tabular figures everywhere numbers are compared */
-  .tabular, td[data-numeric], th[data-numeric] { font-variant-numeric: tabular-nums; }
+  [data-ground="light"] :focus-visible {
+    outline: 2px solid var(--color-ink-900);
+    outline-offset: 2px;
+  }
 }
 
-@layer components {
-  .section-lg { padding-block: clamp(96px, 12vw, 192px); }   /* Hero, major moments */
-  .section-md { padding-block: clamp(64px, 8vw, 128px);  }   /* Standard sections */
-  .section-sm { padding-block: clamp(48px, 6vw, 80px);   }   /* Dense: proof strip, footer top */
+/* Control primitives (§18.3) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  line-height: 1;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn--sm {
+  height: 36px;
+  padding-left: 14px;
+  padding-right: 14px;
+  font-size: var(--text-step--1);
+}
+.btn--md {
+  height: 44px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: var(--text-step-0);
+}
+.btn--lg {
+  height: 52px;
+  padding-left: 28px;
+  padding-right: 28px;
+  font-size: var(--text-step-1);
+}
+
+.btn--primary {
+  background-color: var(--color-amber-400);
+  color: var(--color-ink-950) !important;
+}
+.btn--primary:hover {
+  background-color: var(--color-amber-500);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-text-on-dark);
+  border-color: var(--color-ink-500);
+}
+.btn--secondary:hover {
+  background-color: var(--color-ink-800);
+  border-color: var(--color-text-on-dark-muted);
+}
+[data-ground="light"] .btn--secondary {
+  color: var(--color-text-on-light);
+  border-color: var(--color-frost-300);
+}
+[data-ground="light"] .btn--secondary:hover {
+  background-color: var(--color-frost-200);
+  border-color: var(--color-text-on-light-muted);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-on-dark);
+}
+.btn--ghost:hover {
+  background-color: var(--color-ink-800);
+}
+[data-ground="light"] .btn--ghost {
+  color: var(--color-text-on-light);
+}
+[data-ground="light"] .btn--ghost:hover {
+  background-color: var(--color-frost-200);
+}
+
+/* Input & Select controls (§18.3) */
+.input-control,
+.select-control {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: var(--text-step-0);
+  line-height: 1;
+  background-color: var(--color-frost-50);
+  border: 1px solid var(--color-frost-300);
+  color: var(--color-text-on-light);
+  transition: border-color 0.15s ease;
+}
+.input-control:focus,
+.select-control:focus {
+  outline: none;
+  border-color: var(--color-ink-900);
+}
+[data-ground="dark"] .input-control,
+[data-ground="dark"] .select-control {
+  background-color: var(--color-ink-800);
+  border-color: var(--color-ink-500);
+  color: var(--color-text-on-dark);
+}
+[data-ground="dark"] .input-control:focus,
+[data-ground="dark"] .select-control:focus {
+  border-color: var(--color-amber-400);
+}
+
+/* Sections & rhythm (§18.4) */
+.section-lg {
+  padding-top: var(--space-section-lg);
+  padding-bottom: var(--space-section-lg);
+}
+.section-md {
+  padding-top: var(--space-section-md);
+  padding-bottom: var(--space-section-md);
+}
+.section-sm {
+  padding-top: var(--space-section-sm);
+  padding-bottom: var(--space-section-sm);
+}
+
+.heading-block {
+  margin-bottom: 40px;
+}
+.heading-block-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-step--1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-amber-400);
+  display: block;
+  margin-bottom: 10px;
+}
+[data-ground="light"] .heading-block-eyebrow {
+  color: var(--color-text-on-light-muted);
+}
+
+.heading-block-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-text-on-dark);
+  margin-bottom: 16px;
+}
+[data-ground="light"] .heading-block-title {
+  color: var(--color-text-on-light);
+}
+
+.heading-block-sub {
+  font-size: var(--text-step-0);
+  color: var(--color-text-on-dark-muted);
+  max-width: 60ch;
+  line-height: 1.6;
+}
+[data-ground="light"] .heading-block-sub {
+  color: var(--color-text-on-light-muted);
 }

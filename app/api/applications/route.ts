@@ -2,19 +2,18 @@
  * app/api/applications/route.ts
  *
  * Public application submission API route.
- * Handles candidate upsert (D7), 90-day duplicate checking (D7),
- * drive code validation (D9), and creates the application.
- *
- * Falls back to mock submission if database is not configured.
+ * Handles candidate identity resolution by phone_e164,
+ * active application constraint enforcement (§4.a),
+ * 30-day reapply cooldown check (§4.b),
+ * and creates application with initial stage event in application_stage_events.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import { publicApplicationSchema } from '@/lib/validation/application'
 import { getDb } from '@/lib/db/client'
-import { candidates, applications, campusDrives } from '@/lib/db/schema'
-import { findCandidate, upsertCandidate, hasAppliedRecently } from '@/lib/db/queries/candidates'
+import { candidates, applications, campusDrives, applicationStageEvents } from '@/lib/db/schema'
+import { findCandidate, upsertCandidate, checkApplicationEligibility } from '@/lib/db/queries/candidates'
 import { getDriveByCode } from '@/lib/db/queries/drives'
-import { eq, sql } from 'drizzle-orm'
 import { randomUUID } from 'crypto'
 
 export async function POST(request: NextRequest) {
@@ -34,12 +33,8 @@ export async function POST(request: NextRequest) {
     const hasDb = Boolean(process.env.NEON_DATABASE_URL)
 
     if (!hasDb) {
-      // ── MOCK SUBMISSION FALLBACK ──────────────────────────────────────────
-      // Simulates successful database insert to keep form wizard testable by Playwright.
       console.warn('[MOCK SUBMIT] Database not configured. Simulating application insert.')
-      
       const mockId = `APP-MOCK-${Math.floor(10000 + Math.random() * 90000)}`
-      
       return NextResponse.json({
         success: true,
         applicationId: mockId,
@@ -47,39 +42,40 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // ── LIVE MODE (Neon DB transactions) ────────────────────────────────────
+    // ── LIVE MODE ────────────────────────────────────────────────────────────
     const db = getDb()
 
-    // A. Check if candidate already exists
-    let candidate = await findCandidate(data.email, data.phone)
-
-    if (candidate) {
-      // D7: Check if the candidate has applied to this specific role in last 90 days
-      const isDuplicate = await hasAppliedRecently(candidate.id, data.jobId)
-      if (isDuplicate) {
-        return NextResponse.json(
-          { error: 'You have already submitted an application for this role in the last 90 days.' },
-          { status: 400 }
-        )
-      }
-    }
-
-    // B. Upsert candidate (D7)
-    candidate = await upsertCandidate({
+    // A. Upsert / resolve candidate identity by phone_e164
+    let candidate = await upsertCandidate({
       emailNormalised: data.email,
       phoneE164: data.phone,
       fullName: data.fullName,
-      languages: [], // MultiChip values mapping can be attached here
+      languages: [],
       whatsappOptIn: data.whatsappOptIn,
     })
 
     if (!candidate) {
-      throw new Error('Failed to upsert candidate record')
+      throw new Error('Failed to resolve candidate record')
+    }
+
+    // B. Check 30-day cooldown and active application constraints (§4)
+    const eligibility = await checkApplicationEligibility(candidate.id)
+    if (!eligibility.allowed) {
+      return NextResponse.json(
+        {
+          error: eligibility.reason || 'ELIGIBILITY_BLOCKED',
+          message: eligibility.message,
+          reapplyAvailableAt: eligibility.reapplyAvailableAt?.toISOString(),
+          daysRemaining: eligibility.daysRemaining,
+          activeApplicationId: eligibility.activeApplicationId,
+        },
+        { status: 400 }
+      )
     }
 
     // C. Lookup drive if driveCode is supplied
     let driveId: string | null = null
-    let driveCodeUpper = data.driveCode?.toUpperCase().trim() || null
+    const driveCodeUpper = data.driveCode?.toUpperCase().trim() || null
     if (driveCodeUpper) {
       const drive = await getDriveByCode(driveCodeUpper)
       if (drive) {
@@ -96,43 +92,67 @@ export async function POST(request: NextRequest) {
     const statusToken = randomUUID()
 
     // E. Insert application
-    // Wrap details in values mapping to applications schema
-    await db.insert(applications).values({
-      publicId,
-      statusToken,
-      candidateId: candidate.id,
-      jobId: data.jobId,
-      driveId,
-      collegeId: data.collegeId || null,
-      collegeRaw: data.collegeRaw,
-      courseId: data.courseId || null,
-      courseRaw: data.courseRaw,
-      academicStatus: data.academicStatus,
-      academicNote: data.academicNote || null,
-      experienceType: data.experienceType,
-      hasDrivingLicence: data.hasDrivingLicence,
-      hasTwoWheeler: data.hasTwoWheeler,
-      resumeKey: data.resumeKey,
-      resumeFilename: data.resumeFilename,
-      resumeSizeBytes: data.resumeSizeBytes,
-      resumeMime: data.resumeMime,
-      source: data.source || 'organic',
-      stage: 'received' as const,
-      consentGivenAt: new Date(),
-      consentVersion: '1.0',
-      idempotencyKey: data.idempotencyKey,
+    const [insertedApp] = await db
+      .insert(applications)
+      .values({
+        publicId,
+        statusToken,
+        candidateId: candidate.id,
+        jobId: data.jobId,
+        driveId,
+        collegeId: data.collegeId || null,
+        collegeRaw: data.collegeRaw,
+        courseId: data.courseId || null,
+        courseRaw: data.courseRaw,
+        academicStatus: data.academicStatus,
+        academicNote: data.academicNote || null,
+        experienceType: data.experienceType,
+        hasDrivingLicence: data.hasDrivingLicence,
+        hasTwoWheeler: data.hasTwoWheeler,
+        resumeKey: data.resumeKey,
+        resumeFilename: data.resumeFilename,
+        resumeSizeBytes: data.resumeSizeBytes,
+        resumeMime: data.resumeMime,
+        source: data.source || 'organic',
+        stage: 'received' as const,
+        consentGivenAt: new Date(),
+        consentVersion: '1.0',
+        idempotencyKey: data.idempotencyKey,
+      })
+      .returning()
+
+    if (!insertedApp) {
+      throw new Error('Failed to insert application')
+    }
+
+    // F. Write initial stage event to application_stage_events (§3)
+    await db.insert(applicationStageEvents).values({
+      applicationId: insertedApp.id,
+      stage: 'received',
+      note: 'Application submitted by candidate via online portal.',
+      occurredAt: new Date(),
     })
 
     return NextResponse.json({
       success: true,
       applicationId: publicId,
+      statusToken,
       isMock: false,
     })
   } catch (err: any) {
     console.error('Error processing application submission:', err)
 
-    // Handle postgres unique constraint key violations (e.g. idempotencyKey)
+    // Handle postgres unique constraint key violations (e.g. idempotencyKey, one_active_application)
     if (err.code === '23505') {
+      if (err.constraint === 'one_active_application_per_candidate') {
+        return NextResponse.json(
+          {
+            error: 'ACTIVE_APPLICATION_EXISTS',
+            message: 'You already have an active application under review in our system.',
+          },
+          { status: 400 }
+        )
+      }
       return NextResponse.json(
         { error: 'This application has already been submitted.' },
         { status: 409 }

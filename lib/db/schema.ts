@@ -249,6 +249,7 @@ export const candidates = pgTable('candidates', {
   // E.164 format '+919876543210' — TEXT, NEVER numeric (D1)
   phoneE164: text('phone_e164').unique().notNull(),
   fullName: text('full_name').notNull(),
+  passwordHash: text('password_hash').notNull(),
   gender: text('gender').$type<
     'female' | 'male' | 'prefer_not_to_say' | 'other'
   >(),
@@ -633,6 +634,62 @@ export const consoleSessions = pgTable('console_sessions', {
 })
 
 // ──────────────────────────────────────────────────────────────────────────────
+// Candidate Authentication & Application Tracking Schemas
+// ──────────────────────────────────────────────────────────────────────────────
+export const candidateLoginAttempts = pgTable(
+  'candidate_login_attempts',
+  {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    phoneE164: text('phone_e164').notNull(),
+    ipAddress: text('ip_address').notNull(),
+    succeeded: boolean('succeeded').notNull(),
+    attemptedAt: timestamp('attempted_at', { withTimezone: true })
+      .notNull()
+      .default(sql`now()`),
+  },
+  (t) => [
+    index('candidate_login_attempts_phone_time_idx').on(t.phoneE164, t.attemptedAt),
+  ]
+)
+
+export const candidateSessions = pgTable(
+  'candidate_sessions',
+  {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    candidateId: uuid('candidate_id')
+      .notNull()
+      .references(() => candidates.id, { onDelete: 'cascade' }),
+    tokenHash: text('token_hash').notNull(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true })
+      .notNull()
+      .default(sql`now()`),
+  },
+  (t) => [
+    index('candidate_sessions_token_idx').on(t.tokenHash),
+    index('candidate_sessions_candidate_idx').on(t.candidateId),
+  ]
+)
+
+export const applicationStageEvents = pgTable(
+  'application_stage_events',
+  {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    applicationId: uuid('application_id')
+      .notNull()
+      .references(() => applications.id, { onDelete: 'cascade' }),
+    stage: text('stage').notNull(),
+    note: text('note'),
+    occurredAt: timestamp('occurred_at', { withTimezone: true })
+      .notNull()
+      .default(sql`now()`),
+  },
+  (t) => [
+    index('app_stage_events_app_idx').on(t.applicationId, t.occurredAt),
+  ]
+)
+
+// ──────────────────────────────────────────────────────────────────────────────
 // Inferred types — use these for typed query results throughout the app
 // ──────────────────────────────────────────────────────────────────────────────
 export type College = typeof colleges.$inferSelect
@@ -660,4 +717,7 @@ export type ScheduledReport = typeof scheduledReports.$inferSelect
 export type AlertRule = typeof alertRules.$inferSelect
 export type AlertIncident = typeof alertIncidents.$inferSelect
 export type ConsoleSession = typeof consoleSessions.$inferSelect
+export type CandidateLoginAttempt = typeof candidateLoginAttempts.$inferSelect
+export type CandidateSession = typeof candidateSessions.$inferSelect
+export type ApplicationStageEvent = typeof applicationStageEvents.$inferSelect
 
