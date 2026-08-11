@@ -15,8 +15,8 @@ export async function GET(request: NextRequest) {
     const stage = searchParams.get('stage') || undefined
     const jobId = searchParams.get('jobId') || undefined
 
-    const apps = await getApplicationsList({ stage, jobId })
-
+    const result = await getApplicationsList({ stage, jobId })
+    const apps = result.applications
 
     // Log export event into audit_log
     const db = getDb()
