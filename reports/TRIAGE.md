@@ -147,17 +147,43 @@ same re-run — F1/F4/F6/F9 verified, not just asserted.
 
 `authz-matrix.spec.ts`: **6 of 50 tests failed.** Investigated each before drawing any conclusion (§19.5/systematic-debugging) — they are not one thing.
 
-### F14 — Not a security vulnerability, but blocks verifying one — admin login fixture credential mismatch
+### F14 — RESOLVED (2026-08-11, second pass) — admin login fixture credential mismatch + a test-harness footgun
+
+**Update:** fixed. Two layered causes, both resolved:
+1. `scripts/set-admin-password.ts`'s default (`admin123`) didn't match `scripts/seed-admin.ts`'s (`Admin@123`) — see original write-up below. Fixed by standardizing both scripts on `Admin@123` and adding a same-commit-sync comment to each; live DB password re-synced via `npx tsx scripts/set-admin-password.ts`.
+2. After fixing (1), 5 tests still failed — but on a *different* symptom (`qa-fixtures` endpoint 404, not admin-login 401). Root-caused before touching any product code (systematic-debugging): a stray `npm start` (production) server, left running from earlier manual `curl` verification, was silently reused by Playwright's `reuseExistingServer: true` instead of the `npm run dev` server `playwright.security.config.ts` actually specifies. `next start` always sets `NODE_ENV=production`, which correctly triggered `qa-fixtures`'s "404 in production" guard — the guard was never broken. Killing the stray server and letting the suite spawn its own dev server resolved it with **zero product code changes**. Added a warning comment to `playwright.security.config.ts` so this footgun doesn't cost someone else an hour.
+
+**Verification — full re-run, clean environment:**
+```
+$ npm run test:security
+50 passed (48.1s)
+```
+All 4 P0 IDOR checks (cross-drive scoping, status-token PII leak, adjacent/truncated token rejection) now pass for real, on their actual assertion. The IDOR class is genuinely verified, not just unblocked.
+
+<details><summary>Original write-up (superseded, kept for the record)</summary>
+
+### F14 (original) — Not a security vulnerability, but blocks verifying one — admin login fixture credential mismatch
 **Tests affected:** 4 of the 6 failures are IDOR-tagged (`C — IDOR: object-level authorization (P0)`: cross-drive application access, status-token PII leak, adjacent/truncated token rejection) plus the fixtures-endpoint production-guard test. All fail identically at `loadFixtures()`'s admin login step with `401`, **before ever reaching their actual IDOR assertion.**
 **Root cause, confirmed by direct curl:** `SEED_ADMIN_PASSWORD` is not set in `.env.local`. `authz-matrix.spec.ts`'s new F6 fallback assumes `Admin@123` (matching `scripts/seed-admin.ts`'s default). The admin account actually live in this database has password `admin123` (`scripts/set-admin-password.ts`'s default — confirmed: `curl .../login -d '{"email":"admin@gmail.com","password":"admin123"}'` → 200; `Admin@123` → 401). Two scripts, two different hardcoded defaults, no single source of truth for "what is the admin password right now," and nothing reconciles them.
 **Consequence:** this is not proof of an IDOR vulnerability — it's proof the test never got to check. 4 of the P0-tagged authorization checks in this campaign are **unverified, not passing.** `C — Application detail with a fabricated UUID returns 404` (the one IDOR test that logs in as a *recruiter*, not admin) did pass, which is a positive data point, but it's the weakest of the five IDOR checks.
-**Not fixed** — flagged for explicit decision, since "fix nothing more" was scoped to F10-F12 (known app bugs), and this is a different kind of gap: without resolving it, the launch decision cannot honestly claim the IDOR class was checked.
+*(Original "not fixed" disposition — superseded above.)*
 
-### F15 — P1 — Login-timing oracle: 331ms delta between existing/non-existing accounts (threshold 300ms)
+</details>
+
+### F15 — RESOLVED — Login-timing oracle: 331ms delta between existing/non-existing accounts (threshold 300ms)
 **Test:** `D — Login oracle: generic error body, consistent timing` — this one **did** run its real assertion (doesn't depend on the admin fixture).
 **Evidence:** `Timing delta 331ms exceeds 300ms oracle threshold` — average response time for a login attempt against an existing account differs from a non-existing account by 331ms, enough to let an attacker distinguish "this phone/email exists" from "it doesn't" via timing alone.
-**Root cause not yet located** — would need to profile `app/api/auth/login/route.ts`'s existing-vs-missing-account code paths (candidate login already has an explicit dummy-hash timing mitigation per F4's read of `candidate-password.ts`; the admin/console login path may not).
-**Not fixed** — recorded per the user's decision to stop fixing beyond F1-F6+F9 for this session.
+**Root cause, confirmed by reading `app/api/auth/login/route.ts`:** the route already had a timing mitigation for unknown accounts (dummy Argon2id compare), but the *known-account, wrong-password* branch performs one extra sequential DB write (`users.failedLoginCount`/`lockedUntil` update) that the unknown-account branch didn't have — an asymmetric number of Neon round-trips, not a hashing-cost asymmetry.
+
+**Fix:** added a matching no-op DB write (an update targeting a UUID that can never match a real row, so it always affects 0 rows) to the unknown-account branch, so both branches perform the same number of sequential writes.
+
+**Verification:**
+```
+$ npm run test:security
+Timing oracle check: existing avg=824ms, unknown avg=818ms, delta=6ms
+✓ Login response time does not reveal account existence (< 250ms delta)
+```
+Delta dropped from 331ms (baseline) / 254ms (natural variance, pre-fix) to 6ms post-fix.
 
 ## Launch decision — NO GO
 

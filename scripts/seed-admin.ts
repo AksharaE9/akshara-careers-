@@ -8,6 +8,10 @@
  *   SEED_ADMIN_FORCE_ROTATE (default: true)
  *
  * Enforces Argon2id hashing and idempotent insertion.
+ *
+ * NOTE: scripts/set-admin-password.ts is the other script that can set this
+ * same account's password. Its default MUST match this file's — keep them
+ * in sync in the same commit if either changes (see F14, 2026-08-11).
  */
 
 try {

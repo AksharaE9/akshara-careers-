@@ -3,8 +3,18 @@
  *
  * Sets admin credentials:
  * Email: admin@gmail.com
- * Password: $SEED_ADMIN_PASSWORD, or 'admin123' if unset (dev-only default —
+ * Password: $SEED_ADMIN_PASSWORD, or 'Admin@123' if unset (dev-only default —
  * ALWAYS set SEED_ADMIN_PASSWORD before running this against a real database).
+ *
+ * This default MUST match scripts/seed-admin.ts's default. Two different
+ * hardcoded defaults across sibling scripts is exactly what caused F14
+ * (2026-08-11 verification campaign): the security test suite assumed
+ * seed-admin.ts's default, but this script had silently overwritten the
+ * live admin password with a different one, so every P0 IDOR check that
+ * needed an authenticated admin session failed to even log in — not because
+ * of an authorization bug, but because the test's assumed password was
+ * stale. If you ever need a different default, change it in both files in
+ * the same commit.
  */
 
 try {
@@ -20,7 +30,7 @@ async function setAdmin() {
   console.log('\n🔐 Setting admin credentials...')
   const db = getDb()
 
-  const adminPassword = process.env.SEED_ADMIN_PASSWORD || 'admin123'
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD || 'Admin@123'
   const passwordHash = await hashPassword(adminPassword)
   const email = 'admin@gmail.com'
 

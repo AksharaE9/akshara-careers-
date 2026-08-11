@@ -51,6 +51,21 @@ export async function POST(request: NextRequest) {
       // Uses a valid Argon2id hash format to ensure the full derivation executes.
       const DUMMY_HASH = '$argon2id$v=19$m=19456,t=2,p=1$fzrJapWQKvDhRpURLv4EtA$48McOJnSPFXCaGxJUs+mXZX5bzAQ/r7Kf2U8sg1SZ58'
       await verifyPassword(password, DUMMY_HASH).catch(() => {})
+
+      // F15 fix: the wrong-password branch below (for a *known* account)
+      // performs a second sequential DB write — updating failedLoginCount /
+      // lockedUntil — that this unknown-account branch otherwise doesn't
+      // have. Without a matching write, this branch is consistently faster
+      // and leaks account existence via response timing (confirmed
+      // empirically: 331ms average delta against a 300ms oracle threshold —
+      // see reports/TRIAGE.md F15). Pay the same DB round-trip here against
+      // a UUID that can never match a real row, so it always affects 0 rows.
+      try {
+        await db
+          .update(users)
+          .set({ lockedUntil: null })
+          .where(eq(users.id, '00000000-0000-0000-0000-000000000000'))
+      } catch {}
       // ─────────────────────────────────────────────────────────────────────
 
       try {
