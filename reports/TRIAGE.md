@@ -121,12 +121,35 @@ same re-run — F1/F4/F6/F9 verified, not just asserted.
 **Root cause (not yet located):** these are all height-only violations (widths are fine) — every listed element is short of 44px tall, not narrow. Directly relevant to Document 7's control-sizing remediation: `control-sizing.spec.ts` (§18.6, already passing) only asserts controls stay **under** 64px and buttons avoid a boxy ratio — it never asserted a **floor**. The 44×44 WCAG minimum tap-target floor was never covered by that remediation and looks like it's never been met for pagination buttons, secondary CTAs, or the header wordmark link.
 **Not yet fixed** — flagged for decision below.
 
-### F12 — P1 — Candidate login lockout is off-by-one: blocks the 6th failed attempt, not the 5th
+### F12 — RESOLVED (2026-08-11, second pass) — two real bugs, neither was the off-by-one first assumed
+
+**Update:** the original write-up below misread which assertion actually failed (attributed a post-loop check to being inside the loop) and concluded there was a counting off-by-one. There wasn't — a hand-traced walkthrough of `loginCandidate()`'s arithmetic, then a direct-fetch reproduction script hitting the real API 7 times in sequence, both confirmed the count logic is correct: 5 logged failures correctly trigger `RATE_LIMITED` on attempt 6 and every attempt after. Two different, real bugs were actually responsible:
+
+**F12a — test isolation:** `playwright.config.ts` runs `fullyParallel: true` across 6 browser projects. `candidate-auth.spec.ts` hardcoded one phone number and one email for all of them. Concurrent projects shared the same `candidates` row and `candidate_login_attempts` rows — one project's `beforeAll` cleanup could delete another's in-flight attempt count mid-test, and `candidates.emailNormalised`'s unique constraint made two concurrent signups with the same email collide outright (surfacing as a signup→`/dashboard` redirect timeout, not a lockout symptom). Fixed by deriving `testPhone`/`testPhoneE164`/`testEmail` from `testInfo.workerIndex` in `beforeAll`, so parallel workers never share rows.
+
+**F12b — real product bug, IP-key fragility:** after fixing F12a, the test still failed deterministically on Firefox alone (not a concurrency artifact — reproduced with `--project=firefox` run in total isolation). Root-caused with a direct-fetch reproduction script (bypassing the browser and Playwright's API context entirely) that confirmed the server-side logic is correct when the same client makes every call. The actual cause: `app/api/auth/candidate/login/route.ts` (and identically, `app/api/auth/login/route.ts`) keys the rate limit on a raw `x-forwarded-for` / `x-real-ip` / `'127.0.0.1'` string with **no normalization**. On this machine, "localhost" resolves to different loopback representations (`127.0.0.1` vs `::1`) depending on which network stack resolves it — Firefox's own engine resolved differently than Playwright's Node-based `page.request` API context used for the test's final direct-API check. The 5 logged failures and the final lockout check ended up keyed on two different IP strings for the same real client, so the final check saw 0 matching failures and let a request through that should have been blocked. This isn't purely a local-dev artifact — any dual-stack client, proxy, or load balancer that can present the same connection over either IPv4 or IPv6 has the identical fragility against a literal string-equality rate-limit key.
+
+**Fix:** new `lib/security/client-ip.ts` (`getClientIp` + `normalizeIp`) collapses `::1` → `127.0.0.1` and unwraps IPv4-mapped IPv6 (`::ffff:x.x.x.x`) before the string is ever used as a rate-limit key. Wired into both login routes, replacing their inline extraction.
+
+**Verification:**
+```
+$ npx playwright test tests/e2e/candidate-auth.spec.ts --reporter=list
+Running 6 tests using 6 workers
+6 passed (22.6s)
+```
+All 6 browser projects pass together — the exact scenario (parallel, all engines) that originally failed.
+
+<details><summary>Original write-up (superseded, kept for the record — the off-by-one it describes does not exist)</summary>
+
+### F12 (original) — P1 — Candidate login lockout is off-by-one: blocks the 6th failed attempt, not the 5th
 **Gate:** 4-functional — `candidate-auth.spec.ts` "Valid signup, duplicate signup auto-redirect, and login lockout", **reproduces on chromium** (not browser flakiness)
 **Evidence:** test submits 5 consecutive wrong passwords and expects the 5th response to say "Too many failed login attempts." Actual 5th response: `"Invalid phone number or password."` (200/normal invalid-credentials path).
 **Root cause, confirmed by reading `lib/auth/candidate-password.ts` `loginCandidate()`:** the lockout check (`if (failures.length >= MAX_FAILED_ATTEMPTS)`) runs against failures **already logged from previous requests**, then the current attempt is logged *after* that check. So on the Nth failed attempt, the check only sees N-1 prior failures — lockout doesn't actually engage until the (MAX_FAILED_ATTEMPTS + 1)th request, one request later than the stated 5-attempt policy. A 6th wrong password gets through with a normal error message instead of being blocked; the account is only actually rate-limited starting on attempt 6.
 **Fix approach:** decide whether "MAX_FAILED_ATTEMPTS" means "5 wrong attempts allowed, 6th blocked" (current behavior, in which case the test's expectation is wrong) or "block starting on the 5th wrong attempt" (test's expectation, in which case the check needs to count the in-flight attempt). Given the brief's P1 framing of rate-limit precision as a real control, and that the test's stated intent (§ security spec docstring: "brute-force rate-limiting") reads as "5 wrong attempts is the limit," the code should change, not the test: check should become `failures.length >= MAX_FAILED_ATTEMPTS - 1` so the current (Nth) attempt, once logged, would be the one that reaches the cap — i.e. block *before* running verifyPassword on an attempt that would become the 5th logged failure.
-**Not yet fixed** — flagged for decision below.
+
+*(This diagnosis was wrong — see the resolution above.)*
+
+</details>
 
 ### F13 — Environment limitation, not a product defect — Firefox headless crashes on this Windows sandbox
 **Gate:** 3-design-integrity, 4-functional (multiple Firefox-only failures)

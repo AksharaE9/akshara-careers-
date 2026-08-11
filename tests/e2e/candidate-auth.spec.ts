@@ -13,13 +13,37 @@ import { candidates, applications, applicationStageEvents, candidateSessions, ca
 import { eq, sql } from 'drizzle-orm'
 
 test.describe('Candidate Password-Based Auth & Security E2E', () => {
-  const testPhone = '9876543000'
-  const testPhoneE164 = '+919876543000'
-  const testEmail = 'pass.candidate@example.com'
+  // F12: playwright.config.ts runs fullyParallel across 6 browser projects.
+  // A hardcoded phone number here meant every project's run of this test
+  // shared the same candidate + candidate_login_attempts rows — one
+  // project's beforeAll cleanup could delete another project's in-flight
+  // login-attempt count mid-test, making the lockout assertion intermittently
+  // fail depending on scheduling, not on any bug in the lockout logic itself
+  // (traced through lib/auth/candidate-password.ts's counting arithmetic:
+  // it's correct). Derive a unique phone per worker so parallel projects
+  // never collide on the same rows.
+  let testPhone: string
+  let testPhoneE164: string
+  let testEmail: string
   const testName = 'Password Candidate'
   const testPassword = 'candidatepass123'
 
-  test.beforeAll(async () => {
+  test.beforeAll(async ({}, testInfo) => {
+    // 10-digit, starts 6-9 (isValidPhone requirement), last 3 digits derived
+    // from the worker index so concurrent projects/workers get distinct
+    // numbers. workerIndex is small (single digits in practice), padded to
+    // keep the number format stable.
+    const workerSuffix = String(700 + (testInfo.workerIndex % 100)).padStart(3, '0')
+    testPhone = `98765${workerSuffix}00`
+    testPhoneE164 = `+91${testPhone}`
+    // candidates.emailNormalised is UNIQUE — a shared email across parallel
+    // workers/projects hit that constraint the moment two projects tried to
+    // sign up concurrently, which surfaced as a signup->/dashboard redirect
+    // timeout (the signup silently failed on the duplicate-email check)
+    // rather than anything about the lockout logic this test is meant to
+    // exercise.
+    testEmail = `pass.candidate.w${testInfo.workerIndex}@example.com`
+
     const db = getDb()
 
     // Clean test candidate and login attempts

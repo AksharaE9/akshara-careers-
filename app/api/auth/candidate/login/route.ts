@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { loginCandidate } from '@/lib/auth/candidate-password'
 import { CANDIDATE_SESSION_COOKIE } from '@/lib/auth/candidate-session'
+import { getClientIp } from '@/lib/security/client-ip'
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '127.0.0.1'
+    const ip = getClientIp(request.headers)
     const result = await loginCandidate(phone, password, ip)
 
     if (!result.success) {

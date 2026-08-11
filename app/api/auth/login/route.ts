@@ -16,6 +16,7 @@ import { users, auditLog, securityEvents } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
 import { setSessionCookie, createSessionToken } from '@/lib/auth/session'
 import { verifyPassword } from '@/lib/auth/password'
+import { getClientIp } from '@/lib/security/client-ip'
 import crypto from 'crypto'
 
 export async function POST(request: NextRequest) {
@@ -23,7 +24,7 @@ export async function POST(request: NextRequest) {
     const { email, password } = await request.json()
 
     const GENERIC_ERROR = 'Email or password is incorrect.'
-    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '127.0.0.1'
+    const ip = getClientIp(request.headers)
     const ipHash = crypto.createHash('sha256').update(ip).digest('hex').substring(0, 16)
     const ua = request.headers.get('user-agent') || ''
     const uaHash = crypto.createHash('sha256').update(ua).digest('hex').substring(0, 16)
