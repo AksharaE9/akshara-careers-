@@ -7,7 +7,7 @@
 
 import { getDb } from '../client'
 import { courses } from '../schema'
-import { eq, and, sql, or } from 'drizzle-orm'
+import { sql, or } from 'drizzle-orm'
 
 export interface SearchCourseResult {
   id: string

@@ -4,13 +4,13 @@
  * Campus Drives performance intelligence endpoint (§14.10).
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getDb } from '@/lib/db/client'
 import { campusDrives, colleges, applications } from '@/lib/db/schema'
 import { eq, sql, desc } from 'drizzle-orm'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user) {

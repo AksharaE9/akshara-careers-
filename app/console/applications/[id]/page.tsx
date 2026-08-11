@@ -7,7 +7,6 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getApplicationById } from '@/lib/db/queries/applications'
-import { Card } from '@/components/ui/Card'
 import { ApplicationDetailClient } from './client'
 
 interface Params {
@@ -32,7 +31,7 @@ export default async function ApplicationDetailPage({ params }: Params) {
         <span>&larr;</span> Back to Candidate Pipeline
       </Link>
 
-      <ApplicationDetailClient initialApp={app as any} />
+      <ApplicationDetailClient initialApp={app} />
     </div>
   )
 }

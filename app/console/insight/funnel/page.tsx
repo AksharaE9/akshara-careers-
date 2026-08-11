@@ -51,24 +51,28 @@ const initialFunnelData = {
 }
 
 export default function FunnelAnalyticsPage() {
-  const [data, setData] = useState<any>(initialFunnelData)
-  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState<typeof initialFunnelData>(initialFunnelData)
   const [connectionFilter, setConnectionFilter] = useState('all')
 
-  const fetchFunnel = async (conn = connectionFilter) => {
-    try {
-      const res = await fetch(`/api/console/funnel?connection=${conn}`)
-      if (res.ok) {
-        const json = await res.json()
-        setData(json)
-      }
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
+  // F7: fetching inline inside the effect, guarded by `ignore`, rather than
+  // calling a separately-declared fetchFunnel() — same pattern applied
+  // throughout this campaign's F7 pass (see app/console/audit/page.tsx).
   useEffect(() => {
-    fetchFunnel(connectionFilter)
+    let ignore = false
+    ;(async () => {
+      try {
+        const res = await fetch(`/api/console/funnel?connection=${connectionFilter}`)
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) setData(json)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [connectionFilter])
 
   return (
@@ -100,7 +104,7 @@ export default function FunnelAnalyticsPage() {
         </div>
       </div>
 
-      {loading || !data ? (
+      {!data ? (
         <div className="animate-pulse space-y-4">
           <div className="h-64 bg-white border border-(--color-ink-900)/10 rounded-xl" />
           <div className="h-48 bg-white border border-(--color-ink-900)/10 rounded-xl" />
@@ -117,7 +121,7 @@ export default function FunnelAnalyticsPage() {
             </p>
 
             <div className="space-y-3">
-              {data.funnelSteps.map((step: any, idx: number) => {
+              {data.funnelSteps.map((step, idx) => {
                 const widthPct = parseFloat(step.pct)
                 return (
                   <div key={step.name} className="space-y-1">
@@ -165,7 +169,7 @@ export default function FunnelAnalyticsPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-(--color-ink-900)/5">
-                  {data.fieldDropoffs.map((f: any) => (
+                  {data.fieldDropoffs.map((f) => (
                     <tr key={f.field} className="hover:bg-(--color-chalk)">
                       <td className="py-3 font-mono font-medium text-(--color-ink-900)">{f.field}</td>
                       <td className="py-3 font-mono tabular-nums">{f.focused}</td>
@@ -192,7 +196,7 @@ export default function FunnelAnalyticsPage() {
                 Most frequent blocker messages shown to candidates
               </p>
               <div className="space-y-2">
-                {data.errorLeaderboard.map((err: any, i: number) => (
+                {data.errorLeaderboard.map((err, i) => (
                   <div key={i} className="p-2.5 rounded-lg bg-(--color-chalk) border border-(--color-ink-900)/5 flex items-start justify-between text-(--font-size-step--1)">
                     <div>
                       <span className="font-mono text-(--font-size-step--2) text-(--color-marigold) font-semibold uppercase">{err.field}</span>
@@ -226,7 +230,7 @@ export default function FunnelAnalyticsPage() {
               </div>
               <div className="space-y-1.5 text-(--font-size-step--2)">
                 <span className="font-semibold text-(--color-graphite) uppercase font-mono">Failure Breakdown</span>
-                {data.resumeHealth.failureBreakdown.map((f: any, idx: number) => (
+                {data.resumeHealth.failureBreakdown.map((f, idx) => (
                   <div key={idx} className="flex justify-between py-1 border-b border-(--color-ink-900)/5 font-mono">
                     <span className="text-(--color-ink-900)">{f.reason}</span>
                     <span className="text-(--color-kumkum) font-bold">{f.count} incidents</span>

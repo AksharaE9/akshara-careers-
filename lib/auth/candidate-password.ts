@@ -8,10 +8,9 @@
 
 import { getDb } from '@/lib/db/client'
 import { candidates, candidateLoginAttempts } from '@/lib/db/schema'
-import { eq, and, gt, desc, sql } from 'drizzle-orm'
+import { eq, and, gt, desc } from 'drizzle-orm'
 import { hashPassword, verifyPassword } from '@/lib/auth/password'
 import { createCandidateSession } from '@/lib/auth/candidate-session'
-import crypto from 'crypto'
 
 const LOCKOUT_WINDOW_MINUTES = 15
 const MAX_FAILED_ATTEMPTS = 5

@@ -46,7 +46,7 @@ export async function createCandidateSession(candidateId: string): Promise<strin
       path: '/',
       expires: expiresAt,
     })
-  } catch (err) {
+  } catch {
     // Silence error outside request context (e.g. scripts/CLI)
   }
 

@@ -6,9 +6,6 @@
  */
 
 import { cookies } from 'next/headers'
-import { getDb } from '@/lib/db/client'
-import { users } from '@/lib/db/schema'
-import { eq } from 'drizzle-orm'
 
 export interface SessionUser {
   id: string

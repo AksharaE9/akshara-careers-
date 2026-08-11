@@ -4,13 +4,13 @@
  * System Health & Live Probe diagnostics endpoint (§14.14).
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
 import { getDb } from '@/lib/db/client'
 import { sql } from 'drizzle-orm'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user || !can(user, 'view_system')) {

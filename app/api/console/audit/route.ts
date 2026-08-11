@@ -4,14 +4,14 @@
  * Audit trail query endpoint (§14.17).
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
 import { getDb } from '@/lib/db/client'
 import { auditLog, users } from '@/lib/db/schema'
 import { desc, eq } from 'drizzle-orm'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user || !can(user, 'view_audit')) {
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
       .limit(50)
 
     return NextResponse.json({ logs })
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to query audit log' }, { status: 500 })
   }
 }

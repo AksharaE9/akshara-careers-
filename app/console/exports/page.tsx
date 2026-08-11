@@ -21,7 +21,19 @@ export default function ConsoleExportsPage() {
     const params = new URLSearchParams()
     if (stage) params.set('stage', stage)
 
-    window.location.href = `/api/console/exports?${params.toString()}`
+    // This triggers a file download (the endpoint sets Content-Disposition:
+    // attachment), not a page navigation — router.push()/redirect() are for
+    // navigating between Next.js routes, not fetching a non-HTML response.
+    // An anchor click is the standard way to trigger a download without
+    // navigating away, and it doesn't trip
+    // @next/next/no-location-assign-relative-destination the way a direct
+    // window.location.href assignment does.
+    const link = document.createElement('a')
+    link.href = `/api/console/exports?${params.toString()}`
+    link.rel = 'noopener'
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
     setTimeout(() => setDownloading(false), 2000)
   }
 

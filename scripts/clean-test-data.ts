@@ -21,7 +21,6 @@ import {
   candidateSessions,
   applicationStageEvents,
 } from '../lib/db/schema'
-import { sql } from 'drizzle-orm'
 
 async function cleanTestData() {
   console.log('\n🧹 Cleaning test data from database...')

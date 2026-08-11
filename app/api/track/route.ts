@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     }
 
     return new NextResponse(null, { status: 204 })
-  } catch (err) {
+  } catch {
     // Return 204 to never break client forms
     return new NextResponse(null, { status: 204 })
   }

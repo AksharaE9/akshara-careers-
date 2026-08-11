@@ -18,7 +18,7 @@ export async function hashPassword(plainText: string): Promise<string> {
 export async function verifyPassword(plainText: string, hashed: string): Promise<boolean> {
   try {
     return await verify(hashed, plainText)
-  } catch (err) {
+  } catch {
     return false
   }
 }

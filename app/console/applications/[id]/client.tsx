@@ -7,10 +7,15 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Textarea } from '@/components/ui/Textarea'
+import type { getApplicationById } from '@/lib/db/queries/applications'
+
+type ApplicationDetail = NonNullable<Awaited<ReturnType<typeof getApplicationById>>>
+type ApplicationNote = ApplicationDetail['notes'][number]
+
+type Stage = ApplicationDetail['stage']
 
 const STAGES = [
   { id: 'received', label: 'Received' },
@@ -25,16 +30,16 @@ const STAGES = [
   { id: 'duplicate', label: 'Duplicate' },
 ] as const
 
-export function ApplicationDetailClient({ initialApp }: { initialApp: any }) {
-  const [app, setApp] = useState(initialApp)
+export function ApplicationDetailClient({ initialApp }: { initialApp: ApplicationDetail }) {
+  const [app] = useState(initialApp)
   const [stage, setStage] = useState(initialApp.stage)
   const [stageLoading, setStageLoading] = useState(false)
   const [noteBody, setNoteBody] = useState('')
   const [noteLoading, setNoteLoading] = useState(false)
-  const [notes, setNotes] = useState<any[]>(initialApp.notes || [])
+  const [notes, setNotes] = useState<ApplicationNote[]>(initialApp.notes || [])
   const [copiedToken, setCopiedToken] = useState(false)
 
-  const handleStageChange = async (newStage: string) => {
+  const handleStageChange = async (newStage: Stage) => {
     setStageLoading(true)
     try {
       const res = await fetch(`/api/console/applications/${app.id}/stage`, {
@@ -126,7 +131,7 @@ export function ApplicationDetailClient({ initialApp }: { initialApp: any }) {
           <select
             value={stage}
             disabled={stageLoading}
-            onChange={(e) => handleStageChange(e.target.value)}
+            onChange={(e) => handleStageChange(e.target.value as Stage)}
             className="text-(--font-size-step-0) font-bold bg-(--color-chalk) border-2 border-(--color-marigold) rounded-(--radius-sm) px-3 py-1.5 focus:outline-none"
           >
             {STAGES.map((s) => (

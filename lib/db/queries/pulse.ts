@@ -7,8 +7,8 @@
  */
 
 import { getDb } from '@/lib/db/client'
-import { applications, jobs, campusDrives, colleges, candidates, users, securityEvents, auditLog } from '@/lib/db/schema'
-import { eq, sql, desc, and } from 'drizzle-orm'
+import { applications, jobs, campusDrives, colleges, candidates } from '@/lib/db/schema'
+import { eq, sql, desc } from 'drizzle-orm'
 import { SessionUser } from '@/lib/auth/session'
 
 export async function getPulseData(currentUser: SessionUser) {

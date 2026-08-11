@@ -8,10 +8,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
 import { getDb } from '@/lib/db/client'
-import { contentBlocks, auditLog } from '@/lib/db/schema'
-import { eq } from 'drizzle-orm'
+import { auditLog } from '@/lib/db/schema'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user || !can(user, 'edit_content')) {
@@ -40,7 +39,7 @@ export async function GET(request: NextRequest) {
     ]
 
     return NextResponse.json({ blocks: defaultBlocks })
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to query content blocks' }, { status: 500 })
   }
 }
@@ -63,7 +62,7 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ success: true, message: 'Content block updated successfully.' })
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update content' }, { status: 500 })
   }
 }

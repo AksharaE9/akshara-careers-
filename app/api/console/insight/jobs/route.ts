@@ -4,13 +4,13 @@
  * Jobs Performance analytics endpoint (§14.9).
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getDb } from '@/lib/db/client'
 import { jobs, applications } from '@/lib/db/schema'
 import { eq, sql } from 'drizzle-orm'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user) {

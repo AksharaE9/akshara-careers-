@@ -6,8 +6,8 @@
  */
 
 import { getDb } from '../client'
-import { candidates, applications, applicationStageEvents } from '../schema'
-import { eq, or, sql, desc } from 'drizzle-orm'
+import { candidates, applications } from '../schema'
+import { eq, or, desc } from 'drizzle-orm'
 import { hashPassword } from '@/lib/auth/password'
 import crypto from 'crypto'
 

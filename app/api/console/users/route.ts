@@ -9,10 +9,10 @@ import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
 import { getDb } from '@/lib/db/client'
 import { users, auditLog } from '@/lib/db/schema'
-import { eq, desc } from 'drizzle-orm'
+import { desc } from 'drizzle-orm'
 import { hashPassword } from '@/lib/auth/password'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user || !can(user, 'manage_users')) {
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
       .orderBy(desc(users.lastLoginAt))
 
     return NextResponse.json({ users: allUsers })
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to query users' }, { status: 500 })
   }
 }
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ success: true, user: created })
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to create user' }, { status: 500 })
   }
 }

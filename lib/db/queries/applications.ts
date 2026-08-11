@@ -20,6 +20,8 @@ import {
 } from '@/lib/db/schema'
 import { eq, and, desc, sql, or, ilike, SQL } from 'drizzle-orm'
 
+export type ApplicationStage = NonNullable<typeof applications.$inferSelect.stage>
+
 export interface ApplicationFilterOptions {
   stage?: string | undefined
   jobId?: string | undefined
@@ -38,16 +40,7 @@ export interface ApplicationFilterOptions {
   unpaginated?: boolean | undefined
 }
 
-export interface PaginatedApplicationsResult {
-  applications: any[]
-  totalCount: number
-  page: number
-  pageSize: number
-  totalPages: number
-  hasMore: boolean
-}
-
-export async function getApplicationsList(filters: ApplicationFilterOptions = {}): Promise<PaginatedApplicationsResult> {
+export async function getApplicationsList(filters: ApplicationFilterOptions = {}) {
   const db = getDb()
 
   // F8: export mode gets a much higher ceiling (10,000, not the UI's 200)
@@ -64,7 +57,7 @@ export async function getApplicationsList(filters: ApplicationFilterOptions = {}
   const conditions: SQL[] = []
 
   if (filters.stage && filters.stage !== 'all') {
-    conditions.push(eq(applications.stage, filters.stage as any))
+    conditions.push(eq(applications.stage, filters.stage as ApplicationStage))
   }
 
   if (filters.jobId) {
@@ -290,14 +283,22 @@ export async function updateApplicationStage(
     'duplicate',
   ] as const
 
-  if (!validStages.includes(newStage as any)) {
+  // newStage arrives as an untrusted string from the request body (see
+  // app/api/console/applications/[id]/stage/route.ts) — this is the real
+  // runtime validation gate, not just a type-level nicety. A proper type
+  // guard narrows newStage to ApplicationStage for both this check and the
+  // .set() below, instead of casting past the check with `as any` twice.
+  const isValidStage = (s: string): s is ApplicationStage =>
+    (validStages as readonly string[]).includes(s)
+
+  if (!isValidStage(newStage)) {
     throw new Error(`Invalid stage: ${newStage}`)
   }
 
   await db
     .update(applications)
     .set({
-      stage: newStage as any,
+      stage: newStage,
       updatedAt: new Date(),
     })
     .where(eq(applications.id, applicationId))

@@ -12,7 +12,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Card } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
 import { Textarea } from '@/components/ui/Textarea'
@@ -27,8 +26,6 @@ import {
   personalDetailsSchema,
   academicStatusSchemaForForm as academicStatusSchema,
   resumeReviewSchema,
-  type PersonalDetailsInput,
-  type AcademicStatusInput,
 } from '@/lib/validation/application'
 
 interface JobApplyFormProps {
@@ -115,7 +112,7 @@ export function JobApplyForm({ job, driveCode, source }: JobApplyFormProps) {
       if (data.statusToken) {
         router.push(`/status/${data.statusToken}`)
       }
-    } catch (err) {
+    } catch {
       setLookupError('Network error while looking up application.')
     } finally {
       setIsLookingUp(false)

@@ -92,8 +92,8 @@ export async function POST(request: NextRequest) {
     })
 
     const response = await s3Client.send(command)
-    const streamToBuffer = async (stream: any): Promise<Buffer> => {
-      const chunks: any[] = []
+    const streamToBuffer = async (stream: AsyncIterable<Uint8Array>): Promise<Buffer> => {
+      const chunks: Uint8Array[] = []
       for await (const chunk of stream) {
         chunks.push(chunk)
       }
@@ -104,8 +104,13 @@ export async function POST(request: NextRequest) {
       throw new Error('Empty response body returned from storage')
     }
 
-    // Read the stream
-    const buffer = await streamToBuffer(response.Body)
+    // Read the stream. @aws-sdk/client-s3 types response.Body as a union
+    // covering both browser (ReadableStream) and Node (Readable) runtimes;
+    // TS can't see that the Node build always implements async iteration,
+    // so this narrows to what we actually get at runtime here (a Next.js
+    // API route always runs on Node), rather than typing the parameter
+    // itself as `any`.
+    const buffer = await streamToBuffer(response.Body as unknown as AsyncIterable<Uint8Array>)
     const mimeType = sniffMimeType(buffer)
 
     if (!mimeType) {

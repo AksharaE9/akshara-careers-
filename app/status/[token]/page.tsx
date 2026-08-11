@@ -6,7 +6,6 @@
  */
 
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Card } from '@/components/ui/Card'
@@ -99,7 +98,6 @@ export default async function CandidateStatusPage({ params }: StatusPageProps) {
             {STAGES_TIMELINE.map((s, i) => {
               const isPast = i < activeIdx
               const isCurrent = i === activeIdx
-              const isFuture = i > activeIdx
 
               return (
                 <div key={s.id} className="flex gap-(--spacing-s4) items-start">

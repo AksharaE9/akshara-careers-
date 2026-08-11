@@ -4,10 +4,10 @@
  * Traffic, Attribution and Real-User Core Web Vitals endpoint (§14.12).
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user) {

@@ -9,8 +9,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getDb } from '@/lib/db/client'
-import { applications, candidates, colleges, jobs } from '@/lib/db/schema'
-import { desc, eq, sql } from 'drizzle-orm'
+import { applications } from '@/lib/db/schema'
+import { sql } from 'drizzle-orm'
 
 export async function GET(request: NextRequest) {
   try {

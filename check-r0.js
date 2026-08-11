@@ -21,6 +21,7 @@ async function run() {
   console.log('Body preview:', bodyText.slice(0, 300))
 
   const links = await page.$$eval('link[rel="stylesheet"]', els => els.map(e => e.href))
+  console.log('Stylesheet links:', links)
   const h1Count = await page.locator('h1').count()
   console.log('H1 count:', h1Count)
 

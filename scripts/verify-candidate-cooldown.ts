@@ -3,7 +3,7 @@ dotenv.config({ path: '.env.local' })
 
 import { getDb } from '../lib/db/client'
 import { candidates, applications, applicationStageEvents, jobs } from '../lib/db/schema'
-import { checkApplicationEligibility, upsertCandidate } from '../lib/db/queries/candidates'
+import { checkApplicationEligibility } from '../lib/db/queries/candidates'
 import { updateApplicationStage } from '../lib/db/queries/applications'
 import { signupCandidate } from '../lib/auth/candidate-password'
 import { eq, sql } from 'drizzle-orm'

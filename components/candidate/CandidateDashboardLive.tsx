@@ -11,7 +11,9 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { CandidateLogoutButton } from './CandidateLogoutButton'
-import { SmoothLoader } from '@/components/ui/SmoothLoader'
+import type { getCandidateApplications } from '@/lib/db/queries/applications'
+
+type CandidateApplication = Awaited<ReturnType<typeof getCandidateApplications>>[number]
 
 const STAGE_LABELS: Record<string, { label: string; color: string; desc: string }> = {
   received: {
@@ -73,7 +75,7 @@ interface LiveDashboardProps {
     phoneE164: string
     emailNormalised: string
   }
-  initialApplications: any[]
+  initialApplications: CandidateApplication[]
   initialEligibility: {
     allowed: boolean
     reason?: string
@@ -88,10 +90,9 @@ export function CandidateDashboardLive({
   initialApplications,
   initialEligibility,
 }: LiveDashboardProps) {
-  const [apps, setApps] = useState<any[]>(initialApplications)
+  const [apps, setApps] = useState<CandidateApplication[]>(initialApplications)
   const [eligibility, setEligibility] = useState(initialEligibility)
   const [lastSyncTime, setLastSyncTime] = useState<string>('Just now')
-  const [isSyncing, setIsSyncing] = useState(false)
   const [hasUpdated, setHasUpdated] = useState(false)
   const lastEtagRef = useRef<string | null>(null)
 
@@ -140,7 +141,7 @@ export function CandidateDashboardLive({
             setLastSyncTime(new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
           }
         }
-      } catch (err) {
+      } catch {
         // Silent recovery on network glitches
       }
     }
@@ -284,7 +285,7 @@ export function CandidateDashboardLive({
 
               <div className="relative pl-6 sm:pl-8 border-l border-(--color-ink-600) flex flex-col gap-6 ml-2 my-2">
                 {latestApp.timeline && latestApp.timeline.length > 0 ? (
-                  latestApp.timeline.map((evt: any, idx: number) => {
+                  latestApp.timeline.map((evt, idx) => {
                     const isLatest = idx === 0
                     const cfg = STAGE_LABELS[evt.stage] || { label: evt.stage, desc: '' }
                     return (

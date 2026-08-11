@@ -36,7 +36,7 @@ interface QueuedEvent {
   name: AnalyticsEventName
   sessionId: string
   path: string
-  props: Record<string, any>
+  props: Record<string, unknown>
   jobId?: string | undefined
   driveId?: string | undefined
   referrer?: string | undefined
@@ -44,8 +44,19 @@ interface QueuedEvent {
   ts: string
 }
 
+// navigator.doNotTrack is already declared (deprecated but typed) in
+// lib.dom.d.ts. globalPrivacyControl and window.doNotTrack are real,
+// widely-implemented signals with no lib types at all — narrow, local
+// extensions instead of casting through `any`.
+interface NavigatorWithPrivacySignals extends Navigator {
+  globalPrivacyControl?: boolean
+}
+interface WindowWithDoNotTrack extends Window {
+  doNotTrack?: string | null
+}
+
 let eventQueue: QueuedEvent[] = []
-let flushTimer: any = null
+let flushTimer: ReturnType<typeof setTimeout> | null = null
 
 function getSessionId(): string {
   if (typeof window === 'undefined') return 'server'
@@ -88,7 +99,7 @@ function getUtmParams(): Record<string, string> {
 
 export function trackEvent(
   name: AnalyticsEventName,
-  props: Record<string, any> = {},
+  props: Record<string, unknown> = {},
   context?: { jobId?: string; driveId?: string }
 ) {
   if (typeof window === 'undefined') return
@@ -96,9 +107,9 @@ export function trackEvent(
   try {
     // Respect Do Not Track / Global Privacy Control
     const isDNT =
-      (navigator as any).doNotTrack === '1' ||
-      (window as any).doNotTrack === '1' ||
-      (navigator as any).globalPrivacyControl === true
+      navigator.doNotTrack === '1' ||
+      (window as WindowWithDoNotTrack).doNotTrack === '1' ||
+      (navigator as NavigatorWithPrivacySignals).globalPrivacyControl === true
 
     if (isDNT && name !== 'page_view') {
       return
@@ -128,7 +139,7 @@ export function trackEvent(
     } else if (!flushTimer) {
       flushTimer = setTimeout(flushAnalytics, 5000)
     }
-  } catch (err) {
+  } catch {
     // Fail completely silently
   }
 }

@@ -5,13 +5,13 @@
  * Groups by unique candidate human (fixes D7).
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getDb } from '@/lib/db/client'
-import { candidates, applications, colleges, jobs } from '@/lib/db/schema'
+import { candidates, applications } from '@/lib/db/schema'
 import { desc, sql, eq } from 'drizzle-orm'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user) {

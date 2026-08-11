@@ -4,11 +4,11 @@
  * Single-request Pulse dashboard data endpoint (§14.5 & §14.24).
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getPulseData } from '@/lib/db/queries/pulse'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user) {

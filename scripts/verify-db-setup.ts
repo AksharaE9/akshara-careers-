@@ -35,7 +35,7 @@ async function check() {
   const tables = await db.execute(sql`
     SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';
   `)
-  console.log('Tables in DB:', tables.rows.map((r: any) => r.table_name))
+  console.log('Tables in DB:', tables.rows.map((r) => (r as { table_name: string }).table_name))
 }
 
 check().catch(console.error)

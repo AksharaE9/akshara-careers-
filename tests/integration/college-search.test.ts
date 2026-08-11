@@ -16,7 +16,7 @@ import { describe, it, expect, beforeAll } from 'vitest'
 import { getDb } from '@/lib/db/client'
 import { colleges } from '@/lib/db/schema'
 import { searchColleges } from '@/lib/db/queries/colleges'
-import { eq, sql } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 
 describe('College search pg_trgm integration tests', () => {
   const dbUrl = process.env.NEON_DATABASE_URL

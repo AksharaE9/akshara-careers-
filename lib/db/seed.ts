@@ -12,7 +12,7 @@ try {
 } catch {}
 
 import { getDb } from './client'
-import { colleges, courses, jobs, users, campusDrives, candidates, applications, applicationNotes } from './schema'
+import { colleges, courses, jobs, users, campusDrives } from './schema'
 import { eq, and, sql } from 'drizzle-orm'
 
 import { hashPassword } from '../auth/password'

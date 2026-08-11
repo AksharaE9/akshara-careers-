@@ -15,11 +15,11 @@ import { candidates, applications, applicationStageEvents, jobs, candidateSessio
 import { eq, sql } from 'drizzle-orm'
 import { randomUUID } from 'crypto'
 import crypto from 'crypto'
-
-function createSessionToken(user: any): string {
-  const payload = { ...user, exp: Date.now() + 12 * 60 * 60 * 1000 }
-  return Buffer.from(JSON.stringify(payload)).toString('base64url')
-}
+// F7: this test duplicated createSessionToken's exact implementation with
+// `user: any` — using the real one both removes the any and means the test
+// exercises the actual token format, not a parallel reimplementation that
+// could quietly drift from it.
+import { createSessionToken } from '@/lib/auth/session'
 
 test.describe('Real-Time Cross-Dashboard Sync Consistency (§3 & §8)', () => {
   const syncPhone = '+919876543211'

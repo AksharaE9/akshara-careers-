@@ -48,12 +48,6 @@ async function runBenchmark(totalRequests = 1000, concurrency = 100) {
   console.log(`⚡ Total Requests: ${totalRequests} | Concurrency: ${concurrency}`)
   console.log(`======================================================\n`)
 
-  const endpoints = [
-    `${BASE_URL}/careers`,
-    `${BASE_URL}/api/health`,
-    `${BASE_URL}/api/applications/presign`,
-  ]
-
   const results: LatencySample[] = []
   let completed = 0
 

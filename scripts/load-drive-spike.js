@@ -126,8 +126,10 @@ function checkForDbError(body) {
 }
 
 // ─── VU main function ──────────────────────────────────────────────────────────
+// k6 requires a default export as the VU entry point; naming it satisfies
+// import/no-anonymous-default-export without changing k6's behavior.
 
-export default function () {
+export default function driveSpikeVirtualUser() {
   // Distribute traffic across representative user flows
 
   // 40% — Public careers page (highest traffic)

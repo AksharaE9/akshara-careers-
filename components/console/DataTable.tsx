@@ -39,6 +39,18 @@ interface DataTableProps<T> {
   keyField?: keyof T
 }
 
+// F7: DataTable is a fully generic table consuming 6 different row shapes
+// (AuditLogRow, CandidateRow, DrivePerformanceRow, ...), each declared via
+// `interface`, none with an index signature. `Record<string, unknown>` and
+// `object` both fail TS's assignability check for interfaces without an
+// index signature (a real TS structural-typing gap, not a bug in the row
+// types) — reproduced and confirmed against all 6 consumers before settling
+// here. Narrowing every consumer's row type to satisfy a stricter bound
+// would be a six-file data-model change to fix a P2 lint rule; not doing
+// that here. This is the one deliberately-kept `any` in this campaign's F7
+// pass, and it's bounded to a single generic parameter, not a value leaking
+// `any` into calling code.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function DataTable<T extends Record<string, any>>({
   columns,
   data,

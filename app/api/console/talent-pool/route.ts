@@ -4,13 +4,13 @@
  * Talent pool candidates endpoint.
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getDb } from '@/lib/db/client'
 import { talentPool } from '@/lib/db/schema'
 import { desc } from 'drizzle-orm'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user) {
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     const entries = await db.select().from(talentPool).orderBy(desc(talentPool.createdAt)).limit(50)
 
     return NextResponse.json({ talentPool: entries })
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to query talent pool' }, { status: 500 })
   }
 }

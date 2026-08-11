@@ -59,25 +59,24 @@ async function apiPost(
   })
 }
 
-async function apiPatch(
-  request: APIRequestContext,
-  path: string,
-  cookie: string,
-  body: Record<string, unknown> = {},
-) {
-  return request.patch(`${BASE}${path}`, {
-    headers: cookie ? { cookie: `akshara_console_session=${cookie}` } : {},
-    data: body,
-  })
-}
-
 // ─── fixtures ────────────────────────────────────────────────────────────────
+
+// Matches app/api/console/qa-fixtures/route.ts's response shape — only the
+// fields this suite actually reads.
+interface QaFixturesResponse {
+  users: {
+    recruiter1?: { id: string; email: string } | null
+  }
+  applications: {
+    any?: { id: string; statusToken: string; candidateId: string } | null
+  }
+}
 
 interface Fixtures {
   superAdminCookie: string
   adminCookie: string
   recruiterCookie: string
-  fixtures: Record<string, any>
+  fixtures: QaFixturesResponse
 }
 
 async function loadFixtures(request: APIRequestContext): Promise<Fixtures> {
@@ -216,7 +215,7 @@ test.describe('Authorization Matrix — Security Sweep (§17.4.1)', () => {
         expect(text).not.toMatch(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/)
         // Must not expose internal Postgres UUIDs in the HTML
         // (status tokens are separate from UUIDs)
-        expect(text).not.toContain(fixtures.applications.any.candidateId ?? 'NO_CANDIDATE_ID')
+        expect(text).not.toContain(fixtures.applications?.any?.candidateId ?? 'NO_CANDIDATE_ID')
       }
     })
 

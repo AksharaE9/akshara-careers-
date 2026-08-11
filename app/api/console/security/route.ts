@@ -4,14 +4,14 @@
  * Security Observability & 8-Layer Defense Monitoring endpoint (§14.13).
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
 import { getDb } from '@/lib/db/client'
-import { securityEvents, users, consoleSessions } from '@/lib/db/schema'
-import { desc, sql, eq } from 'drizzle-orm'
+import { securityEvents } from '@/lib/db/schema'
+import { desc } from 'drizzle-orm'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getCurrentUser()
     if (!user || !can(user, 'view_security')) {

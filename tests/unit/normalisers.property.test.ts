@@ -34,11 +34,9 @@ describe('normalisePhone — property tests', () => {
     fc.assert(
       fc.property(
         fc.integer({ min: 6, max: 9 }).chain((first) =>
-          fc.integer({ min: 0, max: 9 }).chain((d2) =>
-            fc.tuple(
-              fc.constant(first),
-              fc.array(fc.integer({ min: 0, max: 9 }), { minLength: 9, maxLength: 9 }),
-            )
+          fc.tuple(
+            fc.constant(first),
+            fc.array(fc.integer({ min: 0, max: 9 }), { minLength: 9, maxLength: 9 }),
           )
         ),
         ([first, rest]) => {

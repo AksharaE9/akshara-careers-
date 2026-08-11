@@ -41,12 +41,18 @@ async function login(request: APIRequestContext, email: string, password: string
   return match?.[1] ?? ''
 }
 
+interface PresignBody {
+  key?: string
+  filename?: string
+  error?: string
+}
+
 async function presign(
   request: APIRequestContext,
   filename: string,
   contentType: string,
   fileSize?: number,
-): Promise<{ status: number; body: any }> {
+): Promise<{ status: number; body: PresignBody }> {
   const res = await request.post(`${BASE}/api/applications/presign`, {
     data: { filename, contentType, fileSize },
   })
@@ -54,11 +60,8 @@ async function presign(
   return { status: res.status(), body }
 }
 
-// Generate a minimal PDF header for polyglot tests
-const MINIMAL_PDF_HEADER = '%PDF-1.4\n%âãÏÓ\n'
 const EICAR = 'X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'
 const SVG_XSS = '<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script><rect/></svg>'
-const PHP_WEBSHELL = '<?php system($_GET["cmd"]); ?>'
 
 // ─── tests ───────────────────────────────────────────────────────────────────
 
