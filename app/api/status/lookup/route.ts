@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getDb } from '@/lib/db/client'
 import { applications, candidates } from '@/lib/db/schema'
 import { eq, or, sql } from 'drizzle-orm'
-import { normaliseEmail } from '@/lib/validation/normalisers'
+import { normaliseEmail } from '@/lib/validation/shared'
 
 export async function POST(request: NextRequest) {
   try {
