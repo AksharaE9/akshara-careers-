@@ -28,24 +28,28 @@ export default function CandidatesDirectoryPage() {
   const [totalCount, setTotalCount] = useState(0)
   const [loading, setLoading] = useState(true)
 
-  const fetchCandidates = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/console/candidates')
-      if (res.ok) {
-        const json = await res.json()
-        setCandidates(json.candidates || [])
-        setTotalCount(json.totalCount || 0)
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    fetchCandidates()
+    let ignore = false
+    ;(async () => {
+      setLoading(true)
+      try {
+        const res = await fetch('/api/console/candidates')
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) {
+            setCandidates(json.candidates || [])
+            setTotalCount(json.totalCount || 0)
+          }
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [])
 
   const columns: ColumnDef<CandidateRow>[] = [

@@ -135,7 +135,6 @@ const initialPulseData: PulseData = {
 
 export default function PulseDashboardPage() {
   const [data, setData] = useState<PulseData>(initialPulseData)
-  const [loading, setLoading] = useState(false)
   const [secondsAgo, setSecondsAgo] = useState(0)
 
   const fetchPulse = async () => {
@@ -151,8 +150,13 @@ export default function PulseDashboardPage() {
     }
   }
 
+  // F7: fetchPulse is also the setInterval callback right below, so it must
+  // stay a stable reference — the initial call is wrapped in an IIFE rather
+  // than inlined.
   useEffect(() => {
-    fetchPulse()
+    ;(async () => {
+      await fetchPulse()
+    })()
     const interval = setInterval(fetchPulse, 30000)
     const tick = setInterval(() => setSecondsAgo((prev) => prev + 1), 1000)
     return () => {

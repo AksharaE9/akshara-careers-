@@ -8,27 +8,42 @@
 
 import React, { useState, useEffect } from 'react'
 
+interface TrafficData {
+  summary: {
+    visitors: number
+    sessions: number
+    pageViews: number
+    bounceRate: string
+    medianSessionDuration: string
+  }
+  webVitals: { metric: string; p75: string; target: string }[]
+  devices: { mobile: string; desktop: string }
+  topPages: { path: string; views: number; share: string }[]
+}
+
 export default function TrafficAttributionPage() {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<TrafficData | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const fetchTraffic = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/console/insight/traffic')
-      if (res.ok) {
-        const json = await res.json()
-        setData(json)
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    fetchTraffic()
+    let ignore = false
+    ;(async () => {
+      setLoading(true)
+      try {
+        const res = await fetch('/api/console/insight/traffic')
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) setData(json)
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [])
 
   if (loading || !data) {
@@ -82,7 +97,7 @@ export default function TrafficAttributionPage() {
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {data.webVitals.map((wv: any) => (
+          {data.webVitals.map((wv) => (
             <div key={wv.metric} className="p-3.5 rounded-lg bg-(--color-chalk) border border-(--color-ink-900)/10">
               <span className="text-(--font-size-step--2) text-(--color-graphite) font-mono">{wv.metric}</span>
               <div className="text-(--font-size-step-2) font-mono font-bold text-(--color-leaf) my-1">{wv.p75}</div>
@@ -120,7 +135,7 @@ export default function TrafficAttributionPage() {
         <div className="bg-white border border-(--color-ink-900)/10 rounded-xl p-4 shadow-xs">
           <h3 className="text-(--font-size-step-0) font-bold text-(--color-ink-900) mb-3">Top Visited Routes</h3>
           <div className="space-y-2">
-            {data.topPages.map((p: any) => (
+            {data.topPages.map((p) => (
               <div key={p.path} className="flex justify-between text-(--font-size-step--1) font-mono py-1 border-b border-(--color-ink-900)/5">
                 <span className="truncate max-w-[280px] text-(--color-ink-900)">{p.path}</span>
                 <span className="text-(--color-graphite) tabular-nums font-bold">{p.views} ({p.share})</span>

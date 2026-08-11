@@ -18,26 +18,24 @@ interface ContentBlockItem {
 
 export default function ContentManagementPage() {
   const [blocks, setBlocks] = useState<ContentBlockItem[]>([])
-  const [loading, setLoading] = useState(true)
   const [savedSlug, setSavedSlug] = useState<string | null>(null)
 
-  const fetchBlocks = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/console/content')
-      if (res.ok) {
-        const json = await res.json()
-        setBlocks(json.blocks || [])
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    fetchBlocks()
+    let ignore = false
+    ;(async () => {
+      try {
+        const res = await fetch('/api/console/content')
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) setBlocks(json.blocks || [])
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [])
 
   const handleSave = async (slug: string, content: string) => {

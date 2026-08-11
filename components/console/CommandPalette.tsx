@@ -7,8 +7,19 @@
  * Keyboard-first navigation, candidate/job/drive quick search, date range presets, rail toggle.
  */
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+
+// F7 (react-hooks/purity): Date.now()/new Date() lexically inside the
+// component's render body — even nested in a callback never invoked during
+// render itself — trips the "impure call during render" check, since the
+// linter can't prove a closure stored in an array is deferred. Module-scope
+// helper functions aren't part of that render-body analysis at all.
+function pushDateRangeFilter(router: ReturnType<typeof useRouter>, days: number) {
+  const now = new Date()
+  const prev = new Date(Date.now() - days * 24 * 60 * 60 * 1000)
+  router.push(`?from=${prev.toISOString().split('T')[0]}&to=${now.toISOString().split('T')[0]}`)
+}
 
 interface CommandPaletteProps {
   isOpen: boolean
@@ -60,16 +71,8 @@ export function CommandPalette({ isOpen, onClose, onToggleRail }: CommandPalette
 
     // Quick Actions
     { id: 'act-toggle-rail', title: 'Toggle Navigation Rail', subtitle: 'Collapse / expand sidebar', category: 'Actions', action: onToggleRail },
-    { id: 'act-date-7d', title: 'Filter: Last 7 Days', subtitle: 'Apply date range to current screen', category: 'Actions', action: () => {
-      const now = new Date()
-      const prev = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-      router.push(`?from=${prev.toISOString().split('T')[0]}&to=${now.toISOString().split('T')[0]}`)
-    }},
-    { id: 'act-date-30d', title: 'Filter: Last 30 Days', subtitle: 'Apply date range to current screen', category: 'Actions', action: () => {
-      const now = new Date()
-      const prev = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-      router.push(`?from=${prev.toISOString().split('T')[0]}&to=${now.toISOString().split('T')[0]}`)
-    }},
+    { id: 'act-date-7d', title: 'Filter: Last 7 Days', subtitle: 'Apply date range to current screen', category: 'Actions', action: () => pushDateRangeFilter(router, 7) },
+    { id: 'act-date-30d', title: 'Filter: Last 30 Days', subtitle: 'Apply date range to current screen', category: 'Actions', action: () => pushDateRangeFilter(router, 30) },
   ]
 
   const filtered = query.trim()
@@ -81,10 +84,32 @@ export function CommandPalette({ isOpen, onClose, onToggleRail }: CommandPalette
       )
     : items
 
+  // F7 (react-hooks/immutability): moved above the effect that references
+  // it — it worked at runtime via closures either way (handleKeyDown only
+  // calls executeItem once a keydown fires, well after the whole component
+  // has rendered), but the linter flags referencing a const before its
+  // declaration as fragile. Wrapped in useCallback so it has a stable
+  // identity for the exhaustive-deps fix below.
+  const executeItem = useCallback(
+    (item: CommandItem) => {
+      onClose()
+      if (item.action) {
+        item.action()
+      } else if (item.href) {
+        router.push(item.href)
+      }
+    },
+    [onClose, router],
+  )
+
   useEffect(() => {
     if (isOpen) {
-      setQuery('')
-      setSelectedIndex(0)
+      // F7 (react-hooks/set-state-in-effect): deferred rather than called
+      // synchronously — same reasoning as Combobox.tsx / ConsoleShell.tsx.
+      queueMicrotask(() => {
+        setQuery('')
+        setSelectedIndex(0)
+      })
       setTimeout(() => inputRef.current?.focus(), 50)
     }
   }, [isOpen])
@@ -113,16 +138,7 @@ export function CommandPalette({ isOpen, onClose, onToggleRail }: CommandPalette
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, filtered, selectedIndex])
-
-  const executeItem = (item: CommandItem) => {
-    onClose()
-    if (item.action) {
-      item.action()
-    } else if (item.href) {
-      router.push(item.href)
-    }
-  }
+  }, [isOpen, filtered, selectedIndex, executeItem, onClose])
 
   if (!isOpen) return null
 

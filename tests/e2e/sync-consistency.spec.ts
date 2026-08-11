@@ -15,11 +15,23 @@ import { candidates, applications, applicationStageEvents, jobs, candidateSessio
 import { eq, sql } from 'drizzle-orm'
 import { randomUUID } from 'crypto'
 import crypto from 'crypto'
-// F7: this test duplicated createSessionToken's exact implementation with
-// `user: any` — using the real one both removes the any and means the test
-// exercises the actual token format, not a parallel reimplementation that
-// could quietly drift from it.
-import { createSessionToken } from '@/lib/auth/session'
+// F7 correction: an earlier version of this fix imported the real
+// createSessionToken from '@/lib/auth/session' to replace a locally
+// duplicated `user: any` version. That broke this test file outright —
+// lib/auth/session.ts has a top-level `import { cookies } from
+// 'next/headers'`, which only resolves inside Next's server runtime, not
+// in Playwright's plain-Node test process. Caught by running the full e2e
+// suite before committing, not just this one file in isolation — the exact
+// kind of regression an isolated lint/typecheck pass can't catch, since
+// the file typechecks fine and eslint has no opinion on module resolution
+// at runtime. `import type` (type-only, erased at compile time, no runtime
+// module load) is safe; the function body is still a local duplicate.
+import type { SessionUser } from '@/lib/auth/session'
+
+function createSessionToken(user: SessionUser): string {
+  const payload = { ...user, exp: Date.now() + 12 * 60 * 60 * 1000 }
+  return Buffer.from(JSON.stringify(payload)).toString('base64url')
+}
 
 test.describe('Real-Time Cross-Dashboard Sync Consistency (§3 & §8)', () => {
   const syncPhone = '+919876543211'

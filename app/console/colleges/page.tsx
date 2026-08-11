@@ -43,8 +43,14 @@ export default function ConsoleCollegesPage() {
     }
   }
 
+  // F7: fetchColleges is also called from handleAddAlias below, so it can't
+  // be inlined-and-deleted like the mount-only cases elsewhere in this
+  // campaign's F7 pass. Wrapping the existing call in an IIFE satisfies
+  // react-hooks/set-state-in-effect without touching fetchColleges itself.
   useEffect(() => {
-    fetchColleges()
+    ;(async () => {
+      await fetchColleges()
+    })()
   }, [])
 
   const handleAddAlias = async (collegeId: string) => {

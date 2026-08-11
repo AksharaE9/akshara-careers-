@@ -21,23 +21,25 @@ export default function TalentPoolPage() {
   const [entries, setEntries] = useState<TalentPoolRow[]>([])
   const [loading, setLoading] = useState(true)
 
-  const fetchTalent = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/console/talent-pool')
-      if (res.ok) {
-        const json = await res.json()
-        setEntries(json.talentPool || [])
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    fetchTalent()
+    let ignore = false
+    ;(async () => {
+      setLoading(true)
+      try {
+        const res = await fetch('/api/console/talent-pool')
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) setEntries(json.talentPool || [])
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [])
 
   const columns: ColumnDef<TalentPoolRow>[] = [

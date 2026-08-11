@@ -31,23 +31,25 @@ export default function DrivesPerformancePage() {
   const [drives, setDrives] = useState<DrivePerformanceRow[]>([])
   const [loading, setLoading] = useState(true)
 
-  const fetchDrives = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/console/insight/drives')
-      if (res.ok) {
-        const json = await res.json()
-        setDrives(json.drives || [])
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    fetchDrives()
+    let ignore = false
+    ;(async () => {
+      setLoading(true)
+      try {
+        const res = await fetch('/api/console/insight/drives')
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) setDrives(json.drives || [])
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [])
 
   const columns: ColumnDef<DrivePerformanceRow>[] = [

@@ -9,27 +9,31 @@
 
 import React, { useState, useEffect } from 'react'
 
-export default function SecurityObservabilityPage() {
-  const [data, setData] = useState<any>(null)
-  const [loading, setLoading] = useState(false)
+interface SecurityData {
+  layers?: Record<string, number>
+  turnstile?: { solveRate: string; challengeCount: number; failOpenCount: number }
+  activeSessionsCount?: number
+}
 
-  const fetchSecurity = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/console/security')
-      if (res.ok) {
-        const json = await res.json()
-        setData(json)
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
+export default function SecurityObservabilityPage() {
+  const [data, setData] = useState<SecurityData | null>(null)
 
   useEffect(() => {
-    fetchSecurity()
+    let ignore = false
+    ;(async () => {
+      try {
+        const res = await fetch('/api/console/security')
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) setData(json)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [])
 
   const defaultLayers = {

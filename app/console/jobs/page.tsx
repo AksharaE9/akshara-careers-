@@ -39,7 +39,7 @@ export default function ConsoleJobsPage() {
   const [slug, setSlug] = useState('')
   const [family, setFamily] = useState('Sales')
   const [summary, setSummary] = useState('')
-  const [locationCity, setLocationCity] = useState('Bengaluru')
+  const [locationCity] = useState('Bengaluru')
   const [salaryMin, setSalaryMin] = useState('300000')
   const [salaryMax, setSalaryMax] = useState('450000')
   const [creating, setCreating] = useState(false)
@@ -59,8 +59,11 @@ export default function ConsoleJobsPage() {
     }
   }
 
+  // F7: fetchJobs is also called from handleCreateJob below.
   useEffect(() => {
-    fetchJobs()
+    ;(async () => {
+      await fetchJobs()
+    })()
   }, [])
 
   const handleTitleChange = (val: string) => {
@@ -73,7 +76,7 @@ export default function ConsoleJobsPage() {
     setSlug(generatedSlug)
   }
 
-  const handleStatusChange = async (jobId: string, status: string) => {
+  const handleStatusChange = async (jobId: string, status: JobAdminItem['status']) => {
     try {
       const res = await fetch(`/api/console/jobs/${jobId}`, {
         method: 'PATCH',
@@ -82,7 +85,7 @@ export default function ConsoleJobsPage() {
       })
       if (res.ok) {
         setJobs((prev) =>
-          prev.map((j) => (j.id === jobId ? { ...j, status: status as any } : j))
+          prev.map((j) => (j.id === jobId ? { ...j, status } : j))
         )
       }
     } catch (err) {
@@ -188,7 +191,7 @@ export default function ConsoleJobsPage() {
                     <td className="py-3 px-4">
                       <select
                         value={j.status}
-                        onChange={(e) => handleStatusChange(j.id, e.target.value)}
+                        onChange={(e) => handleStatusChange(j.id, e.target.value as JobAdminItem['status'])}
                         className={`text-(--font-size-step--2) font-mono font-bold uppercase rounded px-2 py-1 border ${
                           j.status === 'open'
                             ? 'bg-emerald-500/10 text-emerald-800 border-emerald-300'

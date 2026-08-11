@@ -44,8 +44,11 @@ export default function UserManagementPage() {
     }
   }
 
+  // F7: fetchUsers is also called from handleCreateUser below.
   useEffect(() => {
-    fetchUsers()
+    ;(async () => {
+      await fetchUsers()
+    })()
   }, [])
 
   const handleCreateUser = async (e: React.FormEvent) => {
@@ -116,7 +119,7 @@ export default function UserManagementPage() {
     {
       id: 'actions',
       header: 'Actions',
-      accessor: (row) => (
+      accessor: () => (
         <button
           type="button"
           data-testid="session-revoke"

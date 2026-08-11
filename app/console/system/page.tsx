@@ -31,23 +31,24 @@ const initialSystemData = {
 }
 
 export default function SystemHealthPage() {
-  const [data, setData] = useState<any>(initialSystemData)
-  const [loading, setLoading] = useState(false)
-
-  const fetchHealth = async () => {
-    try {
-      const res = await fetch('/api/console/system')
-      if (res.ok) {
-        const json = await res.json()
-        setData(json)
-      }
-    } catch (err) {
-      console.error(err)
-    }
-  }
+  const [data, setData] = useState<typeof initialSystemData>(initialSystemData)
 
   useEffect(() => {
-    fetchHealth()
+    let ignore = false
+    ;(async () => {
+      try {
+        const res = await fetch('/api/console/system')
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) setData(json)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [])
 
   return (
@@ -65,7 +66,7 @@ export default function SystemHealthPage() {
 
       {/* Service Status Row (§14.14) */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-        {data.services.map((svc: any) => (
+        {data.services.map((svc) => (
           <div
             key={svc.name}
             data-testid={`system-service-${svc.name}`}
@@ -111,7 +112,7 @@ export default function SystemHealthPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-(--color-ink-900)/5">
-              {data.endpoints.map((ep: any) => (
+              {data.endpoints.map((ep) => (
                 <tr key={ep.path} className="hover:bg-(--color-chalk) font-mono">
                   <td className="py-3 font-semibold text-(--color-ink-900)">{ep.path}</td>
                   <td className="py-3">{ep.p50}</td>

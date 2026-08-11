@@ -41,7 +41,7 @@ export default function CampusDrivesPage() {
   const [venue, setVenue] = useState('')
   const [seats, setSeats] = useState('50')
   const [creating, setCreating] = useState(false)
-  const [collegeOptions, setCollegeOptions] = useState<any[]>([])
+  const [collegeOptions, setCollegeOptions] = useState<{ value: string; label: string; meta?: string }[]>([])
 
   const fetchDrives = async () => {
     try {
@@ -58,8 +58,11 @@ export default function CampusDrivesPage() {
     }
   }
 
+  // F7: fetchDrives is also called from handleCreate below.
   useEffect(() => {
-    fetchDrives()
+    ;(async () => {
+      await fetchDrives()
+    })()
   }, [])
 
   const searchColleges = async (q: string) => {

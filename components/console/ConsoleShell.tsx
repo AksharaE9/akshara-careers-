@@ -65,7 +65,9 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
       eventSource.onopen = () => setIsLiveConnected(true)
       eventSource.onerror = () => setIsLiveConnected(false)
     } catch {
-      setIsLiveConnected(false)
+      // F7: deferred rather than called synchronously in the effect body —
+      // same reasoning as Combobox.tsx's fix.
+      queueMicrotask(() => setIsLiveConnected(false))
     }
 
     return () => {

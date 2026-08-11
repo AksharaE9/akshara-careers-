@@ -30,23 +30,25 @@ export default function JobsPerformancePage() {
   const [jobs, setJobs] = useState<JobPerformanceRow[]>([])
   const [loading, setLoading] = useState(true)
 
-  const fetchJobs = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/console/insight/jobs')
-      if (res.ok) {
-        const json = await res.json()
-        setJobs(json.jobs || [])
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    fetchJobs()
+    let ignore = false
+    ;(async () => {
+      setLoading(true)
+      try {
+        const res = await fetch('/api/console/insight/jobs')
+        if (res.ok) {
+          const json = await res.json()
+          if (!ignore) setJobs(json.jobs || [])
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    })()
+    return () => {
+      ignore = true
+    }
   }, [])
 
   const columns: ColumnDef<JobPerformanceRow>[] = [

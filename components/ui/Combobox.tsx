@@ -18,7 +18,6 @@ import {
   useEffect,
   useId,
   type KeyboardEvent,
-  type ReactNode,
 } from 'react'
 import { buildDescribedBy } from './FieldWrapper'
 
@@ -87,8 +86,17 @@ export function Combobox({
       return
     }
     if (inputValue.length < minChars) {
-      setOptions([])
-      setOpen(false)
+      // F7: setOptions/setOpen deferred to a microtask rather than called
+      // synchronously in the effect body — react-hooks/set-state-in-effect
+      // flags exactly this (a setState reachable without an intervening
+      // await/task boundary). queueMicrotask preserves the early-return
+      // control flow below (still exits before the debounce/search setup)
+      // while genuinely deferring the state update, not just syntactically
+      // hiding it.
+      queueMicrotask(() => {
+        setOptions([])
+        setOpen(false)
+      })
       return
     }
     if (debounceRef.current) clearTimeout(debounceRef.current)
