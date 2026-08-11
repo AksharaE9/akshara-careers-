@@ -27,6 +27,15 @@ export interface ApplicationFilterOptions {
   query?: string | undefined
   limit?: number | undefined
   offset?: number | undefined
+  /**
+   * F8: the console pipeline UI wants a page at a time (hence the 200-row
+   * cap below), but CSV export wants every row matching the filter. Without
+   * this flag, the exports route silently got page 1 of 50 and called it a
+   * complete export. Setting this bypasses both the cap and the offset —
+   * only use it for genuine full-dataset reads (exports, reports), not
+   * anything rendering a paginated UI.
+   */
+  unpaginated?: boolean | undefined
 }
 
 export interface PaginatedApplicationsResult {
@@ -41,8 +50,14 @@ export interface PaginatedApplicationsResult {
 export async function getApplicationsList(filters: ApplicationFilterOptions = {}): Promise<PaginatedApplicationsResult> {
   const db = getDb()
 
-  const limit = Math.min(Math.max(Number(filters.limit) || 50, 1), 200)
-  const offset = Math.max(Number(filters.offset) || 0, 0)
+  // F8: export mode gets a much higher ceiling (10,000, not the UI's 200)
+  // and always starts at offset 0 — it's reading the whole filtered set in
+  // one shot, not paging through it.
+  const EXPORT_MAX_ROWS = 10_000
+  const limit = filters.unpaginated
+    ? EXPORT_MAX_ROWS
+    : Math.min(Math.max(Number(filters.limit) || 50, 1), 200)
+  const offset = filters.unpaginated ? 0 : Math.max(Number(filters.offset) || 0, 0)
   const page = Math.floor(offset / limit) + 1
 
   // Dynamic parameterized filter conditions

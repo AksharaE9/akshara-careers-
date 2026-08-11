@@ -82,11 +82,23 @@ every root-cause statement below.
 **Root cause:** Pre-existing technical debt, not a regression from Document 7 or the candidate-auth work. The `react-hooks/set-state-in-effect` pattern in particular is one mechanism repeated ~13 times (a shared data-fetching convention across the admin console), not 13 independent bugs.
 **Decision:** Out of scope for this campaign. Per the brief's own rule ("don't fix P2s while a P0 is open," "don't improve code you weren't sent to fix"), this is recorded as backlog, not fixed here. It does not block the launch decision on its own — nothing in it is a security, correctness, or data-integrity defect; it's lint discipline. Flagging the `react-hooks/set-state-in-effect` pattern as worth a dedicated pass later, since fixing it 13 times individually would itself violate "one root cause per commit" if bundled with anything else.
 
-### F8 — P2 — CSV export silently caps at 50 records (found while fixing F2, not fixed)
+### F8 — RESOLVED — CSV export silently caps at 50 records
 **File:** `app/api/console/exports/route.ts:18` calling `getApplicationsList({ stage, jobId })`
 **Symptom:** `getApplicationsList` defaults `limit` to 50 (`Math.min(Math.max(Number(filters.limit) || 50, 1), 200)`) and the exports route never overrides it. Even after F2's fix, a CSV export of a filter matching more than 50 applications would silently return only the first 50, with no indication in the response that it was truncated.
 **Root cause:** distinct from F2 — F2 was reading the wrong property off the result; this is the underlying query being called with an implicit page-1-of-50 instead of "everything matching this filter."
-**Decision:** Not fixed in this pass — recorded so it isn't bundled into F2's commit (one root cause per commit) and doesn't get lost. Recommend `getApplicationsList` grow an explicit "no pagination, return all matching rows" mode for the export path specifically, since exports and paginated UI listing have different correctness requirements.
+**Fix:** `ApplicationFilterOptions` grew an explicit `unpaginated` flag. When set, `getApplicationsList` uses a 10,000-row export ceiling and offset 0 instead of the UI's 200-row page cap — a deliberate, auditable "read everything matching this filter" mode, not a blanket removal of the cap (which would risk an unbounded query given the docstring's own "100,000+ records" design target). The exports route now passes `unpaginated: true` and reports `X-Export-Truncated` / `X-Export-Total-Matching` response headers, so a `totalCount` beyond the 10,000-row ceiling is surfaced honestly rather than silently dropped — same principle as the audit-log `recordCount` field, extended to also carry `totalMatchingCount` and `truncated`.
+**Regression test added** (this endpoint had zero coverage before this campaign — F2 and F8 were both invisible to every existing test): `tests/e2e/console-dashboard.spec.ts` — asserts 200, a well-formed CSV, presence of the truncation headers, and that the row count matches `totalMatching` whenever `truncated` is false.
+**Verification:**
+```
+$ curl -b <admin-session> -D - http://localhost:3000/api/console/exports
+x-export-total-matching: 1
+x-export-truncated: false
+(1 real data row in the CSV body, matching)
+
+$ npx playwright test tests/e2e/console-dashboard.spec.ts --grep "CSV export"
+1 passed
+```
+Full end-to-row-count verification against a >50-row dataset wasn't possible — this database has 1 application today — but the mechanism (bypassing the 200-row UI cap, honest truncation reporting) is verified directly against the real code path, not assumed.
 
 ### F9 — P0-class (build-blocking) — `exactOptionalPropertyTypes` violation in candidate dashboard
 **Gate:** 0-build-typecheck (also blocks `next build`, discovered mid-fix: see note below)

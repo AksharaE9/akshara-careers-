@@ -15,8 +15,13 @@ export async function GET(request: NextRequest) {
     const stage = searchParams.get('stage') || undefined
     const jobId = searchParams.get('jobId') || undefined
 
-    const result = await getApplicationsList({ stage, jobId })
+    // F8: unpaginated: true — export every matching row, not page 1 of 50.
+    const result = await getApplicationsList({ stage, jobId, unpaginated: true })
     const apps = result.applications
+    // getApplicationsList's export mode caps at 10,000 rows even when
+    // unpaginated. Surface that honestly rather than silently truncating —
+    // recruiters should know if this export isn't actually complete.
+    const truncated = result.totalCount > apps.length
 
     // Log export event into audit_log
     const db = getDb()
@@ -26,6 +31,8 @@ export async function GET(request: NextRequest) {
       entityType: 'applications',
       after: {
         recordCount: apps.length,
+        totalMatchingCount: result.totalCount,
+        truncated,
         exportedAt: new Date().toISOString(),
         filters: { stage, jobId },
       },
@@ -78,6 +85,10 @@ export async function GET(request: NextRequest) {
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
         'Content-Disposition': `attachment; filename="akshara-candidates-${Date.now()}.csv"`,
+        // F8: not silently incomplete. True whenever the filter matched more
+        // than getApplicationsList's export cap (10,000 rows).
+        'X-Export-Truncated': String(truncated),
+        'X-Export-Total-Matching': String(result.totalCount),
       },
     })
   } catch (err: any) {
