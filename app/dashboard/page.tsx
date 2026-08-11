@@ -38,10 +38,15 @@ export default async function CandidateDashboardPage() {
             initialApplications={apps}
             initialEligibility={{
               allowed: eligibility.allowed,
-              reason: eligibility.reason,
-              message: eligibility.message,
-              reapplyAvailableAt: eligibility.reapplyAvailableAt?.toISOString(),
-              daysRemaining: eligibility.daysRemaining,
+              // exactOptionalPropertyTypes: omit these keys entirely when
+              // undefined rather than assigning `undefined` to an optional
+              // string/number prop, which TS treats as a distinct violation.
+              ...(eligibility.reason !== undefined && { reason: eligibility.reason }),
+              ...(eligibility.message !== undefined && { message: eligibility.message }),
+              ...(eligibility.reapplyAvailableAt !== undefined && {
+                reapplyAvailableAt: eligibility.reapplyAvailableAt.toISOString(),
+              }),
+              ...(eligibility.daysRemaining !== undefined && { daysRemaining: eligibility.daysRemaining }),
             }}
           />
         </Container>
