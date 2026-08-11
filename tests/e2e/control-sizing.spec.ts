@@ -54,8 +54,8 @@ test.describe('Control Sizing & Theme Remediation (§18.6)', () => {
       const bg = await sec.evaluate((el) => window.getComputedStyle(el).backgroundColor)
       const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
       if (match) {
-        const r = parseInt(match[1], 10)
-        const b = parseInt(match[3], 10)
+        const r = parseInt(match[1] ?? '0', 10)
+        const b = parseInt(match[3] ?? '0', 10)
         // If not transparent or near-black
         if (r > 30 || b > 30) {
           expect(r - b, `Section background ${bg} has warm ground (r - b = ${r - b} > 8)`).toBeLessThanOrEqual(8)
@@ -72,9 +72,9 @@ test.describe('Control Sizing & Theme Remediation (§18.6)', () => {
       const color = await p.evaluate((el) => window.getComputedStyle(el).color)
       const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
       if (match) {
-        const r = parseInt(match[1], 10)
-        const g = parseInt(match[2], 10)
-        const b = parseInt(match[3], 10)
+        const r = parseInt(match[1] ?? '0', 10)
+        const g = parseInt(match[2] ?? '0', 10)
+        const b = parseInt(match[3] ?? '0', 10)
         // Check for saturated periwinkle (#7B8FD4 is rgb(123, 143, 212)) -> b - r = 89
         const blueDominance = b - Math.max(r, g)
         expect(blueDominance, `Paragraph color ${color} is saturated blue (dominance ${blueDominance} > 50)`).toBeLessThan(50)
@@ -92,9 +92,9 @@ test.describe('Control Sizing & Theme Remediation (§18.6)', () => {
         const color = await el.evaluate((el) => window.getComputedStyle(el).color)
         const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
         if (match) {
-          const r = parseInt(match[1], 10)
-          const g = parseInt(match[2], 10)
-          const b = parseInt(match[3], 10)
+          const r = parseInt(match[1] ?? '0', 10)
+          const g = parseInt(match[2] ?? '0', 10)
+          const b = parseInt(match[3] ?? '0', 10)
           // Amber is roughly high R, medium G, low B (e.g. rgb(240, 169, 59) or rgb(232, 163, 61))
           const isAmber = r > 200 && g > 130 && b < 100
           expect(isAmber, `Found amber text ${color} on light ground`).toBe(false)
@@ -110,9 +110,9 @@ test.describe('Control Sizing & Theme Remediation (§18.6)', () => {
     // Verify wordmark is light text, not dark
     const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
     if (match) {
-      const r = parseInt(match[1], 10)
-      const g = parseInt(match[2], 10)
-      const b = parseInt(match[3], 10)
+      const r = parseInt(match[1] ?? '0', 10)
+      const g = parseInt(match[2] ?? '0', 10)
+      const b = parseInt(match[3] ?? '0', 10)
       const brightness = (r * 299 + g * 587 + b * 114) / 1000
       expect(brightness, `Wordmark brightness ${brightness} on dark header is too low (must be > 150)`).toBeGreaterThan(150)
     }

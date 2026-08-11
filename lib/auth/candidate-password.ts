@@ -112,6 +112,13 @@ export async function signupCandidate(
     })
     .returning()
 
+  if (!cand) {
+    // Insert with .returning() came back empty — should be unreachable if
+    // the insert above didn't throw, but fail loudly rather than proceed
+    // with an undefined candidate.
+    throw new Error('Candidate insert.returning() came back empty')
+  }
+
   // Generate session cookie
   const sessionToken = await createCandidateSession(cand.id)
 
@@ -157,6 +164,11 @@ export async function loginCandidate(
   if (failures.length >= MAX_FAILED_ATTEMPTS) {
     // Find the 5th most recent failure (at index 4) to calculate remaining lockout time
     const fifthFailure = failures[MAX_FAILED_ATTEMPTS - 1]
+    if (!fifthFailure) {
+      // Unreachable given the length check above, but keep the type checker
+      // honest rather than asserting past it.
+      throw new Error('Lockout window check invariant violated: fewer failures than MAX_FAILED_ATTEMPTS')
+    }
     const lockoutExpiry = new Date(fifthFailure.attemptedAt.getTime() + LOCKOUT_WINDOW_MINUTES * 60 * 1000)
     const retryAfterSeconds = Math.max(0, Math.ceil((lockoutExpiry.getTime() - now.getTime()) / 1000))
 
@@ -196,7 +208,12 @@ export async function loginCandidate(
     succeeded: loginSucceeded,
   })
 
-  if (!loginSucceeded) {
+  if (!loginSucceeded || !candidate) {
+    // The `!candidate` arm is unreachable in practice: loginSucceeded can
+    // only be true when the `if (candidate)` branch above ran verifyPassword
+    // against a real hash. It's kept explicit rather than asserted away —
+    // relying on that correlation implicitly is exactly the kind of thing
+    // that quietly breaks in a later refactor of this function.
     return {
       success: false,
       error: 'INVALID_CREDENTIALS',

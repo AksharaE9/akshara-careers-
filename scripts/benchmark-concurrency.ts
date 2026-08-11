@@ -110,11 +110,16 @@ async function runBenchmark(totalRequests = 1000, concurrency = 100) {
   const failures = results.length - successes
   const reqPerSec = (results.length / totalDurationSeconds).toFixed(1)
 
-  const p50 = durations[Math.floor(durations.length * 0.5)].toFixed(1)
-  const p90 = durations[Math.floor(durations.length * 0.9)].toFixed(1)
-  const p95 = durations[Math.floor(durations.length * 0.95)].toFixed(1)
-  const p99 = durations[Math.floor(durations.length * 0.99)].toFixed(1)
-  const max = durations[durations.length - 1].toFixed(1)
+  if (durations.length === 0) {
+    console.log('No requests completed — nothing to report.')
+    return
+  }
+  const percentile = (p: number) => (durations[Math.min(Math.floor(durations.length * p), durations.length - 1)] ?? 0).toFixed(1)
+  const p50 = percentile(0.5)
+  const p90 = percentile(0.9)
+  const p95 = percentile(0.95)
+  const p99 = percentile(0.99)
+  const max = (durations[durations.length - 1] ?? 0).toFixed(1)
 
   console.log(`\n\n======================================================`)
   console.log(`📊 BENCHMARK RESULTS & THROUGHPUT SUMMARY`)

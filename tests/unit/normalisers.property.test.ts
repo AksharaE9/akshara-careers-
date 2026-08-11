@@ -271,6 +271,11 @@ describe('normaliseEmail — property tests', () => {
           { minLength: 2, maxLength: 2 },
         ),
         ([email1, email2]) => {
+          // fc.uniqueArray(..., { minLength: 2, maxLength: 2 }) always yields
+          // exactly 2 elements, but its type is string[], not a 2-tuple.
+          if (email1 === undefined || email2 === undefined) {
+            throw new Error('fc.uniqueArray violated its minLength/maxLength: 2 contract')
+          }
           const n1 = normaliseEmail(email1)
           const n2 = normaliseEmail(email2)
           // If they normalise to the same thing, they must already be case-identical

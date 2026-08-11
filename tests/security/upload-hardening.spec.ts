@@ -38,7 +38,7 @@ async function login(request: APIRequestContext, email: string, password: string
   })
   const setCookie = res.headers()['set-cookie'] ?? ''
   const match = setCookie.match(/akshara_console_session=([^;]+)/)
-  return match ? match[1] : ''
+  return match?.[1] ?? ''
 }
 
 async function presign(

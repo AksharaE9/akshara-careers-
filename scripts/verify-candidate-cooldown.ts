@@ -79,6 +79,7 @@ async function runVerification() {
       idempotencyKey: `idem-${Date.now()}-1`,
     })
     .returning()
+  if (!app1) throw new Error('Application 1 insert.returning() came back empty')
 
   await db.insert(applicationStageEvents).values({
     applicationId: app1.id,
@@ -145,6 +146,7 @@ async function runVerification() {
       idempotencyKey: `idem-${Date.now()}-2`,
     })
     .returning()
+  if (!app2) throw new Error('Application 2 insert.returning() came back empty')
 
   await db.insert(applicationStageEvents).values({
     applicationId: app2.id,

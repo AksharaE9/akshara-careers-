@@ -69,6 +69,7 @@ test.describe('Real-Time Cross-Dashboard Sync Consistency (§3 & §8)', () => {
         languages: [],
       })
       .returning()
+    if (!cand) throw new Error('Candidate insert.returning() came back empty')
 
     // Generate Candidate Session directly
     candidateToken = crypto.randomBytes(32).toString('hex')
@@ -86,6 +87,7 @@ test.describe('Real-Time Cross-Dashboard Sync Consistency (§3 & §8)', () => {
     // Get actual Admin User for Console Session
     const adminRows = await db.select().from(users).where(eq(users.email, 'admin@gmail.com')).limit(1)
     const adminUser = adminRows[0]
+    if (!adminUser) throw new Error("Seeded admin user 'admin@gmail.com' not found — run npm run db:seed first")
 
     consoleToken = createSessionToken({
       id: adminUser.id,
@@ -119,6 +121,7 @@ test.describe('Real-Time Cross-Dashboard Sync Consistency (§3 & §8)', () => {
         idempotencyKey: `idem-sync-${Date.now()}`,
       })
       .returning()
+    if (!app) throw new Error('Application insert.returning() came back empty')
     testAppId = app.id
 
     await db.insert(applicationStageEvents).values({
