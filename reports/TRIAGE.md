@@ -139,6 +139,73 @@ same re-run — F1/F4/F6/F9 verified, not just asserted.
 - `careers-screenshots.spec.ts` Mobile 390px capture — `page.goto` timeout on mobile-chrome only. Single data point, not enough to root-cause yet.
 - `sync-consistency.spec.ts` real-time sync propagation — 1 Firefox-only failure, likely F13.
 
+---
+
+## Round 3 — security suite (E5)
+
+`upload-hardening.spec.ts`: **all 14 tests PASS.** Malicious payload rejection (webshell, polyglot, zip-bomb header, EICAR, SVG-with-script, double extension, null byte, path traversal, empty/oversized file), uploadId session-binding, server-generated object keys, and `Content-Disposition: attachment` all hold.
+
+`authz-matrix.spec.ts`: **6 of 50 tests failed.** Investigated each before drawing any conclusion (§19.5/systematic-debugging) — they are not one thing.
+
+### F14 — Not a security vulnerability, but blocks verifying one — admin login fixture credential mismatch
+**Tests affected:** 4 of the 6 failures are IDOR-tagged (`C — IDOR: object-level authorization (P0)`: cross-drive application access, status-token PII leak, adjacent/truncated token rejection) plus the fixtures-endpoint production-guard test. All fail identically at `loadFixtures()`'s admin login step with `401`, **before ever reaching their actual IDOR assertion.**
+**Root cause, confirmed by direct curl:** `SEED_ADMIN_PASSWORD` is not set in `.env.local`. `authz-matrix.spec.ts`'s new F6 fallback assumes `Admin@123` (matching `scripts/seed-admin.ts`'s default). The admin account actually live in this database has password `admin123` (`scripts/set-admin-password.ts`'s default — confirmed: `curl .../login -d '{"email":"admin@gmail.com","password":"admin123"}'` → 200; `Admin@123` → 401). Two scripts, two different hardcoded defaults, no single source of truth for "what is the admin password right now," and nothing reconciles them.
+**Consequence:** this is not proof of an IDOR vulnerability — it's proof the test never got to check. 4 of the P0-tagged authorization checks in this campaign are **unverified, not passing.** `C — Application detail with a fabricated UUID returns 404` (the one IDOR test that logs in as a *recruiter*, not admin) did pass, which is a positive data point, but it's the weakest of the five IDOR checks.
+**Not fixed** — flagged for explicit decision, since "fix nothing more" was scoped to F10-F12 (known app bugs), and this is a different kind of gap: without resolving it, the launch decision cannot honestly claim the IDOR class was checked.
+
+### F15 — P1 — Login-timing oracle: 331ms delta between existing/non-existing accounts (threshold 300ms)
+**Test:** `D — Login oracle: generic error body, consistent timing` — this one **did** run its real assertion (doesn't depend on the admin fixture).
+**Evidence:** `Timing delta 331ms exceeds 300ms oracle threshold` — average response time for a login attempt against an existing account differs from a non-existing account by 331ms, enough to let an attacker distinguish "this phone/email exists" from "it doesn't" via timing alone.
+**Root cause not yet located** — would need to profile `app/api/auth/login/route.ts`'s existing-vs-missing-account code paths (candidate login already has an explicit dummy-hash timing mitigation per F4's read of `candidate-password.ts`; the admin/console login path may not).
+**Not fixed** — recorded per the user's decision to stop fixing beyond F1-F6+F9 for this session.
+
+## Launch decision — NO GO
+
+Per Document 8 §19.9's own rubric: **NO GO — any open P0.**
+
+The disqualifying item is **F14**, not F10/F11/F12/F15. Those four are real,
+confirmed, severity-appropriate (P1) findings the user explicitly chose to
+defer for a later session — that's a normal, defensible "ship with a dated
+fix commitment" call, and on their own they would support **GO WITH
+CONDITIONS**.
+
+F14 is different in kind: it is not a confirmed defect, it's a **hole in the
+verification itself**. Four of the five P0-tagged IDOR checks in this
+campaign (`Recruiter cannot access application that does not belong to
+their drive scope`, `Status token endpoint leaks no internal UUID/email/
+phone`, `Adjacent status token probe`, `Truncated status token rejected`)
+never reached their real assertion — they errored out at an admin-login
+step that fails due to a test-fixture credential mismatch, not app logic.
+The fifth IDOR check (fabricated UUID → 404, logged in as a recruiter, not
+admin) did pass, which is a positive but partial signal.
+
+**Blast radius in plain language:** we do not currently know whether a
+recruiter logged into the console can read another recruiter's candidate
+data — resumes, phone numbers, interview notes — across a drive boundary.
+The code may well be fine; `Container.tsx`/`Button.tsx`-style propagation
+gaps are exactly the kind of thing this campaign exists to catch, and this
+class of check simply did not run. Given the explicit brief instruction —
+"If any IDOR test fails, stop the campaign and fix it before running
+anything else" — and given the user's decision to leave it unresolved
+rather than apply the one-line test fixture fix, the honest position is
+**NO GO**, not **GO WITH CONDITIONS** downgraded by one severity level.
+
+**Fix estimate:** trivial once prioritized — the diagnosis is already done
+(F14 above states the exact root cause and fix). Point
+`tests/security/authz-matrix.spec.ts`'s `SEED_ADMIN_PASSWORD` fallback at
+whatever the live admin password actually is (or, better, make
+`scripts/seed-admin.ts` and `scripts/set-admin-password.ts` agree on a
+single default so this class of mismatch can't recur), then re-run
+`npm run test:security` and read the real result. Estimate: under 15
+minutes of engineering time, most of it re-running the suite.
+
+**Everything else that would gate GO is otherwise in reasonable shape:**
+build/typecheck/CSS/DB/secret-hygiene all pass; malicious-upload hardening
+is 14/14; the DB itself shows zero orphan FKs, `phone_e164` correctly typed
+as text, consent captured on every row, connections at 1.7%. This is not a
+system in bad shape — it's a system where one specific, high-value check
+needs to actually run before anyone can respons­ibly say GO.
+
 ## What's next
 
 F1 is the blocker for re-running gates 3/4/5 at all, so it goes first. F2/F3/F6
