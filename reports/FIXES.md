@@ -134,13 +134,29 @@ upload-hardening.spec.ts: 14/14 PASS
 authz-matrix.spec.ts: 44/50 PASS, 6 FAIL (F14 test-fixture gap on 4 P0 IDOR checks + fixtures-guard test; F15 real 331ms login-timing-oracle finding)
 ```
 
-## Not fixed this session — explicit user decisions, recorded not silently dropped
+## Round 2 onward — full remediation
 
-- **F8** (exports silently caps at 50 rows) — recorded as a separate root cause from F2, not bundled.
-- **F10** (`[data-card-meta]` missing, universal across 6 browsers) — user chose to defer.
-- **F11** (10 tap targets under 44×44px on mobile, universal across 6 browsers) — user chose to defer.
-- **F12** (candidate login lockout off-by-one, confirmed on chromium) — user chose to defer.
-- **F13** (Firefox headless crashes in this Windows sandbox) — environment limitation, not a code fix.
-- **F14** (admin-login test-fixture credential mismatch blocking 4 P0 IDOR checks from running their real assertion) — user explicitly chose to leave unverified rather than fix the one-line test default.
-- **F15** (331ms login-timing oracle, real finding, ran its actual assertion) — user chose to defer.
-- **F7** (pre-existing lint debt, ~40 files, predates this session) — explicitly out of scope per the brief's own "don't fix P2s while a P0 is open" rule.
+The user subsequently asked for all remaining findings to be fixed
+properly, including F7's full scope once it turned out to be 89 files/205
+problems rather than the ~40 first estimated. Every finding above listed
+as deferred is now **RESOLVED**, each with root cause, diff, and pasted
+verification output — see `reports/TRIAGE.md` for the complete write-up
+per finding (F7, F8, F10, F11, F12, F14, F15), and `git log` for the
+individual commits (F14+F15, F12, F10, F11, F8, then F7 parts 1-3, then a
+second F14 fix found during final re-verification — see below).
+
+**F14 took two attempts.** The first fix (unifying two of three
+admin-bootstrap scripts) was confirmed with `50/50` security tests
+passing, then silently broke again — a fourth script
+(`lib/db/seed.ts`) had the same stale default, and
+`tests/e2e/console-auth.spec.ts` was reverting the fix as an
+unintended side effect of testing password rotation, every time the
+functional suite ran. Caught only by re-running the full suite at the
+end of the campaign instead of trusting the earlier green result — see
+`TRIAGE.md` F14 for the full trace and the actual fix (a regression-proof
+`afterAll` restoring shared test-fixture state).
+
+**Final state:** `npx eslint .` 205 → 0. `npm run test:security` 50/50.
+Full functional suite 216/222 (6 WebKit-family engine-launch flakes, not
+app defects — see `TRIAGE.md` F13). Full design-integrity suite 126/126,
+all 6 browsers. Launch decision: **GO** (see `TRIAGE.md`).

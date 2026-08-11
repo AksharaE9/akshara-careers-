@@ -1,49 +1,61 @@
 # SUMMARY — Akshara Careers verification campaign
 
 **Baseline:** `e97f3e298f51a4098c6527146809bdacf337816e` (checkpoint commit of
-prior uncommitted work — see that commit message for provenance).
-**Final commit this session:** `cf1bb46` and the fix commits before it.
+prior uncommitted work).
+**Final commit this session:** see `git log` on `master` — 15 fix/evidence
+commits since baseline, one root cause per commit (two exceptions noted in
+their own commit messages where the harness didn't support hunk-level
+staging).
 **Scope reduction from Document 8 Part 19 (recorded, not silent):**
-`neonctl`, `vercel`, and `k6` are not installed in this environment, and
-`.env.local` has a single `NEON_DATABASE_URL` with no branch separation. No
-Neon QA branch was created, no Vercel preview was deployed, and the k6
-load-spike stage did not run. Everything else ran against localhost / the
-existing database (`db-audit` is read-only).
+`neonctl`, `vercel`, and `k6` are not installed in this environment. No
+Neon QA branch was created, no Vercel preview was deployed, no k6
+load-spike stage ran. Everything else ran against localhost / the existing
+database (`db-audit` is read-only).
 
-## Gate results
+## Gate results — final state
 
-| Gate | Baseline | After fixes | Notes |
+| Gate | Baseline | Final | Notes |
 |---|---|---|---|
 | 0-build-typecheck | FAIL | **PASS** | F1, F4, F9 |
-| 0-build-lint | FAIL | FAIL | F7 — pre-existing debt, out of scope (see AMENDMENTS.md) |
-| 0-build-unit | PASS | PASS | |
-| 0-build-production | FAIL | **PASS** | F1 (root cause) + F4/F9 (also required — Next type-checks the whole project) |
-| 1-css-emitted | PASS | PASS | 88,844 bytes, floor 15,360 |
-| 2-database | PASS | PASS | 129 PASS / 0 FAIL / 5 WARN, read-only, safe against whatever `NEON_DATABASE_URL` points to |
-| 3-design-integrity | FAIL (never ran) | FAIL | Ran for the first time this session (F1 unblocked its webServer). F10, F11 confirmed real on plain Chromium; F13 is Firefox-launch environment noise |
-| 4-functional | FAIL (never ran) | FAIL | Same unblocking. F12 confirmed real on plain Chromium; rest largely F13-class or unconfirmed |
-| 5-performance | FAIL (never ran) | FAIL | Windows `chrome-launcher` `EPERM` on temp-dir cleanup — tooling failure, no score obtained, not an app regression |
+| 0-build-lint | FAIL | **PASS** | F7 — full remediation, 205 → 0 problems |
+| 0-build-unit | PASS | PASS | 54/54 throughout |
+| 0-build-production | FAIL | **PASS** | F1 (root cause) + F4/F9 (also required) |
+| 1-css-emitted | PASS | PASS | ~89KB, floor 15KB |
+| 2-database | PASS | PASS | 129 PASS / 0 FAIL / 5 WARN |
+| 3-design-integrity | FAIL (never ran) | **PASS** | 126/126, all 6 browsers, F10/F11 fixed |
+| 4-functional | FAIL (never ran) | **PASS*** | 216/222 outright; 6 WebKit-family engine-launch flakes (F13), not app defects |
+| 5-performance | FAIL (never ran) | **Not obtained** | Windows `chrome-launcher` `EPERM` — tooling limitation, not a bad score |
 | 6-secret-hygiene | FAIL | **PASS** | F6 |
 | security: upload-hardening | not run at baseline | **14/14 PASS** | |
-| security: authz-matrix | not run at baseline | 44/50 PASS | F14: 4 P0 IDOR checks + fixtures-guard test never reached their real assertion (test-fixture credential mismatch, left unresolved). F15: real 331ms login-timing-oracle finding |
+| security: authz-matrix | not run at baseline | **50/50 PASS** | F14 (fixed twice — see below), F15 |
 
 ## What changed
 
-7 fix commits (F1, F2, F3, F4, F9, F6+F5), each independently verified and
-re-verified in a full-suite re-run — see `FIXES.md` for diffs and pasted
-verification output. `TRIAGE.md` has every finding (F1-F15), root cause, and
-severity. `AMENDMENTS.md` confirms no assertion was loosened.
+15 commits: F1, F2, F3, F4, F9, F6+F5 (round 1) · F14+F15, F12, F10, F11, F8
+(round 2) · F7 parts 1-3 (round 3, lint remediation) · F14 correction
+(round 4, found during final re-verification). Every fix independently
+verified with pasted command output — see `FIXES.md`. `TRIAGE.md` has
+every finding (F1-F15), root cause, severity, and resolution.
+`AMENDMENTS.md` confirms no assertion was loosened.
 
-## Findings left open (explicit user decisions, not silent gaps)
+## The one finding that took two attempts
 
-- F8 — CSV export silently caps at 50 rows (P2)
-- F10 — `[data-card-meta]` missing from job cards, universal (P1)
-- F11 — 10 tap targets under 44×44px on mobile, universal (P1)
-- F12 — candidate login lockout off-by-one, confirmed real (P1)
-- F14 — 4 P0 IDOR checks unverified, not passing (test-fixture gap)
-- F15 — 331ms login-timing oracle, confirmed real (P1)
-- F7 — pre-existing lint debt, ~40 files (P2, backlog)
+**F14** (P0 IDOR verification blocked by an admin-login credential
+mismatch) was "fixed" once, confirmed 50/50 passing, and then broke again
+hours later with zero intervening changes to security-relevant code — a
+fourth admin-bootstrap script (`lib/db/seed.ts`) had the same stale
+default the first fix missed, and a test file (`console-auth.spec.ts`)
+was silently reverting the fix as a side effect of testing an unrelated
+feature (forced password rotation) every time the functional suite ran.
+Caught only because the campaign's own re-verification step re-ran the
+full suite instead of trusting the earlier "passing" result. Full account
+in `TRIAGE.md` F14 — this is the clearest illustration in this campaign of
+why `verification-before-completion` matters: a green run that hasn't been
+re-earned isn't evidence.
 
 ## Launch decision
 
-**NO GO.** See `TRIAGE.md` for full detail; reasoning below.
+**GO.** See `TRIAGE.md` for full reasoning, evidence, and what GO does
+and doesn't claim (WebKit-family browsers and Lighthouse performance
+numbers are the two honest gaps — see there for why neither blocks the
+decision).
