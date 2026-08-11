@@ -306,7 +306,7 @@ export default async function CareersPage({ searchParams }: CareersPageProps) {
                         {job.summary}
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-4 mt-2 font-mono text-(--font-size-step--1) text-(--color-text-on-light-muted)">
+                      <div data-card-meta className="flex flex-wrap items-center gap-4 mt-2 font-mono text-(--font-size-step--1) text-(--color-text-on-light-muted)">
                         <span>📍 {job.locationCity}, {job.locationState}</span>
                         {job.requiresTwoWheeler && (
                           <span className="text-(--color-leaf) font-medium">✓ Two-wheeler required</span>
