@@ -3,7 +3,8 @@
  *
  * Sets admin credentials:
  * Email: admin@gmail.com
- * Password: admin123
+ * Password: $SEED_ADMIN_PASSWORD, or 'admin123' if unset (dev-only default —
+ * ALWAYS set SEED_ADMIN_PASSWORD before running this against a real database).
  */
 
 try {
@@ -19,7 +20,8 @@ async function setAdmin() {
   console.log('\n🔐 Setting admin credentials...')
   const db = getDb()
 
-  const passwordHash = await hashPassword('admin123')
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD || 'admin123'
+  const passwordHash = await hashPassword(adminPassword)
   const email = 'admin@gmail.com'
 
   const [existing] = await db
@@ -39,7 +41,7 @@ async function setAdmin() {
         mustChangePassword: false,
         failedLoginCount: 0,
         lockedUntil: null,
-        updatedAt: new Date(),
+        passwordChangedAt: new Date(),
       })
       .where(eq(users.email, email))
     console.log(`✅ Updated password for existing user: ${email}`)
@@ -61,7 +63,7 @@ async function setAdmin() {
   console.log(`👑 ADMIN CREDENTIALS CONFIGURED`)
   console.log(`======================================================`)
   console.log(`Email:    admin@gmail.com`)
-  console.log(`Password: admin123`)
+  console.log(`Password: ${adminPassword}`)
   console.log(`Role:     super_admin`)
   console.log(`======================================================\n`)
 }
