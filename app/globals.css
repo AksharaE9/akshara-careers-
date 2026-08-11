@@ -134,7 +134,13 @@
 }
 
 .btn--sm {
-  height: 36px;
+  /* F11: was 36px — under the 44px WCAG 2.5.5 tap-target floor. Confirmed
+     by design-integrity.spec.ts's mobile tap-target check (10 elements
+     under 44x44 on /careers, all height-only shortfalls, several tracing
+     to this shared class). Raising this affects every .btn--sm consumer,
+     not just the ones the test happened to catch on /careers — same class
+     of fix as F1/F4's "check every consumer of a shared token" lesson. */
+  height: 44px;
   padding-left: 14px;
   padding-right: 14px;
   font-size: var(--text-step--1);

@@ -173,8 +173,13 @@ export function HiringProcessCarousel() {
 
           {/* Bottom Controls */}
           <div className="pt-6 border-t border-(--color-ink-600)/50 flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               {PROCESS_STEPS.map((_, idx) => (
+                // F11: the visible dot stays small (10px / 32px when active)
+                // by design, but the tappable element itself must still meet
+                // the 44x44 WCAG floor — carry the hit area on this outer
+                // span and keep the small colored dot as a decorative inner
+                // span, rather than inflating the visible dot to 44px.
                 <span
                   key={idx}
                   role="button"
@@ -186,13 +191,18 @@ export function HiringProcessCarousel() {
                       setActiveIdx(idx)
                     }
                   }}
-                  className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                    idx === activeIdx
-                      ? 'w-8 bg-(--color-amber-400)'
-                      : 'w-2.5 bg-(--color-ink-600) hover:bg-(--color-ink-500)'
-                  }`}
+                  className="h-11 w-11 flex items-center justify-center cursor-pointer"
                   aria-label={`Go to slide ${idx + 1}`}
-                />
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`h-2.5 rounded-full transition-all ${
+                      idx === activeIdx
+                        ? 'w-8 bg-(--color-amber-400)'
+                        : 'w-2.5 bg-(--color-ink-600) hover:bg-(--color-ink-500)'
+                    }`}
+                  />
+                </span>
               ))}
             </div>
 

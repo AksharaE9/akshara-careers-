@@ -17,7 +17,10 @@ export function Footer() {
         <Grid className="gap-y-10">
           {/* Brand Column */}
           <div className="col-span-4 lg:col-span-4 flex flex-col gap-4">
-            <Link href="/careers" className="inline-flex items-center gap-3">
+            {/* F11: min-h-[44px] — matches the same fix on Header.tsx's
+                wordmark link. This is a separate duplicated instance of the
+                brand link, not a shared component, so it needed its own fix. */}
+            <Link href="/careers" className="inline-flex items-center gap-3 min-h-[44px]">
               <div className="h-8 w-8 bg-(--color-amber-400) rounded-md flex items-center justify-center font-display font-black text-(--color-ink-950) text-lg shadow-sm">
                 A
               </div>
