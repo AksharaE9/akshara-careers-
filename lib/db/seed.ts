@@ -24,7 +24,12 @@ async function seed() {
   // ── 1. Users (Recruiters & Admins) ──────────────────────────────────────────
   console.log('Seeding users...')
   const defaultHash = await hashPassword('DemoPassword@123')
-  const adminHash = await hashPassword(process.env.SEED_ADMIN_PASSWORD || 'admin123')
+  // Must match scripts/seed-admin.ts and scripts/set-admin-password.ts's
+  // default — see F14 (2026-08-11 verification campaign): three sibling
+  // admin-bootstrap paths disagreeing on this default is exactly what broke
+  // P0 IDOR verification the first time, and a fourth path (this file) was
+  // still wrong when that got re-discovered during final re-verification.
+  const adminHash = await hashPassword(process.env.SEED_ADMIN_PASSWORD || 'Admin@123')
 
   const seedUsers = [
     {
