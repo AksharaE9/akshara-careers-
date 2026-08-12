@@ -97,7 +97,15 @@ export async function getCurrentCandidate(): Promise<CurrentCandidate | null> {
       .limit(1)
 
     return rows[0] || null
-  } catch (err) {
+  } catch (err: unknown) {
+    if (
+      err &&
+      typeof err === 'object' &&
+      'digest' in err &&
+      (err as { digest?: string }).digest === 'DYNAMIC_SERVER_USAGE'
+    ) {
+      throw err
+    }
     console.error('Error in getCurrentCandidate:', err)
     return null
   }

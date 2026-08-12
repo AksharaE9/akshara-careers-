@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { DataTable, ColumnDef } from '@/components/console/DataTable'
+import { formatISTDateTime } from '@/lib/date/ist'
 
 interface UserRow {
   id: string
@@ -112,7 +113,7 @@ export default function UserManagementPage() {
       header: 'Last Login',
       accessor: (row) => (
         <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">
-          {row.lastLoginAt ? new Date(row.lastLoginAt).toLocaleString() : 'Never'}
+          {row.lastLoginAt ? formatISTDateTime(row.lastLoginAt) : 'Never'}
         </span>
       ),
     },

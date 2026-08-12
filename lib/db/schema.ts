@@ -380,7 +380,9 @@ export const applications = pgTable(
       .default(sql`now()`),
   },
   (t) => [
+    index('apps_submitted_desc').on(t.submittedAt),
     index('apps_stage_submitted').on(t.stage, t.submittedAt),
+    index('apps_drive_submitted').on(t.driveId, t.submittedAt),
     index('apps_job').on(t.jobId, t.submittedAt),
     index('apps_drive').on(t.driveId),
     // D7 guard: blocks more than one ACTIVE (non-withdrawn, non-duplicate)
@@ -690,6 +692,35 @@ export const applicationStageEvents = pgTable(
 )
 
 // ──────────────────────────────────────────────────────────────────────────────
+// email_outbox — transactional outbox for HR notification emails (§20)
+// Rows commit in the same transaction as the application row.
+// drainOutbox() uses SELECT FOR UPDATE SKIP LOCKED.
+// ──────────────────────────────────────────────────────────────────────────────
+export const emailOutbox = pgTable(
+  'email_outbox',
+  {
+    id: uuid('id').primaryKey().default(sql`uuid_generate_v4()`),
+    kind: text('kind').notNull(), // 'hr_new_application'
+    recipients: text('recipients').array().notNull(),
+    applicationId: uuid('application_id').references(() => applications.id, { onDelete: 'cascade' }),
+    idempotencyKey: text('idempotency_key').unique().notNull(),
+    payload: jsonb('payload').notNull().default(sql`'{}'::jsonb`),
+    status: text('status').notNull().default('pending')
+      .$type<'pending' | 'retrying' | 'sent' | 'failed'>(),
+    attempts: integer('attempts').notNull().default(0),
+    nextAttemptAt: timestamp('next_attempt_at', { withTimezone: true }),
+    sentAt: timestamp('sent_at', { withTimezone: true }),
+    lastError: text('last_error'),
+    createdAt: timestamp('created_at', { withTimezone: true })
+      .notNull()
+      .default(sql`now()`),
+  },
+  (t) => [
+    index('outbox_due').on(t.status, t.nextAttemptAt),
+  ]
+)
+
+// ──────────────────────────────────────────────────────────────────────────────
 // Inferred types — use these for typed query results throughout the app
 // ──────────────────────────────────────────────────────────────────────────────
 export type College = typeof colleges.$inferSelect
@@ -720,4 +751,5 @@ export type ConsoleSession = typeof consoleSessions.$inferSelect
 export type CandidateLoginAttempt = typeof candidateLoginAttempts.$inferSelect
 export type CandidateSession = typeof candidateSessions.$inferSelect
 export type ApplicationStageEvent = typeof applicationStageEvents.$inferSelect
+export type EmailOutboxEntry = typeof emailOutbox.$inferSelect
 

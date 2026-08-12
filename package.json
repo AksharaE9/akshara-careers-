@@ -26,6 +26,7 @@
     "load:soak": "cross-env K6_PROFILE=soak k6 run scripts/load-drive-spike.js",
     "load:breakpoint": "cross-env K6_PROFILE=breakpoint k6 run scripts/load-drive-spike.js",
     "db:audit": "tsx scripts/db-audit.ts",
+    "audit:perf": "tsx scripts/audit-performance.ts",
     "qa": "bash scripts/qa.sh",
     "probe:health": "curl -s http://localhost:3000/api/health | node -e \"process.stdin.resume();let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>console.log(JSON.stringify(JSON.parse(d),null,2)))\""
   },

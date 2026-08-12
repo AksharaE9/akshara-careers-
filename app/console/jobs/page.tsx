@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
 import { FieldWrapper } from '@/components/ui/FieldWrapper'
+import { formatISTDate } from '@/lib/date/ist'
 
 interface JobAdminItem {
   id: string
@@ -207,7 +208,7 @@ export default function ConsoleJobsPage() {
                       </select>
                     </td>
                     <td className="py-3 px-4 text-(--font-size-step--2) text-(--color-ink-400) font-mono">
-                      {j.postedAt ? new Date(j.postedAt).toLocaleDateString() : 'Unpublished'}
+                      {j.postedAt ? formatISTDate(j.postedAt) : 'Unpublished'}
                     </td>
                     <td className="py-3 px-4 text-right">
                       <Link

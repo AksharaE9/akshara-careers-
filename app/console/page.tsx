@@ -4,24 +4,31 @@
  * app/console/page.tsx
  *
  * Screen 1 — Pulse Dashboard (§14.5).
- * Answers "is everything OK?" in under three seconds.
- * 6 KPI tiles with sparklines, applications over time chart with accessible table alternative,
- * live activity feed, pipeline snapshot, live drives, and prioritized attention list.
+ * Safe, loop-free, real-data-only implementation of the recruiter dashboard.
  */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import { getFreshnessLabel, useRealtime } from '@/lib/console/use-realtime'
+import { type Metric, type DistributionItem } from '@/lib/console/metrics'
 
 interface PulseData {
   kpis: {
-    applications: { value: number; delta: string; sparkline: number[] }
-    applyConversionRate: { value: string; delta: string; sparkline: number[] }
-    uniqueVisitors: { value: number; delta: string; sparkline: number[] }
-    jobViews: { value: number; delta: string; sparkline: number[] }
-    avgTimeToComplete: { value: string; delta: string; sparkline: number[] }
-    resumeSuccessRate: { value: string; delta: string; sparkline: number[] }
+    applications: Metric<number>
+    applyConversionRate: Metric<string>
+    uniqueVisitors: Metric<number>
+    jobViews: Metric<number>
+    avgTimeToComplete: Metric<string>
+    resumeSuccessRate: Metric<string>
+    appSparkline: number[] | null
+    conversionSparkline: number[] | null
+    visitorsSparkline: number[] | null
+    viewsSparkline: number[] | null
+    timeSparkline: number[] | null
+    resumeSparkline: number[] | null
   }
   pipelineSnapshot: Record<string, number>
+  channelBreakdown: DistributionItem[]
   liveFeed: Array<{
     id: string
     publicId: string
@@ -50,8 +57,9 @@ interface PulseData {
   lastUpdated: string
 }
 
-function MiniSparkline({ data, color = 'var(--color-marigold)' }: { data: number[]; color?: string }) {
+function MiniSparkline({ data, color }: { data: number[] | null; color?: string | undefined }) {
   if (!data || data.length === 0) return null
+  const strokeColor = color ?? 'var(--color-marigold)'
   const min = Math.min(...data)
   const max = Math.max(...data)
   const range = max - min || 1
@@ -69,7 +77,7 @@ function MiniSparkline({ data, color = 'var(--color-marigold)' }: { data: number
     <svg width={width} height={height} className="overflow-visible">
       <polyline
         fill="none"
-        stroke={color}
+        stroke={strokeColor}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -79,91 +87,154 @@ function MiniSparkline({ data, color = 'var(--color-marigold)' }: { data: number
   )
 }
 
-const initialPulseData: PulseData = {
-  kpis: {
-    applications: { value: 5, delta: '+14.2%', sparkline: [1, 2, 1, 3, 2, 4, 3, 4, 5, 4, 5, 6, 5, 5] },
-    applyConversionRate: { value: '74.8%', delta: '+3.1%', sparkline: [62, 65, 68, 64, 70, 71, 73, 72, 75, 74, 76, 73, 74, 75] },
-    uniqueVisitors: { value: 1480, delta: '+18.5%', sparkline: [80, 95, 110, 105, 120, 135, 130, 145, 160, 155, 170, 185, 190, 210] },
-    jobViews: { value: 3965, delta: '+9.4%', sparkline: [200, 220, 240, 230, 260, 280, 275, 300, 320, 310, 340, 360, 380, 410] },
-    avgTimeToComplete: { value: '3m 24s', delta: '-18s faster', sparkline: [240, 235, 230, 225, 220, 218, 215, 212, 210, 208, 206, 205, 204, 204] },
-    resumeSuccessRate: { value: '99.2%', delta: '+0.4%', sparkline: [98, 98, 99, 98, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99] },
-  },
-  pipelineSnapshot: {
-    received: 1,
-    under_review: 1,
-    shortlisted: 1,
-    interview_scheduled: 1,
-    interviewed: 0,
-    offered: 1,
-    hired: 0,
-  },
-  liveFeed: [
-    {
-      id: 'app-1',
-      publicId: 'APP-ORG-34275',
-      candidateName: 'Aditi Sharma',
-      jobTitle: 'Business Development Executive',
-      collegeName: 'Government First Grade College, Yelahanka',
-      stage: 'received',
-      submittedAt: new Date().toISOString(),
-    },
-    {
-      id: 'app-2',
-      publicId: 'APP-ORG-34272',
-      candidateName: 'Rahul Nair',
-      jobTitle: 'Business Development Executive',
-      collegeName: 'Government First Grade College, Yelahanka',
-      stage: 'shortlisted',
-      submittedAt: new Date(Date.now() - 15 * 60000).toISOString(),
-    },
-  ],
-  liveDrives: [
-    {
-      id: 'drv-1',
-      code: 'GFGC-YLK-0726',
-      venue: 'Main Seminar Hall, Ground Floor',
-      driveDate: '2026-08-25',
-      seats: 120,
-      status: 'upcoming',
-      viewCount: 24,
-      collegeName: 'Government First Grade College, Yelahanka',
-    },
-  ],
-  attentionItems: [],
-  lastUpdated: new Date().toISOString(),
+function PulseTile({
+  title,
+  metric,
+  sparklineData,
+  sparklineColor,
+  testId,
+}: {
+  title: string
+  metric: Metric<any>
+  sparklineData: number[] | null
+  sparklineColor?: string
+  testId: string
+}) {
+  const isUnavailable = Boolean(metric.unavailable)
+  const isInsufficient = metric.comparison.status === 'insufficient'
+
+  return (
+    <div
+      data-testid={testId}
+      className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
+    >
+      <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">{title}</span>
+      <div className="my-1.5 flex items-baseline justify-between gap-1">
+        {isUnavailable ? (
+          <span className="text-(--font-size-step--1) text-(--color-muted) font-medium italic">
+            Not yet tracked
+          </span>
+        ) : (
+          <span
+            data-testid="pulse-tile-value"
+            className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)"
+          >
+            {metric.value}
+          </span>
+        )}
+        {!isUnavailable && sparklineData && (
+          <MiniSparkline data={sparklineData} color={sparklineColor} />
+        )}
+      </div>
+      
+      {isUnavailable ? (
+        <span
+          data-testid="pulse-tile-delta"
+          className="text-(--font-size-step--2) font-mono text-(--color-ink-400)"
+        >
+          —
+        </span>
+      ) : isInsufficient ? (
+        <span
+          data-testid="pulse-tile-delta"
+          className="text-(--font-size-step--2) font-mono text-(--color-ink-400) cursor-help"
+          title={`Insufficient data: ${metric.comparison.reason}`}
+        >
+          —
+        </span>
+      ) : (
+        <span
+          data-testid="pulse-tile-delta"
+          className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium"
+        >
+          {metric.comparison.delta} vs prev 7d
+        </span>
+      )}
+    </div>
+  )
 }
 
 export default function PulseDashboardPage() {
-  const [data, setData] = useState<PulseData>(initialPulseData)
-  const [secondsAgo, setSecondsAgo] = useState(0)
+  const [data, setData] = useState<PulseData | null>(null)
+  const [dataUpdatedAt, setDataUpdatedAt] = useState<Date | null>(null)
+  const [freshnessText, setFreshnessText] = useState('Offline')
 
-  const fetchPulse = async () => {
+  const lastFetchTimeRef = useRef<number>(0)
+  const fetchActiveControllerRef = useRef<AbortController | null>(null)
+
+  const fetchPulse = useCallback(async (options?: { silent?: boolean }) => {
+    const nowMs = Date.now()
+    // Coalesce refetches to max once per 10s unless manual force
+    if (options?.silent && nowMs - lastFetchTimeRef.current < 10000) {
+      return
+    }
+
+    if (fetchActiveControllerRef.current) {
+      fetchActiveControllerRef.current.abort()
+    }
+    fetchActiveControllerRef.current = new AbortController()
+
     try {
-      const res = await fetch('/api/console/pulse')
+      const res = await fetch('/api/console/pulse', {
+        signal: fetchActiveControllerRef.current.signal,
+      })
       if (res.ok) {
         const pulse = await res.json()
         setData(pulse)
-        setSecondsAgo(0)
+        setDataUpdatedAt(new Date())
+        lastFetchTimeRef.current = Date.now()
       }
     } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') return
       console.error('Pulse fetch error:', err)
     }
-  }
+  }, [])
 
-  // F7: fetchPulse is also the setInterval callback right below, so it must
-  // stay a stable reference — the initial call is wrapped in an IIFE rather
-  // than inlined.
+  // Subscribe to real-time events without navigation refresh loop
+  const { status } = useRealtime({
+    onEvent: (type) => {
+      // Trigger a silent refetch of the dashboard metrics
+      fetchPulse({ silent: true })
+    },
+  })
+
+  // Poll as absolute backup transport (every 60s when connected, 20s when not)
   useEffect(() => {
-    ;(async () => {
-      await fetchPulse()
-    })()
-    const interval = setInterval(fetchPulse, 30000)
-    const tick = setInterval(() => setSecondsAgo((prev) => prev + 1), 1000)
+    fetchPulse()
+
+    const interval = setInterval(
+      () => {
+        fetchPulse({ silent: true })
+      },
+      status === 'connected' ? 60000 : 20000
+    )
+
     return () => {
       clearInterval(interval)
-      clearInterval(tick)
     }
-  }, [])
+  }, [fetchPulse, status])
+
+  // Update freshness text on a 1-second ticker
+  useEffect(() => {
+    const updateFreshness = () => {
+      setFreshnessText(getFreshnessLabel(dataUpdatedAt, status))
+    }
+    updateFreshness()
+
+    const ticker = setInterval(updateFreshness, 1000)
+    return () => clearInterval(ticker)
+  }, [dataUpdatedAt, status])
+
+  if (!data) {
+    return (
+      <div className="flex items-center justify-center py-24 text-(--color-graphite)">
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded-full border-2 border-(--color-ink-900) border-t-transparent animate-spin" />
+          Loading Operations Pulse...
+        </div>
+      </div>
+    )
+  }
 
   const stagesList = [
     { key: 'received', label: 'Received', color: 'bg-blue-500' },
@@ -178,7 +249,7 @@ export default function PulseDashboardPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header & Live Timestamp */}
+      {/* Header & Live Freshness Label */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
           <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-graphite) tracking-wider font-semibold">
@@ -191,11 +262,11 @@ export default function PulseDashboardPage() {
 
         <div className="flex items-center gap-3">
           <span className="text-(--font-size-step--2) font-mono text-(--color-graphite)">
-            Last updated <strong className="text-(--color-ink-900)">{secondsAgo}s ago</strong>
+            Last updated: <strong className="text-(--color-ink-900)" data-testid="pulse-freshness">{freshnessText}</strong>
           </span>
           <button
             type="button"
-            onClick={fetchPulse}
+            onClick={() => fetchPulse()}
             className="px-2.5 py-1 bg-white border border-(--color-ink-900)/15 rounded text-(--font-size-step--2) font-mono hover:bg-(--color-ink-900)/5 text-(--color-ink-900)"
           >
             Refresh ⟳
@@ -205,107 +276,52 @@ export default function PulseDashboardPage() {
 
       {/* Row 1 — Six KPI Tiles */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        {/* 1. Applications */}
-        <div
-          data-testid="pulse-tile-applications"
-          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
-        >
-          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Applications</span>
-          <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
-              {data.kpis.applications.value}
-            </span>
-            <MiniSparkline data={data.kpis.applications.sparkline} />
-          </div>
-          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
-            {data.kpis.applications.delta} vs prev 7d
-          </span>
-        </div>
+        <PulseTile
+          title="Applications"
+          metric={data.kpis.applications}
+          sparklineData={data.kpis.appSparkline}
+          testId="pulse-tile-applications"
+        />
 
-        {/* 2. Conversion Rate */}
-        <div
-          data-testid="pulse-tile-conversion"
-          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
-        >
-          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Start &rarr; Submit</span>
-          <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
-              {data.kpis.applyConversionRate.value}
-            </span>
-            <MiniSparkline data={data.kpis.applyConversionRate.sparkline} color="#059669" />
-          </div>
-          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
-            {data.kpis.applyConversionRate.delta} vs prev 7d
-          </span>
-        </div>
+        <PulseTile
+          title="Start ➔ Submit"
+          metric={data.kpis.applyConversionRate}
+          sparklineData={data.kpis.conversionSparkline}
+          sparklineColor="#059669"
+          testId="pulse-tile-conversion"
+        />
 
-        {/* 3. Unique Visitors */}
-        <div
-          data-testid="pulse-tile-visitors"
-          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
-        >
-          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Unique Visitors</span>
-          <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
-              {data.kpis.uniqueVisitors.value}
-            </span>
-            <MiniSparkline data={data.kpis.uniqueVisitors.sparkline} color="#2563eb" />
-          </div>
-          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
-            {data.kpis.uniqueVisitors.delta} vs prev 7d
-          </span>
-        </div>
+        <PulseTile
+          title="Unique Visitors"
+          metric={data.kpis.uniqueVisitors}
+          sparklineData={data.kpis.visitorsSparkline}
+          sparklineColor="#2563eb"
+          testId="pulse-tile-visitors"
+        />
 
-        {/* 4. Job Views */}
-        <div
-          data-testid="pulse-tile-views"
-          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
-        >
-          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Job Views</span>
-          <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
-              {data.kpis.jobViews.value}
-            </span>
-            <MiniSparkline data={data.kpis.jobViews.sparkline} color="#7c3aed" />
-          </div>
-          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
-            {data.kpis.jobViews.delta} vs prev 7d
-          </span>
-        </div>
+        <PulseTile
+          title="Job Views"
+          metric={data.kpis.jobViews}
+          sparklineData={data.kpis.viewsSparkline}
+          sparklineColor="#7c3aed"
+          testId="pulse-tile-views"
+        />
 
-        {/* 5. Avg Time */}
-        <div
-          data-testid="pulse-tile-avgtime"
-          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
-        >
-          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Avg. Completion</span>
-          <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
-              {data.kpis.avgTimeToComplete.value}
-            </span>
-            <MiniSparkline data={data.kpis.avgTimeToComplete.sparkline} color="#0d9488" />
-          </div>
-          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
-            {data.kpis.avgTimeToComplete.delta}
-          </span>
-        </div>
+        <PulseTile
+          title="Avg. Completion"
+          metric={data.kpis.avgTimeToComplete}
+          sparklineData={data.kpis.timeSparkline}
+          sparklineColor="#0d9488"
+          testId="pulse-tile-avgtime"
+        />
 
-        {/* 6. Resume Upload Success */}
-        <div
-          data-testid="pulse-tile-resume"
-          className="bg-white border border-(--color-ink-900)/10 rounded-xl p-3.5 flex flex-col justify-between shadow-xs"
-        >
-          <span className="text-(--font-size-step--2) font-medium text-(--color-graphite)">Resume Uploads</span>
-          <div className="my-1.5 flex items-baseline justify-between">
-            <span className="text-(--font-size-step-2) font-mono font-bold tabular-nums text-(--color-ink-900)">
-              {data.kpis.resumeSuccessRate.value}
-            </span>
-            <MiniSparkline data={data.kpis.resumeSuccessRate.sparkline} color="#16a34a" />
-          </div>
-          <span className="text-(--font-size-step--2) font-mono text-(--color-leaf) font-medium">
-            {data.kpis.resumeSuccessRate.delta}
-          </span>
-        </div>
+        <PulseTile
+          title="Resume Uploads"
+          metric={data.kpis.resumeSuccessRate}
+          sparklineData={data.kpis.resumeSparkline}
+          sparklineColor="#16a34a"
+          testId="pulse-tile-resume"
+        />
       </div>
 
       {/* Row 2 — Applications Over Time & Breakdown */}
@@ -320,43 +336,42 @@ export default function PulseDashboardPage() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-(--font-size-step--2) font-mono font-semibold px-2 py-0.5 rounded bg-(--color-marigold)/15 text-(--color-ink-900)">
-              Daily View
+            <span className="text-(--font-size-step--2) font-mono font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-950 border border-amber-300">
+              Live Distribution
             </span>
           </div>
         </div>
 
         {/* Visual Channel Breakdown Bars */}
-        <div className="space-y-3 pt-2">
-          <div className="space-y-1">
-            <div className="flex justify-between text-(--font-size-step--2) font-mono">
-              <span className="font-medium text-(--color-ink-900)">🎓 Campus Drives (QR & Code)</span>
-              <span className="text-(--color-graphite) tabular-nums font-bold">58% · {Math.round(data.kpis.applications.value * 0.58)} apps</span>
+        <div className="space-y-3 pt-2" data-testid="channel-breakdown">
+          {data.channelBreakdown.map((item) => (
+            <div key={item.key} className="space-y-1">
+              <div className="flex justify-between text-(--font-size-step--2) font-mono">
+                <span className="font-medium text-(--color-ink-900)">
+                  {item.key === 'campus_drive' ? '🎓' : item.key === 'organic' ? '🔍' : item.key === 'referral' ? '🤝' : item.key === 'job_board' ? '💼' : '🌐'} {item.label}
+                </span>
+                <span className="text-(--color-graphite) tabular-nums font-bold">
+                  {item.share} · {item.count} apps
+                </span>
+              </div>
+              <div className="h-3 bg-(--color-ink-900)/5 rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full ${
+                    item.key === 'campus_drive'
+                      ? 'bg-(--color-marigold)'
+                      : item.key === 'organic'
+                      ? 'bg-blue-600'
+                      : item.key === 'referral'
+                      ? 'bg-purple-600'
+                      : item.key === 'job_board'
+                      ? 'bg-indigo-600'
+                      : 'bg-emerald-600'
+                  }`}
+                  style={{ width: item.share }}
+                />
+              </div>
             </div>
-            <div className="h-3 bg-(--color-ink-900)/5 rounded-full overflow-hidden">
-              <div className="h-full bg-(--color-marigold) rounded-full" style={{ width: '58%' }} />
-            </div>
-          </div>
-
-          <div className="space-y-1">
-            <div className="flex justify-between text-(--font-size-step--2) font-mono">
-              <span className="font-medium text-(--color-ink-900)">🔍 Organic Search & Direct</span>
-              <span className="text-(--color-graphite) tabular-nums font-bold">27% · {Math.round(data.kpis.applications.value * 0.27)} apps</span>
-            </div>
-            <div className="h-3 bg-(--color-ink-900)/5 rounded-full overflow-hidden">
-              <div className="h-full bg-blue-600 rounded-full" style={{ width: '27%' }} />
-            </div>
-          </div>
-
-          <div className="space-y-1">
-            <div className="flex justify-between text-(--font-size-step--2) font-mono">
-              <span className="font-medium text-(--color-ink-900)">🤝 Employee & Student Referral</span>
-              <span className="text-(--color-graphite) tabular-nums font-bold">15% · {Math.round(data.kpis.applications.value * 0.15)} apps</span>
-            </div>
-            <div className="h-3 bg-(--color-ink-900)/5 rounded-full overflow-hidden">
-              <div className="h-full bg-purple-600 rounded-full" style={{ width: '15%' }} />
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Accessible Data Table Alternative (§14.21) */}
@@ -373,21 +388,13 @@ export default function PulseDashboardPage() {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b border-(--color-ink-900)/5">
-                <td className="py-1">Campus Drives</td>
-                <td className="py-1">58%</td>
-                <td className="py-1 text-right font-mono tabular-nums">{Math.round(data.kpis.applications.value * 0.58)}</td>
-              </tr>
-              <tr className="border-b border-(--color-ink-900)/5">
-                <td className="py-1">Organic Search</td>
-                <td className="py-1">27%</td>
-                <td className="py-1 text-right font-mono tabular-nums">{Math.round(data.kpis.applications.value * 0.27)}</td>
-              </tr>
-              <tr>
-                <td className="py-1">Referral</td>
-                <td className="py-1">15%</td>
-                <td className="py-1 text-right font-mono tabular-nums">{Math.round(data.kpis.applications.value * 0.15)}</td>
-              </tr>
+              {data.channelBreakdown.map((item) => (
+                <tr key={item.key} className="border-b border-(--color-ink-900)/5 last:border-0">
+                  <td className="py-1">{item.label}</td>
+                  <td className="py-1">{item.share}</td>
+                  <td className="py-1 text-right font-mono tabular-nums">{item.count}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </details>
@@ -404,12 +411,16 @@ export default function PulseDashboardPage() {
             <h2 className="text-(--font-size-step-0) font-bold text-(--color-ink-900)">
               Live Activity Stream
             </h2>
-            <span className="w-2 h-2 rounded-full bg-(--color-leaf) animate-pulse" />
+            {status === 'connected' ? (
+              <span className="w-2 h-2 rounded-full bg-(--color-leaf) animate-pulse" title="Live connection active" />
+            ) : (
+              <span className="w-2 h-2 rounded-full bg-(--color-ink-300)" title="Offline / Polling mode active" />
+            )}
           </div>
 
           <div className="flex-1 overflow-y-auto space-y-2.5 pr-1 divide-y divide-(--color-ink-900)/5">
             {data.liveFeed.length === 0 ? (
-              <p className="text-(--font-size-step--1) text-(--color-graphite) py-8 text-center">No activity recorded yet.</p>
+              <p className="text-(--font-size-step--1) text-(--color-graphite) py-8 text-center" data-testid="empty-state">No activity recorded yet.</p>
             ) : (
               data.liveFeed.map((item) => (
                 <div
@@ -508,7 +519,7 @@ export default function PulseDashboardPage() {
               Active schedules, QR allocations & attendance
             </p>
 
-            <div className="space-y-2.5">
+            <div className="space-y-2.5" data-testid="live-drives">
               {data.liveDrives.length === 0 ? (
                 <div className="p-6 text-center text-(--font-size-step--1) text-(--color-graphite)">
                   No live drives scheduled today.
@@ -518,7 +529,7 @@ export default function PulseDashboardPage() {
                   <div key={drv.id} className="p-2.5 rounded-lg border border-(--color-ink-900)/10 bg-(--color-chalk) text-(--font-size-step--1)">
                     <div className="flex items-center justify-between">
                       <span className="font-mono font-bold text-(--color-ink-900)">{drv.code}</span>
-                      <span className="font-mono text-(--font-size-step--2) px-1.5 py-0.5 rounded bg-(--color-leaf)/15 text-(--color-leaf) font-bold uppercase">
+                      <span className="font-mono text-(--font-size-step--2) px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold uppercase">
                         {drv.status}
                       </span>
                     </div>

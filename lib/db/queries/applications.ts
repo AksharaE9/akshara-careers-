@@ -18,15 +18,21 @@ import {
   auditLog,
   applicationStageEvents,
 } from '@/lib/db/schema'
-import { eq, and, desc, sql, or, ilike, SQL } from 'drizzle-orm'
+import { eq, and, desc, sql, or, ilike, gte, lt, SQL } from 'drizzle-orm'
+import { istDayStart, istDayEndExclusive } from '@/lib/date/ist'
 
-export type ApplicationStage = NonNullable<typeof applications.$inferSelect.stage>
+import { ALL_STAGES, ApplicationStage } from '@/lib/console/stages'
+export type { ApplicationStage }
 
 export interface ApplicationFilterOptions {
   stage?: string | undefined
   jobId?: string | undefined
   driveId?: string | undefined
   query?: string | undefined
+  from?: string | undefined // YYYY-MM-DD in IST
+  to?: string | undefined // YYYY-MM-DD in IST
+  startDate?: Date | null | undefined
+  endDateExclusive?: Date | null | undefined
   limit?: number | undefined
   offset?: number | undefined
   /**
@@ -38,6 +44,16 @@ export interface ApplicationFilterOptions {
    * anything rendering a paginated UI.
    */
   unpaginated?: boolean | undefined
+}
+
+import { broadcastConsoleEvent } from '@/lib/realtime/broadcast'
+
+// Short in-memory stats cache to prevent repeated database aggregation queries
+let cachedStats: { data: Record<string, number>; timestamp: number } | null = null
+const STATS_CACHE_TTL_MS = 3000
+
+export function invalidateStatsCache() {
+  cachedStats = null
 }
 
 export async function getApplicationsList(filters: ApplicationFilterOptions = {}) {
@@ -55,6 +71,7 @@ export async function getApplicationsList(filters: ApplicationFilterOptions = {}
 
   // Dynamic parameterized filter conditions
   const conditions: SQL[] = []
+  const hasCandidateSearch = Boolean(filters.query && filters.query.trim())
 
   if (filters.stage && filters.stage !== 'all') {
     conditions.push(eq(applications.stage, filters.stage as ApplicationStage))
@@ -68,8 +85,26 @@ export async function getApplicationsList(filters: ApplicationFilterOptions = {}
     conditions.push(eq(applications.driveId, filters.driveId))
   }
 
-  if (filters.query && filters.query.trim()) {
-    const q = `%${filters.query.trim()}%`
+  // IST Date range filtering with half-open interval [startDate, endDateExclusive) (§20.1.2)
+  let startDate = filters.startDate
+  let endDateExclusive = filters.endDateExclusive
+
+  if (!startDate && filters.from) {
+    startDate = istDayStart(filters.from)
+  }
+  if (!endDateExclusive && filters.to) {
+    endDateExclusive = istDayEndExclusive(filters.to)
+  }
+
+  if (startDate) {
+    conditions.push(gte(applications.submittedAt, startDate))
+  }
+  if (endDateExclusive) {
+    conditions.push(lt(applications.submittedAt, endDateExclusive))
+  }
+
+  if (hasCandidateSearch) {
+    const q = `%${filters.query!.trim()}%`
     conditions.push(
       or(
         ilike(candidates.fullName, q),
@@ -82,7 +117,19 @@ export async function getApplicationsList(filters: ApplicationFilterOptions = {}
 
   const whereClause = conditions.length > 0 ? and(...conditions) : undefined
 
-  // Run data query and total count query in parallel
+  // Run data query and total count query in parallel.
+  // When no candidate text search is performed, count directly on applications for maximum speed.
+  const countQuery = hasCandidateSearch
+    ? db
+        .select({ count: sql<number>`count(*)::int` })
+        .from(applications)
+        .innerJoin(candidates, eq(applications.candidateId, candidates.id))
+        .where(whereClause)
+    : db
+        .select({ count: sql<number>`count(*)::int` })
+        .from(applications)
+        .where(whereClause)
+
   const [dataRows, countRows] = await Promise.all([
     db
       .select({
@@ -123,11 +170,7 @@ export async function getApplicationsList(filters: ApplicationFilterOptions = {}
       .limit(limit)
       .offset(offset),
 
-    db
-      .select({ count: sql<number>`count(*)::int` })
-      .from(applications)
-      .innerJoin(candidates, eq(applications.candidateId, candidates.id))
-      .where(whereClause),
+    countQuery,
   ])
 
   const totalCount = countRows[0]?.count || 0
@@ -144,8 +187,41 @@ export async function getApplicationsList(filters: ApplicationFilterOptions = {}
   }
 }
 
-export async function getApplicationStats() {
+export async function getApplicationStats(dateFilter?: {
+  from?: string | undefined
+  to?: string | undefined
+  startDate?: Date | null | undefined
+  endDateExclusive?: Date | null | undefined
+}) {
+  const hasDateFilter = Boolean(
+    dateFilter?.from || dateFilter?.to || dateFilter?.startDate || dateFilter?.endDateExclusive
+  )
+
+  if (!hasDateFilter && cachedStats && Date.now() - cachedStats.timestamp < STATS_CACHE_TTL_MS) {
+    return cachedStats.data
+  }
+
   const db = getDb()
+  const conditions: SQL[] = []
+
+  let startDate = dateFilter?.startDate
+  let endDateExclusive = dateFilter?.endDateExclusive
+
+  if (!startDate && dateFilter?.from) {
+    startDate = istDayStart(dateFilter.from)
+  }
+  if (!endDateExclusive && dateFilter?.to) {
+    endDateExclusive = istDayEndExclusive(dateFilter.to)
+  }
+
+  if (startDate) {
+    conditions.push(gte(applications.submittedAt, startDate))
+  }
+  if (endDateExclusive) {
+    conditions.push(lt(applications.submittedAt, endDateExclusive))
+  }
+
+  const whereClause = conditions.length > 0 ? and(...conditions) : undefined
 
   const stageCounts = await db
     .select({
@@ -153,18 +229,14 @@ export async function getApplicationStats() {
       count: sql<number>`count(*)::int`,
     })
     .from(applications)
+    .where(whereClause)
     .groupBy(applications.stage)
 
   const statsMap: Record<string, number> = {
     total: 0,
-    received: 0,
-    under_review: 0,
-    shortlisted: 0,
-    interview_scheduled: 0,
-    interviewed: 0,
-    offered: 0,
-    hired: 0,
-    rejected: 0,
+  }
+  for (const s of ALL_STAGES) {
+    statsMap[s] = 0
   }
 
   let total = 0
@@ -174,6 +246,9 @@ export async function getApplicationStats() {
   })
   statsMap.total = total
 
+  if (!hasDateFilter) {
+    cachedStats = { data: statsMap, timestamp: Date.now() }
+  }
   return statsMap
 }
 
@@ -198,30 +273,39 @@ export async function getApplicationById(id: string) {
       resumeMime: applications.resumeMime,
       source: applications.source,
       consentGivenAt: applications.consentGivenAt,
+      consentVersion: applications.consentVersion,
       submittedAt: applications.submittedAt,
       // Candidate
       candidateId: candidates.id,
       candidateName: candidates.fullName,
       candidateEmail: candidates.emailNormalised,
       candidatePhone: candidates.phoneE164,
+      gender: candidates.gender,
+      homeCity: candidates.homeCity,
+      homeState: candidates.homeState,
       candidateLanguages: candidates.languages,
+      languages: candidates.languages,
       whatsappOptIn: candidates.whatsappOptIn,
       // Job
       jobId: applications.jobId,
       jobTitle: sql<string>`coalesce(${jobs.title}, 'Business Development Executive')`,
       jobSlug: sql<string>`coalesce(${jobs.slug}, 'business-development-executive')`,
-      jobFamily: sql<string>`coalesce(${jobs.family}, 'Sales')`,
+      jobFamily: sql<string>`coalesce(${jobs.family}, 'Operations')`,
       // Drive
       driveId: campusDrives.id,
       driveCode: campusDrives.code,
-      driveVenue: campusDrives.venue,
       // College & Course
       collegeId: applications.collegeId,
-      collegeRaw: applications.collegeRaw,
+      collegeName: sql<string>`coalesce(${colleges.name}, ${applications.collegeRaw})`,
       collegeCanonicalName: colleges.name,
+      collegeRaw: applications.collegeRaw,
+      collegeCity: colleges.city,
       courseId: applications.courseId,
-      courseRaw: applications.courseRaw,
+      courseName: sql<string>`coalesce(${courses.name}, ${applications.courseRaw})`,
       courseCanonicalName: courses.name,
+      courseRaw: applications.courseRaw,
+      courseSpecialisation: courses.specialisation,
+      courseLevel: courses.level,
     })
     .from(applications)
     .innerJoin(candidates, eq(applications.candidateId, candidates.id))
@@ -234,18 +318,18 @@ export async function getApplicationById(id: string) {
 
   if (!rows[0]) return null
 
-  // Fetch interview / recruiter notes
+  // Fetch application notes
   const notes = await db
     .select({
       id: applicationNotes.id,
       body: applicationNotes.body,
       createdAt: applicationNotes.createdAt,
-      authorName: users.name,
-      authorEmail: users.email,
+      authorId: applicationNotes.authorId,
+      authorName: sql<string>`coalesce(${users.name}, 'Recruiter')`,
       authorRole: users.role,
     })
     .from(applicationNotes)
-    .innerJoin(users, eq(applicationNotes.authorId, users.id))
+    .leftJoin(users, eq(applicationNotes.authorId, users.id))
     .where(eq(applicationNotes.applicationId, id))
     .orderBy(desc(applicationNotes.createdAt))
 
@@ -270,26 +354,8 @@ export async function updateApplicationStage(
 
   if (!prev[0]) throw new Error('Application not found')
 
-  const validStages = [
-    'received',
-    'under_review',
-    'shortlisted',
-    'interview_scheduled',
-    'interviewed',
-    'offered',
-    'hired',
-    'rejected',
-    'withdrawn',
-    'duplicate',
-  ] as const
-
-  // newStage arrives as an untrusted string from the request body (see
-  // app/api/console/applications/[id]/stage/route.ts) — this is the real
-  // runtime validation gate, not just a type-level nicety. A proper type
-  // guard narrows newStage to ApplicationStage for both this check and the
-  // .set() below, instead of casting past the check with `as any` twice.
   const isValidStage = (s: string): s is ApplicationStage =>
-    (validStages as readonly string[]).includes(s)
+    (ALL_STAGES as readonly string[]).includes(s)
 
   if (!isValidStage(newStage)) {
     throw new Error(`Invalid stage: ${newStage}`)
@@ -325,6 +391,13 @@ export async function updateApplicationStage(
     after: { stage: newStage },
   })
 
+  // Invalidate in-memory cache and broadcast real-time SSE event to all recruiters
+  invalidateStatsCache()
+  broadcastConsoleEvent({
+    type: 'application:stage_updated',
+    data: { id: applicationId, stage: newStage, actorId: actorId ?? null },
+  })
+
   return { success: true, oldStage: prev[0].stage, newStage }
 }
 
@@ -355,6 +428,12 @@ export async function addApplicationNote(
     entityType: 'application',
     entityId: applicationId,
     after: { noteId: note.id, bodyLength: body.length },
+  })
+
+  // Broadcast real-time note event
+  broadcastConsoleEvent({
+    type: 'application:note_added',
+    data: { id: applicationId, noteId: note.id },
   })
 
   return note

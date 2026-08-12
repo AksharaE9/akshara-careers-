@@ -4,6 +4,7 @@
  * §2.6 — Wraps all form fields with label, hint, error, required marker.
  * Used by Input, Textarea, Select, Combobox, etc.
  * Implements ARIA best practices: label[for], aria-describedby, aria-invalid.
+ * Required asterisk uses --color-rust per §21.1.
  */
 
 import type { ReactNode } from 'react'
@@ -35,20 +36,19 @@ export function FieldWrapper({
   const hintId = hint ? `${id}-hint` : undefined
   const errorId = error ? `${id}-error` : undefined
 
-  // Clone children to inject aria props — children should be a single form element
   return (
     <div
-      className={`flex flex-col gap-2 ${className}`}
+      className={`flex flex-col gap-1.5 w-full ${className}`}
       data-testid={testId}
     >
       <label
         htmlFor={id}
-        className="text-(--font-size-step--1) font-semibold text-(--color-text-on-dark) [data-ground=light]:text-(--color-text-on-light) leading-tight"
+        className="text-[clamp(0.80rem,0.77rem+0.15vw,0.89rem)] font-semibold text-(--color-ink) leading-tight"
       >
         {label}
         {required && (
           <span
-            className="ml-1 text-(--color-amber-400)"
+            className="ml-1 text-(--color-rust) font-bold"
             aria-hidden="true"
           >
             *
@@ -57,14 +57,14 @@ export function FieldWrapper({
         {required && <span className="sr-only">(required)</span>}
       </label>
 
-      <div className="relative">
+      <div className="relative w-full">
         {children}
       </div>
 
       {hint && !error && (
         <p
           id={hintId}
-          className="text-(--font-size-step--2) text-(--color-text-on-dark-muted) [data-ground=light]:text-(--color-text-on-light-muted) leading-snug"
+          className="text-[clamp(0.69rem,0.66rem+0.12vw,0.78rem)] text-(--color-muted) leading-snug"
         >
           {hint}
         </p>
@@ -75,7 +75,7 @@ export function FieldWrapper({
           id={errorId}
           role="alert"
           data-testid={`error-${id}`}
-          className="flex items-center gap-1.5 text-(--font-size-step--2) text-red-400 font-medium leading-snug"
+          className="flex items-center gap-1.5 text-[clamp(0.69rem,0.66rem+0.12vw,0.78rem)] text-(--color-kumkum) font-medium leading-snug"
         >
           <svg
             width="14"
@@ -98,10 +98,6 @@ export function FieldWrapper({
 
 /**
  * Helper to build aria-describedby string from hint/error IDs.
- * Used inside Input, Textarea, etc. to wire up the correct IDs.
- *
- * Usage in Input:
- *   aria-describedby={buildDescribedBy(id, { hint, error })}
  */
 export function buildDescribedBy(
   id: string,

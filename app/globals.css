@@ -1,42 +1,84 @@
 @import "tailwindcss";
 
 @theme {
-  /* ---- Palette Tokens (§18.2) ---- */
-  --color-ink-950: #0A1220;
-  --color-ink-900: #0F1A2E;
-  --color-ink-800: #16243D;
-  --color-ink-700: #1C2E4A;
-  --color-ink-600: #22354F;
-  --color-ink-500: #4A6892;
+  /* ---- Part 21 Palette Tokens — Warm Light Theme System ---- */
+  --color-white:      #FFFFFF; /* Pure white: cards on cream, inputs, modals, table body */
+  --color-paper:      #FDFBF7; /* Warm paper: default page ground, header bar */
+  --color-cream:      #F4EEE1; /* Warm cream: alternating sections, hero, table header */
+  --color-sand:       #EAE1CE; /* Warm sand: footer, emphasis bands, badges */
+  --color-sand-deep:  #DDD1B8; /* Deep sand: pull quotes, active rows */
 
-  --color-frost-50:  #F7FAFD;
-  --color-frost-100: #EEF4FB;
-  --color-frost-200: #DFE9F5;
-  --color-frost-300: #C6D6E8;
+  /* Warm Ink Typography (§21.3) */
+  --color-ink:           #1C1814; /* 15.26:1 on cream — All primary body and headings */
+  --color-ink-soft:      #2B2620; /* 12.97:1 on sand — Headings on sand, hover states */
+  --color-muted:         #6E6153; /* 5.19:1 on cream — Secondary text */
+  --color-muted-strong:  #5C5145; /* 6.68:1 on sand — Secondary text on sand */
 
-  --color-text-on-dark:       #E9EFF8;
-  --color-text-on-dark-muted: #A9BAD1;
-  --color-text-on-light:       #0F1A2E;
-  --color-text-on-light-muted: #4A5D77;
+  /* Structural Borders (§21.2) */
+  --color-hairline:   #E3D9C6; /* Decorative row separators, section dividers */
+  --color-border:     #8B7D67; /* 3.47:1 on cream, 3.09:1 on sand — Inputs, selects, buttons */
 
-  --color-amber-400: #F0A93B;
-  --color-amber-500: #D98A1F;
+  /* Accents & Signals */
+  --color-rust:       #A8432A; /* Single accent & focus color sitewide (5.80:1 paper, 5.19:1 cream, 4.62:1 sand) */
+  --color-amber:      #E8A33D; /* Fills only (.btn--accent) or inside .ink-band */
+  --color-amber-press:#D97706; /* Hover state for amber fills */
+  --color-leaf:       #2E6B48; /* Success indicator */
+  --color-kumkum:     #A8201A; /* Error & destructive actions */
+  --color-warning:    #9A6B10; /* Warning badges & icons (4.05:1 on cream) */
 
-  /* Aliases & Semantic Compatibility */
-  --color-marigold:       #F0A93B;
-  --color-marigold-press: #D98A1F;
-  --color-leaf:   #2E6B4F;
-  --color-kumkum: #C0392B;
-  --color-paper:  #EEF4FB;
-  --color-chalk:  #F7FAFD;
-  --color-graphite: #4A5D77;
+  /* Warm-adjusted Data Series Palette for Console / Stages (§21.5) */
+  --color-series-1:   #7A4B22; /* Warm Ochre / Cognac */
+  --color-series-2:   #4A5D3F; /* Warm Sage / Olive */
+  --color-series-3:   #8A6140; /* Terracotta */
+  --color-series-4:   #4A586E; /* Warm Slate */
+  --color-series-5:   #73566B; /* Plum / Heather */
+  --color-series-6:   #3E6958; /* Deep Forest */
+
+  /* Backward Compatibility Aliases */
+  --color-ink-950:    #1C1814;
+  --color-ink-900:    #1C1814;
+  --color-ink-800:    #2B2620;
+  --color-ink-700:    #403932;
+  --color-ink-600:    #5C5145;
+  --color-ink-500:    #6E6153;
+  --color-ink-400:    #8B7D67;
+  --color-ink-300:    #C4B69A;
+  --color-ink-200:    #E3D9C6;
+  --color-ink-100:    #F4EEE1;
+
+  --color-text-on-dark:       #1C1814;
+  --color-text-on-dark-muted: #6E6153;
+  --color-text-on-light:       #1C1814;
+  --color-text-on-light-muted: #6E6153;
+
+  --color-amber-400:  #E8A33D;
+  --color-amber-500:  #D97706;
+  --color-marigold:   #E8A33D;
+  --color-marigold-press: #D97706;
+  --color-chalk:      #FFFFFF;
+  --color-graphite:   #1C1814;
+
+  /* Spacing Tokens */
+  --spacing-s1: 4px;
+  --spacing-s2: 8px;
+  --spacing-s3: 12px;
+  --spacing-s4: 16px;
+  --spacing-s5: 24px;
+  --spacing-s6: 32px;
+  --spacing-s7: 48px;
+  --spacing-s8: 64px;
+
+  /* Animation Durations */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
 
   /* ---- Type Tokens ---- */
   --font-display: var(--font-bricolage), 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-sans:    var(--font-inter-tight), 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono:    var(--font-geist-mono), 'Geist Mono', ui-monospace, monospace;
 
-  /* Fluid type scale (§18.4) — tightened step-5 peaks at 3.75rem */
+  /* Fluid type scale (§18.4) */
   --text-step--2: clamp(0.69rem, 0.66rem + 0.12vw, 0.78rem);
   --text-step--1: clamp(0.80rem, 0.77rem + 0.15vw, 0.89rem);
   --text-step-0:  clamp(1.00rem, 0.95rem + 0.25vw, 1.13rem);
@@ -79,8 +121,8 @@
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
   body {
-    background-color: var(--color-ink-950);
-    color: var(--color-text-on-dark);
+    background-color: var(--color-paper);
+    color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: var(--text-step-0);
     line-height: 1.6;
@@ -88,26 +130,76 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Universal high-contrast typing rules for all form elements */
+  input, textarea, select {
+    color: var(--color-ink) !important;
+  }
+  input::placeholder, textarea::placeholder {
+    color: var(--color-muted) !important;
+    opacity: 1 !important;
+  }
+
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     line-height: 1.15;
     letter-spacing: -0.025em;
     text-wrap: balance;
+    color: var(--color-ink);
   }
 
-  /* Focus ring management (§18.2) */
+  /* Focus ring management (§21.1: Rust focus ring everywhere) */
   :focus-visible {
-    outline: 2px solid var(--color-amber-400);
-    outline-offset: 2px;
-  }
-
-  [data-ground="light"] :focus-visible {
-    outline: 2px solid var(--color-ink-900);
+    outline: 2px solid var(--color-rust);
     outline-offset: 2px;
   }
 }
 
-/* Control primitives (§18.3) */
+/* Structural: Adjacent same-ground sections auto-draw a hairline (§21.2) */
+[data-ground="cream"] + [data-ground="cream"],
+[data-ground="paper"] + [data-ground="paper"],
+[data-ground="sand"] + [data-ground="sand"],
+[data-ground="white"] + [data-ground="white"] {
+  border-top: 1px solid var(--color-hairline);
+}
+
+/* Section grounds */
+[data-ground="white"] {
+  background-color: var(--color-white);
+  color: var(--color-ink);
+}
+[data-ground="paper"] {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+[data-ground="cream"] {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+}
+[data-ground="sand"] {
+  background-color: var(--color-sand);
+  color: var(--color-ink);
+}
+
+/* Full-bleed Ink Band (§21.4) */
+.ink-band,
+[data-ground="ink"] {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+}
+.ink-band h1, .ink-band h2, .ink-band h3, .ink-band h4,
+[data-ground="ink"] h1, [data-ground="ink"] h2, [data-ground="ink"] h3, [data-ground="ink"] h4 {
+  color: var(--color-paper);
+}
+.ink-band p, .ink-band span,
+[data-ground="ink"] p, [data-ground="ink"] span {
+  color: var(--color-paper);
+}
+.ink-band .heading-block-eyebrow,
+[data-ground="ink"] .heading-block-eyebrow {
+  color: var(--color-amber); /* Amber text legal inside .ink-band (8.18:1) */
+}
+
+/* Control primitives (§18.3 & §21.4) */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -134,12 +226,6 @@
 }
 
 .btn--sm {
-  /* F11: was 36px — under the 44px WCAG 2.5.5 tap-target floor. Confirmed
-     by design-integrity.spec.ts's mobile tap-target check (10 elements
-     under 44x44 on /careers, all height-only shortfalls, several tracing
-     to this shared class). Raising this affects every .btn--sm consumer,
-     not just the ones the test happened to catch on /careers — same class
-     of fix as F1/F4's "check every consumer of a shared token" lesson. */
   height: 44px;
   padding-left: 14px;
   padding-right: 14px;
@@ -158,47 +244,49 @@
   font-size: var(--text-step-1);
 }
 
+/* Primary Button: Ink fill, paper text (17.07:1 ratio, §21.4) */
 .btn--primary {
-  background-color: var(--color-amber-400);
-  color: var(--color-ink-950) !important;
+  background-color: var(--color-ink);
+  color: var(--color-paper) !important;
+  font-weight: 700;
+  border: 1px solid var(--color-ink);
 }
 .btn--primary:hover {
-  background-color: var(--color-amber-500);
+  background-color: var(--color-ink-soft);
+  border-color: var(--color-ink-soft);
 }
 
+/* Secondary Button: White fill, ink text, 3:1 border */
 .btn--secondary {
-  background-color: transparent;
-  color: var(--color-text-on-dark);
-  border-color: var(--color-ink-500);
+  background-color: var(--color-white);
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
 }
 .btn--secondary:hover {
-  background-color: var(--color-ink-800);
-  border-color: var(--color-text-on-dark-muted);
-}
-[data-ground="light"] .btn--secondary {
-  color: var(--color-text-on-light);
-  border-color: var(--color-frost-300);
-}
-[data-ground="light"] .btn--secondary:hover {
-  background-color: var(--color-frost-200);
-  border-color: var(--color-text-on-light-muted);
+  background-color: var(--color-cream);
+  border-color: var(--color-ink);
 }
 
+/* Accent Button: Amber fill, ink text (8.18:1 ratio, §21.1) */
+.btn--accent {
+  background-color: var(--color-amber);
+  color: var(--color-ink) !important;
+  font-weight: 700;
+}
+.btn--accent:hover {
+  background-color: var(--color-amber-press);
+}
+
+/* Ghost Button */
 .btn--ghost {
   background-color: transparent;
-  color: var(--color-text-on-dark);
+  color: var(--color-ink);
 }
 .btn--ghost:hover {
-  background-color: var(--color-ink-800);
-}
-[data-ground="light"] .btn--ghost {
-  color: var(--color-text-on-light);
-}
-[data-ground="light"] .btn--ghost:hover {
-  background-color: var(--color-frost-200);
+  background-color: var(--color-cream);
 }
 
-/* Input & Select controls (§18.3) */
+/* Input & Select controls (§18.3 & §21.2) */
 .input-control,
 .select-control {
   display: inline-flex;
@@ -212,25 +300,16 @@
   font-family: var(--font-sans);
   font-size: var(--text-step-0);
   line-height: 1;
-  background-color: var(--color-frost-50);
-  border: 1px solid var(--color-frost-300);
-  color: var(--color-text-on-light);
-  transition: border-color 0.15s ease;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  color: var(--color-ink) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .input-control:focus,
 .select-control:focus {
   outline: none;
-  border-color: var(--color-ink-900);
-}
-[data-ground="dark"] .input-control,
-[data-ground="dark"] .select-control {
-  background-color: var(--color-ink-800);
-  border-color: var(--color-ink-500);
-  color: var(--color-text-on-dark);
-}
-[data-ground="dark"] .input-control:focus,
-[data-ground="dark"] .select-control:focus {
-  border-color: var(--color-amber-400);
+  border-color: var(--color-rust);
+  box-shadow: 0 0 0 2px rgba(168, 67, 42, 0.25);
 }
 
 /* Sections & rhythm (§18.4) */
@@ -250,36 +329,35 @@
 .heading-block {
   margin-bottom: 40px;
 }
+.eyebrow,
 .heading-block-eyebrow {
   font-family: var(--font-mono);
   font-size: var(--text-step--1);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 600;
-  color: var(--color-amber-400);
+  font-weight: 700;
+  color: var(--color-rust); /* Rust replaces amber text (§21.1) */
   display: block;
   margin-bottom: 10px;
-}
-[data-ground="light"] .heading-block-eyebrow {
-  color: var(--color-text-on-light-muted);
 }
 
 .heading-block-title {
   font-family: var(--font-display);
   font-weight: 700;
-  color: var(--color-text-on-dark);
+  color: var(--color-ink);
   margin-bottom: 16px;
-}
-[data-ground="light"] .heading-block-title {
-  color: var(--color-text-on-light);
 }
 
 .heading-block-sub {
   font-size: var(--text-step-0);
-  color: var(--color-text-on-dark-muted);
+  color: var(--color-muted);
   max-width: 60ch;
   line-height: 1.6;
 }
-[data-ground="light"] .heading-block-sub {
-  color: var(--color-text-on-light-muted);
+
+/* Warm card shadow */
+.card-warm {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-hairline);
+  box-shadow: 0 2px 8px rgba(60, 46, 28, 0.08);
 }

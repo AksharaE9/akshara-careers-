@@ -43,10 +43,10 @@ export function TalentPoolForm() {
   if (submitted) {
     return (
       <div className="text-center py-6">
-        <span className="font-mono text-(--color-leaf) font-bold text-(--font-size-step-0) block mb-2">
+        <span className="font-mono text-(--color-leaf) font-bold text-[clamp(1.00rem,0.95rem+0.25vw,1.13rem)] block mb-2">
           ✓ Profile Registered
         </span>
-        <p className="text-(--font-size-step--1) text-(--color-text-on-dark-muted)">
+        <p className="text-[clamp(0.80rem,0.77rem+0.15vw,0.89rem)] text-(--color-muted)">
           Thank you, {fullName}. Our recruitment team will review your profile and reach out when relevant opportunities open.
         </p>
       </div>
@@ -56,13 +56,13 @@ export function TalentPoolForm() {
   return (
     <form data-testid="talent-pool-form" onSubmit={handleSubmit} className="flex flex-col gap-4">
       {error && (
-        <div className="p-3 bg-(--color-kumkum)/20 border border-(--color-kumkum) rounded-md text-(--font-size-step--1) text-(--color-text-on-dark)">
+        <div className="p-3 bg-red-50 border border-red-200 rounded-md text-[clamp(0.80rem,0.77rem+0.15vw,0.89rem)] text-(--color-kumkum) font-medium">
           {error}
         </div>
       )}
 
       <div>
-        <label htmlFor="talent-full-name" className="block text-(--font-size-step--1) font-mono uppercase text-(--color-text-on-dark-muted) mb-1.5 font-medium">
+        <label htmlFor="talent-full-name" className="block text-[clamp(0.80rem,0.77rem+0.15vw,0.89rem)] font-semibold text-(--color-ink) mb-1.5">
           Full Name
         </label>
         <input
@@ -73,12 +73,12 @@ export function TalentPoolForm() {
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           placeholder="e.g. Rahul Sharma"
-          className="w-full h-12 px-3.5 bg-(--color-ink-800) border border-(--color-ink-500) rounded-md text-(--color-text-on-dark) text-(--font-size-step-0) placeholder:text-(--color-text-on-dark-muted)/50 focus-visible:outline-2 focus-visible:outline-(--color-amber-400)"
+          className="input-control w-full h-12"
         />
       </div>
 
       <div>
-        <label htmlFor="talent-email" className="block text-(--font-size-step--1) font-mono uppercase text-(--color-text-on-dark-muted) mb-1.5 font-medium">
+        <label htmlFor="talent-email" className="block text-[clamp(0.80rem,0.77rem+0.15vw,0.89rem)] font-semibold text-(--color-ink) mb-1.5">
           Email Address
         </label>
         <input
@@ -89,12 +89,12 @@ export function TalentPoolForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="e.g. rahul.sharma@gmail.com"
-          className="w-full h-12 px-3.5 bg-(--color-ink-800) border border-(--color-ink-500) rounded-md text-(--color-text-on-dark) text-(--font-size-step-0) placeholder:text-(--color-text-on-dark-muted)/50 focus-visible:outline-2 focus-visible:outline-(--color-amber-400)"
+          className="input-control w-full h-12"
         />
       </div>
 
       <div>
-        <label htmlFor="talent-domain" className="block text-(--font-size-step--1) font-mono uppercase text-(--color-text-on-dark-muted) mb-1.5 font-medium">
+        <label htmlFor="talent-domain" className="block text-[clamp(0.80rem,0.77rem+0.15vw,0.89rem)] font-semibold text-(--color-ink) mb-1.5">
           Domain of Interest
         </label>
         <select
@@ -102,7 +102,7 @@ export function TalentPoolForm() {
           aria-label="Domain of Interest"
           value={domainInterest}
           onChange={(e) => setDomainInterest(e.target.value)}
-          className="w-full h-12 px-3.5 bg-(--color-ink-800) border border-(--color-ink-500) rounded-md text-(--color-text-on-dark) text-(--font-size-step-0) focus-visible:outline-2 focus-visible:outline-(--color-amber-400)"
+          className="select-control w-full h-12"
         >
           <option value="Sales & Business Development">Sales & Business Development</option>
           <option value="Operations & Verification">Operations & Verification</option>
@@ -115,7 +115,7 @@ export function TalentPoolForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="btn btn--md btn--primary w-full sm:w-auto min-w-[180px]"
+          className="btn btn--md btn--primary w-full sm:w-auto min-w-[180px] font-bold"
         >
           {submitting ? 'Registering...' : 'Join Talent Pool →'}
         </button>

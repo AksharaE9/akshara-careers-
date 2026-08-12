@@ -9,7 +9,7 @@ import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
 import { getDb } from '@/lib/db/client'
 import { auditLog, users } from '@/lib/db/schema'
-import { desc, eq } from 'drizzle-orm'
+import { desc, eq, sql } from 'drizzle-orm'
 
 export async function GET() {
   try {
@@ -20,9 +20,9 @@ export async function GET() {
 
     const db = getDb()
 
-    const logs = await db
+    const rawLogs = await db
       .select({
-        id: auditLog.id,
+        id: sql<string>`${auditLog.id}::text`,
         action: auditLog.action,
         entityType: auditLog.entityType,
         entityId: auditLog.entityId,
@@ -38,8 +38,14 @@ export async function GET() {
       .orderBy(desc(auditLog.createdAt))
       .limit(50)
 
+    const logs = rawLogs.map((log) => ({
+      ...log,
+      id: String(log.id),
+    }))
+
     return NextResponse.json({ logs })
-  } catch {
+  } catch (err) {
+    console.error('Audit route error:', err)
     return NextResponse.json({ error: 'Failed to query audit log' }, { status: 500 })
   }
 }

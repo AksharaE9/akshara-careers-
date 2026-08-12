@@ -3,6 +3,7 @@
  *
  * Public Candidate Self-Serve Status Tracker.
  * Accessed via 32-char opaque token without exposing full candidate PII.
+ * Updated for Part 21 warm light theme with rust accents.
  */
 
 import { notFound } from 'next/navigation'
@@ -10,6 +11,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Card } from '@/components/ui/Card'
 import { getApplicationByToken } from '@/lib/db/queries/applications'
+import { formatISTDate } from '@/lib/date/ist'
 
 interface StatusPageProps {
   params: Promise<{
@@ -56,39 +58,39 @@ export default async function CandidateStatusPage({ params }: StatusPageProps) {
   const activeIdx = getStageIndex(app.stage)
 
   return (
-    <div className="min-h-screen bg-(--color-paper) flex flex-col font-sans">
+    <div className="min-h-screen bg-(--color-paper) text-(--color-ink) flex flex-col font-sans">
       <Header />
 
       <main className="mx-auto max-w-2xl w-full px-(--spacing-s4) py-(--spacing-s8) flex-1 flex flex-col gap-(--spacing-s6)">
         <div>
-          <span className="eyebrow text-(--color-marigold)">Application Status</span>
-          <h1 className="display text-(--font-size-step-3) font-bold text-(--color-ink-900) mt-1">
+          <span className="eyebrow text-(--color-rust)">Application Status</span>
+          <h1 className="display text-(--font-size-step-3) font-bold text-(--color-ink) mt-1">
             Track Your Application
           </h1>
-          <p className="text-(--font-size-step-0) text-(--color-graphite) mt-1">
+          <p className="text-(--font-size-step-0) text-(--color-muted) mt-1">
             Hello {app.candidateFirstName || 'there'}, here is the live status of your application for the{' '}
-            <span className="font-semibold text-(--color-ink-900)">{app.jobTitle}</span> opening.
+            <span className="font-semibold text-(--color-ink)">{app.jobTitle}</span> opening.
           </p>
         </div>
 
         {/* Status Card */}
-        <Card className="p-(--spacing-s6) bg-(--color-chalk) border border-(--color-ink-900)/10 shadow-md flex flex-col gap-(--spacing-s6)">
+        <Card className="p-(--spacing-s6) bg-white border border-(--color-hairline) shadow-md flex flex-col gap-(--spacing-s6)">
           {/* Header Summary */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-(--color-ink-900)/10 pb-4 gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-(--color-hairline) pb-4 gap-2">
             <div>
-              <span className="text-(--font-size-step--2) text-(--color-ink-400) uppercase font-mono block">
+              <span className="text-(--font-size-step--2) text-(--color-muted) uppercase font-mono block">
                 Application Reference
               </span>
-              <span className="font-mono font-bold text-(--font-size-step-1) text-(--color-marigold)">
+              <span className="font-mono font-bold text-(--font-size-step-1) text-(--color-rust)">
                 {app.publicId}
               </span>
             </div>
             <div className="text-left sm:text-right">
-              <span className="text-(--font-size-step--2) text-(--color-ink-400) uppercase font-mono block">
+              <span className="text-(--font-size-step--2) text-(--color-muted) uppercase font-mono block">
                 Submitted On
               </span>
-              <span className="font-mono text-(--font-size-step--1) text-(--color-graphite)">
-                {new Date(app.submittedAt).toLocaleDateString()}
+              <span className="font-mono text-(--font-size-step--1) text-(--color-muted-strong)">
+                {formatISTDate(app.submittedAt)}
               </span>
             </div>
           </div>
@@ -107,8 +109,8 @@ export default async function CandidateStatusPage({ params }: StatusPageProps) {
                         isPast
                           ? 'bg-(--color-leaf) text-white'
                           : isCurrent
-                          ? 'bg-(--color-marigold) text-white ring-4 ring-(--color-marigold)/20'
-                          : 'bg-(--color-ink-900)/10 text-(--color-ink-400)'
+                          ? 'bg-(--color-rust) text-white ring-4 ring-(--color-rust)/20'
+                          : 'bg-(--color-sand) text-(--color-muted)'
                       }`}
                     >
                       {isPast ? '✓' : i + 1}
@@ -116,7 +118,7 @@ export default async function CandidateStatusPage({ params }: StatusPageProps) {
                     {i < STAGES_TIMELINE.length - 1 && (
                       <div
                         className={`w-0.5 h-10 my-1 ${
-                          isPast ? 'bg-(--color-leaf)' : 'bg-(--color-ink-900)/10'
+                          isPast ? 'bg-(--color-leaf)' : 'bg-(--color-hairline)'
                         }`}
                       />
                     )}
@@ -127,21 +129,21 @@ export default async function CandidateStatusPage({ params }: StatusPageProps) {
                       <h3
                         className={`font-bold text-(--font-size-step-0) ${
                           isCurrent
-                            ? 'text-(--color-ink-900)'
+                            ? 'text-(--color-ink)'
                             : isPast
                             ? 'text-(--color-leaf)'
-                            : 'text-(--color-ink-400)'
+                            : 'text-(--color-muted)'
                         }`}
                       >
                         {s.label}
                       </h3>
                       {isCurrent && (
-                        <span className="px-2 py-0.2 text-(--font-size-step--2) font-mono font-bold bg-(--color-marigold)/15 text-(--color-graphite) rounded">
+                        <span className="px-2 py-0.2 text-(--font-size-step--2) font-mono font-bold bg-(--color-sand) text-(--color-ink) rounded">
                           Current Stage
                         </span>
                       )}
                     </div>
-                    <p className="text-(--font-size-step--1) text-(--color-graphite) mt-0.5">
+                    <p className="text-(--font-size-step--1) text-(--color-muted) mt-0.5">
                       {s.desc}
                     </p>
                   </div>
@@ -151,8 +153,8 @@ export default async function CandidateStatusPage({ params }: StatusPageProps) {
           </div>
 
           {/* Need help box */}
-          <div className="border-t border-(--color-ink-900)/10 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-(--font-size-step--1)">
-            <span className="text-(--color-graphite)">
+          <div className="border-t border-(--color-hairline) pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-(--font-size-step--1)">
+            <span className="text-(--color-muted)">
               Have questions regarding your application?
             </span>
             <a

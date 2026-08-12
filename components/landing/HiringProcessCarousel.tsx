@@ -2,7 +2,8 @@
  * components/landing/HiringProcessCarousel.tsx
  *
  * Interactive visual hiring process carousel featuring photography, step badges,
- * timeline progression, and auto-rotation.
+ * timeline progression, and 3-second auto-rotation.
+ * Updated for Part 21 warm light theme with --color-rust accents.
  */
 
 'use client'
@@ -53,11 +54,12 @@ export function HiringProcessCarousel() {
   const [activeIdx, setActiveIdx] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
 
+  // 3-second auto-rotation interval
   useEffect(() => {
     if (isPaused) return
     const timer = setInterval(() => {
       setActiveIdx((prev) => (prev + 1) % PROCESS_STEPS.length)
-    }, 6000)
+    }, 3000)
     return () => clearInterval(timer)
   }, [isPaused])
 
@@ -65,7 +67,7 @@ export function HiringProcessCarousel() {
 
   return (
     <div
-      className="w-full flex flex-col gap-8"
+      className="w-full flex flex-col gap-6"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -86,29 +88,29 @@ export function HiringProcessCarousel() {
                   setActiveIdx(idx)
                 }
               }}
-              className={`cursor-pointer text-left p-4 rounded-(--radius-md) border transition-all flex flex-col gap-1 select-none ${
+              className={`cursor-pointer text-left p-4 rounded-xl border transition-all flex flex-col gap-1.5 select-none ${
                 isActive
-                  ? 'bg-(--color-ink-800) border-(--color-amber-400) shadow-lg'
-                  : 'bg-(--color-ink-900)/60 border-(--color-ink-600)/60 hover:border-(--color-ink-500)'
+                  ? 'bg-white border-2 border-(--color-rust) shadow-md ring-2 ring-(--color-rust)/20'
+                  : 'bg-white/80 border-(--color-hairline) hover:border-(--color-border) hover:bg-white text-(--color-ink)'
               }`}
             >
               <div className="flex items-center justify-between pointer-events-none">
                 <span
-                  className={`font-mono text-(--font-size-step--1) font-bold ${
-                    isActive ? 'text-(--color-amber-400)' : 'text-(--color-text-on-dark-muted)'
+                  className={`font-mono text-xs font-bold ${
+                    isActive ? 'text-(--color-rust)' : 'text-(--color-muted)'
                   }`}
                 >
                   {s.step}
                 </span>
                 <span
-                  className={`h-2 w-2 rounded-full ${
-                    isActive ? 'bg-(--color-amber-400)' : 'bg-(--color-ink-600)'
+                  className={`h-2.5 w-2.5 rounded-full ${
+                    isActive ? 'bg-(--color-rust)' : 'bg-(--color-hairline)'
                   }`}
                 />
               </div>
               <span
-                className={`font-display text-(--font-size-step--1) font-bold truncate pointer-events-none ${
-                  isActive ? 'text-(--color-text-on-dark)' : 'text-(--color-text-on-dark-muted)'
+                className={`font-display text-sm font-bold truncate pointer-events-none ${
+                  isActive ? 'text-(--color-ink)' : 'text-(--color-muted-strong)'
                 }`}
               >
                 {s.title}
@@ -119,32 +121,33 @@ export function HiringProcessCarousel() {
       </div>
 
       {/* Main Feature Slide Card */}
-      <div className="bg-(--color-ink-900) border border-(--color-ink-600) rounded-(--radius-lg) overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12">
+      <div className="bg-white border border-(--color-hairline) rounded-2xl overflow-hidden shadow-md grid grid-cols-1 lg:grid-cols-12 text-(--color-ink)">
         {/* Left Side: Photo with Badge (6 cols) */}
-        <div className="lg:col-span-6 relative min-h-[300px] lg:min-h-[420px] bg-(--color-ink-950) overflow-hidden">
+        <div className="lg:col-span-6 relative min-h-[300px] lg:min-h-[420px] bg-(--color-ink) overflow-hidden">
           <Image
             src={current.image}
             alt={current.title}
             fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover object-center transition-all duration-700 hover:scale-105"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-(--color-ink-950) via-transparent to-transparent opacity-80" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-(--color-ink-900)/40 lg:to-(--color-ink-900)" />
+          <div className="absolute inset-0 bg-gradient-to-t from-(--color-ink)/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-(--color-ink)/40" />
 
           {/* Floating Metric Pill */}
-          <div className="absolute top-4 left-4 bg-(--color-ink-950)/85 backdrop-blur-md border border-(--color-ink-600) px-3 py-1.5 rounded-full flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-(--color-amber-400) animate-pulse" />
-            <span className="font-mono text-(--font-size-step--2) font-bold text-(--color-amber-400)">
+          <div className="absolute top-4 left-4 bg-(--color-ink)/85 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full flex items-center gap-2 text-white">
+            <span className="h-2 w-2 rounded-full bg-(--color-amber) animate-pulse" />
+            <span className="font-mono text-xs font-bold text-(--color-amber)">
               {current.badge}
             </span>
           </div>
 
-          <div className="absolute bottom-4 left-4 right-4 bg-(--color-ink-950)/80 backdrop-blur-md border border-(--color-ink-600)/80 p-3 rounded-(--radius-md) flex items-center justify-between">
-            <span className="font-mono text-(--font-size-step--2) text-(--color-text-on-dark-muted)">
+          <div className="absolute bottom-4 left-4 right-4 bg-(--color-ink)/85 backdrop-blur-md border border-white/15 p-3.5 rounded-xl flex items-center justify-between text-(--color-paper)">
+            <span className="font-mono text-xs text-(--color-paper)/70">
               Stage Benchmark
             </span>
-            <span className="font-mono text-(--font-size-step--1) font-bold text-(--color-text-on-dark)">
+            <span className="font-mono text-sm font-bold text-(--color-paper)">
               {current.stat}
             </span>
           </div>
@@ -154,32 +157,27 @@ export function HiringProcessCarousel() {
         <div className="lg:col-span-6 p-8 lg:p-10 flex flex-col justify-between gap-6">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-(--font-size-step-1) font-bold text-(--color-amber-400)">
+              <span className="font-mono text-lg font-black text-(--color-rust)">
                 {current.step}
               </span>
-              <span className="font-mono text-(--font-size-step--2) uppercase tracking-wider text-(--color-text-on-dark-muted) font-semibold">
+              <span className="font-mono text-xs uppercase tracking-wider text-(--color-muted) font-bold">
                 {current.subtitle}
               </span>
             </div>
 
-            <h3 className="font-display text-(--font-size-step-3) font-bold text-(--color-text-on-dark) leading-tight">
+            <h3 className="font-display text-[clamp(1.50rem,1.30rem+0.80vw,2.10rem)] font-bold text-(--color-ink) leading-tight">
               {current.title}
             </h3>
 
-            <p className="text-(--font-size-step-0) text-(--color-text-on-dark-muted) leading-relaxed mt-2">
+            <p className="text-base text-(--color-muted) leading-relaxed mt-2">
               {current.desc}
             </p>
           </div>
 
           {/* Bottom Controls */}
-          <div className="pt-6 border-t border-(--color-ink-600)/50 flex items-center justify-between">
+          <div className="pt-6 border-t border-(--color-hairline) flex items-center justify-between">
             <div className="flex items-center">
               {PROCESS_STEPS.map((_, idx) => (
-                // F11: the visible dot stays small (10px / 32px when active)
-                // by design, but the tappable element itself must still meet
-                // the 44x44 WCAG floor — carry the hit area on this outer
-                // span and keep the small colored dot as a decorative inner
-                // span, rather than inflating the visible dot to 44px.
                 <span
                   key={idx}
                   role="button"
@@ -198,8 +196,8 @@ export function HiringProcessCarousel() {
                     aria-hidden="true"
                     className={`h-2.5 rounded-full transition-all ${
                       idx === activeIdx
-                        ? 'w-8 bg-(--color-amber-400)'
-                        : 'w-2.5 bg-(--color-ink-600) hover:bg-(--color-ink-500)'
+                        ? 'w-8 bg-(--color-rust)'
+                        : 'w-2.5 bg-(--color-hairline) hover:bg-(--color-border)'
                     }`}
                   />
                 </span>
@@ -212,7 +210,7 @@ export function HiringProcessCarousel() {
                 onClick={() =>
                   setActiveIdx((prev) => (prev === 0 ? PROCESS_STEPS.length - 1 : prev - 1))
                 }
-                className="btn btn--sm btn--secondary !min-w-[80px]"
+                className="btn btn--sm btn--secondary !min-w-[80px] font-semibold"
                 aria-label="Previous step"
               >
                 &larr; Prev
@@ -220,7 +218,7 @@ export function HiringProcessCarousel() {
               <button
                 type="button"
                 onClick={() => setActiveIdx((prev) => (prev + 1) % PROCESS_STEPS.length)}
-                className="btn btn--sm btn--secondary !min-w-[80px]"
+                className="btn btn--sm btn--secondary !min-w-[80px] font-semibold"
                 aria-label="Next step"
               >
                 Next &rarr;

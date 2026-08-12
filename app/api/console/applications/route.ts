@@ -15,6 +15,8 @@ export async function GET(request: NextRequest) {
     const jobId = searchParams.get('jobId') || undefined
     const driveId = searchParams.get('driveId') || undefined
     const query = searchParams.get('q') || undefined
+    const from = searchParams.get('from') || undefined
+    const to = searchParams.get('to') || undefined
     const limit = searchParams.get('limit') ? Number(searchParams.get('limit')) : 50
     const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1
     const offset = searchParams.get('offset')
@@ -22,8 +24,8 @@ export async function GET(request: NextRequest) {
       : (page - 1) * limit
 
     const [paginatedResult, stats] = await Promise.all([
-      getApplicationsList({ stage, jobId, driveId, query, limit, offset }),
-      getApplicationStats(),
+      getApplicationsList({ stage, jobId, driveId, query, from, to, limit, offset }),
+      getApplicationStats({ from, to }),
     ])
 
     return NextResponse.json({

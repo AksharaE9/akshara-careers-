@@ -7,7 +7,7 @@
 
 import { getDb } from '../client'
 import { candidates, applications } from '../schema'
-import { eq, or, desc } from 'drizzle-orm'
+import { eq, or, desc, and } from 'drizzle-orm'
 import { hashPassword } from '@/lib/auth/password'
 import crypto from 'crypto'
 
@@ -95,26 +95,34 @@ export interface CooldownCheckResult {
 }
 
 /**
- * Enforces §4:
- * a) At most one active application per candidate.
- * b) 30-day reapply cooldown starting from terminal decision timestamp (updated_at).
+ * Enforces Candidate Application Eligibility:
+ * a) Candidates CAN apply to different roles/jobs across the company.
+ * b) A candidate CANNOT apply twice to the SAME role while an active application is under review or in cooldown.
  */
-export async function checkApplicationEligibility(candidateId: string): Promise<CooldownCheckResult> {
+export async function checkApplicationEligibility(
+  candidateId: string,
+  jobId?: string
+): Promise<CooldownCheckResult> {
   const db = getDb()
   const TERMINAL_STAGES = ['rejected', 'withdrawn', 'duplicate']
-  const COOLDOWN_DAYS = 30
+  const COOLDOWN_DAYS = 60 // 2 months cooldown per role
 
-  // Query most recent application for this candidate with row-level locking
+  // Query most recent application for this candidate & specific role (if jobId provided)
+  const whereClause = jobId
+    ? and(eq(applications.candidateId, candidateId), eq(applications.jobId, jobId))
+    : eq(applications.candidateId, candidateId)
+
   const rows = await db
     .select({
       id: applications.id,
       publicId: applications.publicId,
       stage: applications.stage,
+      jobId: applications.jobId,
       updatedAt: applications.updatedAt,
       submittedAt: applications.submittedAt,
     })
     .from(applications)
-    .where(eq(applications.candidateId, candidateId))
+    .where(whereClause)
     .orderBy(desc(applications.updatedAt))
     .limit(1)
 
@@ -124,17 +132,17 @@ export async function checkApplicationEligibility(candidateId: string): Promise<
 
   const latest = rows[0]
 
-  // a) Check if active application exists (not in terminal stages)
+  // a) Check if active application exists for this role
   if (!TERMINAL_STAGES.includes(latest.stage)) {
     return {
       allowed: false,
       reason: 'ACTIVE_APPLICATION_EXISTS',
-      message: 'You currently have an active application under review. You can apply again once your active application concludes.',
+      message: 'You already have an active application under review for this specific role. You can still apply to other open positions!',
       activeApplicationId: latest.publicId,
     }
   }
 
-  // b) 30-day cooldown starting from decision timestamp (updatedAt)
+  // b) 30-day cooldown for this specific role starting from decision timestamp (updatedAt)
   const decisionTime = latest.updatedAt ? new Date(latest.updatedAt).getTime() : new Date(latest.submittedAt).getTime()
   const cooldownEndsAt = new Date(decisionTime + COOLDOWN_DAYS * 24 * 60 * 60 * 1000)
   const now = Date.now()
@@ -151,7 +159,7 @@ export async function checkApplicationEligibility(candidateId: string): Promise<
     return {
       allowed: false,
       reason: 'COOLDOWN_ACTIVE',
-      message: `You can apply again on ${dateFormatted} (${daysRemaining} day${daysRemaining > 1 ? 's' : ''} remaining).`,
+      message: `You can reapply for this role on ${dateFormatted} (${daysRemaining} day${daysRemaining > 1 ? 's' : ''} remaining).`,
       reapplyAvailableAt: cooldownEndsAt,
       daysRemaining,
     }

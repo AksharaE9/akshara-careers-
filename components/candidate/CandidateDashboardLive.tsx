@@ -18,7 +18,7 @@ type CandidateApplication = Awaited<ReturnType<typeof getCandidateApplications>>
 const STAGE_LABELS: Record<string, { label: string; color: string; desc: string }> = {
   received: {
     label: 'Application Submitted',
-    color: 'text-(--color-amber-400) bg-(--color-amber-400)/10 border-(--color-amber-400)/30',
+    color: 'text-(--color-rust) bg-(--color-rust)/10 border-(--color-rust)/30',
     desc: 'Your profile has been received and registered in our database.',
   },
   under_review: {
@@ -91,10 +91,18 @@ export function CandidateDashboardLive({
   initialEligibility,
 }: LiveDashboardProps) {
   const [apps, setApps] = useState<CandidateApplication[]>(initialApplications)
+  const [selectedAppId, setSelectedAppId] = useState<string>(initialApplications[0]?.id || '')
   const [eligibility, setEligibility] = useState(initialEligibility)
   const [lastSyncTime, setLastSyncTime] = useState<string>('Just now')
   const [hasUpdated, setHasUpdated] = useState(false)
   const lastEtagRef = useRef<string | null>(null)
+
+  // Sync selectedAppId when apps change
+  useEffect(() => {
+    if (apps.length > 0 && apps[0] && (!selectedAppId || !apps.some((a) => a.id === selectedAppId))) {
+      setSelectedAppId(apps[0].id)
+    }
+  }, [apps, selectedAppId])
 
   // 2-second Conditional Polling Sync Loop (§3)
   useEffect(() => {
@@ -153,32 +161,29 @@ export function CandidateDashboardLive({
     }
   }, [apps])
 
-  const latestApp = apps[0]
-  const activeApp = apps.find(
-    (a) => !['rejected', 'withdrawn', 'duplicate'].includes(a.stage)
-  )
+  const currentApp = apps.find((a) => a.id === selectedAppId) || apps[0]
 
   return (
     <div className="flex flex-col gap-8">
       {/* Candidate Profile Header Bar */}
-      <div className="bg-(--color-ink-900) border border-(--color-ink-600) rounded-(--radius-lg) p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl relative overflow-hidden">
+      <div className="bg-slate-900 border border-slate-800 rounded-(--radius-lg) p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl relative overflow-hidden text-white">
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center gap-3">
-            <span className="font-mono text-(--font-size-step--2) text-(--color-amber-400) font-bold uppercase tracking-wider">
+            <span className="font-mono text-(--font-size-step--2) text-amber-400 font-bold uppercase tracking-wider">
               Candidate Account
             </span>
             {/* Live Sync Badge (§3) */}
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-(--color-ink-950) border border-(--color-ink-600) font-mono text-[11px] text-(--color-text-on-dark-muted)">
-              <span className="h-1.5 w-1.5 rounded-full bg-(--color-leaf) animate-pulse" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-950 border border-slate-700 font-mono text-[11px] text-slate-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>Live Sync</span>
             </div>
           </div>
 
-          <h1 className="font-display text-(--font-size-step-3) font-bold text-(--color-text-on-dark)">
+          <h1 className="font-display text-(--font-size-step-3) font-bold text-white">
             {candidate.fullName}
           </h1>
 
-          <div className="flex flex-wrap items-center gap-4 text-(--font-size-step--1) text-(--color-text-on-dark-muted) font-mono mt-1">
+          <div className="flex flex-wrap items-center gap-4 text-(--font-size-step--1) text-slate-300 font-mono mt-1">
             <span>📱 {candidate.phoneE164}</span>
             {candidate.emailNormalised && !candidate.emailNormalised.includes('temp_') && (
               <span>✉️ {candidate.emailNormalised}</span>
@@ -187,63 +192,94 @@ export function CandidateDashboardLive({
         </div>
 
         <div className="flex items-center gap-3">
-          <Link href="/careers#roles" className="btn btn--sm btn--primary">
-            Browse Open Roles &rarr;
+          <Link href="/careers#roles" className="btn btn--sm btn--primary font-bold">
+            + Apply for Another Role
           </Link>
           <CandidateLogoutButton />
         </div>
       </div>
 
-      {/* 30-Day Cooldown Banner (§4.b & §5) */}
+      {/* Multiple Roles Tab Switcher if Candidate has applied for > 1 role */}
+      {apps.length > 1 && (
+        <div className="flex flex-col gap-3 p-4 bg-white border border-slate-200 rounded-(--radius-lg) shadow-xs">
+          <span className="font-mono text-(--font-size-step--2) uppercase tracking-wider text-amber-700 font-bold">
+            Switch Applied Role ({apps.length} Applications)
+          </span>
+          <div className="flex flex-wrap gap-2.5">
+            {apps.map((app) => {
+              const isSelected = (currentApp?.id === app.id)
+              return (
+                <button
+                  key={app.id}
+                  type="button"
+                  onClick={() => setSelectedAppId(app.id)}
+                  className={`px-4 py-2.5 rounded-lg font-medium text-(--font-size-step--1) transition-all flex items-center gap-2.5 border cursor-pointer ${
+                    isSelected
+                      ? 'bg-amber-500 text-slate-950 font-bold border-amber-600 shadow-md'
+                      : 'bg-slate-50 text-slate-800 border-slate-200 hover:border-amber-400 hover:bg-amber-50'
+                  }`}
+                >
+                  <span>{app.jobTitle}</span>
+                  <span className={`text-xs font-mono px-2 py-0.5 rounded ${isSelected ? 'bg-slate-950 text-amber-400' : 'bg-slate-200 text-slate-700'}`}>
+                    {app.publicId}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* 2-Month Cooldown Banner */}
       {!eligibility.allowed && eligibility.reason === 'COOLDOWN_ACTIVE' && (
-        <div className="p-6 bg-(--color-ink-900) border-l-4 border-l-(--color-amber-400) border border-(--color-ink-600) rounded-(--radius-lg) shadow-lg flex flex-col gap-2 transition-all">
+        <div className="p-6 bg-amber-50 border-l-4 border-l-amber-500 border border-amber-200 rounded-(--radius-lg) shadow-sm flex flex-col gap-2 transition-all">
           <div className="flex items-center gap-2">
             <span className="text-xl">⏳</span>
-            <h3 className="font-display text-(--font-size-step-1) font-bold text-(--color-amber-400)">
+            <h3 className="font-display text-(--font-size-step-1) font-bold text-amber-900">
               Application Cooldown Active
             </h3>
           </div>
-          <p className="text-(--font-size-step-0) text-(--color-text-on-dark) font-medium">
+          <p className="text-(--font-size-step-0) text-amber-950 font-medium">
             {eligibility.message}
           </p>
-          <p className="text-(--font-size-step--1) text-(--color-text-on-dark-muted) leading-relaxed">
-            Akshara maintains a 30-day review interval following application conclusion so you have time to build experience or acquire certifications before reapplying.
+          <p className="text-(--font-size-step--1) text-amber-800 leading-relaxed">
+            Akshara maintains a 2-month (60-day) review interval following application conclusion for the same role so you have time to build experience or acquire certifications before reapplying. You can still apply for other open positions in the meantime!
           </p>
         </div>
       )}
 
-      {/* Active Application or Recent Application Status */}
-      {latestApp ? (
+      {/* Active Application Status for Current Selected Role */}
+      {currentApp ? (
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
-            <h2 className="font-display text-(--font-size-step-2) font-bold text-(--color-text-on-dark)">
-              {activeApp ? 'Active Application' : 'Latest Application'}
+            <h2 className="font-display text-(--font-size-step-2) font-bold text-slate-900">
+              Application Status & Progress
             </h2>
-            <span className="font-mono text-(--font-size-step--1) text-(--color-text-on-dark-muted)">
-              Reference: <strong className="text-(--color-amber-400)">{latestApp.publicId}</strong>
+            <span className="font-mono text-(--font-size-step--1) text-slate-600 font-semibold">
+              Reference: <strong className="text-amber-600">{currentApp.publicId}</strong>
             </span>
           </div>
 
           {/* Main Status & Timeline Card */}
           <div
-            className={`bg-(--color-ink-900) border rounded-(--radius-lg) p-6 sm:p-8 shadow-xl flex flex-col gap-8 transition-all duration-700 ${
+            className={`bg-white border rounded-(--radius-lg) p-6 sm:p-8 shadow-sm flex flex-col gap-8 transition-all duration-700 ${
               hasUpdated
-                ? 'border-(--color-amber-400) ring-4 ring-(--color-amber-400)/20'
-                : 'border-(--color-ink-600)'
+                ? 'border-amber-400 ring-4 ring-amber-400/20'
+                : 'border-slate-200'
             }`}
           >
             {/* Application Header Summary */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-(--color-ink-600)/50 gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-200 gap-4">
               <div className="flex flex-col gap-1">
-                <span className="font-mono text-(--font-size-step--2) uppercase text-(--color-text-on-dark-muted)">
+                <span className="font-mono text-(--font-size-step--2) uppercase text-slate-500 font-semibold">
                   Target Opening
                 </span>
-                <h3 className="font-display text-(--font-size-step-2) font-bold text-(--color-text-on-dark)">
-                  {latestApp.jobTitle}
+                <h3 className="font-display text-(--font-size-step-2) font-bold text-slate-900">
+                  {currentApp.jobTitle}
                 </h3>
-                <span className="font-mono text-(--font-size-step--1) text-(--color-text-on-dark-muted)">
-                  {latestApp.jobFamily} · {latestApp.locationCity || 'Bengaluru'} · Submitted{' '}
-                  {new Date(latestApp.submittedAt).toLocaleDateString('en-IN', {
+                <span className="font-mono text-(--font-size-step--1) text-slate-600">
+                  {currentApp.jobFamily} · {currentApp.locationCity || 'Bengaluru'} · Submitted{' '}
+                  {new Date(currentApp.submittedAt).toLocaleDateString('en-IN', {
                     day: 'numeric',
                     month: 'short',
                     year: 'numeric',
@@ -254,8 +290,8 @@ export function CandidateDashboardLive({
               {/* Current Stage Badge with Live Animation */}
               <div>
                 {(() => {
-                  const cfg = STAGE_LABELS[latestApp.stage] || {
-                    label: latestApp.stage,
+                  const cfg = STAGE_LABELS[currentApp.stage] || {
+                    label: currentApp.stage,
                     color: 'text-gray-300 bg-gray-500/10 border-gray-500/30',
                     desc: '',
                   }
@@ -276,7 +312,7 @@ export function CandidateDashboardLive({
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-(--font-size-step--2) uppercase tracking-wider text-(--color-amber-400) font-bold">
-                  Application History & Stage Timeline
+                  {currentApp.jobTitle} — Timeline
                 </span>
                 <span className="font-mono text-[11px] text-(--color-text-on-dark-muted)">
                   Last synced: {lastSyncTime}
@@ -284,8 +320,8 @@ export function CandidateDashboardLive({
               </div>
 
               <div className="relative pl-6 sm:pl-8 border-l border-(--color-ink-600) flex flex-col gap-6 ml-2 my-2">
-                {latestApp.timeline && latestApp.timeline.length > 0 ? (
-                  latestApp.timeline.map((evt, idx) => {
+                {currentApp.timeline && currentApp.timeline.length > 0 ? (
+                  currentApp.timeline.map((evt, idx) => {
                     const isLatest = idx === 0
                     const cfg = STAGE_LABELS[evt.stage] || { label: evt.stage, desc: '' }
                     return (
@@ -325,7 +361,7 @@ export function CandidateDashboardLive({
                       Application Submitted
                     </span>
                     <span className="font-mono text-(--font-size-step--2) text-(--color-text-on-dark-muted)">
-                      {new Date(latestApp.submittedAt).toLocaleDateString()}
+                      {new Date(currentApp.submittedAt).toLocaleDateString()}
                     </span>
                     <p className="text-(--font-size-step--1) text-(--color-text-on-dark-muted)">
                       Application registered successfully in recruitment database.
@@ -352,11 +388,11 @@ export function CandidateDashboardLive({
         </div>
       )}
 
-      {/* Past Applications Table (if more than 1) */}
+      {/* All Applications Table */}
       {apps.length > 1 && (
-        <div className="flex flex-col gap-4 mt-4">
+        <div className="flex flex-col gap-4 mt-2">
           <h3 className="font-display text-(--font-size-step-1) font-bold text-(--color-text-on-dark)">
-            Past Application History
+            All Applications Submitted ({apps.length})
           </h3>
           <div className="bg-(--color-ink-900) border border-(--color-ink-600) rounded-(--radius-lg) overflow-hidden shadow-lg">
             <div className="overflow-x-auto">
@@ -364,24 +400,55 @@ export function CandidateDashboardLive({
                 <thead className="bg-(--color-ink-800) text-(--color-text-on-dark-muted) uppercase text-(--font-size-step--2) border-b border-(--color-ink-600)">
                   <tr>
                     <th className="p-4">Reference</th>
-                    <th className="p-4">Role</th>
-                    <th className="p-4">Submitted</th>
-                    <th className="p-4">Final Stage</th>
+                    <th className="p-4">Role Title</th>
+                    <th className="p-4">Submitted Date</th>
+                    <th className="p-4">Current Status</th>
+                    <th className="p-4 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-(--color-ink-600)/40">
-                  {apps.slice(1).map((past) => (
-                    <tr key={past.id} className="hover:bg-(--color-ink-800)/40">
-                      <td className="p-4 font-bold text-(--color-amber-400)">{past.publicId}</td>
-                      <td className="p-4 font-sans text-(--color-text-on-dark)">{past.jobTitle}</td>
-                      <td className="p-4 text-(--color-text-on-dark-muted)">
-                        {new Date(past.submittedAt).toLocaleDateString()}
-                      </td>
-                      <td className="p-4">
-                        <span className="capitalize">{past.stage.replace('_', ' ')}</span>
-                      </td>
-                    </tr>
-                  ))}
+                  {apps.map((app) => {
+                    const isSelected = (currentApp?.id === app.id)
+                    const cfg = STAGE_LABELS[app.stage] || { label: app.stage, color: 'text-gray-300' }
+                    return (
+                      <tr
+                        key={app.id}
+                        className={`transition-colors cursor-pointer ${
+                          isSelected ? 'bg-amber-400/10' : 'hover:bg-(--color-ink-800)/40'
+                        }`}
+                        onClick={() => setSelectedAppId(app.id)}
+                      >
+                        <td className="p-4 font-bold text-(--color-amber-400)">{app.publicId}</td>
+                        <td className="p-4 font-sans font-semibold text-(--color-text-on-dark)">
+                          {app.jobTitle}
+                        </td>
+                        <td className="p-4 text-(--color-text-on-dark-muted)">
+                          {new Date(app.submittedAt).toLocaleDateString('en-IN', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric',
+                          })}
+                        </td>
+                        <td className="p-4">
+                          <span className="capitalize font-semibold text-amber-300">
+                            {cfg.label}
+                          </span>
+                        </td>
+                        <td className="p-4 text-right">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setSelectedAppId(app.id)
+                            }}
+                            className={`btn btn--xs ${isSelected ? 'btn--primary' : 'btn--secondary'}`}
+                          >
+                            {isSelected ? 'Viewing' : 'View Timeline'}
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>

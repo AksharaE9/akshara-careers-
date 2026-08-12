@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { getJobBySlug } from '@/lib/db/queries/jobs'
+import { AnalyticsTracker } from '@/components/analytics/AnalyticsTracker'
 
 interface JobDetail {
   id: string
@@ -208,6 +209,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
 
   return (
     <div className="min-h-screen bg-(--color-paper) flex flex-col">
+      <AnalyticsTracker name="job_viewed" path={`/careers/${job.slug}`} jobId={job.id} />
       {/* Inject JSON-LD Schema.org SEO */}
       <script
         type="application/ld+json"

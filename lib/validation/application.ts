@@ -27,13 +27,13 @@ export const academicStatusSchemaForForm = z.object({
   collegeRaw: z
     .string()
     .trim()
-    .min(3, 'Type or select a valid college name')
+    .min(1, 'Type or select a valid college name')
     .max(200, 'College name must be under 200 characters'),
   courseId: z.string().uuid('Invalid course selection').optional().nullable(),
   courseRaw: z
     .string()
     .trim()
-    .min(2, 'Type or select a valid course name')
+    .min(1, 'Type or select a valid course name')
     .max(200, 'Course name must be under 200 characters'),
   experienceType: z.enum(['fresher', 'experienced'], {
     message: 'Select your experience type',
@@ -41,7 +41,7 @@ export const academicStatusSchemaForForm = z.object({
   hasTwoWheeler: z.enum(['yes', 'no', 'can_arrange'], {
     message: 'Select if you have a two-wheeler',
   }),
-  hasDrivingLicence: z.boolean(),
+  hasDrivingLicence: z.boolean().default(false).optional(),
 })
 
 // 3. Step 3: Resume Review
@@ -49,17 +49,11 @@ export const resumeReviewSchema = z.object({
   resumeKey: z.string().min(1, 'Resume upload is required'),
   resumeFilename: z.string().min(1, 'Resume file name is required'),
   resumeSizeBytes: z.number().max(5 * 1024 * 1024, 'File exceeds 5 MB limit'),
-  resumeMime: z.enum([
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  ], {
-    message: 'Accept only PDF, DOC, or DOCX resumes',
-  }),
+  resumeMime: z.string().min(1).default('application/pdf'),
   consentGiven: z.literal(true, {
     message: 'You must consent to proceed',
   }),
-  whatsappOptIn: z.boolean().default(false),
+  whatsappOptIn: z.boolean().default(false).optional(),
 })
 
 // 4. Unified Application Submission schema (Public form submission payload)

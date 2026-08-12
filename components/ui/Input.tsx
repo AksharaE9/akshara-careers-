@@ -1,10 +1,9 @@
 /**
  * components/ui/Input.tsx
  *
- * §2.6 — Text input with all states.
+ * §2.6 & §21.2 — Text input with 3:1 WCAG border (--color-border: #8B7D67),
+ * white fill, warm ink text, and rust focus ring (--color-rust: #A8432A).
  * States: default | focus | filled | disabled | readonly | error
- * 
- * Always used inside FieldWrapper for label + error wire-up.
  */
 
 import { forwardRef, type InputHTMLAttributes } from 'react'
@@ -22,21 +21,21 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
 
 const baseInput = [
   // Layout
-  'w-full min-h-[44px] px-(--spacing-s4) py-(--spacing-s3)',
+  'w-full min-h-[44px] px-3.5 py-2.5',
   // Typography
-  'font-sans text-(--font-size-step-0) text-(--color-graphite)',
-  // Visual
-  'bg-(--color-chalk) rounded-(--radius-md)',
-  'border border-(--color-ink-900)/20',
+  'font-sans text-[clamp(1.00rem,0.95rem+0.25vw,1.13rem)] text-(--color-ink) font-medium',
+  // Visual (§21.2: white fill with 3:1 border)
+  'bg-white rounded-md',
+  'border border-(--color-border) shadow-xs',
   // Transitions
-  'transition-colors duration-(--duration-fast)',
+  'transition-colors duration-150',
   // States
-  'placeholder:text-(--color-ink-400)',
-  'hover:border-(--color-ink-900)/40',
-  'focus:outline-none focus:border-(--color-marigold) focus:ring-1 focus:ring-(--color-marigold)',
-  'disabled:bg-(--color-ink-900)/4 disabled:text-(--color-ink-400) disabled:cursor-not-allowed',
-  'read-only:bg-(--color-ink-900)/4',
-  'aria-invalid:border-(--color-kumkum) aria-invalid:ring-1 aria-invalid:ring-(--color-kumkum)/30',
+  'placeholder:text-(--color-muted) placeholder:font-normal',
+  'hover:border-(--color-ink)',
+  'focus:outline-none focus:border-(--color-rust) focus:ring-2 focus:ring-(--color-rust)/30',
+  'disabled:bg-(--color-sand) disabled:text-(--color-muted) disabled:cursor-not-allowed',
+  'read-only:bg-(--color-sand) text-(--color-ink)',
+  'aria-invalid:border-(--color-kumkum) aria-invalid:ring-2 aria-invalid:ring-(--color-kumkum)/30',
 ].join(' ')
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -49,9 +48,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     if (prefix || suffix) {
       return (
-        <div className="relative flex items-center">
+        <div className="relative flex items-center w-full">
           {prefix && (
-            <span className="absolute left-(--spacing-s4) text-(--color-ink-400) text-(--font-size-step-0) pointer-events-none select-none">
+            <span className="absolute left-3.5 text-(--color-muted-strong) font-semibold text-[clamp(1.00rem,0.95rem+0.25vw,1.13rem)] pointer-events-none select-none z-10">
               {prefix}
             </span>
           )}
@@ -63,8 +62,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             data-testid={`field-${id}`}
             className={[
               baseInput,
-              prefix ? 'pl-[calc(var(--spacing-s4)*2+1em)]' : '',
-              suffix ? 'pr-[calc(var(--spacing-s4)*2+1em)]' : '',
+              prefix ? 'pl-14' : '',
+              suffix ? 'pr-12' : '',
               className,
             ]
               .filter(Boolean)
@@ -72,7 +71,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...rest}
           />
           {suffix && (
-            <span className="absolute right-(--spacing-s4) text-(--color-ink-400) text-(--font-size-step-0) pointer-events-none select-none">
+            <span className="absolute right-3.5 text-(--color-muted) text-[clamp(1.00rem,0.95rem+0.25vw,1.13rem)] pointer-events-none select-none z-10">
               {suffix}
             </span>
           )}

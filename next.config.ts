@@ -3,10 +3,16 @@ import { withSentryConfig } from '@sentry/nextjs'
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  compress: true,
   // ── TypeScript ──────────────────────────────────────────────────────────────
   // Fail build on type errors — no warnings-only mode
   typescript: {
     ignoreBuildErrors: false,
+  },
+
+  // ── Package optimizations ───────────────────────────────────────────────────
+  experimental: {
+    optimizePackageImports: ['recharts', 'lucide-react', 'gsap'],
   },
 
   // ── Images ──────────────────────────────────────────────────────────────────
@@ -22,7 +28,7 @@ const nextConfig: NextConfig = {
   ...(process.env.ANALYZE === 'true'
     ? {
         experimental: {
-          // @next/bundle-analyzer wraps this config externally — see package.json
+          optimizePackageImports: ['recharts', 'lucide-react', 'gsap'],
         },
       }
     : {}),
@@ -32,6 +38,15 @@ const nextConfig: NextConfig = {
   // routes that need it. These headers apply to every response.
   async headers() {
     return [
+      {
+        source: '/fonts/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
       {
         source: '/:path*',
         headers: [

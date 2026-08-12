@@ -1,10 +1,9 @@
 /**
  * components/ui/Textarea.tsx
  *
- * §2.6 — Textarea with live character counter.
+ * §2.6 & §21.2 — Textarea with 3:1 WCAG border (--color-border),
+ * white fill, warm ink text, rust focus ring (--color-rust), and live character counter.
  * States: default | focus | filled | disabled | error
- * 
- * Live counter: announces remaining characters to screen readers via aria-live.
  */
 
 'use client'
@@ -23,17 +22,17 @@ export interface TextareaProps
 }
 
 const baseTextarea = [
-  'w-full px-(--spacing-s4) py-(--spacing-s3)',
-  'font-sans text-(--font-size-step-0) text-(--color-graphite)',
-  'bg-(--color-chalk) rounded-(--radius-md)',
-  'border border-(--color-ink-900)/20',
-  'transition-colors duration-(--duration-fast)',
+  'w-full px-3.5 py-2.5',
+  'font-sans text-[clamp(1.00rem,0.95rem+0.25vw,1.13rem)] text-(--color-ink) font-medium',
+  'bg-white rounded-md shadow-xs',
+  'border border-(--color-border)',
+  'transition-colors duration-150',
   'resize-y',
-  'placeholder:text-(--color-ink-400)',
-  'hover:border-(--color-ink-900)/40',
-  'focus:outline-none focus:border-(--color-marigold) focus:ring-1 focus:ring-(--color-marigold)',
-  'disabled:bg-(--color-ink-900)/4 disabled:text-(--color-ink-400) disabled:cursor-not-allowed',
-  'aria-invalid:border-(--color-kumkum) aria-invalid:ring-1 aria-invalid:ring-(--color-kumkum)/30',
+  'placeholder:text-(--color-muted) placeholder:font-normal',
+  'hover:border-(--color-ink)',
+  'focus:outline-none focus:border-(--color-rust) focus:ring-2 focus:ring-(--color-rust)/30',
+  'disabled:bg-(--color-sand) disabled:text-(--color-muted) disabled:cursor-not-allowed',
+  'aria-invalid:border-(--color-kumkum) aria-invalid:ring-2 aria-invalid:ring-(--color-kumkum)/30',
 ].join(' ')
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -68,7 +67,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const allDescribedBy = [describedBy, counterId].filter(Boolean).join(' ') || undefined
 
     return (
-      <div className="relative">
+      <div className="relative w-full">
         <textarea
           ref={ref}
           id={id}
@@ -92,10 +91,10 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             aria-live="polite"
             aria-atomic="true"
             className={[
-              'mt-(--spacing-s1) text-right text-(--font-size-step--1) tabular',
+              'mt-1 text-right text-[clamp(0.80rem,0.77rem+0.15vw,0.89rem)] tabular-nums',
               remaining !== undefined && remaining <= 20
                 ? 'text-(--color-kumkum) font-medium'
-                : 'text-(--color-ink-400)',
+                : 'text-(--color-muted)',
             ].join(' ')}
           >
             <span className="sr-only">Characters remaining: </span>

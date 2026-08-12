@@ -12,6 +12,7 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { FieldWrapper } from '@/components/ui/FieldWrapper'
+import { formatISTDate } from '@/lib/date/ist'
 
 interface DriveItem {
   id: string
@@ -174,7 +175,7 @@ export default function CampusDrivesPage() {
                       </div>
                     </td>
                     <td className="py-3 px-4 font-mono">
-                      {new Date(d.driveDate).toLocaleDateString()}
+                      {formatISTDate(d.driveDate)}
                     </td>
                     <td className="py-3 px-4 text-(--color-graphite)">
                       {d.venue || 'Campus Auditorium'}

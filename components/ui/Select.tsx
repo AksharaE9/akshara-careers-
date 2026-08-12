@@ -1,11 +1,9 @@
 /**
  * components/ui/Select.tsx
  *
- * §2.6 — Native <select> styled consistently.
+ * §2.6 & §21.2 — Native <select> styled with 3:1 WCAG border (--color-border),
+ * white fill, warm ink text, and rust focus ring (--color-rust).
  * States: default | focus | disabled | error
- * 
- * We use native <select> (not custom dropdown) for mobile compatibility and
- * accessibility. The combobox is a separate component (Combobox.tsx).
  */
 
 import { forwardRef, type SelectHTMLAttributes } from 'react'
@@ -27,7 +25,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const hasError = Boolean(error)
 
     return (
-      <div className="relative">
+      <div className="relative w-full">
         <select
           ref={ref}
           id={id}
@@ -35,17 +33,17 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           aria-describedby={describedBy}
           data-testid={`field-${id}`}
           className={[
-            'w-full min-h-[44px] px-(--spacing-s4) py-(--spacing-s3)',
-            'font-sans text-(--font-size-step-0) text-(--color-graphite)',
-            'bg-(--color-chalk) rounded-(--radius-md)',
-            'border border-(--color-ink-900)/20',
-            'transition-colors duration-(--duration-fast)',
+            'w-full min-h-[44px] px-3.5 py-2.5',
+            'font-sans text-[clamp(1.00rem,0.95rem+0.25vw,1.13rem)] text-(--color-ink) font-medium',
+            'bg-white rounded-md shadow-xs',
+            'border border-(--color-border)',
+            'transition-colors duration-150',
             'appearance-none pr-10', // room for chevron
-            'hover:border-(--color-ink-900)/40',
-            'focus:outline-none focus:border-(--color-marigold) focus:ring-1 focus:ring-(--color-marigold)',
-            'disabled:bg-(--color-ink-900)/4 disabled:text-(--color-ink-400) disabled:cursor-not-allowed',
+            'hover:border-(--color-ink)',
+            'focus:outline-none focus:border-(--color-rust) focus:ring-2 focus:ring-(--color-rust)/30',
+            'disabled:bg-(--color-sand) disabled:text-(--color-muted) disabled:cursor-not-allowed',
             hasError
-              ? 'border-(--color-kumkum) ring-1 ring-(--color-kumkum)/30'
+              ? 'border-(--color-kumkum) ring-2 ring-(--color-kumkum)/30'
               : '',
             className,
           ]
@@ -54,7 +52,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           {...rest}
         >
           {placeholder && (
-            <option value="" disabled>
+            <option value="" disabled className="text-(--color-muted)">
               {placeholder}
             </option>
           )}
@@ -63,14 +61,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
 
         {/* Chevron icon */}
         <span
-          className="pointer-events-none absolute inset-y-0 right-(--spacing-s4) flex items-center text-(--color-ink-400)"
+          className="pointer-events-none absolute inset-y-0 right-3.5 flex items-center text-(--color-muted)"
           aria-hidden="true"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path
               d="M6 9l6 6 6-6"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             />

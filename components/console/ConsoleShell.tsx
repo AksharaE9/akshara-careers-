@@ -3,18 +3,19 @@
 /**
  * components/console/ConsoleShell.tsx
  *
- * Full enterprise console shell according to §14.3.
+ * Full enterprise console shell according to §14.3, Part 20, and Part 21.
  * Left rail (240px -> 56px collapsible, mobile drawer), top bar, breadcrumbs,
- * global date picker, live SSE status dot, ⌘K trigger, and security banners.
+ * read-only global date display synced to useFilterState, live SSE status dot, ⌘K trigger, and security banners.
  */
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { SessionUser } from '@/lib/auth/session'
 import { can, Capability } from '@/lib/auth/rbac'
 import { CommandPalette } from './CommandPalette'
+import { useFilterState, installHistoryLoopGuard } from '@/lib/console/use-filter-state'
 
 interface ConsoleShellProps {
   user: SessionUser | null
@@ -36,12 +37,17 @@ interface NavGroup {
 export function ConsoleShell({ user, children }: ConsoleShellProps) {
   const pathname = usePathname()
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const { range } = useFilterState()
 
   const [isRailCollapsed, setIsRailCollapsed] = useState(false)
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false)
   const [isCmdkOpen, setIsCmdkOpen] = useState(false)
   const [isLiveConnected, setIsLiveConnected] = useState(true)
+
+  // Mount loop guard in dev
+  useEffect(() => {
+    installHistoryLoopGuard()
+  }, [])
 
   // ⌘K hotkey listener
   useEffect(() => {
@@ -65,8 +71,6 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
       eventSource.onopen = () => setIsLiveConnected(true)
       eventSource.onerror = () => setIsLiveConnected(false)
     } catch {
-      // F7: deferred rather than called synchronously in the effect body —
-      // same reasoning as Combobox.tsx's fix.
       queueMicrotask(() => setIsLiveConnected(false))
     }
 
@@ -94,7 +98,6 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
         { label: 'Funnel', href: '/console/insight/funnel', capability: 'view_funnel_analytics', icon: '📉' },
         { label: 'Traffic', href: '/console/insight/traffic', capability: 'view_traffic_analytics', icon: '🌐' },
         { label: 'Jobs', href: '/console/insight/jobs', capability: 'manage_jobs', icon: '💼' },
-        { label: 'Drives', href: '/console/insight/drives', capability: 'manage_drives', icon: '🎓' },
         { label: 'Colleges', href: '/console/insight/colleges', capability: 'merge_colleges', icon: '🏛️' },
       ],
     },
@@ -127,19 +130,6 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
     } catch {}
   }
 
-  const handleDatePreset = (days: number) => {
-    const params = new URLSearchParams(searchParams.toString())
-    const to = new Date().toISOString().split('T')[0]
-    const from = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-    params.set('from', from!)
-    params.set('to', to!)
-    router.push(`${pathname}?${params.toString()}`)
-  }
-
-  const currentDateRange = searchParams.get('from') && searchParams.get('to')
-    ? `${searchParams.get('from')} – ${searchParams.get('to')}`
-    : 'Last 7 Days'
-
   // If login page or unauthenticated, render minimal shell
   if (pathname.includes('/login') || !user) {
     return <>{children}</>
@@ -151,67 +141,78 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
       <CommandPalette
         isOpen={isCmdkOpen}
         onClose={() => setIsCmdkOpen(false)}
-        onToggleRail={() => setIsRailCollapsed((prev) => !prev)}
       />
 
-      {/* Left Navigation Rail (Desktop) */}
-      <aside
-        className={`hidden lg:flex flex-col border-r border-(--color-ink-900)/10 bg-(--color-chalk) transition-all duration-200 sticky top-0 h-screen z-30 ${
-          isRailCollapsed ? 'w-14' : 'w-60'
-        }`}
-      >
-        {/* Rail Header */}
-        <div className="h-14 px-3 flex items-center justify-between border-b border-(--color-ink-900)/10">
-          {!isRailCollapsed && (
-            <Link href="/console" className="flex items-center gap-2">
-              <Image
-                src="/images/akshara-logo.svg"
-                alt="Akshara Logo"
-                width={100}
-                height={24}
-                priority
-                style={{ width: 'auto', height: '24px' }}
-              />
-              <span className="text-(--font-size-step--2) font-mono uppercase bg-(--color-marigold)/15 px-1.5 py-0.5 rounded font-semibold text-(--color-ink-900)">
-                Admin
-              </span>
-            </Link>
-          )}
+      {/* Mobile Drawer Backdrop */}
+      {isMobileDrawerOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/50 z-40 lg:hidden backdrop-blur-xs"
+          onClick={() => setIsMobileDrawerOpen(false)}
+        />
+      )}
 
+      {/* ── Left Navigation Rail ────────────────────────────────────────────── */}
+      <aside
+        className={`fixed top-0 bottom-0 left-0 z-50 bg-white border-r border-(--color-ink-900)/10 flex flex-col transition-all duration-200 ${
+          isRailCollapsed ? 'w-14' : 'w-60'
+        } ${isMobileDrawerOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+      >
+        {/* Rail Header & Brand */}
+        <div className="h-14 border-b border-(--color-ink-900)/10 px-3 flex items-center justify-between">
+          <Link href="/console" className="flex items-center gap-2 overflow-hidden">
+            <div className="h-7 w-7 bg-(--color-amber) rounded flex items-center justify-center font-display font-black text-(--color-ink) text-sm shrink-0">
+              A
+            </div>
+            {!isRailCollapsed && (
+              <div className="flex items-baseline gap-1 font-sans">
+                <span className="font-bold text-sm text-(--color-ink-900)">akshara</span>
+                <span className="font-mono text-[9px] uppercase tracking-wider font-extrabold text-(--color-rust)">ADMIN</span>
+              </div>
+            )}
+          </Link>
+
+          {/* Desktop Rail Collapse Toggle */}
           <button
             type="button"
-            onClick={() => setIsRailCollapsed((prev) => !prev)}
-            className="p-1.5 rounded hover:bg-(--color-ink-900)/5 text-(--color-graphite)"
-            title={isRailCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            onClick={() => setIsRailCollapsed(!isRailCollapsed)}
+            className="hidden lg:flex p-1 text-(--color-graphite) hover:text-(--color-ink-900) rounded hover:bg-(--color-ink-900)/5"
+            title={isRailCollapsed ? 'Expand Rail' : 'Collapse Rail'}
           >
             {isRailCollapsed ? '→' : '←'}
           </button>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-4 text-(--font-size-step--1)">
-          {navGroups.map((grp) => {
-            const accessibleItems = grp.items.filter((item) => !item.capability || can(user, item.capability))
-            if (accessibleItems.length === 0) return null
+        {/* Rail Navigation List */}
+        <nav className="flex-1 overflow-y-auto p-2 space-y-4 text-(--font-size-step--1)">
+          {navGroups.map((group) => {
+            const visibleItems = group.items.filter(
+              (item) => !item.capability || can(user, item.capability)
+            )
+
+            if (visibleItems.length === 0) return null
 
             return (
-              <div key={grp.group} className="space-y-1">
+              <div key={group.group} className="space-y-1">
                 {!isRailCollapsed && (
-                  <div className="px-2 py-1 font-mono text-(--font-size-step--2) uppercase text-(--color-ink-400) font-semibold tracking-wider">
-                    {grp.group}
+                  <div className="px-3 py-1 font-mono text-[10px] uppercase font-bold tracking-wider text-(--color-ink-400)">
+                    {group.group}
                   </div>
                 )}
-                {accessibleItems.map((item) => {
-                  const isActive = pathname === item.href || (item.href !== '/console' && pathname.startsWith(item.href))
+                {visibleItems.map((item) => {
+                  const isActive =
+                    item.href === '/console'
+                      ? pathname === '/console'
+                      : pathname.startsWith(item.href)
+
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
                       title={isRailCollapsed ? item.label : undefined}
-                      className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg font-medium transition-colors ${
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition-all ${
                         isActive
-                          ? 'bg-(--color-marigold)/15 text-(--color-ink-900) font-semibold'
-                          : 'text-(--color-graphite) hover:bg-(--color-ink-900)/5 hover:text-(--color-ink-900)'
+                          ? 'bg-(--color-sand) text-(--color-ink) font-bold border border-(--color-hairline) shadow-xs'
+                          : 'text-(--color-muted-strong) hover:bg-(--color-paper) hover:text-(--color-ink)'
                       }`}
                     >
                       <span className="text-base">{item.icon}</span>
@@ -237,25 +238,26 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
           <button
             type="button"
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 p-1.5 rounded text-(--font-size-step--1) text-(--color-kumkum) hover:bg-(--color-kumkum)/10 transition-colors font-medium"
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-(--font-size-step--1) text-(--color-kumkum) hover:bg-red-50 rounded font-medium transition-colors"
           >
             <span>🚪</span>
-            {!isRailCollapsed && <span>Sign out</span>}
+            {!isRailCollapsed && <span>Log Out</span>}
           </button>
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Persistent Red Security Banner if Default Admin Password Active */}
+      {/* ── Main Layout Wrapper ─────────────────────────────────────────────── */}
+      <div
+        className={`flex-1 flex flex-col min-w-0 transition-all duration-200 ${
+          isRailCollapsed ? 'lg:ml-14' : 'lg:ml-60'
+        }`}
+      >
+        {/* Security / Password Expiry Alert Banner */}
         {user.mustChangePassword && (
-          <div
-            data-testid="pulse-attention-P1"
-            className="bg-(--color-kumkum) text-white px-4 py-2 text-(--font-size-step--1) font-medium flex items-center justify-between shadow-sm z-50"
-          >
+          <div className="bg-red-600 text-white px-4 py-2 text-xs font-mono font-medium flex items-center justify-between shadow-xs">
             <div className="flex items-center gap-2">
-              <span className="font-bold">⚠️ CRITICAL SECURITY GATE:</span>
-              <span>Default admin password is still active. Change it before taking this portal live.</span>
+              <span>⚠️</span>
+              <span><strong>Security Requirement:</strong> Your operator password is due for rotation.</span>
             </div>
             <Link
               href="/console/account/password"
@@ -287,18 +289,16 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
             </div>
           </div>
 
-          {/* Top Actions: Date Range, ⌘K, Env Badge, SSE Indicator */}
+          {/* Top Actions: Date Range (read-only per Task 3), ⌘K, Env Badge, SSE Indicator */}
           <div className="flex items-center gap-3">
-            {/* Global Date Range Picker */}
+            {/* Global Date Range Read-Only Display (§Task 3) */}
             <div className="hidden sm:flex items-center gap-1 bg-(--color-chalk) border border-(--color-ink-900)/10 rounded-lg p-1 text-(--font-size-step--2)">
-              <button
-                type="button"
-                data-testid="date-range-picker"
-                onClick={() => handleDatePreset(7)}
-                className="px-2 py-0.5 rounded font-mono font-medium hover:bg-white text-(--color-ink-900)"
+              <span
+                data-testid="topbar-date-range"
+                className="px-2 py-0.5 rounded font-mono font-medium text-(--color-ink-900)"
               >
-                {currentDateRange}
-              </button>
+                {range.label}
+              </span>
             </div>
 
             {/* ⌘K Command Palette Trigger */}
@@ -331,45 +331,16 @@ export function ConsoleShell({ user, children }: ConsoleShellProps) {
             <Link
               href="/careers"
               target="_blank"
-              className="text-(--font-size-step--2) text-(--color-marigold) font-medium hover:underline hidden sm:inline"
+              className="hidden md:inline-flex items-center gap-1 text-(--font-size-step--2) text-(--color-graphite) hover:text-(--color-ink-900) font-medium"
             >
-              Public Board &rarr;
+              <span>Public Board</span>
+              <span>↗</span>
             </Link>
           </div>
         </header>
 
-        {/* Mobile Slide-over Drawer */}
-        {isMobileDrawerOpen && (
-          <div className="lg:hidden fixed inset-0 z-50 flex">
-            <div className="fixed inset-0 bg-black/30" onClick={() => setIsMobileDrawerOpen(false)} />
-            <div className="relative w-64 bg-(--color-chalk) h-full flex flex-col p-4 shadow-xl z-10">
-              <div className="flex items-center justify-between pb-3 border-b border-(--color-ink-900)/10">
-                <span className="font-bold text-(--font-size-step-0)">Navigation</span>
-                <button type="button" onClick={() => setIsMobileDrawerOpen(false)} className="text-xl">×</button>
-              </div>
-              <div className="flex-1 overflow-y-auto py-3 space-y-4">
-                {navGroups.map((grp) => (
-                  <div key={grp.group} className="space-y-1">
-                    <div className="font-mono text-(--font-size-step--2) uppercase text-(--color-ink-400) font-semibold">{grp.group}</div>
-                    {grp.items.map((it) => (
-                      <Link
-                        key={it.href}
-                        href={it.href}
-                        onClick={() => setIsMobileDrawerOpen(false)}
-                        className="block px-2 py-1.5 rounded hover:bg-(--color-ink-900)/5 text-(--font-size-step--1)"
-                      >
-                        {it.icon} {it.label}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Main Routed Content Container (Max width 1600px with dense rhythm) */}
-        <main className="flex-1 p-(--spacing-s4) md:p-(--spacing-s5) max-w-[1600px] w-full mx-auto">
+        {/* Console Viewport Body */}
+        <main className="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto">
           {children}
         </main>
       </div>

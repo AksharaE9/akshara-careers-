@@ -8,6 +8,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { DataTable, ColumnDef } from '@/components/console/DataTable'
+import { formatISTDate } from '@/lib/date/ist'
 
 interface TalentPoolRow {
   id: string
@@ -67,7 +68,7 @@ export default function TalentPoolPage() {
       header: 'Joined At',
       accessor: (row) => (
         <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">
-          {new Date(row.createdAt).toLocaleDateString()}
+          {formatISTDate(row.createdAt)}
         </span>
       ),
     },
@@ -83,6 +84,17 @@ export default function TalentPoolPage() {
           <h1 className="text-(--font-size-step-2) font-bold text-(--color-ink-900) tracking-tight">
             Talent Pool Registry
           </h1>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <a
+            href="/api/console/talent-pool/export"
+            download
+            data-testid="export-talent-pool-btn"
+            className="min-h-[44px] px-3.5 py-2 inline-flex items-center gap-2 rounded-(--radius-sm) border border-(--color-ink-900)/15 bg-(--color-chalk) text-(--color-ink-900) font-medium text-(--font-size-step--1) shadow-xs hover:bg-(--color-ink-900)/5 transition-colors"
+          >
+            <span>↓ Export Talent Pool ({entries.length})</span>
+          </a>
         </div>
       </div>
 

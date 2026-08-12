@@ -15,6 +15,8 @@ import { getCandidateApplications } from '@/lib/db/queries/applications'
 import { checkApplicationEligibility } from '@/lib/db/queries/candidates'
 import { CandidateDashboardLive } from '@/components/candidate/CandidateDashboardLive'
 
+export const dynamic = 'force-dynamic'
+
 export default async function CandidateDashboardPage() {
   const candidate = await getCurrentCandidate()
 

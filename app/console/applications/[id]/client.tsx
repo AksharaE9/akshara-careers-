@@ -12,23 +12,13 @@ import { Button } from '@/components/ui/Button'
 import { Textarea } from '@/components/ui/Textarea'
 import type { getApplicationById } from '@/lib/db/queries/applications'
 
+import { formatISTDate, formatISTDateTime } from '@/lib/date/ist'
+import { ALL_STAGES, STAGE_CONFIGS } from '@/lib/console/stages'
+
 type ApplicationDetail = NonNullable<Awaited<ReturnType<typeof getApplicationById>>>
 type ApplicationNote = ApplicationDetail['notes'][number]
 
 type Stage = ApplicationDetail['stage']
-
-const STAGES = [
-  { id: 'received', label: 'Received' },
-  { id: 'under_review', label: 'Under Review' },
-  { id: 'shortlisted', label: 'Shortlisted' },
-  { id: 'interview_scheduled', label: 'Interview Scheduled' },
-  { id: 'interviewed', label: 'Interviewed' },
-  { id: 'offered', label: 'Offered' },
-  { id: 'hired', label: 'Hired' },
-  { id: 'rejected', label: 'Rejected' },
-  { id: 'withdrawn', label: 'Withdrawn' },
-  { id: 'duplicate', label: 'Duplicate' },
-] as const
 
 export function ApplicationDetailClient({ initialApp }: { initialApp: ApplicationDetail }) {
   const [app] = useState(initialApp)
@@ -108,11 +98,11 @@ export function ApplicationDetailClient({ initialApp }: { initialApp: Applicatio
       <Card className="p-(--spacing-s6) bg-(--color-chalk) border border-(--color-ink-900)/10 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-(--spacing-s4)">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-(--spacing-s2)">
-            <span className="font-mono text-(--font-size-step--1) font-bold text-(--color-marigold) bg-(--color-marigold)/10 px-2 py-0.5 rounded">
+            <span className="font-mono text-(--font-size-step--1) font-bold text-(--color-rust) bg-(--color-rust)/10 px-2 py-0.5 rounded">
               {app.publicId}
             </span>
             <span className="text-(--font-size-step--2) text-(--color-ink-400)">
-              Applied {new Date(app.submittedAt).toLocaleDateString()}
+              Applied {formatISTDate(app.submittedAt)}
             </span>
           </div>
           <h1 className="display text-(--font-size-step-3) font-bold text-(--color-ink-900)">
@@ -132,11 +122,11 @@ export function ApplicationDetailClient({ initialApp }: { initialApp: Applicatio
             value={stage}
             disabled={stageLoading}
             onChange={(e) => handleStageChange(e.target.value as Stage)}
-            className="text-(--font-size-step-0) font-bold bg-(--color-chalk) border-2 border-(--color-marigold) rounded-(--radius-sm) px-3 py-1.5 focus:outline-none"
+            className="text-(--font-size-step-0) font-bold bg-(--color-chalk) border-2 border-(--color-border) rounded-(--radius-sm) px-3 py-1.5 focus:outline-hidden cursor-pointer"
           >
-            {STAGES.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.label}
+            {ALL_STAGES.map((s) => (
+              <option key={s} value={s}>
+                {STAGE_CONFIGS[s].label}
               </option>
             ))}
           </select>
@@ -196,7 +186,7 @@ export function ApplicationDetailClient({ initialApp }: { initialApp: Applicatio
                   DPDP Consent Given
                 </span>
                 <span className="font-mono text-(--font-size-step--1) text-(--color-graphite)">
-                  {new Date(app.consentGivenAt).toLocaleString()}
+                  {formatISTDateTime(app.consentGivenAt)}
                 </span>
               </div>
             </div>
@@ -395,7 +385,7 @@ export function ApplicationDetailClient({ initialApp }: { initialApp: Applicatio
                         {n.authorName} ({n.authorRole})
                       </span>
                       <span className="text-(--color-ink-400) font-mono">
-                        {new Date(n.createdAt).toLocaleDateString()}
+                        {formatISTDateTime(n.createdAt)}
                       </span>
                     </div>
                     <p className="text-(--color-graphite) whitespace-pre-wrap">{n.body}</p>

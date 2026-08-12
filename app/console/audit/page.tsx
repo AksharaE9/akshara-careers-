@@ -8,6 +8,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { DataTable, ColumnDef } from '@/components/console/DataTable'
+import { formatISTDateTime } from '@/lib/date/ist'
 
 interface AuditLogRow {
   id: string
@@ -61,7 +62,7 @@ export default function AuditLogPage() {
       header: 'Timestamp',
       accessor: (row) => (
         <span className="font-mono text-(--font-size-step--2) text-(--color-graphite)">
-          {new Date(row.createdAt).toLocaleString()}
+          {formatISTDateTime(row.createdAt)}
         </span>
       ),
     },

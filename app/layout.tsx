@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter_Tight } from 'next/font/google'
 import localFont from 'next/font/local'
+import { Suspense } from 'react'
+import { RouteProgressBar } from '@/components/layout/RouteProgressBar'
 import './globals.css'
 
 const interTight = Inter_Tight({
@@ -56,7 +58,13 @@ export default function RootLayout({
       lang="en"
       className={`${interTight.variable} ${bricolage.variable} ${geistMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <Suspense fallback={null}>
+          <RouteProgressBar />
+        </Suspense>
+        {children}
+      </body>
     </html>
   )
 }
+
