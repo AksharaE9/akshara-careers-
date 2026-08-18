@@ -22,7 +22,7 @@ import {
   funnelDaily,
   fieldAnalyticsDaily,
   webVitals,
-  outbox,
+  emailOutbox,
 } from '@/lib/db/schema'
 
 export async function POST() {
@@ -33,7 +33,7 @@ export async function POST() {
   try {
     const db = getDb()
 
-    await db.delete(outbox)
+    await db.delete(emailOutbox)
     await db.delete(applicationStageEvents)
     await db.delete(applicationNotes)
     await db.delete(applications)
