@@ -48,8 +48,6 @@ const MUST_BE_SET_IN_PROD = [
   'UPSTASH_REDIS_REST_TOKEN',
   'NEXT_PUBLIC_SENTRY_DSN',
   'SENTRY_AUTH_TOKEN',
-  'HASH_PEPPER',
-  'FORM_TIMESTAMP_SECRET',
 ]
 
 // ── Fingerprint helper ─────────────────────────────────────────────────────────
