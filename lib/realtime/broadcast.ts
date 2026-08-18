@@ -9,7 +9,7 @@ import { EventEmitter } from 'events'
 
 // Global singleton across server invocations in development and production
 declare global {
-  // eslint-disable-next-line no-var
+   
   var __realtimeBroadcaster: EventEmitter | undefined
 }
 

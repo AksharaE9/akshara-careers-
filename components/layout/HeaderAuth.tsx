@@ -11,12 +11,18 @@ interface HeaderAuthProps {
 export function HeaderAuth({ candidateName: initialName }: HeaderAuthProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [candidateName, setCandidateName] = useState<string | null>(initialName || null)
+  const [prevInitialName, setPrevInitialName] = useState(initialName)
+
+  if (initialName !== prevInitialName) {
+    setPrevInitialName(initialName)
+    setCandidateName(initialName || null)
+  }
+
   const menuRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
   useEffect(() => {
     if (initialName !== undefined) {
-      setCandidateName(initialName)
       return
     }
 

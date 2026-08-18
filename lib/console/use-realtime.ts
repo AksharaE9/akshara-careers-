@@ -6,12 +6,15 @@
  * and data freshness calculations from query timestamps.
  */
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react'
 
 export type StreamStatus = 'connected' | 'reconnecting' | 'offline'
 
+// Typed SSE event payload — type discriminated by the `type` field
+export type RealtimeEventData = Record<string, unknown> | null
+
 export interface RealtimeOptions {
-  onEvent: (type: string, data: any) => void
+  onEvent: (type: string, data: RealtimeEventData) => void
   disabled?: boolean
 }
 
@@ -21,13 +24,13 @@ export interface RealtimeOptions {
  */
 export function useRealtime({ onEvent, disabled = false }: RealtimeOptions) {
   const [status, setStatus] = useState<StreamStatus>('offline')
-  
+
   const eventSourceRef = useRef<EventSource | null>(null)
   const lastEventIdRef = useRef<string | null>(null)
   const retryCountRef = useRef(0)
   const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const onEventRef = useRef(onEvent)
-  onEventRef.current = onEvent
+  const connectRef = useRef<(() => void) | null>(null)
 
   const connect = useCallback(() => {
     if (disabled || typeof window === 'undefined') return
@@ -73,7 +76,7 @@ export function useRealtime({ onEvent, disabled = false }: RealtimeOptions) {
         retryCountRef.current++
 
         reconnectTimeoutRef.current = setTimeout(() => {
-          connect()
+          connectRef.current?.()
         }, delay)
       }
 
@@ -83,7 +86,7 @@ export function useRealtime({ onEvent, disabled = false }: RealtimeOptions) {
           lastEventIdRef.current = e.lastEventId
         }
         try {
-          const payload = JSON.parse(e.data)
+          const payload = JSON.parse(e.data) as { type: string; data: RealtimeEventData }
           if (payload.type === 'ping') return // Keep-alive heartbeat
           onEventRef.current(payload.type, payload.data)
         } catch (err) {
@@ -99,7 +102,7 @@ export function useRealtime({ onEvent, disabled = false }: RealtimeOptions) {
             lastEventIdRef.current = e.lastEventId
           }
           try {
-            const data = e.data ? JSON.parse(e.data) : null
+            const data = e.data ? (JSON.parse(e.data) as RealtimeEventData) : null
             onEventRef.current(evtName, data)
           } catch {
             onEventRef.current(evtName, null)
@@ -112,11 +115,25 @@ export function useRealtime({ onEvent, disabled = false }: RealtimeOptions) {
     }
   }, [disabled])
 
+  // Keep the refs up to date without causing re-renders.
+  // useLayoutEffect runs synchronously after DOM mutations, before paint,
+  // so the ref is always current before any event fires.
+  useLayoutEffect(() => {
+    onEventRef.current = onEvent
+    connectRef.current = connect
+  })
+
   // Initial connect & cleanup
   useEffect(() => {
-    connect()
+    let active = true
+    Promise.resolve().then(() => {
+      if (active) {
+        connect()
+      }
+    })
 
     return () => {
+      active = false
       if (eventSourceRef.current) {
         eventSourceRef.current.close()
         eventSourceRef.current = null

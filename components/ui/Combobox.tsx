@@ -112,9 +112,11 @@ export function Combobox({
     }
   }, [inputValue, minChars])
 
-  useEffect(() => {
+  const [prevValue, setPrevValue] = useState(value)
+  if (value !== prevValue) {
     setInputValue(value)
-  }, [value])
+    setPrevValue(value)
+  }
 
   const handleSelect = (option: ComboboxOption) => {
     isSelectingRef.current = true

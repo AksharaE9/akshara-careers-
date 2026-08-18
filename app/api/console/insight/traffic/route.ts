@@ -123,7 +123,7 @@ export async function GET() {
       }
 
       const p75Val = stats.p75
-      let displayP75 = p75Val.toFixed(tm.key === 'CLS' ? 3 : 2) + tm.unit
+      const displayP75 = p75Val.toFixed(tm.key === 'CLS' ? 3 : 2) + tm.unit
       let status = 'good'
 
       if (p75Val > tm.limit) {

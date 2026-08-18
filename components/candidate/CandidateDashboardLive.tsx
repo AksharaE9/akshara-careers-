@@ -98,11 +98,10 @@ export function CandidateDashboardLive({
   const lastEtagRef = useRef<string | null>(null)
 
   // Sync selectedAppId when apps change
-  useEffect(() => {
-    if (apps.length > 0 && apps[0] && (!selectedAppId || !apps.some((a) => a.id === selectedAppId))) {
-      setSelectedAppId(apps[0].id)
-    }
-  }, [apps, selectedAppId])
+  const activeAppExists = apps.some((a) => a.id === selectedAppId)
+  if (apps.length > 0 && apps[0] && (!selectedAppId || !activeAppExists)) {
+    setSelectedAppId(apps[0].id)
+  }
 
   // 2-second Conditional Polling Sync Loop (§3)
   useEffect(() => {

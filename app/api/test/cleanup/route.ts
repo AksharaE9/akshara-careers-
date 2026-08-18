@@ -5,7 +5,7 @@
  * Returns 404 in production to protect data-integrity.
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getDb } from '@/lib/db/client'
 import {
   applications,
@@ -22,9 +22,10 @@ import {
   funnelDaily,
   fieldAnalyticsDaily,
   webVitals,
+  outbox,
 } from '@/lib/db/schema'
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   if (process.env.NODE_ENV === 'production' && process.env.PLAYWRIGHT_TEST !== 'true') {
     return new NextResponse('Not Found', { status: 404 })
   }
@@ -32,6 +33,7 @@ export async function POST(request: NextRequest) {
   try {
     const db = getDb()
 
+    await db.delete(outbox)
     await db.delete(applicationStageEvents)
     await db.delete(applicationNotes)
     await db.delete(applications)
@@ -48,7 +50,8 @@ export async function POST(request: NextRequest) {
     await db.delete(webVitals)
 
     return NextResponse.json({ success: true, message: 'Test data purged' })
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Purge failed' }, { status: 500 })
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Purge failed'
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }

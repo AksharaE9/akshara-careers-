@@ -77,9 +77,11 @@ export default function ApplicationsPipelinePage() {
 
   // Local ephemeral state for search input text
   const [searchInput, setSearchInput] = useState(filters.q)
-  useEffect(() => {
+  const [prevQ, setPrevQ] = useState(filters.q)
+  if (filters.q !== prevQ) {
     setSearchInput(filters.q)
-  }, [filters.q])
+    setPrevQ(filters.q)
+  }
 
   const { onChange: onSearchChange, flush: flushSearch } = useDebouncedParam(
     (nextQ: string) => setFilters({ q: nextQ }),
@@ -156,7 +158,15 @@ export default function ApplicationsPipelinePage() {
 
   // Fetch only when URL filter key actually changes (R3)
   useEffect(() => {
-    fetchApplications()
+    let active = true
+    Promise.resolve().then(() => {
+      if (active) {
+        fetchApplications()
+      }
+    })
+    return () => {
+      active = false
+    }
   }, [key, fetchApplications])
 
   // Real-time synchronization via SSE (debounced to avoid loop storms)
@@ -182,7 +192,7 @@ export default function ApplicationsPipelinePage() {
       eventSource.addEventListener('application_note_added', handleRealtimeUpdate)
       eventSource.addEventListener('pipeline_update', handleRealtimeUpdate)
     } catch {
-      setIsLiveConnected(false)
+      Promise.resolve().then(() => setIsLiveConnected(false))
     }
 
     const handleVisibility = () => {

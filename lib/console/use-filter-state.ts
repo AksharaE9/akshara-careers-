@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { resolveDatePreset, type DatePresetId, type ResolvedRange } from "@/lib/date/ist";
 
@@ -68,7 +68,7 @@ export function useFilterState() {
 
       for (const [k, v] of Object.entries(patch)) {
         if (RESETS_PAGE.has(k)) touchedFilter = true;
-        const isDefault = v === (DEFAULTS as any)[k];
+        const isDefault = v === (DEFAULTS as Record<string, unknown>)[k];
         if (v === null || v === undefined || v === "" || isDefault) next.delete(k);
         else next.set(k, String(v));
       }
@@ -104,7 +104,10 @@ export function useFilterState() {
 export function useDebouncedParam(onCommit: (v: string) => void, delay = 300) {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const commitRef = useRef(onCommit);
-  commitRef.current = onCommit;
+  // Keep ref current without causing a re-render (same pattern as onEventRef in use-realtime).
+  useLayoutEffect(() => {
+    commitRef.current = onCommit;
+  })
 
   const onChange = useCallback((next: string) => {
     if (timer.current) clearTimeout(timer.current);
@@ -123,21 +126,21 @@ export function useDebouncedParam(onCommit: (v: string) => void, delay = 300) {
 export function installHistoryLoopGuard(limit = 10) {
   if (typeof window === "undefined") return;
   if (process.env.NODE_ENV === "production") return;
-  if ((window as any).__historyGuardInstalled) return;
-  (window as any).__historyGuardInstalled = true;
+  if ((window as Window & { __historyGuardInstalled?: boolean }).__historyGuardInstalled) return;
+  (window as Window & { __historyGuardInstalled?: boolean; __replaceStateCount?: number }).__historyGuardInstalled = true;
 
   let count = 0, windowStart = Date.now();
-  (window as any).__replaceStateCount = 0;
+  (window as Window & { __replaceStateCount?: number }).__replaceStateCount = 0;
   const original = history.replaceState.bind(history);
 
-  history.replaceState = function (...args: any[]) {
-    (window as any).__replaceStateCount++;
+  history.replaceState = function (...args: Parameters<typeof history.replaceState>) {
+    (window as Window & { __replaceStateCount?: number }).__replaceStateCount = ((window as Window & { __replaceStateCount?: number }).__replaceStateCount ?? 0) + 1;
     const now = Date.now();
     if (now - windowStart > 1000) { count = 0; windowStart = now; }
     if (++count === limit) {
       console.error(`[loop-guard] replaceState ${limit}x in <1s. A component is writing the URL from an effect.`);
       console.trace();
     }
-    return (original as any)(...args);
+    return original(...args);
   };
 }

@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     // 1. Ensure or find job
     const jobSlug = body.jobSlug || 'business-development-executive'
-    let jobList = await db.select().from(jobs).where(eq(jobs.slug, jobSlug)).limit(1)
+    const jobList = await db.select().from(jobs).where(eq(jobs.slug, jobSlug)).limit(1)
     let jobId: string
 
     if (jobList.length === 0) {
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 2. Ensure candidate
-    let candList = await db
+    const candList = await db
       .select()
       .from(candidates)
       .where(eq(candidates.emailNormalised, email))
@@ -117,8 +117,9 @@ export async function POST(request: NextRequest) {
       publicId: newApp!.publicId,
       statusToken: newApp!.statusToken,
     })
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Failed to seed test application:', err)
-    return NextResponse.json({ error: err.message || 'Seed failed' }, { status: 500 })
+    const msg = err instanceof Error ? err.message : 'Seed failed'
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }

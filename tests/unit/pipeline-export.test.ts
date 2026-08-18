@@ -16,11 +16,8 @@ import {
 import { TALENT_POOL_HEADERS } from '@/app/api/console/talent-pool/export/route'
 import {
   formatISTDate,
-  toISTDateTimeString,
-  toISTDateOnlyString,
   istDayStart,
   istDayEndExclusive,
-  resolveDatePreset,
 } from '@/lib/date/ist'
 import { checkExportRateLimit } from '@/lib/ratelimit/export-limit'
 
@@ -169,7 +166,6 @@ describe('Pipeline Export Constraints (§20.2 & §20.4)', () => {
     it('excludes next-day early application (00:05 IST) from previous day half-open interval', () => {
       // 2026-08-13 00:05:00 IST is 2026-08-12 18:35:00 UTC
       const nextDaySubmission = new Date('2026-08-12T18:35:00.000Z')
-      const start = istDayStart('2026-08-12')
       const endExclusive = istDayEndExclusive('2026-08-12')
 
       expect(nextDaySubmission.getTime() < endExclusive.getTime()).toBe(false)
