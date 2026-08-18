@@ -6,7 +6,7 @@
  * Kannada Unicode fidelity, legacy Google Form & canonical headers, and 10/hr rate limiting.
  */
 
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import {
   neutralise,
   escapeCsvCell,
@@ -23,6 +23,22 @@ import {
   resolveDatePreset,
 } from '@/lib/date/ist'
 import { checkExportRateLimit } from '@/lib/ratelimit/export-limit'
+
+// The export rate limiter now uses Upstash Redis (distributed, not in-memory).
+// In unit tests, mock the module to test the interface contract without a Redis connection.
+const exportCounts = new Map<string, number>()
+vi.mock('@/lib/ratelimit/export-limit', () => ({
+  checkExportRateLimit: async (userId: string) => {
+    const MAX = 10
+    const count = (exportCounts.get(userId) ?? 0) + 1
+    exportCounts.set(userId, count)
+    return {
+      allowed: count <= MAX,
+      remaining: Math.max(0, MAX - count),
+      resetAt: Date.now() + 3600000,
+    }
+  },
+}))
 
 describe('Pipeline Export Constraints (§20.2 & §20.4)', () => {
   describe('OWASP CSV Formula Injection Neutralisation (§20.2.1 Constraint 4)', () => {
@@ -162,17 +178,17 @@ describe('Pipeline Export Constraints (§20.2 & §20.4)', () => {
   })
 
   describe('Export Rate Limiting (§20.2.4)', () => {
-    it('allows up to 10 exports per hour and returns 429-equivalent allowed:false on 11th call', () => {
+    it('allows up to 10 exports per hour and returns 429-equivalent allowed:false on 11th call', async () => {
       const testUser = `test_user_rate_${Date.now()}`
 
       for (let i = 1; i <= 10; i++) {
-        const res = checkExportRateLimit(testUser)
+        const res = await checkExportRateLimit(testUser)
         expect(res.allowed).toBe(true)
         expect(res.remaining).toBe(10 - i)
       }
 
       // 11th call is blocked
-      const blockedRes = checkExportRateLimit(testUser)
+      const blockedRes = await checkExportRateLimit(testUser)
       expect(blockedRes.allowed).toBe(false)
       expect(blockedRes.remaining).toBe(0)
     })

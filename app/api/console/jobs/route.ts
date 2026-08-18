@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidateTag } from 'next/cache'
 import { listAllJobsAdmin, createJobPosting } from '@/lib/db/queries/jobs'
 import { getCurrentUser } from '@/lib/auth/session'
 import { can } from '@/lib/auth/rbac'
@@ -28,7 +29,7 @@ export async function POST(request: NextRequest) {
     if (!can(user, 'manage_jobs')) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
     const body = await request.json()
-    const { title, slug, family, summary, descriptionHtml, locationCity, salaryMin, salaryMax } = body
+    const { title, slug, family, summary, descriptionHtml, locationCity, salaryMin, salaryMax, status } = body
 
     if (!title || !slug || !family || !summary) {
       return NextResponse.json(
@@ -37,6 +38,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const jobStatus = status || 'open'
     const job = await createJobPosting({
       title,
       slug,
@@ -46,8 +48,14 @@ export async function POST(request: NextRequest) {
       locationCity: locationCity || 'Bengaluru',
       salaryMin: salaryMin ? Number(salaryMin) : undefined,
       salaryMax: salaryMax ? Number(salaryMax) : undefined,
-      status: 'open',
+      status: jobStatus,
     })
+
+    // ISR cache invalidation: bust /careers and /careers/[slug] immediately
+    // when a job is published so candidates see it without waiting 60s.
+    if (jobStatus === 'open' || jobStatus === 'closed') {
+      revalidateTag('jobs', 'max')
+    }
 
     return NextResponse.json({ success: true, job })
   } catch (err) {

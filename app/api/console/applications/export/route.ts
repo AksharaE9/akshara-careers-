@@ -113,7 +113,7 @@ export async function GET(request: NextRequest) {
     }
 
     // 2. Rate Limiting Check (§20.2.4: 10 exports per user per hour)
-    const rateLimit = checkExportRateLimit(user.id)
+    const rateLimit = await checkExportRateLimit(user.id)
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Rate limit exceeded: maximum 10 exports per hour' },

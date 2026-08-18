@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { unstable_cache } from 'next/cache'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Container } from '@/components/layout/Container'
@@ -8,6 +9,21 @@ import { Grid } from '@/components/layout/Grid'
 import { getOpenJobs, type JobCardResult } from '@/lib/db/queries/jobs'
 import { TalentPoolForm } from '@/components/talent-pool/TalentPoolForm'
 import { HiringProcessCarousel } from '@/components/landing/HiringProcessCarousel'
+
+// ISR: re-render at most once per 60s. On job publish/close, revalidateTag('jobs')
+// fires immediately and busts this cache without waiting for the window.
+export const revalidate = 60
+
+// Cache the DB fetch at the data layer so individual RSC renders stay fast
+// even when the page re-renders due to searchParam filter changes.
+const getCachedOpenJobs = unstable_cache(
+  async () => {
+    if (!process.env.NEON_DATABASE_URL) return null
+    return getOpenJobs()
+  },
+  ['open-jobs'],
+  { tags: ['jobs'], revalidate: 60 },
+)
 
 const FALLBACK_JOBS: JobCardResult[] = [
   {
@@ -70,10 +86,8 @@ export default async function CareersPage({ searchParams }: CareersPageProps) {
   let openJobs = FALLBACK_JOBS
 
   try {
-    if (process.env.NEON_DATABASE_URL) {
-      const dbJobs = await getOpenJobs()
-      if (dbJobs && dbJobs.length > 0) openJobs = dbJobs
-    }
+    const dbJobs = await getCachedOpenJobs()
+    if (dbJobs && dbJobs.length > 0) openJobs = dbJobs
   } catch (err) {
     console.error('Failed to query database, using fallback data:', err)
   }

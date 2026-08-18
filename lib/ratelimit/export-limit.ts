@@ -1,33 +1,38 @@
 /**
  * lib/ratelimit/export-limit.ts
  *
+ * TASK 2 — Distributed Rate Limiting
+ *
  * Rate limiter for console data exports: 10 exports per user per hour (§20.2.4).
+ *
+ * Previously backed by a plain in-memory Map<> — correct for single-process
+ * tests, but a no-op under Vercel's multi-instance serverless model where each
+ * cold-start has a fresh, empty Map and instances cannot see each other's state.
+ *
+ * Now delegates to lib/security/ratelimit.ts which uses Upstash Redis
+ * (distributed, persistent across instances). The public API surface is
+ * unchanged so call sites in app/api/console/{applications,talent-pool}/export/route.ts need no edits.
  */
 
-interface RateLimitRecord {
-  count: number
-  resetAt: number
+import { getExportRateLimiter } from '@/lib/security/ratelimit'
+
+export interface ExportRateLimitResult {
+  allowed: boolean
+  remaining: number
+  resetAt: number // Unix ms
 }
 
-const exportRateLimitMap = new Map<string, RateLimitRecord>()
+/**
+ * Check whether userId is allowed to perform an export right now.
+ * Returns the same shape as the old Map-backed implementation.
+ */
+export async function checkExportRateLimit(userId: string): Promise<ExportRateLimitResult> {
+  const limiter = getExportRateLimiter()
+  const result = await limiter.limit(userId)
 
-const WINDOW_MS = 60 * 60 * 1000 // 1 hour
-const MAX_EXPORTS_PER_WINDOW = 10
-
-export function checkExportRateLimit(userId: string): { allowed: boolean; remaining: number; resetAt: number } {
-  const now = Date.now()
-  const record = exportRateLimitMap.get(userId)
-
-  if (!record || now > record.resetAt) {
-    const newRecord: RateLimitRecord = { count: 1, resetAt: now + WINDOW_MS }
-    exportRateLimitMap.set(userId, newRecord)
-    return { allowed: true, remaining: MAX_EXPORTS_PER_WINDOW - 1, resetAt: newRecord.resetAt }
+  return {
+    allowed: result.success,
+    remaining: result.remaining,
+    resetAt: result.reset, // Upstash returns Unix ms
   }
-
-  if (record.count >= MAX_EXPORTS_PER_WINDOW) {
-    return { allowed: false, remaining: 0, resetAt: record.resetAt }
-  }
-
-  record.count += 1
-  return { allowed: true, remaining: MAX_EXPORTS_PER_WINDOW - record.count, resetAt: record.resetAt }
 }

@@ -8,6 +8,7 @@
 
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { unstable_cache } from 'next/cache'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Container } from '@/components/layout/Container'
@@ -17,6 +18,10 @@ import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { getJobBySlug } from '@/lib/db/queries/jobs'
 import { AnalyticsTracker } from '@/components/analytics/AnalyticsTracker'
+
+// ISR: job descriptions change rarely — 300s staleness window is invisible to candidates.
+// revalidateTag('jobs') or revalidateTag('job-<slug>') fires immediately on publish/close.
+export const revalidate = 300
 
 interface JobDetail {
   id: string
@@ -142,24 +147,29 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
   const resolvedParams = await params
   const { slug } = resolvedParams
 
-  // Fetch job from Neon, or use fallback seed
-  let job: typeof FALLBACK_JOBS[number] | null = null
-  const hasDb = Boolean(process.env.NEON_DATABASE_URL)
+  // Cached DB fetch — keyed per slug, tagged for instant invalidation on publish/close
+  const getCachedJob = unstable_cache(
+    async () => {
+      if (!process.env.NEON_DATABASE_URL) return null
+      return getJobBySlug(slug)
+    },
+    [`job-${slug}`],
+    { tags: ['jobs', `job-${slug}`], revalidate: 300 },
+  )
 
-  if (hasDb) {
-    try {
-      const dbJob = await getJobBySlug(slug)
-      if (dbJob) {
-        // Adapt Drizzle schema formats to match page formats
-        job = {
-          ...dbJob,
-          postedAt: dbJob.postedAt ?? new Date(),
-          validThrough: dbJob.validThrough ?? new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-        }
+  let job: typeof FALLBACK_JOBS[number] | null = null
+
+  try {
+    const dbJob = await getCachedJob()
+    if (dbJob) {
+      job = {
+        ...dbJob,
+        postedAt: dbJob.postedAt ?? new Date(),
+        validThrough: dbJob.validThrough ?? new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
       }
-    } catch (err) {
-      console.error('Failed to fetch job details from database, utilizing fallback:', err)
     }
+  } catch (err) {
+    console.error('Failed to fetch job details from database, utilizing fallback:', err)
   }
 
   // Fallback check
