@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs'
+import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -23,15 +24,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [],
   },
 
-  // ── Bundle analyser ─────────────────────────────────────────────────────────
-  // Enabled by ANALYZE=true in env (never default-on in CI)
-  ...(process.env.ANALYZE === 'true'
-    ? {
-        experimental: {
-          optimizePackageImports: ['recharts', 'lucide-react', 'gsap'],
-        },
-      }
-    : {}),
+  // Bundle analyzer is handled at the export wrapping level using @next/bundle-analyzer
 
   // ── Headers ─────────────────────────────────────────────────────────────────
   // Security headers live here (L7). CSP nonce is set in middleware.ts for
@@ -81,7 +74,11 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withSentryConfig(nextConfig, {
+const analyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+export default withSentryConfig(analyzer(nextConfig), {
   // Sentry build-time config — source maps upload on deploy, stripped from client bundle
   ...(process.env.SENTRY_ORG ? { org: process.env.SENTRY_ORG } : {}),
   ...(process.env.SENTRY_PROJECT ? { project: process.env.SENTRY_PROJECT } : {}),
